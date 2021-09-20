@@ -31,7 +31,41 @@ export default {
 
   data: function () {
     return {
-      unclaimedPlanets: []
+      unclaimedPlanets: [
+        {
+          claimable: 1632138522,
+          claimed: false,
+          claimedHash: "",
+          diameter: null,
+          galaxy: null,
+          id: "20a1e2e5-a766-4e46-943c-e35a7c75d93b",
+          image: "",
+          max_temperature: null,
+          min_temperature: null,
+          name: "test",
+          position: null,
+          slots: null,
+          solar_system: null,
+          user: "0x86e62e8447e3CBb73E4bBa42D2aa64067FC52bE4"
+        },
+
+        {
+          claimable: 1632137591,
+          claimed: false,
+          claimedHash: "",
+          diameter: null,
+          galaxy: null,
+          id: "f1393ff2-cdd6-4ecb-95ca-fe23bccb60da",
+          image: "",
+          max_temperature: null,
+          min_temperature: null,
+          name: "tews",
+          position: null,
+          slots: null,
+          solar_system: null,
+          user: "0x86e62e8447e3CBb73E4bBa42D2aa64067FC52bE4"
+        }
+      ]
     };
   },
   created() {
@@ -67,7 +101,8 @@ export default {
     },
 
     updateUnclaimedPlanets: async function () {
-      this.unclaimedPlanets = (await ApiRequest.getUnClaimPlanet()).data;
+      //this.unclaimedPlanets = (await ApiRequest.getUnClaimPlanet()).data;
+      console.log(this.unclaimedPlanets)
     },
 
     deleteFromList: function (data) {
