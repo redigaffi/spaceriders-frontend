@@ -24,7 +24,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn label="Logout" color="blue-7" v-close-popup />
+          <q-btn label="Logout" @click="logout" color="blue-7" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -36,13 +36,16 @@ import ApiRequest from "../service/http/ApiRequests";
 import { ethers } from "ethers";
 
 export default {
-  name: "Login",
+  name: "User",
   data: () => {
     return {
       userInfoPopup: false,
     };
   },
   methods: {
+    logout: function() {
+      this.$store.commit("destroySession");
+    },
     login: async function (e) {
       if (this.loggedIn) {
         this.userInfoPopup = true;
@@ -58,7 +61,11 @@ export default {
       const re = await ApiRequest.authenticate(address, signature);
 
       this.$notification("success", "Successfully started session!", 6000);
+
       this.$store.commit("login", { jwt: re.data.jwt, address: address });
+      
+      const planets = (await ApiRequest.getPlanets()).data;
+      this.$store.commit("setActivePlanet", planets[0]);
     },
   },
 

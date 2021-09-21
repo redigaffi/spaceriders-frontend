@@ -4,6 +4,7 @@
 
 <script>
 import ApiRequest from "../service/http/ApiRequests";
+import { PLANET_CLAIMED } from "../constants/Events";
 
 import PlanetManagementContract, {
   PlanetAttributes,
@@ -77,7 +78,7 @@ export default {
 
         if (confirmReq.data.success === true) {
           this.$notification("success", "Planet claimed successfully!", 6000);
-          this.$emit("planet-confirmed", { planetGuid: planetGuid });
+          this.$eventBus.emit(PLANET_CLAIMED, { planetGuid: planetGuid });
         } else {
           this.$notification("failed", confirmReq.data.error, 6000);
         }

@@ -25,6 +25,7 @@
 import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import PlanetManagementContract from "../service/contract/PlanetManagementContract";
+import { NEW_PLANET_PURCHASED } from "../constants/Events";
 
 export default {
   name: "BuyPlanet",
@@ -73,7 +74,7 @@ export default {
         );
       }
 
-      this.$emit('buy-planet', { planetGuid: planetGuid })
+      this.$eventBus.emit(NEW_PLANET_PURCHASED, { planetGuid: planetGuid });
       closeNotification();
     },
   },

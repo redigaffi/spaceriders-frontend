@@ -17,7 +17,8 @@ export default store(function (/* { ssrContext } */) {
     state() {
         return {
             jwt: false,
-            address: false
+            address: false,
+            activePlanet: false,
         }
     },
     mutations: {
@@ -39,9 +40,16 @@ export default store(function (/* { ssrContext } */) {
             state.jwt = false;
             state.address = false;
         },
+
+        setActivePlanet(state, payload) {
+            state.activePlanet = payload;
+        },
     },
   
     getters: {
+        activePlanet: state => {
+            return state.activePlanet;
+        },
 
         address: state => {
           return state.address;
@@ -50,6 +58,7 @@ export default store(function (/* { ssrContext } */) {
         loggedIn: state => {
             return state.jwt !== false;
         },
+
         jwt: state => {
             return state.jwt;
         }

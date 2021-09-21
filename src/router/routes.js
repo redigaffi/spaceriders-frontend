@@ -1,6 +1,7 @@
 
 const mainLayout = import('layouts/MainLayout.vue');
 const indexPage = import('pages/Index.vue');
+const planetPage = import('pages/Planet.vue');
 
 const routes = [
   {
@@ -10,7 +11,13 @@ const routes = [
       { path: '', component: indexPage },
     ]
   },
-
+  {
+    path: '/planet',
+    component:  mainLayout,
+    children: [
+      { path: '', component: planetPage },
+    ]
+  },
 
 
   // Always leave this as last one,

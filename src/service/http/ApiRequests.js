@@ -64,12 +64,17 @@ export default class ApiRequests {
         return await axios.post(path, body);
     }
 
-    /**
-     * @param {string} txHash Hash which claims the planet
-     * @param {string} planetGuid Planet GUID.
-     */
     static async getUnClaimPlanet() {
         const path = `${process.env.BASE_API_PATH}/planet/unclaimed`;
         return (await axios.get(path)).data;
     }
+
+    /**
+     * Gets active planets
+     */
+    static async getPlanets() {
+        const path = `${process.env.BASE_API_PATH}/planet`;
+        return (await axios.get(path)).data;
+    }
+
 }
