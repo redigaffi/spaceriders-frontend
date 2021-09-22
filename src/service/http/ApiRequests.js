@@ -73,7 +73,15 @@ export default class ApiRequests {
      * Gets active planets
      */
     static async getPlanets() {
-        const path = `${process.env.BASE_API_PATH}/planet`;
+        const path = `${process.env.BASE_API_PATH}/planet/claimed`;
+        return (await axios.get(path)).data;
+    }
+
+     /**
+     * Gets all planets (claimed/unclaimed)
+     */
+    static async getAllPlanets() {
+        const path = `${process.env.BASE_API_PATH}/planet/all`;
         return (await axios.get(path)).data;
     }
 

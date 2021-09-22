@@ -1,21 +1,53 @@
 <template>
   <div>
-    <!-- <q-btn @click="buyPlanet" color="blue-7" label="Buy Planet" /> -->
-    <q-btn label="Buy Planet" color="blue-7" @click="buyPlanetPopup = true" />
+    <q-btn
+      icon="add"
+      label="Buy Planet"
+      color="secondary"
+      @click="buyPlanetPopup = true"
+    />
 
     <q-dialog v-model="buyPlanetPopup">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Buy a Planet</div>
+      <q-card
+        class="bg-dark text-white"
+        style="width: 600px; max-width: 70vw; border-radius: 20px"
+      >
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="warning"
+          icon="close"
+          v-close-popup
+        />
+        <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
+        <q-card-section class="text-center">
+          <div class="text-h6">BUY A PLANET</div>
+          <div class="text-subtitle1">
+            Buying a planet costs 0.5BNB, also, you can choose a planet name
+            (which can be changed later).
+          </div>
         </q-card-section>
         <q-card-section class="q-pt-none">
-          Buying a planet costs 0.5BNB, also, you can choose a planet name (which can be changed later).
-          <q-input v-model="planetName" label="Planet Name" />
+          <q-input
+            label-color="white"
+            v-model="planetName"
+            label="Planet Name"
+            class="text-secondary"
+            standout="bg-secondary"
+          />
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat label="Buy" color="primary" @click="buyPlanet" v-close-popup />
-        </q-card-actions>
+        <q-card-section class="q-pt-none text-center">
+          <q-btn
+            label="Buy Planet"
+            color="warning"
+            @click="buyPlanet"
+            no-caps
+            class="q-px-lg"
+            v-close-popup
+          />
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -38,27 +70,30 @@ export default {
   methods: {
     buyPlanet: async function () {
       const planetGuid = uuidv4();
-      
+
       const closeNotification = this.$notification(
         "progress",
         "Waiting for transaction to complete...",
         0
       );
 
-      let receipt = {status: 0};
-      
-      try { 
+      let receipt = { status: 0 };
+
+      try {
         const tx = await PlanetManagementContract.buyPlanet(planetGuid);
         receipt = await tx.wait();
-
       } catch (e) {
-        console.log("error")
-        console.log(e)
+        console.log("error");
+        console.log(e);
       }
 
       if (receipt.status === 1) {
         const txHash = receipt.transactionHash;
-        const re = await ApiRequest.buyPlanet(txHash, planetGuid, this.planetName);
+        const re = await ApiRequest.buyPlanet(
+          txHash,
+          planetGuid,
+          this.planetName
+        );
 
         if (re.data.success) {
           this.$notification("success", "Planet purchases successfully!", 6000);
@@ -81,9 +116,74 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.tag-glass-element {
+  z-index: 1;
+  background: inherit;
+  overflow: hidden;
+}
 
-/* .notify {
-  margin-top: 20px;
-} */
+.tag-glass-element:before {
+  content: "";
+  position: absolute;
+  background: rgba($dark, 0.7);
+  z-index: -1;
+  // border-radius: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.glass-element {
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  background: inherit;
+  overflow: hidden;
+}
+
+.glass-element:before {
+  content: "";
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 2000px rgba($dark, 0.7);
+  filter: blur(10px);
+  margin: -20px;
+}
+
+.image {
+  position: relative;
+}
+
+.image img {
+  width: 100%;
+  vertical-align: top;
+}
+
+.image:after {
+  content: "\A";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.image:hover:after {
+  content: attr(data-content);
+  color: #fff;
+  padding: 20px;
+  opacity: 1;
+}
 </style>

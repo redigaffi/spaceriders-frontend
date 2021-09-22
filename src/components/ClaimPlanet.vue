@@ -1,5 +1,5 @@
 <template>
-  <q-btn @click="claimPlanet" :disable="claimable" color="blue-7" label="Claim Planet" />
+  <q-btn @click="claimPlanet" color="warning" class="q-px-lg" label="Claim" />
 </template>
 
 <script>
@@ -13,12 +13,8 @@ import PlanetManagementContract, {
 
 export default {
   name: "ClaimPlanet",
-  setup() {
-    return {};
-  },
   props: {
     planet: Object,
-    claimable: Boolean,
   },
   methods: {
     claimPlanet: async function () {
@@ -55,7 +51,6 @@ export default {
       let receipt = {status: 0};
 
       try {
-        console.log(pA);
         const tx = await PlanetManagementContract.claimPlanet(
           pA,
           data.tokenURI,

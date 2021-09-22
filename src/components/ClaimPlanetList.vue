@@ -1,90 +1,77 @@
 <template>
-  <div class="justify-center">
+  <div>
+    <q-card-section v-if="!claimeable" class="row q-col-gutter-sm text-center">
+      <div class="col-3 q-pa-sm" v-for="p in this.planets" :key="p.id">
+        <q-card
+          flat
+          class="bg-transparent text-dark image"
+          :data-content="this.calculateClaimDate(p)"
+          style="width: 230px"
+        >
+          <img
+            src="~assets/img/planet1.jpg"
+            style="height: 200px; width: 230px"
+          />
+          <q-card-section class="text-center text-secondary bg-dark">
+            {{ p.name }}
+          </q-card-section>
+        </q-card>
+      </div>
+    </q-card-section>
 
-  <div v-for="uP in this.unclaimedPlanets" :key="uP.id">
-    <q-card  class="my-card">
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h6">Name {{ uP.name }}</div>
-        <div class="text-subtitle2">Claimable in {{ this.calculateClaimDate(uP) }}</div> 
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions align="center">
-        <ClaimPlanet :planet="uP" :claimable="!isClaimable(uP)" />
-      </q-card-actions>
-    </q-card>
-
-  </div>
+    <q-card-section v-else class="row q-col-gutter-sm text-center">
+      <div class="col-3 q-pa-sm" v-for="p in this.planets" :key="p.id">
+        <q-card flat class="bg-transparent text-dark" style="width: 230px">
+          <img
+            src="~assets/img/planet1.jpg"
+            style="height: 200px; width: 230px"
+          />
+          <q-card-section class="text-secondary absolute-top tag-glass-element">
+            {{ p.name }}
+          </q-card-section>
+          <q-card-section class="bg-dark">
+              <ClaimPlanet :planet="p"  />
+          </q-card-section>
+        </q-card>
+      </div>
+    </q-card-section>
   </div>
 </template>
 
 <script>
 import ClaimPlanet from "../components/ClaimPlanet.vue";
-import ApiRequest from "../service/http/ApiRequests";
-import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
 
 export default {
   name: "ClaimPlanetList",
   components: {
     ClaimPlanet,
-  },
-
-  data: function () {
-    return {
-      unclaimedPlanets: []
-    };
-  },
-  created() {
-    this.$eventBus.on(NEW_PLANET_PURCHASED, (e) => {
-      this.updateUnclaimedPlanets();
-    });
-
-    this.$eventBus.on(PLANET_CLAIMED, (e) => {
-      this.deleteFromList(e);
-    });
-
-    this.updateUnclaimedPlanets();
-  },
-  
-  methods: {
-    isClaimable: function(planet) {
-      const now = new Date();
-      const claimDate = new Date(planet.claimable * 1000);  
-      const diff = claimDate.getTime() - now.getTime();
     
-      return diff <= 0;
-    },
+  },
+  props: {
+    planets: Array,
+    claimeable: Boolean,
+  },
 
+  methods: {
     calculateClaimDate: function (planet) {
       const now = new Date();
       const claim = new Date(planet.claimable * 1000);
-      
+
       const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
-      const minutes = Math.round(diffSeconds/60);
+      const s = Math.round(diffSeconds % 60);
+      const minutes = Math.round((diffSeconds-s) / 60);
+
       
-      const m = Math.round(minutes % 60);
-      const h = Math.round(minutes - m)/60
+      const m = (minutes  % 60);
+      const h = Math.round(minutes - m) / 60;
 
       let str = "";
-      if (h > 0) str+= `${h}h`;
-      if (m >= 0) str+= ` ${m}m`;
-
-      if (str === "") str = "CLAIMABLE!";
+      if (h > 0) str += `${h}h`;
+      if (m > 0) str += ` ${m}m`;
+      if (s >= 0) str += ` ${s}s`;
 
       return str;
-    },
-
-    updateUnclaimedPlanets: async function () {
-      this.unclaimedPlanets = (await ApiRequest.getUnClaimPlanet()).data;
-    },
-
-    deleteFromList: function (data) {
-      const planetGuid = data.planetGuid;
-      this.unclaimedPlanets = this.unclaimedPlanets.filter(
-        (el) => el.id !== planetGuid
-      );
-    },
+    },    
   },
 };
 </script>

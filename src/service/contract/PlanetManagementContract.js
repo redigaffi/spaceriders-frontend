@@ -48,8 +48,9 @@ class PlanetManagementContract extends Contract {
         
         const overrides = {
             // To convert Ether to Wei:
-            value: ethers.utils.parseEther("0.5"),
-            gasLimit: 6721975,
+            //@todo: get price from smart contract
+            value: ethers.utils.parseEther("0.05"),
+            gasLimit: 671975,
         };
 
         return await contract.buyPlanet(
