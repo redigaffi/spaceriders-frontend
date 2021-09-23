@@ -18,7 +18,9 @@ export default store(function (/* { ssrContext } */) {
         return {
             jwt: false,
             address: false,
+            planets: false,
             activePlanet: false,
+            resourceData: false,
         }
     },
     mutations: {
@@ -44,9 +46,30 @@ export default store(function (/* { ssrContext } */) {
         setActivePlanet(state, payload) {
             state.activePlanet = payload;
         },
+
+        setResourceData(state, payload) {
+            state.resourceData = payload;
+        },
+
+        setPlanets(state, payload) {
+            state.planets = payload.planets
+        },
+
+        incrementResources(state, payload) {
+            const key = payload.ressource;
+            state.activePlanet.ressources[key] += payload.value;
+        },
     },
   
     getters: {
+        planets: state =>  {
+            return state.planets;
+        },
+        
+        resourceData: state => {
+            return state.resourceData;
+        },
+
         activePlanet: state => {
             return state.activePlanet;
         },
