@@ -35,8 +35,8 @@ class PlanetManagementContract extends Contract {
     }
     
     getContract() {
-        const contractAddress = ContractAddress.getPlanetManagementAddress();
-        return super.buildContract(contractAddress, ABI);
+        // const contractAddress = ContractAddress.getPlanetManagementAddress();
+        // return super.buildContract(contractAddress, ABI);
     }
 
     /**
