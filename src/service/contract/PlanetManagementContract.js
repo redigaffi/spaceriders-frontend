@@ -44,7 +44,7 @@ class PlanetManagementContract extends Contract {
      * 
      **/
     async buyPlanet(planetGuid) {
-        const contract = await this.getContract();
+        /* const contract = await this.getContract();
         
         const overrides = {
             // To convert Ether to Wei:
@@ -55,8 +55,8 @@ class PlanetManagementContract extends Contract {
 
         return await contract.buyPlanet(
             planetGuid,
-            overrides
-        );
+            overrides */
+        /* ); */
     }
 
     /**
@@ -66,7 +66,7 @@ class PlanetManagementContract extends Contract {
      * @param {SignatureData} signatureData Signature data received from the backend (message sign by backend with it's private key)
      */
     async claimPlanet(planetAttributes, tokenURI, signatureData) {
-        const contract = await this.getContract();
+       /*  const contract = await this.getContract();
         
         const overrides = {
             gasLimit: 6721975,
@@ -77,7 +77,7 @@ class PlanetManagementContract extends Contract {
             tokenURI,
             signatureData,
             overrides
-        );
+        ); */
         
     }
 }
