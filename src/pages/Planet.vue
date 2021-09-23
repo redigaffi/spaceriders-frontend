@@ -101,7 +101,6 @@ export default defineComponent({
     }
   },
 
-
   methods: {
     deleteFromList: function (data) {
       const planetGuid = data.planetGuid;
@@ -132,10 +131,9 @@ export default defineComponent({
     },
 
     anyUnClaimedPlanet() {
-      let re = this.planets.filter((obj) => {
+      return this.planets.filter((obj) => {
         return !obj.claimed;
-      });
-      return re.length > 0;
+      }).length > 0;
     },
   },
 });

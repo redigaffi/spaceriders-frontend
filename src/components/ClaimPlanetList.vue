@@ -60,7 +60,6 @@ export default {
       const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
       const s = Math.round(diffSeconds % 60);
       const minutes = Math.round((diffSeconds-s) / 60);
-
       
       const m = (minutes  % 60);
       const h = Math.round(minutes - m) / 60;
