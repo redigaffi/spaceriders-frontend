@@ -20,7 +20,7 @@
               <HomeSlider key="homeSlider"></HomeSlider>
             </div>
           </q-slide-transition>
-          <q-slide-transition>
+          <q-slide-transition duration="200">
             <div v-show="currentTabComponent != 'HomeSlider'">
               <ResourceSlider
                 key="resourceSlider"
