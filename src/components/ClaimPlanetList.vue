@@ -2,7 +2,7 @@
   <div>
     <q-card-section v-if="!claimeable" class="row q-col-gutter-sm text-center">
       <div
-        class="col-xs-6 col-sm-3 col-md-3 q-pa-sm"
+        class="col-xs-6 col-sm-4 col-md-3 q-pa-sm"
         v-for="p in this.planets"
         :key="p.id"
       >
@@ -21,15 +21,12 @@
 
     <q-card-section v-else class="row q-col-gutter-sm text-center">
       <div
-        class="col-xs-6 col-sm-3 col-md-3 q-pa-sm"
+        class="col-xs-6 col-sm-4 col-md-3 q-pa-sm"
         v-for="p in this.planets"
         :key="p.id"
       >
-        <q-card flat class="bg-transparent text-dark" style="width: 230px">
-          <img
-            src="~assets/img/planet1.jpg"
-            style="height: 200px; width: 230px"
-          />
+        <q-card flat class="bg-transparent text-dark claimable-cards">
+          <img src="~assets/img/planet1.jpg" />
           <q-card-section class="text-secondary absolute-top tag-glass-element">
             {{ p.name }}
           </q-card-section>
@@ -80,14 +77,12 @@ export default {
 <style lang="scss">
 .image {
   position: relative;
-  width: 230px;
 }
 
 .image img {
   width: 100%;
   vertical-align: top;
   height: 200px;
-  width: 230px;
 }
 
 .image:after {
@@ -107,17 +102,34 @@ export default {
   -webkit-transition: all 0.5s;
 }
 
+.claimable-cards {
+  position: relative;
+}
+.claimable-cards img {
+  width: 100%;
+  vertical-align: top;
+  height: 200px;
+}
+
 @media (max-width: $breakpoint-md-min) {
   .image {
     position: relative;
-    width: 130px;
+    // width: 130px;
   }
 
   .image img {
+    vertical-align: top;
+    height: 100px;
+    // width: 130px;
+  }
+
+  .claimable-cards {
+    position: relative;
+  }
+  .claimable-cards img {
     width: 100%;
     vertical-align: top;
     height: 100px;
-    width: 130px;
   }
 }
 </style>

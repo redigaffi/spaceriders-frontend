@@ -95,10 +95,11 @@ export default defineComponent({
   methods: {
     startInterval: function () {
       this.claimRefreshId = setInterval(() => {
-        this.$store.commit('refreshPlanets');
-        if (this.unClaimedNotReadyPlanets.length === 0) clearInterval(this.claimRefreshId);
+        this.$store.commit("refreshPlanets");
+        if (this.unClaimedNotReadyPlanets.length === 0)
+          clearInterval(this.claimRefreshId);
       }, 1000);
-    }
+    },
   },
   async created() {
     this.$eventBus.on(NEW_PLANET_PURCHASED, (e) => {
@@ -128,9 +129,11 @@ export default defineComponent({
     },
 
     anyUnClaimedPlanet() {
-      return this.$store.getters.planets.filter((obj) => {
-        return !obj.claimed;
-      }).length > 0;
+      return (
+        this.$store.getters.planets.filter((obj) => {
+          return !obj.claimed;
+        }).length > 0
+      );
     },
   },
 });
