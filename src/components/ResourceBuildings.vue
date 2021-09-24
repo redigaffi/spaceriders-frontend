@@ -18,17 +18,14 @@
             v-for="n in 8"
             :key="`sm-${n}`"
           >
-            <q-card
-              flat
-              class="bg-transparent text-dark cursor-pointer"
-              @click="$emit('change')"
-            >
+            <q-card>
               <q-btn
                 dense
                 size="md"
                 class="absolute-top"
                 color="warning"
                 icon="expand_less"
+                style="z-index: 1"
               >
                 <q-tooltip
                   anchor="top middle"
@@ -38,30 +35,41 @@
                   Expand Metal Mine on level 2
                 </q-tooltip>
               </q-btn>
-              <img src="~assets/img/planet1.jpg" style="height: 110px" />
+              <q-card-section class="q-pa-none">
+                <q-card
+                  flat
+                  class="bg-transparent text-dark cursor-pointer"
+                  @click="$emit('change')"
+                >
+                  <img src="~assets/img/planet1.jpg" style="height: 110px" />
 
-              <q-card-section
-                class="q-pa-xs text-warning absolute-bottom tag-glass-element"
-              >
-                0
+                  <q-card-section
+                    class="
+                      q-pa-xs
+                      text-warning
+                      absolute-bottom
+                      tag-glass-element
+                    "
+                  >
+                    0
+                  </q-card-section>
+                  <!-- <q-card-section class="bg-dark">
+                    <q-btn color="warning" class="q-px-lg" label="Claim" />
+                  </q-card-section> -->
+                  <q-tooltip
+                    anchor="top middle"
+                    self="center middle"
+                    class="bg-primary text-subtitle2"
+                  >
+                    Metal mine
+                  </q-tooltip>
+                </q-card>
               </q-card-section>
-              <!-- <q-card-section class="bg-dark">
-                  <q-btn color="warning" class="q-px-lg" label="Claim" />
-                </q-card-section> -->
-              <q-tooltip
-                anchor="top middle"
-                self="center middle"
-                class="bg-primary text-subtitle2"
-              >
-                Metal mine
-              </q-tooltip>
             </q-card>
           </div>
         </q-card-section>
       </div>
     </q-card>
-
-    
   </div>
 </template>
 
