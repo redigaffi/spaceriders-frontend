@@ -1,43 +1,60 @@
 <template>
-  <q-header bordered class="bg-grey-10 text-white" height-hint="98">
-    <q-tabs align="left" indicator-color="blue" style="">
-      <q-toolbar-title shrink style="margin-left: 20px">
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-        </q-avatar>
-        Cryptoverse
-      </q-toolbar-title>
-
-      
-      <q-route-tab to="/planet" label="Planets" icon="fas fa-globe-europe" />
-      <q-route-tab
-        indicator-color="orange"
-        to="/"
-        label="General Vision"
-        icon="fas fa-home"
-      />
-      <q-route-tab to="" label="Infraestructure" icon="fas fa-industry" />
-      <q-route-tab to="" label="Research" icon="fas fa-university" />
-      <q-route-tab label="Defense" icon="fas fa-shield-alt" />
-
+  <q-header elevated class="bg-dark">
+    <q-toolbar>
+      <q-toolbar-title> Cryptoverse </q-toolbar-title>
       <q-space />
+      <q-tabs inline-label dense class="text-secondary absolute-center">
+        <q-route-tab
+          class="q-py-sm"
+          icon="fas fa-globe-europe"
+          label="Planets"
+          to="/planet"
+          no-caps
+          exact
+        />
+        <q-route-tab
+          class="q-py-sm"
+          name="general"
+          icon="remove_red_eye"
+          label="General Vision"
+          to="/"
+          no-caps
+        />
+        <q-route-tab
+          name="infrastructure"
+          icon="construction"
+          label="Infrastructure"
+          to="/"
+          no-caps
+        />
+        <q-route-tab
+          name="research"
+          icon="travel_explore"
+          label="Research"
+          to="/"
+          no-caps
+        />
+        <q-route-tab
+          name="defense"
+          icon="security"
+          label="Defense"
+          no-caps
+          to="/"
+        />
+      </q-tabs>
 
-      <activePlanet />
       <user />
-      
-    </q-tabs>
+    </q-toolbar>
   </q-header>
 </template>
 
 <script>
 import User from "./User.vue";
-import ActivePlanet from "./ActivePlanet.vue";
 
 export default {
   name: "HeaderBar",
   components: {
     User,
-    ActivePlanet
   },
   setup() {
     return {};

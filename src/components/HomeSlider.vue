@@ -1,0 +1,30 @@
+<template>
+  <q-card-section class="row q-col-gutter-sm text-center">
+    <div class="col-12 q-pa-sm">
+      <q-card flat class="bg-transparent text-dark">
+        <img
+          src="~assets/img/body-backgrounds-7.jpg"
+          width="100%"
+          style="height: 300px; width: 100%"
+        />
+        <q-card-section class="text-secondary absolute-top tag-glass-element">
+          Resources - Homeland
+        </q-card-section>
+        <q-card-section class="bg-dark">
+          <q-btn color="warning" class="q-px-lg" label="Resource Settings" />
+        </q-card-section>
+      </q-card>
+    </div>
+  </q-card-section>
+</template>
+
+<script>
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  name: "PageIndex",
+  setup() {
+    return {};
+  },
+});
+</script>

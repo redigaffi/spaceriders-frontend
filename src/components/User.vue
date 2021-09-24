@@ -1,14 +1,13 @@
 <template>
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
-    <q-tabs indicator-color="transparent">
-      <q-tab
-        align="right"
-        :label="logInButtonText"
-        icon="fas fa-user"
-        @click="login"
-      />
-    </q-tabs>
+    <q-btn
+      rounded
+      color="secondary"
+      :label="logInButtonText"
+      icon="person"
+      @click="login"
+    />
 
     <q-dialog v-model="userInfoPopup">
       <q-card>
@@ -16,11 +15,9 @@
           <div class="text-h6">Information</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
-          
           <q-btn :label="address" color="blue-7">
             <q-tooltip>Authenticated wallet</q-tooltip>
           </q-btn>
-
         </q-card-section>
 
         <q-card-actions align="right">
@@ -44,7 +41,7 @@ export default {
     };
   },
   methods: {
-    logout: function() {
+    logout: function () {
       this.$store.commit("destroySession");
     },
     login: async function (e) {
