@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 
 export default class Contract {
     constructor() {
-        // this.provider = new ethers.providers.Web3Provider(window.ethereum);
-        // this.signer   = this.provider.getSigner();
+        this.provider = new ethers.providers.Web3Provider(window.ethereum);
+        this.signer   = this.provider.getSigner();
     }
 
     async getTransactionReceipt(hash) {
