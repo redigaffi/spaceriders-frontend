@@ -15,12 +15,19 @@
           </div>
         </q-card-section>
         <div>
-          <transition name="slide-up" mode="slide-up" appear>
-            <component
-              :is="currentTabComponent"
-              @cancelled="cancelled"
-            ></component>
-          </transition>
+          <q-slide-transition>
+            <div v-show="currentTabComponent == 'HomeSlider'">
+              <HomeSlider key="homeSlider"></HomeSlider>
+            </div>
+          </q-slide-transition>
+          <q-slide-transition>
+            <div v-show="currentTabComponent != 'HomeSlider'">
+              <ResourceSlider
+                key="resourceSlider"
+                @cancelled="cancelled"
+              ></ResourceSlider>
+            </div>
+          </q-slide-transition>
         </div>
       </q-card>
     </div>
