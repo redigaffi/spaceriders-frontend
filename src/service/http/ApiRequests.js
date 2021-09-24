@@ -27,7 +27,7 @@ export default class ApiRequests {
       name: name,
     };
 
-    const re = await axios.post(path, body);
+    const re = (await axios.post(path, body)).data;
 
     return re;
   }
@@ -58,7 +58,7 @@ export default class ApiRequests {
       planetId: planetGuid,
     };
 
-    return await axios.post(path, body);
+    return (await axios.post(path, body)).data;
   }
 
   static async getUnClaimPlanet() {

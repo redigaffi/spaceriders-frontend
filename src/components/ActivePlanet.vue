@@ -40,10 +40,6 @@ export default {
   name: "ActivePlanet",
   
   async created() {
-    
-    this.$eventBus.on(PLANET_CLAIMED, (e) => {
-      this.fetchPlanets();
-    });
   },
 
   methods: {
@@ -57,12 +53,15 @@ export default {
     },
     isActivePlanet: function (p) {
       const currentActivePlanet = this.$store.getters.activePlanet;
-      return p.id === currentActivePlanet.id;
+      if (currentActivePlanet !== false) {
+        return p.id === currentActivePlanet.id;
+      }
+      return false;
     },
   },
   computed: {
     planets: function() {
-      return this.$store.getters.planets;
+      return this.$store.getters.planets.filter((p) => p.claimed);
     }
   },
 };

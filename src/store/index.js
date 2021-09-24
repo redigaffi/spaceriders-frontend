@@ -18,7 +18,7 @@ export default store(function (/* { ssrContext } */) {
         return {
             jwt: false,
             address: false,
-            planets: false,
+            planets: [],
             activePlanet: false,
             resourceData: false,
         }
@@ -52,7 +52,28 @@ export default store(function (/* { ssrContext } */) {
         },
 
         setPlanets(state, payload) {
-            state.planets = payload.planets
+            state.planets = payload
+        },
+
+        addPlanet(state, payload) {
+            state.planets.push(payload);
+        },
+
+        refreshPlanets(state) {
+            state.planets = [...state.planets]
+        },
+
+        /**
+         * Update planet values by providing planet, field name, and value to update.
+         * @param {*} state 
+         * @param {*} payload 
+         */
+        updatePlanet(state, payload) {
+            let planet = payload.planet;
+            let pI = state.planets.findIndex((p) => p.id === planet.id)
+            let p = state.planets[pI];
+            p[payload.field] = payload.value;
+            state.planets[pI] = p;
         },
 
         incrementResources(state, payload) {
