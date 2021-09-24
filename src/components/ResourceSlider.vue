@@ -4,7 +4,7 @@
       <q-card flat class="bg-transparent text-dark">
         <div class="row text-center">
           <!-- IMAGE -->
-          <div class="col-4">
+          <div class="col-4 gt-sm">
             <img
               src="~assets/img/body-backgrounds-2.jpg"
               width="100%"
@@ -22,7 +22,12 @@
               Metal Mine
               <span class="text-warning q-ml-md">Level 2</span>
               <div class="absolute-right q-ma-md">
-                <q-btn dense color="primary" icon="close" @click="$emit('cancelled')" />
+                <q-btn
+                  dense
+                  color="primary"
+                  icon="close"
+                  @click="$emit('cancelled')"
+                />
               </div>
             </q-card-section>
             <q-card-section
@@ -34,11 +39,18 @@
             >
               <q-list dense>
                 <q-item>
-                  <q-item-section>Production duration:</q-item-section>
-                  <q-item-section class="text-warning text-h6 text-weight-bold"
-                    >9s (-0%)</q-item-section
-                  >
-                  <q-item-section>
+                  <q-item-section class="col">
+                    <q-item-label>Production duration:</q-item-label>
+                    <q-item-label class="text-warning text-h6 text-weight-bold"
+                      >9s (-0%)</q-item-label
+                    >
+
+                    <q-item-label> Energy needed: </q-item-label>
+                    <q-item-label class="text-warning text-h6 text-weight-bold">
+                      13</q-item-label
+                    >
+                  </q-item-section>
+                  <q-item-section class="col">
                     <div class="text-right">
                       <q-btn
                         push
@@ -50,21 +62,15 @@
                     </div>
                   </q-item-section>
                 </q-item>
-                <q-item>
-                  <q-item-section>Energy needed:</q-item-section>
-                  <q-item-section class="text-warning text-h6 text-weight-bold"
-                    >13</q-item-section
-                  >
-                  <q-item-section> </q-item-section>
-                </q-item>
               </q-list>
 
               <q-separator color="info" spaced inset />
 
               <q-list dense>
                 <q-item>
-                  <q-item-section>
+                  <q-item-section class="col">
                     <q-item-label>Required to improve to level 3:</q-item-label>
+
                     <q-item-label caption>
                       <q-card
                         flat
@@ -91,7 +97,7 @@
                       </q-card>
                     </q-item-label>
                   </q-item-section>
-                  <q-item-section class="col-3">
+                  <q-item-section class="col">
                     <div class="text-right">
                       <q-btn
                         color="warning"
@@ -125,8 +131,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "PageIndex",
   setup() {
-    return {
-    };
+    return {};
   },
 });
 </script>

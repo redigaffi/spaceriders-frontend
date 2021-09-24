@@ -14,7 +14,7 @@
       <div>
         <q-card-section class="row q-col-gutter-sm justify-start">
           <div
-            class="col-2 q-pa-sm text-center"
+            class="col-xs-6 col-sm-4 col-md-2 q-pa-sm text-center"
             v-for="n in 8"
             :key="`sm-${n}`"
           >

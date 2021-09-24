@@ -4,6 +4,14 @@
       icon="add"
       label="Buy Planet"
       color="secondary"
+      v-if="!$q.screen.xs"
+      @click="buyPlanetPopup = true"
+    />
+
+    <q-btn
+      icon="add"
+      v-if="$q.screen.xs"
+      color="secondary"
       @click="buyPlanetPopup = true"
     />
 

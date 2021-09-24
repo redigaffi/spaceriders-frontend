@@ -1,9 +1,19 @@
 <template>
   <q-header elevated class="bg-dark">
     <q-toolbar>
+      <q-btn
+        class="lt-md"
+        flat
+        dense
+        round
+        icon="menu"
+        aria-label="Menu"
+        @click="toggleLeftDrawer"
+      />
       <q-toolbar-title> Cryptoverse </q-toolbar-title>
+
       <q-space />
-      <q-tabs inline-label dense class="text-secondary absolute-center">
+      <q-tabs inline-label dense class="text-secondary absolute-center gt-sm">
         <q-route-tab
           class="q-py-sm"
           icon="fas fa-globe-europe"
@@ -45,19 +55,63 @@
 
       <user />
     </q-toolbar>
+    <q-drawer v-model="leftDrawerOpen" bordered overlay>
+      <q-list>
+        <q-item-label header> Essential Links </q-item-label>
+
+        <NavLinks
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+      </q-list>
+    </q-drawer>
   </q-header>
 </template>
 
 <script>
 import User from "./User.vue";
+import { defineComponent, ref } from "vue";
+import NavLinks from "components/NavLinks.vue";
 
+const linksList = [
+  {
+    title: "Planets",
+    link: "/planet",
+  },
+  {
+    title: "General Vision",
+    link: "/",
+  },
+  {
+    title: "Infrastructure",
+    link: "/infrastructure",
+  },
+  {
+    title: "Research",
+    link: "/research",
+  },
+  {
+    title: "Defense",
+    link: "/defense",
+  },
+];
 export default {
   name: "HeaderBar",
   components: {
     User,
+    NavLinks,
   },
   setup() {
-    return {};
+    const leftDrawerOpen = ref(false);
+
+    return {
+      essentialLinks: linksList,
+      leftDrawerOpen,
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+    };
   },
   methods: {
     al: function () {
