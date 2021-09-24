@@ -18,6 +18,7 @@
           <transition name="slide-up" mode="slide-up" appear>
             <component
               :is="currentTabComponent"
+              :data="ressourceInfo"
               @cancelled="cancelled"
             ></component>
           </transition>
@@ -47,8 +48,12 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("HomeSlider");
-    function slideDiv() {
+    const ressourceInfo = ref("ressourceInfo");
+
+    function slideDiv(data) {
       currentTab.value = "ResourceSlider";
+      console.log(data)
+      ressourceInfo.value = data;
     }
 
     const currentTabComponent = computed(() => {
@@ -62,6 +67,7 @@ export default defineComponent({
       slideDiv: slideDiv,
       cancelled: cancelled,
       currentTabComponent: currentTabComponent,
+      ressourceInfo: ressourceInfo,
     };
   },
 });

@@ -19,8 +19,8 @@
                 tag-glass-element
               "
             >
-              Metal Mine
-              <span class="text-warning q-ml-md">Level 2</span>
+              {{ data.name }}
+              <span class="text-warning q-ml-md">Level {{ data.level }}</span>
               <div class="absolute-right q-ma-md">
                 <q-btn
                   dense
@@ -40,14 +40,14 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <q-item-label>Production duration:</q-item-label>
+                    <q-item-label>Upgrade time:</q-item-label>
                     <q-item-label class="text-warning text-h6 text-weight-bold"
-                      >9s (-0%)</q-item-label
+                      >{{ timeString }}</q-item-label
                     >
 
                     <q-item-label> Energy needed: </q-item-label>
                     <q-item-label class="text-warning text-h6 text-weight-bold">
-                      13</q-item-label
+                      +{{ newEnergyUsage }}</q-item-label
                     >
                   </q-item-section>
                   <q-item-section class="col">
@@ -69,7 +69,7 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <q-item-label>Required to improve to level 3:</q-item-label>
+                    <q-item-label>Required to improve to level {{ data.level+1 }}:</q-item-label>
 
                     <q-item-label caption>
                       <q-card
@@ -77,23 +77,59 @@
                         class="bg-transparent row q-col-gutter-sm q-py-md"
                       >
                         <div
-                          v-for="n in 2"
-                          :key="n"
+                          v-if="data.upgrades[data.level+1].cost_metal > 0"
                           class="text-center text-subtitle2"
                         >
                           <div>
                             <img
                               src="~assets/img/gold.jpg"
                               alt=""
-                              style="height: 80px; width: 80px"
+                              style="height: 70px; width: 70px"
                               srcset=""
                             />
-                            <div class="text-secondary">90</div>
+                            <div class="text-secondary">{{ data.upgrades[data.level+1].cost_metal }} </div>
                             <q-tooltip class="bg-secondary">
-                              90 Gold
+                              {{ data.upgrades[data.level+1].cost_metal }} Metal
                             </q-tooltip>
                           </div>
                         </div>
+
+                        <div
+                          v-if="data.upgrades[data.level+1].cost_crystal > 0"
+                          class="text-center text-subtitle2"
+                        >
+                          <div>
+                            <img
+                              src="~assets/img/gold.jpg"
+                              alt=""
+                              style="height: 70px; width: 70px"
+                              srcset=""
+                            />
+                            <div class="text-secondary">{{ data.upgrades[data.level+1].cost_crystal }}</div>
+                            <q-tooltip class="bg-secondary">
+                              {{ data.upgrades[data.level+1].cost_crystal }} Crystal
+                            </q-tooltip>
+                          </div>
+                        </div>
+
+                        <div
+                          v-if="data.upgrades[data.level+1].cost_petrol > 0"
+                          class="text-center text-subtitle2"
+                        >
+                          <div>
+                            <img
+                              src="~assets/img/gold.jpg"
+                              alt=""
+                              style="height: 70px; width: 70px"
+                              srcset=""
+                            />
+                            <div class="text-secondary">{{ data.upgrades[data.level+1].cost_petrol }}</div>
+                            <q-tooltip class="bg-secondary">
+                              {{ data.upgrades[data.level+1].cost_petrol }} Petrol
+                            </q-tooltip>
+                          </div>
+                        </div>
+
                       </q-card>
                     </q-item-label>
                   </q-item-section>
@@ -102,7 +138,7 @@
                       <q-btn
                         color="warning"
                         icon="expand_less"
-                        label="Improve"
+                        label="Upgrade"
                         no-caps
                         push
                       />
@@ -117,8 +153,7 @@
         <q-card-section
           class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
         >
-          Used in the extraction of metal ore, metal mines are of primary
-          importance to all emerging and established empires.
+          {{ data.description }}
         </q-card-section>
       </q-card>
     </div>
@@ -126,12 +161,49 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 
 export default defineComponent({
-  name: "PageIndex",
-  setup() {
-    return {};
+  name: "ResourceSlider",
+  props: {
+    data: Object,
+  },
+  setup(props) {
+    
+    const timeString = computed(() => {
+      
+      const timeNeeded = props.data.upgrades[props.data.level+1].upgrade_time;
+
+      const now = new Date();
+      const finish = new Date(now.getTime() + (timeNeeded*1000));
+      
+      const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
+      const s = Math.round(diffSeconds % 60);
+      const minutes = Math.round((diffSeconds - s) / 60);
+
+      const m = minutes % 60;
+      const h = Math.round(minutes - m) / 60;
+
+      let str = "";
+      if (h > 0) str += `${h}h`;
+      if (m > 0) str += ` ${m}m`;
+
+      return str;
+      
+    });
+
+    const newEnergyUsage = computed(() => {
+      const nextEnergyUsage = props.data.upgrades[props.data.level+1].energy_usage;
+      const currentEnergyUsage = props.data.upgrades[props.data.level].energy_usage;
+
+      return nextEnergyUsage-currentEnergyUsage;
+       
+    });
+
+    return {
+      timeString: timeString,
+      newEnergyUsage: newEnergyUsage,
+    };
   },
 });
 </script>

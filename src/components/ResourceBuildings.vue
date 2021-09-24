@@ -15,13 +15,13 @@
         <q-card-section class="row q-col-gutter-sm justify-start">
           <div
             class="col-xs-6 col-sm-4 col-md-2 q-pa-sm text-center"
-            v-for="n in 8"
-            :key="`sm-${n}`"
+            v-for="(value, key) in this.$store.getters.resourceData"
+            :key="key"
           >
             <q-card
               flat
               class="bg-transparent text-dark cursor-pointer"
-              @click="$emit('change')"
+              @click="$emit('change', value)"
             >
               <q-btn
                 dense
@@ -35,7 +35,7 @@
                   self="center middle"
                   class="bg-primary text-subtitle2"
                 >
-                  Expand Metal Mine on level 2
+                  Upgrade {{ value.name }} to level {{ value.level + 1 }}
                 </q-tooltip>
               </q-btn>
               <img src="~assets/img/planet1.jpg" style="height: 110px" />
@@ -43,7 +43,7 @@
               <q-card-section
                 class="q-pa-xs text-warning absolute-bottom tag-glass-element"
               >
-                0
+                {{ value.level }}
               </q-card-section>
               <!-- <q-card-section class="bg-dark">
                   <q-btn color="warning" class="q-px-lg" label="Claim" />
@@ -53,7 +53,7 @@
                 self="center middle"
                 class="bg-primary text-subtitle2"
               >
-                Metal mine
+                {{ value.name }}
               </q-tooltip>
             </q-card>
           </div>

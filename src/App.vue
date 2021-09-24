@@ -15,6 +15,8 @@ export default defineComponent({
       this.updateAll();
       
     });
+
+    // On login, request all data.
     this.$eventBus.on(LOGGED_IN, (e) => {
       this.updateAll();
     });
