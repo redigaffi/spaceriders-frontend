@@ -1,6 +1,6 @@
 <template>
   <div class="q-py-sm">
-    <q-card class="glass-element text-white q-pa-md" style="width: 300px">
+    <q-card class="glass-element text-white q-pa-md queue-building">
       <q-card-section class="row fit justify-between items-center">
         <div
           class="
@@ -57,3 +57,14 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss">
+.queue-building {
+  width: 300px;
+}
+
+@media (max-width: $breakpoint-sm-min) {
+  .queue-building {
+    width: 100%;
+  }
+}
+</style>
