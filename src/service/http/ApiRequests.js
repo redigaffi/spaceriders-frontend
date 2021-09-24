@@ -27,7 +27,7 @@ export default class ApiRequests {
       name: name,
     };
 
-    const re = await axios.post(path, body);
+    const re = (await axios.post(path, body)).data;
 
     return re;
   }
@@ -58,7 +58,7 @@ export default class ApiRequests {
       planetId: planetGuid,
     };
 
-    return await axios.post(path, body);
+    return (await axios.post(path, body)).data;
   }
 
   static async getUnClaimPlanet() {
@@ -91,4 +91,16 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/planet/all`;
     return (await axios.get(path)).data;
   }
+
+  /**
+   * Gets all resources for given planet 
+   * 
+   * @param {string} planetId 
+   * @returns 
+   */
+  static async getResourceData(planetId) {
+    const path = `${process.env.BASE_API_PATH}/ressource/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+  
 }

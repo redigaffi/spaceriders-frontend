@@ -18,7 +18,9 @@ export default store(function (/* { ssrContext } */) {
         return {
             jwt: false,
             address: false,
+            planets: [],
             activePlanet: false,
+            resourceData: false,
         }
     },
     mutations: {
@@ -44,9 +46,51 @@ export default store(function (/* { ssrContext } */) {
         setActivePlanet(state, payload) {
             state.activePlanet = payload;
         },
+
+        setResourceData(state, payload) {
+            state.resourceData = payload;
+        },
+
+        setPlanets(state, payload) {
+            state.planets = payload
+        },
+
+        addPlanet(state, payload) {
+            state.planets.push(payload);
+        },
+
+        refreshPlanets(state) {
+            state.planets = [...state.planets]
+        },
+
+        /**
+         * Update planet values by providing planet, field name, and value to update.
+         * @param {*} state 
+         * @param {*} payload 
+         */
+        updatePlanet(state, payload) {
+            let planet = payload.planet;
+            let pI = state.planets.findIndex((p) => p.id === planet.id)
+            let p = state.planets[pI];
+            p[payload.field] = payload.value;
+            state.planets[pI] = p;
+        },
+
+        incrementResources(state, payload) {
+            const key = payload.ressource;
+            state.activePlanet.ressources[key] += payload.value;
+        },
     },
   
     getters: {
+        planets: state =>  {
+            return state.planets;
+        },
+        
+        resourceData: state => {
+            return state.resourceData;
+        },
+
         activePlanet: state => {
             return state.activePlanet;
         },

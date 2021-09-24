@@ -95,6 +95,7 @@ export default {
         console.log(e);
       }
 
+
       if (receipt.status === 1) {
         const txHash = receipt.transactionHash;
         const re = await ApiRequest.buyPlanet(
@@ -103,12 +104,15 @@ export default {
           this.planetName
         );
 
-        if (re.data.success) {
+        if (re.success) {
           this.$notification("success", "Planet purchases successfully!", 6000);
         } else {
-          this.$notification("failed", re.data.error, 6000);
+          this.$notification("failed", re.error, 6000);
           console.error(`${planetGuid}`);
         }
+
+        this.$eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
+        this.$store.commit('addPlanet', re.data);
       } else {
         this.$notification(
           "failed",
@@ -117,7 +121,7 @@ export default {
         );
       }
 
-      this.$eventBus.emit(NEW_PLANET_PURCHASED, { planetGuid: planetGuid });
+
       closeNotification();
     },
   },

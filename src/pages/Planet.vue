@@ -75,10 +75,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import ApiRequest from "../service/http/ApiRequests";
 import ClaimPlanetList from "../components/ClaimPlanetList.vue";
 import BuyPlanet from "../components/BuyPlanet.vue";
-import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
+import { NEW_PLANET_PURCHASED } from "../constants/Events";
 
 export default defineComponent({
   name: "PageIndex",
@@ -90,43 +89,28 @@ export default defineComponent({
 
   data: function () {
     return {
-      planets: [],
       claimRefreshId: -1,
     };
   },
-  async created() {
-    this.$eventBus.on(NEW_PLANET_PURCHASED, (e) => {
-      this.getPlanets();
-    });
-
-    this.$eventBus.on(PLANET_CLAIMED, (e) => {
-      this.deleteFromList(e);
-    });
-
-    await this.getPlanets();
-
-    if (this.unClaimedNotReadyPlanets) {
+  methods: {
+    startInterval: function () {
       this.claimRefreshId = setInterval(() => {
-        this.planets = [...this.planets];
-        if (!this.anyUnClaimedPlanet)
-          clearInterval(this.unClaimedNotReadyPlanets);
+        this.$store.commit('refreshPlanets');
+        if (this.unClaimedNotReadyPlanets.length === 0) clearInterval(this.claimRefreshId);
       }, 1000);
     }
   },
+  async created() {
+    this.$eventBus.on(NEW_PLANET_PURCHASED, (e) => {
+      this.startInterval();
+    });
 
-  methods: {
-    deleteFromList: function (data) {
-      const planetGuid = data.planetGuid;
-      this.planets = this.planets.filter((el) => el.id !== planetGuid);
-    },
-
-    getPlanets: async function () {
-      this.planets = (await ApiRequest.getAllPlanets()).data;
-    },
+    if (this.unClaimedNotReadyPlanets.length > 0) this.startInterval();
   },
+
   computed: {
     unClaimedNotReadyPlanets: function () {
-      return this.planets.filter((obj) => {
+      return this.$store.getters.planets.filter((obj) => {
         const now = new Date();
         const claimDate = new Date(obj.claimable * 1000);
         const diff = claimDate.getTime() - now.getTime();
@@ -135,7 +119,7 @@ export default defineComponent({
     },
 
     unClaimedReadyPlanets: function () {
-      return this.planets.filter((obj) => {
+      return this.$store.getters.planets.filter((obj) => {
         const now = new Date();
         const claimDate = new Date(obj.claimable * 1000);
         const diff = claimDate.getTime() - now.getTime();
@@ -144,11 +128,9 @@ export default defineComponent({
     },
 
     anyUnClaimedPlanet() {
-      return (
-        this.planets.filter((obj) => {
-          return !obj.claimed;
-        }).length > 0
-      );
+      return this.$store.getters.planets.filter((obj) => {
+        return !obj.claimed;
+      }).length > 0;
     },
   },
 });

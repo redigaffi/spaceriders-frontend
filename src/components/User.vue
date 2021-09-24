@@ -31,6 +31,7 @@
 <script>
 import ApiRequest from "../service/http/ApiRequests";
 import { ethers } from "ethers";
+import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "../constants/Events";
 
 export default {
   name: "User",
@@ -60,9 +61,15 @@ export default {
       this.$notification("success", "Successfully started session!", 6000);
 
       this.$store.commit("login", { jwt: re.data.jwt, address: address });
-
-      const planets = (await ApiRequest.getPlanets()).data;
+      
+      /* const planets = (await ApiRequest.getPlanets()).data;
+      
+      this.$store.commit("setPlanets", { planets: planets})
       this.$store.commit("setActivePlanet", planets[0]);
+      this.$eventBus.emit(ACTIVE_PLANET_CHANGED, planets[0]); */
+
+      this.$eventBus.emit(LOGGED_IN)
+
     },
   },
 

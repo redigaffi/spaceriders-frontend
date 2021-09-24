@@ -4,7 +4,7 @@
 
 <script>
 import ApiRequest from "../service/http/ApiRequests";
-import { PLANET_CLAIMED } from "../constants/Events";
+import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
 import PlanetManagementContract, {
   PlanetAttributes,
@@ -70,12 +70,22 @@ export default {
           txHash,
           planetGuid
         );
-
-        if (confirmReq.data.success === true) {
+        
+        if (confirmReq.success === true) {
           this.$notification("success", "Planet claimed successfully!", 6000);
-          this.$eventBus.emit(PLANET_CLAIMED, { planetGuid: planetGuid });
+          
+          // First planet is set to default.
+          if (this.$store.getters.planets.filter((p) => p.claimed).length === 0) {
+            this.$store.commit("setActivePlanet", confirmReq.data);
+          }
+
+          this.$store.commit('updatePlanet', {planet: confirmReq.data, field: "claimed", value: true});
+
+          this.$eventBus.emit(ACTIVE_PLANET_CHANGED, confirmReq.data);
+          this.$eventBus.emit(PLANET_CLAIMED, { planet: confirmReq.data });
+
         } else {
-          this.$notification("failed", confirmReq.data.error, 6000);
+          this.$notification("failed", confirmReq.error, 6000);
         }
         
       } else {

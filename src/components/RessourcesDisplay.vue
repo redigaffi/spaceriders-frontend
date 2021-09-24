@@ -2,15 +2,11 @@
   <div class="q-pt-lg container">
     <!-- RESOURCES TAB -->
     <q-card
+      v-if="this.$store.getters.activePlanet !== false"
       flat
-      class="
-        bg-transparent
-        text-secondary text-center
-        row
-        justify-center
-      "
+      class="bg-transparent text-secondary text-center row justify-center"
     >
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width:140px">
+      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
             src="~assets/img/silver.jpg"
@@ -18,7 +14,7 @@
             alt=""
             srcset=""
           />
-          <p>800,00</p>
+          <p>{{ this.$store.getters.activePlanet.ressources.metal }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -68,7 +64,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width:140px">
+      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
             src="~assets/img/silver.jpg"
@@ -76,7 +72,7 @@
             alt=""
             srcset=""
           />
-          <p>800,00</p>
+          <p>{{ this.$store.getters.activePlanet.ressources.crystal }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -126,7 +122,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width:140px">
+      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
             src="~assets/img/silver.jpg"
@@ -134,7 +130,7 @@
             alt=""
             srcset=""
           />
-          <p>800,00</p>
+          <p>{{ this.$store.getters.activePlanet.ressources.petrol }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -184,7 +180,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width:140px">
+      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
             src="~assets/img/silver.jpg"
@@ -192,7 +188,7 @@
             alt=""
             srcset=""
           />
-          <p>800,00</p>
+          <p>{{ this.$store.getters.activePlanet.ressources.total_energy }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -242,43 +238,68 @@
           </q-tooltip>
         </q-btn>
       </div>
-
     </q-card>
   </div>
 </template>
 
 <script>
-import ApiRequests from "src/service/http/ApiRequests";
-import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
+import {
+  RESOURCE_TYPES,
+  METAL_MINE,
+  PETROL_MINE,
+  CRYSTAL_MINE,
+  METAL,
+  PETROL,
+  CRYSTAL,
+  METAL_WAREHOUSE,
+  CRYSTAL_WAREHOUSE,
+  PETROL_WAREHOUSE,
+} from "../constants/ResourceType";
 
 export default {
   name: "RessourcesDisplay",
-  data() {
-    return {
-      activePlanet: false,
-    };
+  methods: {
+    updateResources: function (rD, resource, mine, warehouse) {
+      const upgrading = rD[mine]["upgrading"];
+      const maxCapacity = rD[warehouse]["capacity"];
+      const current = this.$store.getters.activePlanet.ressources[resource];
+
+      if (current < maxCapacity && !upgrading) {
+        this.$store.commit("incrementResources", {
+          ressource: resource,
+          value: rD[mine]["production"],
+        });
+      }
+    },
   },
-
   created() {
-    this.activePlanet = this.$store.getters.activePlanet;
-
-    this.$eventBus.on(ACTIVE_PLANET_CHANGED, (p) => {
-      this.activePlanet = p;
-    });
-
-    //TODO: Insted of API calls, get production/hour and make sum on frontend.
     setInterval(async () => {
-      if (!this.activePlanet) return;
-      const planetData = await ApiRequests.getActivePlanet(
-        this.activePlanet.id
-      );
-      this.activePlanet = planetData.data;
-    }, 30000);
+      if (this.$store.getters.activePlanet === false) return;
+      if (this.$store.getters.planets.filter((p) => p.claimed).length === 0)
+        return;
+
+      let rD = this.$store.getters.resourceData;
+      for (let resourceTypeIndex in RESOURCE_TYPES) {
+        const resourceType = RESOURCE_TYPES[resourceTypeIndex];
+
+        switch (resourceType) {
+          case METAL_MINE:
+            this.updateResources(rD, METAL, METAL_MINE, METAL_WAREHOUSE);
+            break;
+          case PETROL_MINE:
+            this.updateResources(rD, PETROL, PETROL_MINE, PETROL_WAREHOUSE);
+            break;
+          case CRYSTAL_MINE:
+            this.updateResources(rD, CRYSTAL, CRYSTAL_MINE, CRYSTAL_WAREHOUSE);
+            break;
+        }
+      }
+    }, 60000);
   },
 };
 </script>
 <style>
-  .resource-div {
-    width: 120px;
-  }
+.resource-div {
+  width: 120px;
+}
 </style>

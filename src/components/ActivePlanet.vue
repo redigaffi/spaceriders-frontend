@@ -38,36 +38,31 @@ import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
 export default {
   name: "ActivePlanet",
-  data: function () {
-    return {
-      planets: [],
-    };
-  },
   
   async created() {
-    await this.fetchPlanets();
-
-    this.$eventBus.on(PLANET_CLAIMED, (e) => {
-      this.fetchPlanets();
-    });
   },
 
   methods: {
     changeActivePlanet: async function (p) {
-      //TODO: enable this condition
-      //if (p.id === this.$store.getters.activePlanet.id) return;
-
       this.$store.commit("setActivePlanet", p);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, p);
     },
     fetchPlanets: async function () {
-      this.planets = (await ApiRequest.getPlanets()).data;
+      const planets = (await ApiRequest.getPlanets()).data;
+      this.$store.commit("setPlanets", { planets: planets})
     },
     isActivePlanet: function (p) {
       const currentActivePlanet = this.$store.getters.activePlanet;
-      return p.id === currentActivePlanet.id;
+      if (currentActivePlanet !== false) {
+        return p.id === currentActivePlanet.id;
+      }
+      return false;
     },
   },
-  computed: {},
+  computed: {
+    planets: function() {
+      return this.$store.getters.planets.filter((p) => p.claimed);
+    }
+  },
 };
 </script>
