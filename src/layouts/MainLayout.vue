@@ -2,17 +2,14 @@
   <q-layout view="lHh Lpr lFf">
     <headerbar />
     <q-page-container id="main">
-    
-      <RessourcesDisplay /> 
-      
+      <RessourcesDisplay />
+
       <q-page class="container">
-        <div class="q-py-xl">
+        <div class="q-py-lg">
           <router-view />
         </div>
       </q-page>
-
     </q-page-container>
-
   </q-layout>
 </template>
 <script>
@@ -29,7 +26,10 @@ export default defineComponent({
     RessourcesDisplay,
   },
 
-  setup() {},
+  setup() {
+    return {
+    };
+  },
 });
 </script>
 
