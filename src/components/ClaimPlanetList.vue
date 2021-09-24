@@ -20,7 +20,11 @@
     </q-card-section>
 
     <q-card-section v-else class="row q-col-gutter-sm text-center">
-      <div class="col-3 q-pa-sm" v-for="p in this.planets" :key="p.id">
+      <div
+        class="col-xs-6 col-sm-3 col-md-3 q-pa-sm"
+        v-for="p in this.planets"
+        :key="p.id"
+      >
         <q-card flat class="bg-transparent text-dark" style="width: 230px">
           <img
             src="~assets/img/planet1.jpg"
