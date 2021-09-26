@@ -15,23 +15,77 @@
                 <div class="text-overline text-weight-bold">My Planets</div>
               </q-card-section>
             </q-card>
-            <q-tabs switch-indicator class="text-warning" vertical>
-              <q-scroll-area class="full-height">
-                <q-route-tab to="/" v-for="x in 10" :key="x">
-                  <div>
-                    <img
-                      src="~assets/img/mercury-transparent.png"
-                      style="height: 100px; width: 100px"
-                    />
-                  </div>
-                  <q-card-section class="q-pt-none" style="line-height: 1">
-                    <span> Planet Name </span>
-                    <br />
-                    <span style="font-size: 12px">[1:400:50]</span>
-                  </q-card-section>
-                </q-route-tab>
-              </q-scroll-area>
-            </q-tabs>
+            <q-carousel
+              v-model="slide"
+              vertical
+              transition-prev="slide-down"
+              transition-next="slide-up"
+              swipeable
+              animated
+              control-color="white"
+              navigation-icon="radio_button_unchecked"
+              arrows
+              height="800px"
+              class="bg-transparent"
+            >
+              <q-carousel-slide
+                name="style"
+                class="column no-wrap flex-center q-py-xl"
+              >
+                <q-tabs switch-indicator class="text-secondary" vertical>
+                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                    <div>
+                      <img
+                        src="~assets/img/mercury-transparent.png"
+                        style="height: 100px; width: 100px"
+                      />
+                    </div>
+                    <q-card-section class="q-pt-none">
+                      <div class="text-subtitle2">Planet Name</div>
+                      <div class="text-body2">[1:400:50]</div>
+                    </q-card-section>
+                  </q-route-tab>
+                </q-tabs>
+              </q-carousel-slide>
+              <q-carousel-slide
+                name="stem"
+                class="column no-wrap flex-center q-py-xl"
+              >
+                <q-tabs switch-indicator class="text-secondary" vertical>
+                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                    <div>
+                      <img
+                        src="~assets/img/mercury-transparent.png"
+                        style="height: 100px; width: 100px"
+                      />
+                    </div>
+                    <q-card-section class="q-pt-none">
+                      <div class="text-subtitle2">Planet Name</div>
+                      <div class="text-body2">[1:400:50]</div>
+                    </q-card-section>
+                  </q-route-tab>
+                </q-tabs>
+              </q-carousel-slide>
+              <q-carousel-slide
+                name="stem2"
+                class="column no-wrap flex-center q-py-xl"
+              >
+                <q-tabs switch-indicator class="text-secondary" vertical>
+                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                    <div>
+                      <img
+                        src="~assets/img/mercury-transparent.png"
+                        style="height: 100px; width: 100px"
+                      />
+                    </div>
+                    <q-card-section class="q-pt-none">
+                      <div class="text-subtitle2">Planet Name</div>
+                      <div class="text-body2">[1:400:50]</div>
+                    </q-card-section>
+                  </q-route-tab>
+                </q-tabs>
+              </q-carousel-slide>
+            </q-carousel>
           </div>
         </div>
       </q-page>
@@ -53,7 +107,9 @@ export default defineComponent({
   },
 
   setup() {
-    return {};
+    return {
+      slide: ref("style"),
+    };
   },
 });
 </script>
