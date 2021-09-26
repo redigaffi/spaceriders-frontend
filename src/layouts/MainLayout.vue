@@ -5,8 +5,34 @@
       <RessourcesDisplay />
 
       <q-page class="container">
-        <div class="q-py-lg">
-          <router-view />
+        <div class="row">
+          <div class="col q-py-lg">
+            <router-view />
+          </div>
+          <div class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
+            <q-card>
+              <q-card-section class="q-pa-xs text-center">
+                <div class="text-overline text-weight-bold">My Planets</div>
+              </q-card-section>
+            </q-card>
+            <q-tabs switch-indicator class="text-warning" vertical>
+              <q-scroll-area class="full-height">
+                <q-route-tab to="/" v-for="x in 10" :key="x">
+                  <div>
+                    <img
+                      src="~assets/img/mercury-transparent.png"
+                      style="height: 100px; width: 100px"
+                    />
+                  </div>
+                  <q-card-section class="q-pt-none" style="line-height: 1">
+                    <span> Planet Name </span>
+                    <br />
+                    <span style="font-size: 12px">[1:400:50]</span>
+                  </q-card-section>
+                </q-route-tab>
+              </q-scroll-area>
+            </q-tabs>
+          </div>
         </div>
       </q-page>
     </q-page-container>

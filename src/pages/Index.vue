@@ -1,5 +1,5 @@
 <template>
-  <q-page class="container">
+  <q-page>
     <!-- CONTENT PANEL -->
     <div>
       <q-card class="glass-element text-white q-pa-md">

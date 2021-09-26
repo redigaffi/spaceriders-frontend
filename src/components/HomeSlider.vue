@@ -10,9 +10,9 @@
         <q-card-section class="text-secondary absolute-top tag-glass-element">
           Resources - Homeland
         </q-card-section>
-        <q-card-section class="bg-dark">
+        <!-- <q-card-section class="bg-dark">
           <q-btn color="warning" class="q-px-lg" label="Resource Settings" />
-        </q-card-section>
+        </q-card-section> -->
       </q-card>
     </div>
   </q-card-section>
