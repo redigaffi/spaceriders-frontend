@@ -11,13 +11,13 @@
               absolute-center
             "
           >
-            RESOURCES
+            INSTALLATIONS
           </div>
         </q-card-section>
         <div>
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
-              <DefaultSlider :name="`Resources - ${this.$store.getters.activePlanet.name}`" key="defaultSlider"></DefaultSlider>
+              <DefaultSlider :name="`Installations - ${this.$store.getters.activePlanet.name}`" key="defaultSlider"></DefaultSlider>
             </div>
           </q-slide-transition>
           <q-slide-transition duration="1000">
@@ -25,7 +25,7 @@
               <InfoSlider
                 key="resourceSlider"
                 :data="ressourceInfo"
-                type="resource"
+                type="installation"
                 @cancelled="cancelled"
               />
             </div>
@@ -35,8 +35,8 @@
     </div>
 
     <ItemList
-      listName="Resource Buildings"
-      :data="this.$store.getters.resourceData"
+      listName="Installations"
+      :data="this.$store.getters.installationData"
       @change="slideDiv"
     />
     
@@ -50,7 +50,7 @@ import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
 
 export default defineComponent({
-  name: "Resources",
+  name: "Installations",
   components: {
     InfoSlider,
     DefaultSlider,

@@ -20,6 +20,7 @@ export default function (/* { ssrContext } */) {
         planets: [],
         activePlanet: false,
         resourceData: false,
+        installationData: false,
       };
     },
     mutations: {
@@ -48,6 +49,10 @@ export default function (/* { ssrContext } */) {
 
       setResourceData(state, payload) {
         state.resourceData = payload;
+      },
+
+      setInstallationData(state, payload) {
+        state.installationData = payload;
       },
 
       setPlanets(state, payload) {
@@ -89,6 +94,14 @@ export default function (/* { ssrContext } */) {
         state.resourceData[label] = resource;
       },
 
+      upgradeInstallationData(state, payload) {
+        const label = payload.label;
+        let resource = state.installationData[label];
+        resource.upgrading = true;
+        resource.current_upgrade_time_left = payload.upgradeFinish;
+        state.resourceData[label] = resource;
+      },
+
       incrementResources(state, payload) {
         const key = payload.ressource;
         state.activePlanet.ressources[key] += payload.value;
@@ -102,6 +115,10 @@ export default function (/* { ssrContext } */) {
 
       resourceData: (state) => {
         return state.resourceData;
+      },
+      
+      installationData: (state) => {
+        return state.installationData;
       },
 
       activePlanet: (state) => {

@@ -1,14 +1,30 @@
 
 const mainLayout = import('layouts/MainLayout.vue');
-const indexPage = import('src/pages/Resources.vue');
+const resourcesPage = import('src/pages/Resources.vue');
+const installationsPage = import('src/pages/Installations.vue');
 const planetPage = import('pages/Planet.vue');
 
 const routes = [
+  //TODO: change this component
   {
     path: '/',
     component:  mainLayout,
     children: [
-      { path: '', component: indexPage },
+      { path: '', component: resourcesPage },
+    ]
+  },
+  {
+    path: '/resources',
+    component:  mainLayout,
+    children: [
+      { path: '', component: resourcesPage },
+    ]
+  },
+  {
+    path: '/installations',
+    component:  mainLayout,
+    children: [
+      { path: '', component: installationsPage },
     ]
   },
   {

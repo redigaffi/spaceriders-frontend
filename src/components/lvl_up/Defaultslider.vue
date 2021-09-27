@@ -8,7 +8,7 @@
           style="height: 300px; width: 100%"
         />
         <q-card-section class="text-secondary absolute-top tag-glass-element">
-          Resources - Homeland
+          {{ name }}
         </q-card-section>
         <!-- <q-card-section class="bg-dark">
           <q-btn color="warning" class="q-px-lg" label="Resource Settings" />
@@ -23,6 +23,12 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "PageIndex",
+  props: {
+    name: {
+      type: String,
+      default: undefined,
+    },
+  },
   setup() {
     return {};
   },

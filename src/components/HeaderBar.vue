@@ -27,7 +27,15 @@
           name="general"
           icon="remove_red_eye"
           label="Resources"
-          to="/"
+          to="/resources"
+          no-caps
+        />
+        <q-route-tab
+          class="q-py-sm"
+          name="installation"
+          icon="remove_red_eye"
+          label="Installations"
+          to="/installations"
           no-caps
         />
         <q-route-tab

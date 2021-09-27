@@ -51,7 +51,9 @@
 
                     <div v-if="newEnergyUsage > 0">
                       <q-item-label> Energy needed: </q-item-label>
-                      <q-item-label class="text-warning text-h6 text-weight-bold">
+                      <q-item-label
+                        class="text-warning text-h6 text-weight-bold"
+                      >
                         +{{ newEnergyUsage }}</q-item-label
                       >
                     </div>
@@ -155,7 +157,7 @@
                         label="Upgrade"
                         no-caps
                         push
-                        @click="upgradeRessource"
+                        @click="upgrade"
                       />
                     </div>
                   </q-item-section>
@@ -187,8 +189,12 @@ export default defineComponent({
       type: Object,
       default: undefined,
     },
+    type: {
+      type: String,
+      default: undefined,
+    },
   },
-  setup(props, context) {
+  setup(props) {
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
 
@@ -196,17 +202,17 @@ export default defineComponent({
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level+1].cost_metal;
+      return props.data.upgrades[props.data.level + 1].cost_metal;
     });
 
     const petrolCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level+1].cost_petrol;
+      return props.data.upgrades[props.data.level + 1].cost_petrol;
     });
 
     const crystalCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level+1].cost_crystal;
+      return props.data.upgrades[props.data.level + 1].cost_crystal;
     });
 
     const timeString = computed(() => {
@@ -235,25 +241,58 @@ export default defineComponent({
       if (!props.data) return 0;
       const nextEnergyUsage =
         props.data.upgrades[props.data.level + 1].energy_usage;
-      const currentEnergyUsage =
-        props.data.upgrades[props.data.level].energy_usage;
+
+      let currentEnergyUsage = 0;
+      if (props.data.level > 0) {
+        currentEnergyUsage = props.data.upgrades[props.data.level].energy_usage;
+      }
 
       return nextEnergyUsage - currentEnergyUsage;
     });
 
-    const upgradeRessource = async (label) => {
-      if (!props.data) return;
+    const dataSource = (type) => {
+      let data = {};
+      if (type === "resource") {
+        data = $store.getters.resourceData;
+      } else if (type === "installation") {
+        data = $store.getters.installationData;
+      }
 
-      let anyRessourceUpgrading = false;
-      for (let key in $store.getters.resourceData) {
-        const ressource = $store.getters.resourceData[key];
+      return data;
+    }
+    const alreadyUpgrading = (type) => {
+      let data = dataSource(type);
+
+      let anyUpgrade = false;
+      for (let key in data) {
+        const ressource = data[key];
         if (ressource.upgrading) {
-          anyRessourceUpgrading = true;
+          anyUpgrade = true;
           break;
         }
       }
 
-      if (anyRessourceUpgrading) {
+      return anyUpgrade;
+    };
+
+    const canUpgrade = (props, activePlanet) => {
+      let data = dataSource(props.type);
+
+      const level = data[props.data.label]["upgrades"][props.data.level + 1];
+      
+      return (
+        activePlanet.ressources.metal >= level.cost_metal &&
+        activePlanet.ressources.petrol >= level.cost_petrol &&
+        activePlanet.ressources.crystal >= level.cost_crystal
+      );
+    };
+
+    const upgrade = async (label) => {
+      if (!props.data) return;
+
+      const anyUpgrade = alreadyUpgrading(props.type);
+
+      if (anyUpgrade) {
         $notification(
           "failed",
           `A building is already being upgraded, wait until it finishes...`
@@ -262,41 +301,43 @@ export default defineComponent({
       }
 
       const activePlanet = $store.getters.activePlanet;
-      const planetRessources = activePlanet.ressources;
-      const ressourceLevel =
-        $store.getters.resourceData[props.data.label]["upgrades"][
-          props.data.level + 1
-        ];
-
-      if (
-        planetRessources.metal < ressourceLevel.cost_metal ||
-        planetRessources.petrol < ressourceLevel.cost_petrol ||
-        planetRessources.crystal < ressourceLevel.cost_crystal
-      ) {
-        
-        $notification(
-          "failed",
-          `Can't upgrade, not enough resources...`
-        );
+      
+      if (!canUpgrade(props, activePlanet)) {
+        $notification("failed", `Can't upgrade, not enough resources...`);
         return;
       }
 
       const activePlanetId = activePlanet.id;
-      const re = await ApiRequests.upgradeRessource(
+      const level =  dataSource(props.type)[props.data.label]["upgrades"][props.data.level + 1];
+
+      let storeUpdateMethod = "";
+      let apiCall = "";
+      switch (props.type) {
+        case "resource":
+            storeUpdateMethod = "upgradeRessourceData";
+            apiCall = ApiRequests.upgradeRessource;
+          break;
+        case "installation":
+            storeUpdateMethod = "upgradeInstallationData";
+            apiCall = ApiRequests.upgradeInstallation;
+          break;
+      }
+
+      const re = await apiCall(
         props.data.label,
         activePlanetId
       );
 
       if (re.success) {
-        $store.commit("upgradeRessourceData", {
+        $store.commit(storeUpdateMethod, {
           label: props.data.label,
           upgradeFinish: re.data.upgrade_finish,
         });
 
         $store.commit("restPlanetResources", {
-          metal: ressourceLevel.cost_metal,
-          crystal: ressourceLevel.cost_crystal,
-          petrol: ressourceLevel.cost_petrol,
+          metal: level.cost_metal,
+          crystal: level.cost_crystal,
+          petrol: level.cost_petrol,
         });
 
         $notification(
@@ -314,7 +355,7 @@ export default defineComponent({
       metalCost: metalCost,
       petrolCost: petrolCost,
       crystalCost: crystalCost,
-      upgradeRessource: upgradeRessource,
+      upgrade: upgrade,
     };
   },
 });

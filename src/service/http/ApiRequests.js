@@ -93,7 +93,7 @@ export default class ApiRequests {
   }
 
   /**
-   * Gets all resources for given planet 
+   * Gets all resources for a given planet 
    * 
    * @param {string} planetId 
    * @returns 
@@ -104,13 +104,41 @@ export default class ApiRequests {
   }
 
   /**
-   * Upgrades a Ressource.
+   * Upgrades a Ressource Building.
    * @param {string} label
    * @param {string} planetGuid 
    * @returns 
    */
    static async upgradeRessource(label, planetGuid) {
     const path = `${process.env.BASE_API_PATH}/ressource/upgrade`;
+
+    const body = {
+      label: label,
+      planetId: planetGuid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Gets all installations for a given planet 
+   * 
+   * @param {string} planetId 
+   * @returns 
+   */
+   static async getInstallationData(planetId) {
+    const path = `${process.env.BASE_API_PATH}/installation/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+
+  /**
+   * Upgrades a Installation Building.
+   * @param {string} label
+   * @param {string} planetGuid 
+   * @returns 
+   */
+   static async upgradeInstallation(label, planetGuid) {
+    const path = `${process.env.BASE_API_PATH}/installation/upgrade`;
 
     const body = {
       label: label,

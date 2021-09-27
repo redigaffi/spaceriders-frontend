@@ -75,6 +75,9 @@
             </q-carousel>
           </div>
         </div>
+
+        <BuildingQueue />
+
       </q-page>
     </q-page-container>
   </q-layout>
@@ -84,13 +87,14 @@ import { defineComponent, ref } from "vue";
 import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 
+
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
   name: "MainLayout",
 
   components: {
     Headerbar,
-    RessourcesDisplay,
+    RessourcesDisplay
   },
 
   setup() {

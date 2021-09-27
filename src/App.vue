@@ -37,23 +37,42 @@ export default defineComponent({
       const planets = (await ApiRequest.getAllPlanets()).data;
       this.$store.commit("setPlanets", planets);
 
+      const update = async (activePlanet) => {
+          this.$store.commit("setActivePlanet", activePlanet);
+  
+          const resourceData = (await ApiRequest.getResourceData(activePlanet.id)).data;
+          this.$store.commit("setResourceData", resourceData);
+
+          const installationData = (await ApiRequest.getInstallationData(activePlanet.id)).data;
+          this.$store.commit("setInstallationData", installationData);
+      };
+
       if (activePlanetId !== false) {
         let activePlanet = planets.filter((o) => o.id === activePlanetId);
-        activePlanet = activePlanet[0];
-        this.$store.commit("setActivePlanet", activePlanet);
+        update(activePlanet[0]);
+        /* this.$store.commit("setActivePlanet", activePlanet);
   
-        const data = (await ApiRequest.getResourceData(activePlanet.id)).data;
-        this.$store.commit("setResourceData", data);
+        const resourceData = (await ApiRequest.getResourceData(activePlanet.id)).data;
+        this.$store.commit("setResourceData", resourceData);
+
+        const installationData = (await ApiRequest.getInstallationData(activePlanet.id)).data;
+        this.$store.commit("setInstallationData", installationData); */
+
+      // Set default planet
       } else if (!activePlanetId && planets.length > 0) {
         
-        
-        let activePlanet = planets.filter((o) => o.claimed);
-        if (activePlanet.length > 0) {
-          this.$store.commit("setActivePlanet", activePlanet[0]);
+        let activePlanets = planets.filter((o) => o.claimed);
+        if (activePlanets.length > 0) {
+          
+          update(activePlanets[0]);
+          
+          /* this.$store.commit("setActivePlanet", activePlanet);
     
-          const data = (await ApiRequest.getResourceData(activePlanet[0].id)).data;
-          this.$store.commit("setResourceData", data);
+          const resourceData = (await ApiRequest.getResourceData(activePlanet.id)).data;
+          this.$store.commit("setResourceData", resourceData);
 
+          const installationData = (await ApiRequest.getInstallationData(activePlanet.id)).data;
+          this.$store.commit("setInstallationData", installationData); */
         }
       }
     },
