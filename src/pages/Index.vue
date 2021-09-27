@@ -40,9 +40,9 @@
 
 <script>
 import { defineComponent, ref, computed } from "vue";
-import ResourceSlider from "components/ResourceSlider.vue";
+import ResourceSlider from "src/components/lvl_up/ResourceSlider.vue";
 import HomeSlider from "components/HomeSlider.vue";
-import ResourceBuildings from "components/ResourceBuildings.vue";
+import ResourceBuildings from "src/components/lvl_up/ResourceBuildings.vue";
 import QueueBuildings from "src/components/QueueBuildings.vue";
 
 export default defineComponent({
