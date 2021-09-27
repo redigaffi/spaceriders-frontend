@@ -1,5 +1,5 @@
 <template>
-  <q-page class="container">
+  <q-page>
     <!-- CONTENT PANEL -->
     <div>
       <q-card class="glass-element text-white q-pa-md">
@@ -20,7 +20,7 @@
               <HomeSlider key="homeSlider"></HomeSlider>
             </div>
           </q-slide-transition>
-          <q-slide-transition>
+          <q-slide-transition duration="200">
             <div v-show="currentTabComponent != 'HomeSlider'">
               <ResourceSlider
                 key="resourceSlider"

@@ -5,8 +5,71 @@
       <RessourcesDisplay />
 
       <q-page class="container">
-        <div class="q-py-lg">
-          <router-view />
+        <div class="row">
+          <div class="col q-py-lg">
+            <router-view />
+          </div>
+          <div class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
+            <q-card>
+              <q-card-section class="q-pa-xs text-center">
+                <div class="text-overline text-weight-bold">My Planets</div>
+              </q-card-section>
+            </q-card>
+            <q-carousel
+              v-model="slide"
+              vertical
+              transition-prev="slide-down"
+              transition-next="slide-up"
+              swipeable
+              animated
+              control-color="warning"
+              navigation-icon="radio_button_unchecked"
+              arrows
+              height="760px"
+              class="bg-transparent"
+            >
+              <q-carousel-slide
+                name="slide1"
+                class="column no-wrap flex-center q-py-xl"
+              >
+                <q-tabs switch-indicator class="text-warning" vertical>
+                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                    <div>
+                      <img
+                        src="~assets/img/mercury-transparent.png"
+                        style="height: 100px; width: 100px"
+                      />
+                    </div>
+                    <q-card-section class="q-pt-none" style="line-height: 1">
+                      <span> Planet Name </span>
+                      <br />
+                      <span style="font-size: 12px">[1:400:50]</span>
+                    </q-card-section>
+                  </q-route-tab>
+                </q-tabs>
+              </q-carousel-slide>
+              <q-carousel-slide
+                name="slide2"
+                class="column no-wrap flex-center q-py-xl"
+              >
+                <q-tabs switch-indicator class="text-warning" vertical>
+                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                    <div>
+                      <img
+                        src="~assets/img/mercury-transparent.png"
+                        style="height: 100px; width: 100px"
+                      />
+                    </div>
+                    <q-card-section class="q-pt-none" style="line-height: 1">
+                      <span> Planet Name </span>
+                      <br />
+                      <span style="font-size: 12px">[1:400:50]</span>
+                    </q-card-section>
+                  </q-route-tab>
+                </q-tabs>
+              </q-carousel-slide>
+            </q-carousel>
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -27,7 +90,9 @@ export default defineComponent({
   },
 
   setup() {
-    return {};
+    return {
+      slide: ref("slide1"),
+    };
   },
 });
 </script>

@@ -3,7 +3,7 @@
     <q-btn
       icon="add"
       label="Buy Planet"
-      color="secondary"
+      color="accent"
       v-if="!$q.screen.xs"
       @click="buyPlanetPopup = true"
     />
@@ -11,7 +11,7 @@
     <q-btn
       icon="add"
       v-if="$q.screen.xs"
-      color="secondary"
+      color="accent"
       @click="buyPlanetPopup = true"
     />
 
@@ -95,7 +95,6 @@ export default {
         console.log(e);
       }
 
-
       if (receipt.status === 1) {
         const txHash = receipt.transactionHash;
         const re = await ApiRequest.buyPlanet(
@@ -112,7 +111,7 @@ export default {
         }
 
         this.$eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
-        this.$store.commit('addPlanet', re.data);
+        this.$store.commit("addPlanet", re.data);
       } else {
         this.$notification(
           "failed",
@@ -120,7 +119,6 @@ export default {
           1500
         );
       }
-
 
       closeNotification();
     },

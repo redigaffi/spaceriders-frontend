@@ -3,7 +3,8 @@
   <div>
     <q-btn
       rounded
-      color="secondary"
+      color="info"
+      text-color="white"
       :label="logInButtonText"
       icon="person"
       @click="login"
