@@ -1,6 +1,6 @@
 
 const mainLayout = import('layouts/MainLayout.vue');
-const indexPage = import('pages/Index.vue');
+const indexPage = import('src/pages/Resources.vue');
 const planetPage = import('pages/Planet.vue');
 
 const routes = [

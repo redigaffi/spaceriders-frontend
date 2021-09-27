@@ -8,14 +8,14 @@
             absolute-center
           "
         >
-          Resource Buildings
+          {{ listName }}
         </div>
       </q-card-section>
       <div>
         <q-card-section class="row q-col-gutter-sm justify-start">
           <div
             class="col-xs-6 col-sm-4 col-md-2 q-pa-sm text-center"
-            v-for="(value, key) in this.$store.getters.resourceData"
+            v-for="(value, key) in data"
             :key="key"
           >
             <q-card
@@ -43,7 +43,7 @@
                 <q-card
                   flat
                   class="bg-transparent text-dark cursor-pointer"
-                  @click="$emit('change')"
+                  
                 >
                   <img src="~assets/img/planet1.jpg" style="height: 110px" />
 
@@ -82,6 +82,16 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "ResourceBuildings",
+  props: {
+    data: {
+      type: Object,
+      default: undefined,
+    },
+    listName: {
+      type: String,
+      default: undefined,
+    },
+  },
   setup() {
     return {};
   },

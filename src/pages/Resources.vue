@@ -16,45 +16,49 @@
         </q-card-section>
         <div>
           <q-slide-transition>
-            <div v-show="currentTabComponent == 'HomeSlider'">
-              <HomeSlider key="homeSlider"></HomeSlider>
+            <div v-show="currentTabComponent == 'DefaultSlider'">
+              <DefaultSlider key="defaultSlider"></DefaultSlider>
             </div>
           </q-slide-transition>
           <q-slide-transition duration="200">
-            <div v-show="currentTabComponent != 'HomeSlider'">
-              <ResourceSlider
+            <div v-show="currentTabComponent != 'DefaultSlider'">
+              <InfoSlider
                 key="resourceSlider"
                 :data="ressourceInfo"
                 @cancelled="cancelled"
-              ></ResourceSlider>
+              />
             </div>
           </q-slide-transition>
         </div>
       </q-card>
     </div>
 
-    <resource-buildings @change="slideDiv"></resource-buildings>
+    <ItemList
+      listName="Resource Buildings"
+      :data="this.$store.getters.resourceData"
+      @change="slideDiv"
+    />
     <building-queue></building-queue>
   </q-page>
 </template>
 
 <script>
 import { defineComponent, ref, computed } from "vue";
-import ResourceSlider from "src/components/lvl_up/ResourceSlider.vue";
-import HomeSlider from "components/HomeSlider.vue";
-import ResourceBuildings from "src/components/lvl_up/ResourceBuildings.vue";
+import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
+import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
+import ItemList from "src/components/lvl_up/ItemList.vue";
 import BuildingQueue from "src/components/BuildingQueue.vue";
 
 export default defineComponent({
-  name: "PageIndex",
+  name: "Resources",
   components: {
-    ResourceSlider,
-    HomeSlider,
-    ResourceBuildings,
+    InfoSlider,
+    DefaultSlider,
+    ItemList,
     BuildingQueue,
   },
   setup() {
-    const currentTab = ref("HomeSlider");
+    const currentTab = ref("DefaultSlider");
     const ressourceInfo = ref(false);
 
     function slideDiv(data) {
@@ -67,9 +71,9 @@ export default defineComponent({
     });
 
     function cancelled() {
-      currentTab.value = "HomeSlider";
+      currentTab.value = "DefaultSlider";
     }
-    
+
     return {
       slideDiv: slideDiv,
       cancelled: cancelled,

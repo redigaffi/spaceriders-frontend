@@ -49,10 +49,12 @@
                       >{{ timeString }}</q-item-label
                     >
 
-                    <q-item-label> Energy needed: </q-item-label>
-                    <q-item-label class="text-warning text-h6 text-weight-bold">
-                      +{{ newEnergyUsage }}</q-item-label
-                    >
+                    <div v-if="newEnergyUsage > 0">
+                      <q-item-label> Energy needed: </q-item-label>
+                      <q-item-label class="text-warning text-h6 text-weight-bold">
+                        +{{ newEnergyUsage }}</q-item-label
+                      >
+                    </div>
                   </q-item-section>
                   <q-item-section class="col">
                     <div class="text-right">
@@ -176,7 +178,6 @@
 <script>
 import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
-
 import ApiRequests from "../../service/http/ApiRequests";
 
 export default defineComponent({
@@ -195,17 +196,17 @@ export default defineComponent({
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level].cost_metal;
+      return props.data.upgrades[props.data.level+1].cost_metal;
     });
 
     const petrolCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level].cost_petrol;
+      return props.data.upgrades[props.data.level+1].cost_petrol;
     });
 
     const crystalCost = computed(() => {
       if (!props.data) return 0;
-      return props.data.upgrades[props.data.level].cost_crystal;
+      return props.data.upgrades[props.data.level+1].cost_crystal;
     });
 
     const timeString = computed(() => {
@@ -243,26 +244,67 @@ export default defineComponent({
     const upgradeRessource = async (label) => {
       if (!props.data) return;
 
-      //TODO: uncomment this
-      /* if ($store.getters.resourceData[props.data.label].upgrading) {
-        $notification("failed", `${props.data.name} already being upgraded...`)
+      let anyRessourceUpgrading = false;
+      for (let key in $store.getters.resourceData) {
+        const ressource = $store.getters.resourceData[key];
+        if (ressource.upgrading) {
+          anyRessourceUpgrading = true;
+          break;
+        }
+      }
+
+      if (anyRessourceUpgrading) {
+        $notification(
+          "failed",
+          `A building is already being upgraded, wait until it finishes...`
+        );
         return;
-      } */
-      
-      const activePlanetId = $store.getters.activePlanet.id;
+      }
+
+      const activePlanet = $store.getters.activePlanet;
+      const planetRessources = activePlanet.ressources;
+      const ressourceLevel =
+        $store.getters.resourceData[props.data.label]["upgrades"][
+          props.data.level + 1
+        ];
+
+      if (
+        planetRessources.metal < ressourceLevel.cost_metal ||
+        planetRessources.petrol < ressourceLevel.cost_petrol ||
+        planetRessources.crystal < ressourceLevel.cost_crystal
+      ) {
+        
+        $notification(
+          "failed",
+          `Can't upgrade, not enough resources...`
+        );
+        return;
+      }
+
+      const activePlanetId = activePlanet.id;
       const re = await ApiRequests.upgradeRessource(
         props.data.label,
         activePlanetId
       );
-      
+
       if (re.success) {
         $store.commit("upgradeRessourceData", {
           label: props.data.label,
           upgradeFinish: re.data.upgrade_finish,
         });
-        $notification("success", `${props.data.name} upgraded and added to the building queue.`)
+
+        $store.commit("restPlanetResources", {
+          metal: ressourceLevel.cost_metal,
+          crystal: ressourceLevel.cost_crystal,
+          petrol: ressourceLevel.cost_petrol,
+        });
+
+        $notification(
+          "success",
+          `${props.data.name} upgraded and added to the building queue.`
+        );
       } else {
-        $notification("failed", re.error)
+        $notification("failed", re.error);
       }
     };
 

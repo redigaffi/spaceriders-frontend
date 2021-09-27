@@ -26,7 +26,7 @@
           class="q-py-sm"
           name="general"
           icon="remove_red_eye"
-          label="General Vision"
+          label="Resources"
           to="/"
           no-caps
         />
