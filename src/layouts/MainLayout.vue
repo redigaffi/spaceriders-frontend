@@ -5,10 +5,13 @@
       <RessourcesDisplay />
 
       <q-page class="container">
+
         <div class="row">
+          <!-- Router page Content -->
           <div class="col q-py-lg">
             <router-view />
           </div>
+          
           <div class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
             <q-card>
               <q-card-section class="q-pa-xs text-center">
@@ -33,7 +36,7 @@
                 class="column no-wrap flex-center q-py-xl"
               >
                 <q-tabs switch-indicator class="text-warning" vertical>
-                  <q-route-tab to="/" v-for="x in 4" :key="x">
+                  <q-route-tab to="/" v-for="x in 2" :key="x">
                     <div>
                       <img
                         src="~assets/img/mercury-transparent.png"
@@ -41,13 +44,14 @@
                       />
                     </div>
                     <q-card-section class="q-pt-none" style="line-height: 1">
-                      <span> Planet Name </span>
+                      <span> Planet Name1 </span>
                       <br />
                       <span style="font-size: 12px">[1:400:50]</span>
                     </q-card-section>
                   </q-route-tab>
                 </q-tabs>
               </q-carousel-slide>
+              
               <q-carousel-slide
                 name="slide2"
                 class="column no-wrap flex-center q-py-xl"

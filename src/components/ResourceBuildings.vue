@@ -55,7 +55,7 @@
                       tag-glass-element
                     "
                   >
-                    0
+                    {{value.level}}
                   </q-card-section>
                   <!-- <q-card-section class="bg-dark">
                     <q-btn color="warning" class="q-px-lg" label="Claim" />
@@ -65,7 +65,7 @@
                     self="center middle"
                     class="bg-primary text-subtitle2"
                   >
-                    Metal mine
+                    {{ value.name }}
                   </q-tooltip>
                 </q-card>
               </q-card-section>
