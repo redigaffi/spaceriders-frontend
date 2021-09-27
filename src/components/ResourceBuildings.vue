@@ -15,10 +15,14 @@
         <q-card-section class="row q-col-gutter-sm justify-start">
           <div
             class="col-xs-6 col-sm-4 col-md-2 q-pa-sm text-center"
-            v-for="n in 8"
-            :key="`sm-${n}`"
+            v-for="(value, key) in this.$store.getters.resourceData"
+            :key="key"
           >
-            <q-card>
+            <q-card
+              flat
+              class="bg-transparent text-dark cursor-pointer"
+              @click="$emit('change', value)"
+            >
               <q-btn
                 dense
                 size="md"
@@ -32,7 +36,7 @@
                   self="center middle"
                   class="bg-primary text-subtitle2"
                 >
-                  Expand Metal Mine on level 2
+                  Upgrade {{ value.name }} to level {{ value.level + 1 }}
                 </q-tooltip>
               </q-btn>
               <q-card-section class="q-pa-none">

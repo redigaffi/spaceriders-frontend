@@ -15,6 +15,8 @@ export default defineComponent({
       this.updateAll();
       
     });
+
+    // On login, request all data.
     this.$eventBus.on(LOGGED_IN, (e) => {
       this.updateAll();
     });
@@ -43,6 +45,8 @@ export default defineComponent({
         const data = (await ApiRequest.getResourceData(activePlanet.id)).data;
         this.$store.commit("setResourceData", data);
       } else if (!activePlanetId && planets.length > 0) {
+        
+        
         let activePlanet = planets.filter((o) => o.claimed);
         if (activePlanet.length > 0) {
           this.$store.commit("setActivePlanet", activePlanet[0]);

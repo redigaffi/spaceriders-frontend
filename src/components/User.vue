@@ -67,7 +67,6 @@ export default {
       this.$store.commit("setPlanets", { planets: planets})
       this.$store.commit("setActivePlanet", planets[0]);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, planets[0]); */
-
       this.$eventBus.emit(LOGGED_IN)
 
     },
