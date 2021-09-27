@@ -34,7 +34,7 @@
     </div>
 
     <resource-buildings @change="slideDiv"></resource-buildings>
-    <queue-buildings></queue-buildings>
+    <building-queue></building-queue>
   </q-page>
 </template>
 
@@ -43,7 +43,7 @@ import { defineComponent, ref, computed } from "vue";
 import ResourceSlider from "src/components/lvl_up/ResourceSlider.vue";
 import HomeSlider from "components/HomeSlider.vue";
 import ResourceBuildings from "src/components/lvl_up/ResourceBuildings.vue";
-import QueueBuildings from "src/components/QueueBuildings.vue";
+import BuildingQueue from "src/components/BuildingQueue.vue";
 
 export default defineComponent({
   name: "PageIndex",
@@ -51,7 +51,7 @@ export default defineComponent({
     ResourceSlider,
     HomeSlider,
     ResourceBuildings,
-    QueueBuildings,
+    BuildingQueue,
   },
   setup() {
     const currentTab = ref("HomeSlider");

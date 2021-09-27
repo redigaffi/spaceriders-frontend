@@ -1,5 +1,8 @@
 <template>
-  <q-card-section v-if="data !== undefined" class="row q-col-gutter-sm text-center">
+  <q-card-section
+    v-if="data !== undefined"
+    class="row q-col-gutter-sm text-center"
+  >
     <div class="col-12 q-pa-sm">
       <q-card flat class="bg-transparent text-dark">
         <div class="row text-center">
@@ -41,7 +44,8 @@
                 <q-item>
                   <q-item-section class="col">
                     <q-item-label>Upgrade time:</q-item-label>
-                    <q-item-label class="text-warning text-h6 text-weight-bold"
+                    <q-item-label
+                      class="text-warning text-h6 text-weight-bold"
                       >{{ timeString }}</q-item-label
                     >
 
@@ -52,13 +56,13 @@
                   </q-item-section>
                   <q-item-section class="col">
                     <div class="text-right">
-                      <q-btn
+                      <!-- <q-btn
                         push
                         color="red"
                         icon="expand_more"
                         label="Tear Down"
                         no-caps
-                      />
+                      /> -->
                     </div>
                   </q-item-section>
                 </q-item>
@@ -69,14 +73,16 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <q-item-label>Required to improve to level {{ data.level+1 }}:</q-item-label>
+                    <q-item-label
+                      >Required to improve to level
+                      {{ data.level + 1 }}:</q-item-label
+                    >
 
                     <q-item-label caption>
                       <q-card
                         flat
                         class="bg-transparent row q-col-gutter-sm q-py-md"
                       >
-
                         <div
                           v-if="metalCost > 0"
                           class="text-center text-subtitle2"
@@ -88,7 +94,9 @@
                               style="height: 70px; width: 70px"
                               srcset=""
                             />
-                            <div class="text-secondary"> {{ metalCost }} Metal </div>
+                            <div class="text-secondary">
+                              {{ metalCost }} Metal
+                            </div>
                             <q-tooltip class="bg-secondary">
                               {{ metalCost }} Metal
                             </q-tooltip>
@@ -106,7 +114,9 @@
                               style="height: 70px; width: 70px"
                               srcset=""
                             />
-                            <div class="text-secondary"> {{ petrolCost }} Petrol </div>
+                            <div class="text-secondary">
+                              {{ petrolCost }} Petrol
+                            </div>
                             <q-tooltip class="bg-secondary">
                               {{ petrolCost }} Petrol
                             </q-tooltip>
@@ -124,13 +134,14 @@
                               style="height: 70px; width: 70px"
                               srcset=""
                             />
-                            <div class="text-secondary"> {{ crystalCost }} Crystal </div>
+                            <div class="text-secondary">
+                              {{ crystalCost }} Crystal
+                            </div>
                             <q-tooltip class="bg-secondary">
                               {{ crystalCost }} Crystal
                             </q-tooltip>
                           </div>
                         </div>
-
                       </q-card>
                     </q-item-label>
                   </q-item-section>
@@ -142,6 +153,7 @@
                         label="Upgrade"
                         no-caps
                         push
+                        @click="upgradeRessource"
                       />
                     </div>
                   </q-item-section>
@@ -162,7 +174,10 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, computed, getCurrentInstance } from "vue";
+import { useStore } from "vuex";
+
+import ApiRequests from "../../service/http/ApiRequests";
 
 export default defineComponent({
   name: "ResourceSlider",
@@ -172,7 +187,12 @@ export default defineComponent({
       default: undefined,
     },
   },
-  setup(props) {
+  setup(props, context) {
+    const $notification =
+      getCurrentInstance().appContext.config.globalProperties.$notification;
+
+    const $store = useStore();
+
     const metalCost = computed(() => {
       if (!props.data) return 0;
       return props.data.upgrades[props.data.level].cost_metal;
@@ -189,14 +209,13 @@ export default defineComponent({
     });
 
     const timeString = computed(() => {
-      
       if (!props.data) return "0m";
-      
-      let timeNeeded  = props.data.upgrades[props.data.level+1].upgrade_time;
-      
+
+      let timeNeeded = props.data.upgrades[props.data.level + 1].upgrade_time;
+
       const now = new Date();
-      const finish = new Date(now.getTime() + (timeNeeded*1000));
-      
+      const finish = new Date(now.getTime() + timeNeeded * 1000);
+
       const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
       const s = Math.round(diffSeconds % 60);
       const minutes = Math.round((diffSeconds - s) / 60);
@@ -213,11 +232,39 @@ export default defineComponent({
 
     const newEnergyUsage = computed(() => {
       if (!props.data) return 0;
-      const nextEnergyUsage = props.data.upgrades[props.data.level+1].energy_usage;
-      const currentEnergyUsage = props.data.upgrades[props.data.level].energy_usage;
+      const nextEnergyUsage =
+        props.data.upgrades[props.data.level + 1].energy_usage;
+      const currentEnergyUsage =
+        props.data.upgrades[props.data.level].energy_usage;
 
-      return nextEnergyUsage-currentEnergyUsage;
+      return nextEnergyUsage - currentEnergyUsage;
     });
+
+    const upgradeRessource = async (label) => {
+      if (!props.data) return;
+
+      //TODO: uncomment this
+      /* if ($store.getters.resourceData[props.data.label].upgrading) {
+        $notification("failed", `${props.data.name} already being upgraded...`)
+        return;
+      } */
+      
+      const activePlanetId = $store.getters.activePlanet.id;
+      const re = await ApiRequests.upgradeRessource(
+        props.data.label,
+        activePlanetId
+      );
+      
+      if (re.success) {
+        $store.commit("upgradeRessourceData", {
+          label: props.data.label,
+          upgradeFinish: re.data.upgrade_finish,
+        });
+        $notification("success", `${props.data.name} upgraded and added to the building queue.`)
+      } else {
+        $notification("failed", re.error)
+      }
+    };
 
     return {
       timeString: timeString,
@@ -225,6 +272,7 @@ export default defineComponent({
       metalCost: metalCost,
       petrolCost: petrolCost,
       crystalCost: crystalCost,
+      upgradeRessource: upgradeRessource,
     };
   },
 });

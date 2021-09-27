@@ -30,36 +30,29 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Available : </q-item-section>
+                  <q-item-section caption>Available </q-item-section>
                 </q-item-section>
                 <q-item-section class="col-3 text-right">
-                  426,256
+                  {{this.$store.getters.activePlanet.ressources.metal}}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
-                  865,000
+                <q-item-section class="col-2 text-right">
+                  {{ this.$store.getters.resourceData.metalWarehouse.capacity }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right text-positive">
-                  +50.567
+                <q-item-section class="col-2 text-right text-positive">
+                  +{{ this.$store.getters.resourceData.metalMine.production }}/min
                 </q-item-section>
               </q-item>
-              <q-item>
-                <q-item-section class="text-white">
-                  <q-item-section caption>Den Capacity</q-item-section>
-                </q-item-section>
-                <q-item-section class="col-3 text-right text-red">
-                  84.8482
-                </q-item-section>
-              </q-item>
+              
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -83,41 +76,34 @@
             <q-list dense class="text-subtitle2">
               <q-item>
                 <q-item-section class="text-warning">
-                  <q-item-label class="text-subtitle1">Metal</q-item-label>
+                  <q-item-label class="text-subtitle1">Crystal</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Available : </q-item-section>
+                  <q-item-section caption>Available</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-3 text-right">
-                  426,256
+                  {{ this.$store.getters.activePlanet.ressources.crystal }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
-                  865,000
+                <q-item-section class="col-2 text-right">
+                  {{ this.$store.getters.resourceData.crystalWarehouse.capacity }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right text-positive">
-                  +50.567
+                <q-item-section class="col-2 text-right text-positive">
+                  +{{ this.$store.getters.resourceData.crystalMine.production }}/min
                 </q-item-section>
               </q-item>
-              <q-item>
-                <q-item-section class="text-white">
-                  <q-item-section caption>Den Capacity</q-item-section>
-                </q-item-section>
-                <q-item-section class="col-3 text-right text-red">
-                  84.8482
-                </q-item-section>
-              </q-item>
+              
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -141,39 +127,31 @@
             <q-list dense class="text-subtitle2">
               <q-item>
                 <q-item-section class="text-warning">
-                  <q-item-label class="text-subtitle1">Metal</q-item-label>
+                  <q-item-label class="text-subtitle1">Petrol</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Available : </q-item-section>
+                  <q-item-section caption>Available</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-3 text-right">
-                  426,256
+                  {{ this.$store.getters.activePlanet.ressources.petrol }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
-                  865,000
+                <q-item-section class="col-2 text-right">
+                  {{ this.$store.getters.resourceData.petrolWarehouse.capacity }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right text-positive">
-                  +50.567
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section class="text-white">
-                  <q-item-section caption>Den Capacity</q-item-section>
-                </q-item-section>
-                <q-item-section class="col-3 text-right text-red">
-                  84.8482
+                <q-item-section class="col-2 text-right text-positive">
+                  +{{ this.$store.getters.resourceData.petrolMine.production }}/min
                 </q-item-section>
               </q-item>
             </q-list>
@@ -199,41 +177,27 @@
             <q-list dense class="text-subtitle2">
               <q-item>
                 <q-item-section class="text-warning">
-                  <q-item-label class="text-subtitle1">Metal</q-item-label>
+                  <q-item-label class="text-subtitle1">Energy</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Available : </q-item-section>
+                  <q-item-section caption>Current Production </q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
-                  426,256
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section class="text-white">
-                  <q-item-section caption>Storage Capacity</q-item-section>
-                </q-item-section>
-                <q-item-section class="col-3 text-right">
-                  865,000
+                <q-item-section class="col-1 text-right">
+                  {{ this.$store.getters.activePlanet.ressources.total_energy }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Production</q-item-section>
+                  <q-item-section caption>Current Usage</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right text-positive">
-                  +50.567
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section class="text-white">
-                  <q-item-section caption>Den Capacity</q-item-section>
-                </q-item-section>
-                <q-item-section class="col-3 text-right text-red">
-                  84.8482
+                <q-item-section class="col-1 text-right">
+                  {{ this.$store.getters.activePlanet.ressources.energy_usage }}
                 </q-item-section>
               </q-item>
+              
+              
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -256,45 +220,50 @@ import {
   PETROL_WAREHOUSE,
 } from "../constants/ResourceType";
 
+import { useStore } from "vuex";
+
 export default {
   name: "RessourcesDisplay",
-  methods: {
-    updateResources: function (rD, resource, mine, warehouse) {
+  setup() {
+    const $store = useStore();
+    
+    const updateResources = (rD, resource, mine, warehouse) => {
       const upgrading = rD[mine]["upgrading"];
       const maxCapacity = rD[warehouse]["capacity"];
-      const current = this.$store.getters.activePlanet.ressources[resource];
+      const current = $store.getters.activePlanet.ressources[resource];
 
       if (current < maxCapacity && !upgrading) {
-        this.$store.commit("incrementResources", {
+        $store.commit("incrementResources", {
           ressource: resource,
           value: rD[mine]["production"],
         });
       }
-    },
-  },
-  created() {
+    };
+
     setInterval(async () => {
-      if (this.$store.getters.activePlanet === false) return;
-      if (this.$store.getters.planets.filter((p) => p.claimed).length === 0)
+      if ($store.getters.activePlanet === false) return;
+      if ($store.getters.planets.filter((p) => p.claimed).length === 0)
         return;
 
-      let rD = this.$store.getters.resourceData;
+      let rD = $store.getters.resourceData;
       for (let resourceTypeIndex in RESOURCE_TYPES) {
         const resourceType = RESOURCE_TYPES[resourceTypeIndex];
 
         switch (resourceType) {
           case METAL_MINE:
-            this.updateResources(rD, METAL, METAL_MINE, METAL_WAREHOUSE);
+            updateResources(rD, METAL, METAL_MINE, METAL_WAREHOUSE);
             break;
           case PETROL_MINE:
-            this.updateResources(rD, PETROL, PETROL_MINE, PETROL_WAREHOUSE);
+            updateResources(rD, PETROL, PETROL_MINE, PETROL_WAREHOUSE);
             break;
           case CRYSTAL_MINE:
-            this.updateResources(rD, CRYSTAL, CRYSTAL_MINE, CRYSTAL_WAREHOUSE);
+            updateResources(rD, CRYSTAL, CRYSTAL_MINE, CRYSTAL_WAREHOUSE);
             break;
         }
       }
     }, 60000);
+
+    return {};
   },
 };
 </script>

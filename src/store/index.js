@@ -1,4 +1,3 @@
-import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 
 // import example from './module-example'
@@ -12,7 +11,7 @@ import { createStore } from 'vuex'
  * with the Store instance.
  */
 
-export default store(function (/* { ssrContext } */) {
+export default function (/* { ssrContext } */) {
   const Store = createStore({
     state() {
         return {
@@ -63,6 +62,8 @@ export default store(function (/* { ssrContext } */) {
             state.planets = [...state.planets]
         },
 
+       
+
         /**
          * Update planet values by providing planet, field name, and value to update.
          * @param {*} state 
@@ -74,6 +75,14 @@ export default store(function (/* { ssrContext } */) {
             let p = state.planets[pI];
             p[payload.field] = payload.value;
             state.planets[pI] = p;
+        },
+
+        upgradeRessourceData(state, payload) {
+            const label = payload.label;
+            let resource = state.resourceData[label];
+            resource.upgrading = true;
+            resource.current_upgrade_time_left = payload.upgradeFinish;
+            state.resourceData[label] = resource;
         },
 
         incrementResources(state, payload) {
@@ -114,4 +123,4 @@ export default store(function (/* { ssrContext } */) {
   })
 
   return Store
-})
+}
