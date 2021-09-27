@@ -260,6 +260,7 @@ export default defineComponent({
 
       return data;
     }
+    
     const alreadyUpgrading = (type) => {
       let data = dataSource(type);
 
@@ -308,7 +309,7 @@ export default defineComponent({
       }
 
       const activePlanetId = activePlanet.id;
-      const level =  dataSource(props.type)[props.data.label]["upgrades"][props.data.level + 1];
+      const level = dataSource(props.type)[props.data.label]["upgrades"][props.data.level + 1];
 
       let storeUpdateMethod = "";
       let apiCall = "";

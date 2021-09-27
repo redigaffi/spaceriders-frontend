@@ -75,8 +75,8 @@
             </q-carousel>
           </div>
         </div>
-
         <BuildingQueue />
+
 
       </q-page>
     </q-page-container>
@@ -86,6 +86,7 @@
 import { defineComponent, ref } from "vue";
 import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
+import BuildingQueue from "../components/BuildingQueue.vue";
 
 
 //https://quasar.dev/layout/routing-with-layouts-and-pages
@@ -94,7 +95,8 @@ export default defineComponent({
 
   components: {
     Headerbar,
-    RessourcesDisplay
+    RessourcesDisplay,
+    BuildingQueue
   },
 
   setup() {
@@ -108,7 +110,7 @@ export default defineComponent({
 <style>
 #main {
   border: 1px solid black;
-  background: url("../assets/img/bg1.jpeg") no-repeat center center fixed;
+  background: url("../assets/img/bg4.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

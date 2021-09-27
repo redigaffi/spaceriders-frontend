@@ -54,7 +54,8 @@ export default defineComponent({
   components: {
     InfoSlider,
     DefaultSlider,
-    ItemList,
+    ItemList
+
   },
   setup() {
     const currentTab = ref("DefaultSlider");

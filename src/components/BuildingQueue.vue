@@ -47,11 +47,14 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed, getCurrentInstance } from "vue";
+
+
 
 export default defineComponent({
-  name: "QueueBuildings",
+  name: "BuildingQueue",
   setup() {
+
     return {
       underconstruction: true,
     };
