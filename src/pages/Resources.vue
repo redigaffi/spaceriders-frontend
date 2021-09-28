@@ -21,7 +21,7 @@
               ></DefaultSlider>
             </div>
           </q-slide-transition>
-          <q-slide-transition duration="1000">
+          <q-slide-transition duration=1000>
             <div v-show="currentTabComponent != 'DefaultSlider'">
               <InfoSlider
                 key="resourceSlider"

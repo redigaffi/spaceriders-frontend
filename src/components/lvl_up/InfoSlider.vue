@@ -181,6 +181,8 @@
 import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
+import { BUILDING_UPGRADED } from "../../constants/Events";
+
 
 export default defineComponent({
   name: "ResourceSlider",
@@ -197,6 +199,9 @@ export default defineComponent({
   setup(props) {
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
+
+    const $eventBus =
+      getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
     const $store = useStore();
 
@@ -340,6 +345,8 @@ export default defineComponent({
           crystal: level.cost_crystal,
           petrol: level.cost_petrol,
         });
+
+        $eventBus.emit(BUILDING_UPGRADED);
 
         $notification(
           "success",

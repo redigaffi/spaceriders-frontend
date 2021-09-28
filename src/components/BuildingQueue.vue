@@ -14,8 +14,8 @@
           Buildings
         </div>
       </q-card-section> -->
-      <div v-if="underconstruction">
-        <div class="col-12 q-pa-sm text-center" v-for="n in 3" :key="`sm-${n}`">
+      <div v-if="buildingsInQueue.length > 0">
+        <div class="col-12 q-pa-sm text-center" v-for="bQ in buildingsInQueue" :key="`${bQ.name}`">
           <div class="text-center c-subscribe-box">
             <div class="rainbow"><span></span><span></span></div>
 
@@ -25,7 +25,7 @@
               class="c-subscribe-box__wrapper bg-dark q-pa-none"
             >
               <div class="text-warning q-pa-sm text-subtitle2">
-                Crystal Mine
+                {{ bQ.name }}
               </div>
 
               <q-item class="q-pa-none">
@@ -39,11 +39,11 @@
 
                 <q-item-label caption class="text-left">
                   <div>
-                    Improve to : <span class="text-secondary">Level 1</span>
+                    Upgrade to : <span class="text-secondary">{{ bQ.level+1 }}</span>
                   </div>
-                  <div>Duration : <span class="text-secondary">30s</span></div>
+                  <div>Time left : <span class="text-secondary">{{ calculateClaimDate(bQ) }}</span></div>
                   <div>
-                    Status : <span class="text-secondary">In Progress</span>
+                    Status : <span class="text-secondary">Upgrading...</span>
                   </div>
                 </q-item-label>
               </q-item>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!underconstruction" class="text-center">
+      <div v-else class="text-center">
         <div>
           <img
             src="~assets/img/stack-svgrepo-com.svg"
@@ -59,16 +59,17 @@
             style="height: 70px"
           />
         </div>
-        <p class="q-py-sm">No buildings in construction (To Resources)</p>
+        <p class="q-py-sm">No buildings in construction</p>
       </div>
     </q-card>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed, getCurrentInstance } from "vue";
+import { defineComponent, ref, reactive, computed, getCurrentInstance } from "vue";
 import GlassElementHeading from "components/GlassElementHeading";
 import { useStore } from "vuex";
+import { BUILDING_UPGRADED } from "../constants/Events";
 
 export default defineComponent({
   name: "BuildingQueue",
@@ -77,13 +78,34 @@ export default defineComponent({
   },
   setup() {
     const $store = useStore();
-    function stuff()  {
+    const $eventBus =
+      getCurrentInstance().appContext.config.globalProperties.$eventBus;
+
+    let timerId = ref(-1);
+    let upgradeBuildings = reactive({});
+
+    function calculateClaimDate (building) {
+      const now = new Date();
+      const claim = new Date(building.current_upgrade_time_left * 1000);
+
+      const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
+      const s = Math.round(diffSeconds % 60);
+      const minutes = Math.round((diffSeconds - s) / 60);
+
+      const m = minutes % 60;
+      const h = Math.round(minutes - m) / 60;
+
+      let str = "";
       
+      if (h > 0) str += `${h}h`;
+      if (m > 0) str += ` ${m}m`;
+      if (s >= 0) str += ` ${s}s`;
+
       
-      
-    }
-    stuff();
-    const buildingProgress = computed(() => {
+      return str;
+    };
+
+    const buildingsInQueue = computed(() => {
       const data = {
         ...$store.getters.resourceData,
         ...$store.getters.installationData
@@ -94,14 +116,48 @@ export default defineComponent({
         const building = data[key];
         if (building.upgrading) {
           re.push(building)
+          //upgradeBuildings[building.label] = setTimeout(() => { }, 3000);
+        }
+      }
+      return re;
+    });
+
+    function startTimers() {
+      let data = buildingsInQueue.value;
+      for (let d in data) {
+        const b = data[d];
+        if (upgradeBuildings[b.label] === undefined) {
+          const now = new Date();
+          const claim = new Date(b.current_upgrade_time_left * 1000);
+          const diffSeconds = (claim.getTime() - now.getTime());
+
+          upgradeBuildings[b.label] = setTimeout(() => { 
+            $store.commit("upgradeBuildingFinish", {label: b.label, type: b.type})
+            upgradeBuildings[b.label] = undefined;
+          }, diffSeconds);
         }
       }
 
+      if (data.length > 0) {
+        timerId.value = setInterval(() => {
+          console.log("buildin queue interval")
+          $store.commit("refreshBuildingData");
+          if (buildingsInQueue.value.length === 0 ) {
+            clearInterval(timerId.value);
+          } 
+        }, 1000);
+      }
+    }
 
-      return "";
+    $eventBus.on(BUILDING_UPGRADED, () => {
+      startTimers();
     });
+
+    startTimers(); 
+
     return {
-      underconstruction: true,
+      buildingsInQueue: buildingsInQueue,
+      calculateClaimDate: calculateClaimDate,
     };
   },
 });

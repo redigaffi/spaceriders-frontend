@@ -59,7 +59,7 @@
           text-secondary text-subtitle1 text-weight-bolder text-center
         "
       >
-        Looks like you haven't purchased any planet
+        No purchased planets
       </q-card-section>
       <q-card-section
         class="
@@ -95,6 +95,7 @@ export default defineComponent({
   methods: {
     startInterval: function () {
       this.claimRefreshId = setInterval(() => {
+        console.log("refresh planets")
         this.$store.commit("refreshPlanets");
         if (this.unClaimedNotReadyPlanets.length === 0)
           clearInterval(this.claimRefreshId);

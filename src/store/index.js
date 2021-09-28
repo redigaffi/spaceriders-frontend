@@ -67,6 +67,11 @@ export default function (/* { ssrContext } */) {
         state.planets = [...state.planets];
       },
 
+      refreshBuildingData(state) {
+        state.resourceData = {...state.resourceData};
+        state.installationData = {...state.installationData};
+      },
+
       restPlanetResources(state, payload) {
         state.activePlanet.ressources.metal -= payload.metal;
         state.activePlanet.ressources.petrol -= payload.petrol;
@@ -100,6 +105,34 @@ export default function (/* { ssrContext } */) {
         resource.upgrading = true;
         resource.current_upgrade_time_left = payload.upgradeFinish;
         state.resourceData[label] = resource;
+      },
+
+      upgradeBuildingFinish(state, payload) {
+        const label = payload.label;
+        let dataSource = {};
+        
+        switch(payload.type) {
+          case "resources":
+            dataSource = state.resourceData[label]
+            break;
+          case "installations":
+            dataSource = state.installationData[label]
+            break;
+        }
+
+        dataSource.upgrading = false;
+        dataSource.level = dataSource.level+1;
+        dataSource.current_upgrade_time_left = false;
+        
+        switch(payload.type) {
+          case "resources":
+            state.resourceData[label] = dataSource;
+            break;
+          case "installations":
+            state.installationData[label] = dataSource
+            break;
+        }
+        
       },
 
       incrementResources(state, payload) {
