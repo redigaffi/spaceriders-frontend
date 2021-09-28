@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <div>
     <!-- CONTENT PANEL -->
     <div>
       <q-card class="glass-element text-white">
@@ -37,7 +37,7 @@
       :data="this.$store.getters.installationData"
       @change="slideDiv"
     />
-  </q-page>
+  </div>
 </template>
 
 <script>

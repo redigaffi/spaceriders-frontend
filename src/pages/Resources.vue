@@ -1,17 +1,13 @@
 <template>
-  <q-page>
+  <div>
     <!-- CONTENT PANEL -->
     <div>
-      <q-card class="glass-element text-white ">
-        <q-card-section class="q-pa-none">
-          <q-card>
-            <q-card-section class="q-pa-xs text-center">
-              <div class="text-h6 text-center text-weight-bold text-secondary">
-                RESOURCES
-              </div>
-            </q-card-section>
-          </q-card>
-        </q-card-section>
+      <q-card class="glass-element text-white">
+        <glass-element-heading
+          class="text-h6 text-center text-weight-bold text-secondary"
+        >
+          RESOURCES
+        </glass-element-heading>
         <div>
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
@@ -40,7 +36,7 @@
       :data="this.$store.getters.resourceData"
       @change="slideDiv"
     />
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -48,6 +44,7 @@ import { defineComponent, ref, computed } from "vue";
 import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
+import GlassElementHeading from "components/GlassElementHeading";
 
 export default defineComponent({
   name: "Resources",
@@ -55,6 +52,7 @@ export default defineComponent({
     InfoSlider,
     DefaultSlider,
     ItemList,
+    GlassElementHeading,
   },
   setup() {
     const currentTab = ref("DefaultSlider");
