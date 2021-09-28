@@ -10,6 +10,9 @@ import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "./constants/Events";
 export default defineComponent({
   name: "App",
   async created() {
+
+    //TODO: Delete all intervals ..
+    
     // On planet change reset all.
     this.$eventBus.on(ACTIVE_PLANET_CHANGED, (e) => {
       this.updateAll();
