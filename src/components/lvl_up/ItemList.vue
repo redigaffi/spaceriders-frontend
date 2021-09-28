@@ -1,5 +1,5 @@
 <template>
-  <div class="q-py-sm">
+  <div class="q-pt-sm">
     <q-card class="glass-element text-white q-pa-md">
       <q-card-section class="row fit justify-between items-center">
         <div

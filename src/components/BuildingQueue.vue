@@ -17,13 +17,7 @@
       <div v-if="underconstruction">
         <div class="col-12 q-pa-sm text-center" v-for="n in 3" :key="`sm-${n}`">
           <div class="text-center c-subscribe-box">
-            <div class="rainbow"><span></span><span></span></div>
-
-            <q-list
-              bordered
-              rounded
-              class="c-subscribe-box__wrapper bg-dark q-pa-none"
-            >
+            <q-list rounded class="rainbow bg-dark q-pa-none">
               <div class="text-warning q-pa-sm text-subtitle2">
                 Crystal Mine
               </div>
@@ -111,97 +105,54 @@ export default defineComponent({
   width: 300px;
 }
 
-// Global Variables
-
-:root {
-  --color-first: #373945;
-  --color-second: #5c5769;
-  --color-third: #86778d;
-  --color-forth: #b598b0;
-  --block-width: 100%;
-  --block-height: 140px;
-  --border-width: 2px;
-  --border-radius-outer: 8px;
-  --border-radius-inner: calc(var(--border-radius-outer) / 1);
-}
-
-.rainbow {
-  width: 100%;
-  height: 100%;
-  animation: o-rotate-360 linear 3s infinite;
-
-  span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform: translate(-50%, -50%);
-
-    &:after {
-      display: block;
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 100%;
-    }
-
-    &:first-child {
-      background: var(--color-first);
-      &:after {
-        background: var(--color-second);
-      }
-    }
-
-    &:last-child {
-      background: var(--color-third);
-      &:after {
-        background: var(--color-forth);
-      }
-    }
-  }
-}
-
-// Components
-
-.c-subscribe-box {
-  width: var(--block-width);
-  height: var(--block-height);
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 10px 40px -10px rgba(0, 64, 128, 0.2);
-  border-radius: var(--border-radius-outer);
-
-  &__wrapper {
-    width: calc(100% - var(--border-width));
-    height: calc(100% - var(--border-width));
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--border-radius-inner);
-  }
-}
-
-// Objects
-
-@keyframes o-rotate-360 {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @media (max-width: $breakpoint-sm-min) {
   .queue-buildings {
     width: 100%;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.rainbow {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 14px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-image: linear-gradient(#373945, #1a1923),
+      linear-gradient(#223147, #2e141b), linear-gradient(#111916, #1a1923),
+      linear-gradient(#280133, #2e1832);
+    animation: rotate 4s linear infinite;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 3px;
+    top: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    background: $dark;
+    border-radius: 8px;
   }
 }
 </style>
