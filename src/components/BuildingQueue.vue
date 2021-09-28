@@ -2,18 +2,8 @@
   <div class="q-py-sm">
     <q-card class="glass-element text-white queue-buildings">
       <glass-element-heading class="text-overline"
-        >Buildings</glass-element-heading
+        ><slot></slot></glass-element-heading
       >
-      <!-- <q-card-section class="row fit justify-between items-center">
-        <div
-          class="
-            text-h6 text-center text-weight-bold text-secondary
-            absolute-center
-          "
-        >
-          Buildings
-        </div>
-      </q-card-section> -->
       <div v-if="buildingsInQueue.length > 0">
         <div class="col-12 q-pa-sm text-center" v-for="bQ in buildingsInQueue" :key="`${bQ.name}`">
           <div class="text-center c-subscribe-box">
@@ -158,7 +148,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .queue-buildings {
-  width: 300px;
+  width: 100%;
 }
 
 @media (max-width: $breakpoint-sm-min) {

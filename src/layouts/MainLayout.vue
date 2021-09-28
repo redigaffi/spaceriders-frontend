@@ -3,8 +3,7 @@
     <headerbar />
     <q-page-container id="main">
       <RessourcesDisplay />
-
-      <q-page :style-fn="myTweak" class="container">
+      <q-page class="container">
         <div class="row">
           <!-- Router page Content -->
           <div class="col q-py-lg">
@@ -13,8 +12,12 @@
 
           <PlanetList />
         </div>
-        
-        <BuildingQueue />
+
+        <div class="row q-col-gutter-md">
+          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Buildings</BuildingQueue>
+          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Research</BuildingQueue>
+          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Spaceships/ Defense</BuildingQueue>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -29,8 +32,6 @@ import PlanetList from "../components/PlanetList.vue";
 import { useQuasar } from "quasar";
 import { computed, watch } from "vue";
 
-
-
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
   name: "MainLayout",
@@ -42,12 +43,8 @@ export default defineComponent({
     PlanetList,
   },
 
-  setup() {
-    
-  },
-  methods: {
-    
-  },
+  setup() {},
+  methods: {},
 });
 </script>
 
@@ -61,10 +58,4 @@ export default defineComponent({
   -o-background-size: cover;
   background-size: cover;
 }
-
-
-</style>
-
-<style lang="sass">
-
 </style>
