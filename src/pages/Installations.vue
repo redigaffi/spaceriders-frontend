@@ -2,22 +2,20 @@
   <q-page>
     <!-- CONTENT PANEL -->
     <div>
-      <q-card class="glass-element text-white q-pa-md">
-        <q-card-section class="row fit justify-between items-center">
-          <div></div>
-          <div
-            class="
-              text-h6 text-center text-weight-bold text-secondary
-              absolute-center
-            "
-          >
-            INSTALLATIONS
-          </div>
-        </q-card-section>
+      <q-card class="glass-element text-white">
+        <glass-element-heading
+          class="text-h6 text-center text-weight-bold text-secondary"
+        >
+          INSTALLATIONS
+        </glass-element-heading>
+
         <div>
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
-              <DefaultSlider :name="`Installations - ${this.$store.getters.activePlanet.name}`" key="defaultSlider"></DefaultSlider>
+              <DefaultSlider
+                :name="`Installations - ${this.$store.getters.activePlanet.name}`"
+                key="defaultSlider"
+              ></DefaultSlider>
             </div>
           </q-slide-transition>
           <q-slide-transition duration="1000">
@@ -39,7 +37,6 @@
       :data="this.$store.getters.installationData"
       @change="slideDiv"
     />
-    
   </q-page>
 </template>
 
@@ -48,6 +45,7 @@ import { defineComponent, ref, computed } from "vue";
 import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
+import GlassElementHeading from "components/GlassElementHeading";
 
 export default defineComponent({
   name: "Installations",
@@ -55,6 +53,7 @@ export default defineComponent({
     InfoSlider,
     DefaultSlider,
     ItemList,
+    GlassElementHeading,
   },
   setup() {
     const currentTab = ref("DefaultSlider");

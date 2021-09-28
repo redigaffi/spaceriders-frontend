@@ -5,13 +5,12 @@
       <RessourcesDisplay />
 
       <q-page class="container">
-
         <div class="row">
           <!-- Router page Content -->
           <div class="col q-py-lg">
             <router-view />
           </div>
-          
+
           <div class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
             <q-card>
               <q-card-section class="q-pa-xs text-center">
@@ -51,7 +50,7 @@
                   </q-route-tab>
                 </q-tabs>
               </q-carousel-slide>
-              
+
               <q-carousel-slide
                 name="slide2"
                 class="column no-wrap flex-center q-py-xl"
@@ -76,8 +75,6 @@
           </div>
         </div>
         <BuildingQueue />
-
-
       </q-page>
     </q-page-container>
   </q-layout>
@@ -88,7 +85,6 @@ import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 
-
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
   name: "MainLayout",
@@ -96,7 +92,7 @@ export default defineComponent({
   components: {
     Headerbar,
     RessourcesDisplay,
-    BuildingQueue
+    BuildingQueue,
   },
 
   setup() {
@@ -110,6 +106,7 @@ export default defineComponent({
 <style>
 #main {
   border: 1px solid black;
+  /* background: url("../assets/img/background.svg") no-repeat center center fixed; */
   background: url("../assets/img/bg4.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;

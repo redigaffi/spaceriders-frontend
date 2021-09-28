@@ -2,22 +2,23 @@
   <q-page>
     <!-- CONTENT PANEL -->
     <div>
-      <q-card class="glass-element text-white q-pa-md">
-        <q-card-section class="row fit justify-between items-center">
-          <div></div>
-          <div
-            class="
-              text-h6 text-center text-weight-bold text-secondary
-              absolute-center
-            "
-          >
-            RESOURCES
-          </div>
+      <q-card class="glass-element text-white ">
+        <q-card-section class="q-pa-none">
+          <q-card>
+            <q-card-section class="q-pa-xs text-center">
+              <div class="text-h6 text-center text-weight-bold text-secondary">
+                RESOURCES
+              </div>
+            </q-card-section>
+          </q-card>
         </q-card-section>
         <div>
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
-              <DefaultSlider :name="`Resources - ${this.$store.getters.activePlanet.name}`" key="defaultSlider"></DefaultSlider>
+              <DefaultSlider
+                :name="`Resources - ${this.$store.getters.activePlanet.name}`"
+                key="defaultSlider"
+              ></DefaultSlider>
             </div>
           </q-slide-transition>
           <q-slide-transition duration="1000">
@@ -39,7 +40,6 @@
       :data="this.$store.getters.resourceData"
       @change="slideDiv"
     />
-    
   </q-page>
 </template>
 
@@ -54,8 +54,7 @@ export default defineComponent({
   components: {
     InfoSlider,
     DefaultSlider,
-    ItemList
-
+    ItemList,
   },
   setup() {
     const currentTab = ref("DefaultSlider");
