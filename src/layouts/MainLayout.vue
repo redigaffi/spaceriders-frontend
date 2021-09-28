@@ -75,6 +75,7 @@
             </q-carousel>
           </div>
         </div>
+        
         <BuildingQueue />
 
 

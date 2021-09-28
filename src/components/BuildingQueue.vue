@@ -48,13 +48,35 @@
 
 <script>
 import { defineComponent, ref, computed, getCurrentInstance } from "vue";
-
-
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "BuildingQueue",
   setup() {
+    const $store = useStore();
+    function stuff()  {
+      
+      
+      
+    }
+    stuff();
+    const buildingProgress = computed(() => {
+      const data = {
+        ...$store.getters.resourceData,
+        ...$store.getters.installationData
+      }
 
+      let re = []
+      for(let key in data) {
+        const building = data[key];
+        if (building.upgrading) {
+          re.push(building)
+        }
+      }
+
+
+      return "";
+    });
     return {
       underconstruction: true,
     };
