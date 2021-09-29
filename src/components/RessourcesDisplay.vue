@@ -13,8 +13,9 @@
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
+            class="q-pt-sm"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.metal }}
           </p>
 
@@ -65,8 +66,9 @@
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
+            class="q-pt-sm"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.crystal }}
           </p>
 
@@ -117,8 +119,9 @@
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
+            class="q-pt-sm"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.petrol }}
           </p>
 
@@ -169,8 +172,9 @@
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
+            class="q-pt-sm"
           />
-          <p class="text-weight-bold text-body1">{{ energyLeft }}</p>
+          <p class="text-weight-bold text-body1 q-pt-sm">{{ energyLeft }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -325,25 +329,40 @@ export default {
       if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
       console.log("interval resource update");
       let rD = $store.getters.resourceData;
-      
+
       for (let resourceTypeIndex in ResourceType.RESOURCE_TYPES) {
         const resourceType = ResourceType.RESOURCE_TYPES[resourceTypeIndex];
 
         switch (resourceType) {
           case ResourceType.METAL_MINE:
-            updateResources(rD, ResourceType.METAL, ResourceType.METAL_MINE, ResourceType.METAL_WAREHOUSE);
+            updateResources(
+              rD,
+              ResourceType.METAL,
+              ResourceType.METAL_MINE,
+              ResourceType.METAL_WAREHOUSE
+            );
             break;
           case ResourceType.PETROL_MINE:
-            updateResources(rD, ResourceType.PETROL, ResourceType.PETROL_MINE, ResourceType.PETROL_WAREHOUSE);
+            updateResources(
+              rD,
+              ResourceType.PETROL,
+              ResourceType.PETROL_MINE,
+              ResourceType.PETROL_WAREHOUSE
+            );
             break;
           case ResourceType.CRYSTAL_MINE:
-            updateResources(rD, ResourceType.CRYSTAL, ResourceType.CRYSTAL_MINE, ResourceType.CRYSTAL_WAREHOUSE);
+            updateResources(
+              rD,
+              ResourceType.CRYSTAL,
+              ResourceType.CRYSTAL_MINE,
+              ResourceType.CRYSTAL_WAREHOUSE
+            );
             break;
         }
       }
     }, 60000);
 
-    $store.commit("addIntervalId", {id: id})
+    $store.commit("addIntervalId", { id: id });
 
     return {
       metalProduction: metalProduction,
