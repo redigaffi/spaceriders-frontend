@@ -60,7 +60,13 @@ export default defineComponent({
   components: {
     GlassElementHeading,
   },
-  setup() {
+  props: {
+    data: {
+      type: Object,
+      default: undefined,
+    }
+  },
+  setup(props) {
     const $store = useStore();
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
@@ -90,10 +96,7 @@ export default defineComponent({
     };
 
     const buildingsInQueue = computed(() => {
-      const data = {
-        ...$store.getters.resourceData,
-        ...$store.getters.installationData
-      }
+      const data = props.data;
 
       let re = []
       for(let key in data) {
@@ -103,6 +106,7 @@ export default defineComponent({
         }
       }
       return re;
+      
     });
 
     function startTimers() {
@@ -115,7 +119,7 @@ export default defineComponent({
           const diffSeconds = (claim.getTime() - now.getTime());
 
           upgradeBuildings[b.label] = setTimeout(() => { 
-            $store.commit("upgradeBuildingFinish", {label: b.label, type: b.type})
+            $store.commit("upgradeFinished", {label: b.label, type: b.type})
             upgradeBuildings[b.label] = undefined;
           }, diffSeconds);
           

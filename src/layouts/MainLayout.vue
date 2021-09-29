@@ -14,23 +14,21 @@
         </div>
 
         <div class="row q-col-gutter-md">
-          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Buildings</BuildingQueue>
-          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Research</BuildingQueue>
-          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Spaceships/ Defense</BuildingQueue>
+          <BuildingQueue :data="buildingQueueData" class="col-xs-12 col-sm-6 col-md-4">Buildings</BuildingQueue>
+          <BuildingQueue :data="researchQueueData" class="col-xs-12 col-sm-6 col-md-4">Research</BuildingQueue>
+          <!--<BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Spaceships/ Defense</BuildingQueue> -->
         </div>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import PlanetList from "../components/PlanetList.vue";
-
-import { useQuasar } from "quasar";
-import { computed, watch } from "vue";
 
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
@@ -43,7 +41,26 @@ export default defineComponent({
     PlanetList,
   },
 
-  setup() {},
+  setup() {
+    const $store  = useStore();
+
+    let buildingQueueData = computed(() => {
+      return {
+        ...$store.getters.resourceData,
+        ...$store.getters.installationData
+      };
+
+    });
+
+    let researchQueueData = computed(() => {
+      return $store.getters.researchData;
+    });
+
+    return {
+      buildingQueueData: buildingQueueData,
+      researchQueueData: researchQueueData
+    }
+  },
   methods: {},
 });
 </script>

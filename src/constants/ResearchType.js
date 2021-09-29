@@ -1,8 +1,8 @@
 class ResearchType {
-    static INTERGALACTIC_ECONOMY = "intergalacticEconomy";
-    static TYPE = "research";
-    static RESOURCE_TYPES = [
-        INTERGALACTIC_ECONOMY
+    INTERGALACTIC_ECONOMY = "intergalacticEconomy";
+    TYPE = "research";
+    RESOURCE_TYPES = [
+        this.INTERGALACTIC_ECONOMY
     ];
 }
 

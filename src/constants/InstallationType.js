@@ -2,7 +2,7 @@ class InstallationType {
     INVESTIGATION_LABORATORY = "investigationLaboratory";
     TYPE = "installations";
     RESOURCE_TYPES = [
-        INVESTIGATION_LABORATORY
+        this.INVESTIGATION_LABORATORY
     ];
 }
 

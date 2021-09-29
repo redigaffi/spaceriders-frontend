@@ -182,19 +182,15 @@ import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
-
+import Types, {} from "../../constants/Types";
 
 export default defineComponent({
-  name: "ResourceSlider",
+  name: "InfoSlider",
   props: {
     data: {
       type: Object,
       default: undefined,
-    },
-    type: {
-      type: String,
-      default: undefined,
-    },
+    }
   },
   setup(props) {
     const $notification =
@@ -257,10 +253,17 @@ export default defineComponent({
 
     const dataSource = (type) => {
       let data = {};
-      if (type === "resource") {
-        data = $store.getters.resourceData;
-      } else if (type === "installation") {
-        data = $store.getters.installationData;
+      
+      switch(type) {
+          case Types.RESOURCE_TYPE:
+            data = $store.getters.resourceData;
+            break;
+          case Types.INSTALLATION_TYPE:
+            data = $store.getters.installationData;
+            break;
+          case Types.RESEARCH_TYPE:
+            data = $store.getters.researchData;
+            break;
       }
 
       return data;
@@ -282,7 +285,7 @@ export default defineComponent({
     };
 
     const canUpgrade = (props, activePlanet) => {
-      let data = dataSource(props.type);
+      let data = dataSource(props.data.type);
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
       
@@ -296,7 +299,7 @@ export default defineComponent({
     const upgrade = async (label) => {
       if (!props.data) return;
 
-      const anyUpgrade = alreadyUpgrading(props.type);
+      const anyUpgrade = alreadyUpgrading(props.data.type);
 
       if (anyUpgrade) {
         $notification(
@@ -314,18 +317,23 @@ export default defineComponent({
       }
 
       const activePlanetId = activePlanet.id;
-      const level = dataSource(props.type)[props.data.label]["upgrades"][props.data.level + 1];
+      const level = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level + 1];
 
       let storeUpdateMethod = "";
       let apiCall = "";
-      switch (props.type) {
-        case "resource":
+      switch (props.data.type) {
+        case Types.RESOURCE_TYPE:
             storeUpdateMethod = "upgradeRessourceData";
             apiCall = ApiRequests.upgradeRessource;
           break;
-        case "installation":
+        case Types.INSTALLATION_TYPE:
             storeUpdateMethod = "upgradeInstallationData";
             apiCall = ApiRequests.upgradeInstallation;
+          break;
+
+        case Types.RESEARCH_TYPE:
+            storeUpdateMethod = "upgradeResearchData";
+            apiCall = ApiRequests.upgradeResearch;
           break;
       }
 

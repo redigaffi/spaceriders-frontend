@@ -22,7 +22,7 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "PageIndex",
+  name: "DefaultSlider",
   props: {
     name: {
       type: String,

@@ -81,7 +81,7 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "ResourceBuildings",
+  name: "ItemList",
   props: {
     data: {
       type: Object,

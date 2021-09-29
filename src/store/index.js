@@ -127,10 +127,19 @@ export default function (/* { ssrContext } */) {
         let resource = state.installationData[label];
         resource.upgrading = true;
         resource.current_upgrade_time_left = payload.upgradeFinish;
-        state.resourceData[label] = resource;
+        state.installationData[label] = resource;
       },
 
-      upgradeBuildingFinish(state, payload) {
+      upgradeResearchData(state, payload) {
+        const label = payload.label;
+        let resource = state.researchData[label];
+        resource.upgrading = true;
+        resource.current_upgrade_time_left = payload.upgradeFinish;
+        state.researchData[label] = resource;
+      },
+
+
+      upgradeFinished(state, payload) {
         const label = payload.label;
         let dataSource = {};
         
@@ -140,6 +149,9 @@ export default function (/* { ssrContext } */) {
             break;
           case "installations":
             dataSource = state.installationData[label]
+            break;
+          case "research":
+            dataSource = state.researchData[label]
             break;
         }
 
@@ -152,7 +164,10 @@ export default function (/* { ssrContext } */) {
             state.resourceData[label] = dataSource;
             break;
           case "installations":
-            state.installationData[label] = dataSource
+            state.installationData[label] = dataSource;
+            break;
+          case "research":
+            state.researchData[label] = dataSource;
             break;
         }
         
