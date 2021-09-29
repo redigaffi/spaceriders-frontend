@@ -14,7 +14,6 @@
       row-key="name"
       :filter="filter"
       v-model:pagination="pagination"
-      :rows-per-page-options="false"
       rows-per-page-label=" "
       hide-bottom
     >

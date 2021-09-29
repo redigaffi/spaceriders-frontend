@@ -14,7 +14,9 @@
             alt=""
             srcset=""
           />
-          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.metal }}</p>
+          <p class="text-weight-bold text-body1">
+            {{ this.$store.getters.activePlanet.ressources.metal }}
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -64,7 +66,9 @@
             alt=""
             srcset=""
           />
-          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.crystal }}</p>
+          <p class="text-weight-bold text-body1">
+            {{ this.$store.getters.activePlanet.ressources.crystal }}
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -114,7 +118,9 @@
             alt=""
             srcset=""
           />
-          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.petrol }}</p>
+          <p class="text-weight-bold text-body1">
+            {{ this.$store.getters.activePlanet.ressources.petrol }}
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
