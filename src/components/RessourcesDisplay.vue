@@ -9,7 +9,7 @@
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
-            src="~assets/img/silver.jpg"
+            src="~assets/img/metal3.svg"
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
@@ -60,7 +60,7 @@
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
-            src="~assets/img/silver.jpg"
+            src="~assets/img/crystal.svg"
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
@@ -111,7 +111,7 @@
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
-            src="~assets/img/silver.jpg"
+            src="~assets/img/petrol5.svg"
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
@@ -161,7 +161,7 @@
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
         <q-btn stack flat rounded class="btn-glass-element">
           <img
-            src="~assets/img/silver.jpg"
+            src="~assets/img/energy6.svg"
             style="width: 100px; height: 66px"
             alt=""
             srcset=""
