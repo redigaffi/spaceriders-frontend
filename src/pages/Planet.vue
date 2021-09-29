@@ -100,6 +100,8 @@ export default defineComponent({
         if (this.unClaimedNotReadyPlanets.length === 0)
           clearInterval(this.claimRefreshId);
       }, 1000);
+
+      this.$store.commit("addIntervalId", {id: this.claimRefreshId})
     },
   },
   async created() {

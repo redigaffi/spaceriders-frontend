@@ -6,14 +6,14 @@
         <glass-element-heading
           class="text-h6 text-center text-weight-bold text-secondary"
         >
-          INSTALLATIONS
+          RESEARCH
         </glass-element-heading>
 
         <div>
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
               <DefaultSlider
-                :name="`Installations - ${this.$store.getters.activePlanet.name}`"
+                :name="`Research - ${this.$store.getters.activePlanet.name}`"
                 key="defaultSlider"
               ></DefaultSlider>
             </div>
@@ -21,8 +21,8 @@
           <q-slide-transition duration=1000>
             <div v-show="currentTabComponent != 'DefaultSlider'">
               <InfoSlider
-                key="infoSlider"
-                :data="installationInfo"
+                key="researchSlider"
+                :data="researchInfo"
                 type="installation"
                 @cancelled="cancelled"
               />
@@ -33,8 +33,8 @@
     </div>
 
     <ItemList
-      listName="Installations"
-      :data="this.$store.getters.installationData"
+      listName="Research"
+      :data="this.$store.getters.researchData"
       @change="slideDiv"
     />
   </div>
@@ -48,7 +48,7 @@ import ItemList from "src/components/lvl_up/ItemList.vue";
 import GlassElementHeading from "components/GlassElementHeading";
 
 export default defineComponent({
-  name: "Installations",
+  name: "Research",
   components: {
     InfoSlider,
     DefaultSlider,
@@ -57,11 +57,11 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("DefaultSlider");
-    const installationInfo = ref(false);
+    const researchInfo = ref(false);
 
     function slideDiv(data) {
-      currentTab.value = "InfoSlider";
-      installationInfo.value = data;
+      currentTab.value = "ResearchSlider";
+      researchInfo.value = data;
     }
 
     const currentTabComponent = computed(() => {
@@ -76,7 +76,7 @@ export default defineComponent({
       slideDiv: slideDiv,
       cancelled: cancelled,
       currentTabComponent: currentTabComponent,
-      installationInfo: installationInfo,
+      researchInfo: researchInfo,
     };
   },
 });

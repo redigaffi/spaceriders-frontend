@@ -205,18 +205,7 @@
 </template>
 
 <script>
-import {
-  RESOURCE_TYPES,
-  METAL_MINE,
-  PETROL_MINE,
-  CRYSTAL_MINE,
-  METAL,
-  PETROL,
-  CRYSTAL,
-  METAL_WAREHOUSE,
-  CRYSTAL_WAREHOUSE,
-  PETROL_WAREHOUSE,
-} from "../constants/ResourceType";
+import ResourceType from "../constants/ResourceType";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
@@ -294,15 +283,15 @@ export default {
       
       let production = false;
       switch (mine) {
-        case METAL_MINE:
+        case ResourceType.METAL_MINE:
           production = metalProduction.value;
           break;
 
-        case PETROL_MINE:
+        case ResourceType.PETROL_MINE:
           production = petrolProduction.value;
           break;
 
-        case CRYSTAL_MINE:
+        case ResourceType.CRYSTAL_MINE:
           production = crystalProduction.value;
           break;
       }
@@ -315,30 +304,31 @@ export default {
       }
     };
 
-    setInterval(async () => {
+    let id = setInterval(async () => {
       if ($store.getters.activePlanet === false) return;
       if ($store.getters.planets.filter((p) => p.claimed).length === 0)
         return;
       console.log("interval resource update");
       let rD = $store.getters.resourceData;
-      for (let resourceTypeIndex in RESOURCE_TYPES) {
-        const resourceType = RESOURCE_TYPES[resourceTypeIndex];
+      
+      for (let resourceTypeIndex in ResourceType.RESOURCE_TYPES) {
+        const resourceType = ResourceType.RESOURCE_TYPES[resourceTypeIndex];
 
         switch (resourceType) {
-          case METAL_MINE:
-            updateResources(rD, METAL, METAL_MINE, METAL_WAREHOUSE);
+          case ResourceType.METAL_MINE:
+            updateResources(rD, ResourceType.METAL, ResourceType.METAL_MINE, ResourceType.METAL_WAREHOUSE);
             break;
-          case PETROL_MINE:
-            updateResources(rD, PETROL, PETROL_MINE, PETROL_WAREHOUSE);
+          case ResourceType.PETROL_MINE:
+            updateResources(rD, ResourceType.PETROL, ResourceType.PETROL_MINE, ResourceType.PETROL_WAREHOUSE);
             break;
-          case CRYSTAL_MINE:
-            updateResources(rD, CRYSTAL, CRYSTAL_MINE, CRYSTAL_WAREHOUSE);
+          case ResourceType.CRYSTAL_MINE:
+            updateResources(rD, ResourceType.CRYSTAL, ResourceType.CRYSTAL_MINE, ResourceType.CRYSTAL_WAREHOUSE);
             break;
         }
       }
     }, 60000);
 
-    
+    $store.commit("addIntervalId", {id: id})
 
     return {
       metalProduction: metalProduction,

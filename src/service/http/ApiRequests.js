@@ -147,5 +147,17 @@ export default class ApiRequests {
 
     return (await axios.post(path, body)).data;
   }
+
+
+  /**
+   * Gets all research data for a given planet 
+   * 
+   * @param {string} planetId 
+   * @returns 
+   */
+   static async getResearchData(planetId) {
+    const path = `${process.env.BASE_API_PATH}/research/${planetId}`;
+    return (await axios.get(path)).data;
+  }
   
 }

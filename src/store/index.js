@@ -21,6 +21,9 @@ export default function (/* { ssrContext } */) {
         activePlanet: false,
         resourceData: false,
         installationData: false,
+        researchData: false,
+        timeoutIds: [],
+        intervalIds: [],
       };
     },
     mutations: {
@@ -54,6 +57,10 @@ export default function (/* { ssrContext } */) {
       setInstallationData(state, payload) {
         state.installationData = payload;
       },
+      
+      setResearchData(state, payload) {
+        state.researchData = payload;
+      },
 
       setPlanets(state, payload) {
         state.planets = payload;
@@ -76,6 +83,22 @@ export default function (/* { ssrContext } */) {
         state.activePlanet.ressources.metal -= payload.metal;
         state.activePlanet.ressources.petrol -= payload.petrol;
         state.activePlanet.ressources.crystal -= payload.crystal;
+      },
+
+      addTimeoutId(state, payload) {
+        state.timeoutIds.push(payload.id);
+      },
+
+      addIntervalId(state, payload) {
+        state.intervalIds.push(payload.id);
+      },
+
+      clearAllIntervalTimeouts(state) {
+        state.intervalIds.forEach((id) => clearInterval(id));
+        state.intervalIds = [];
+
+        state.timeoutIds.forEach((id) => clearTimeout(id));
+        state.timeoutIds = [];
       },
 
       /**
@@ -152,6 +175,10 @@ export default function (/* { ssrContext } */) {
       
       installationData: (state) => {
         return state.installationData;
+      },
+
+      researchData: (state) => {
+        return state.researchData;
       },
 
       activePlanet: (state) => {
