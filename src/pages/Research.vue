@@ -57,7 +57,7 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("DefaultSlider");
-    const researchInfo = ref(false);
+    const researchInfo = ref();
 
     function slideDiv(data) {
       currentTab.value = "ResearchSlider";

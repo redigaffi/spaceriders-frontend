@@ -57,7 +57,7 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("DefaultSlider");
-    const installationInfo = ref(false);
+    const installationInfo = ref();
 
     function slideDiv(data) {
       currentTab.value = "InfoSlider";

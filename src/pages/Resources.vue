@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed,reactive } from "vue";
 import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
@@ -56,9 +56,10 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("DefaultSlider");
-    const ressourceInfo = ref(false);
+    const ressourceInfo = ref();
 
     function slideDiv(data) {
+      
       currentTab.value = "ResourceSlider";
       ressourceInfo.value = data;
     }

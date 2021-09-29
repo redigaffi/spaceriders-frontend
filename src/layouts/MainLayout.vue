@@ -49,7 +49,6 @@ export default defineComponent({
         ...$store.getters.resourceData,
         ...$store.getters.installationData
       };
-
     });
 
     let researchQueueData = computed(() => {
