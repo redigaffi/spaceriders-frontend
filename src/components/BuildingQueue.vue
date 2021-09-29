@@ -22,12 +22,12 @@
                 </q-item-section>
 
                 <q-item-label caption class="text-left">
-                  <div>
-                    Upgrade to : <span class="text-secondary">{{ bQ.level+1 }}</span>
+                  <div class="text-body2">
+                    Upgrade to : <span class="text-secondary text-weight-bold">{{ bQ.level+1 }}</span>
                   </div>
-                  <div>Time left : <span class="text-secondary">{{ calculateClaimDate(bQ) }}</span></div>
-                  <div>
-                    Status : <span class="text-secondary">Upgrading...</span>
+                  <div class="text-body2">Time left : <span class="text-secondary text-weight-bold">{{ calculateClaimDate(bQ) }}</span></div>
+                  <div class="text-body2">
+                    Status : <span class="text-secondary text-weight-bold">Upgrading...</span>
                   </div>
                 </q-item-label>
               </q-item>
