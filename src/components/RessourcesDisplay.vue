@@ -14,7 +14,7 @@
             alt=""
             srcset=""
           />
-          <p>{{ this.$store.getters.activePlanet.ressources.metal }}</p>
+          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.metal }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -33,7 +33,7 @@
                   <q-item-section caption>Available </q-item-section>
                 </q-item-section>
                 <q-item-section class="col-3 text-right">
-                  {{this.$store.getters.activePlanet.ressources.metal}}
+                  {{ this.$store.getters.activePlanet.ressources.metal }}
                 </q-item-section>
               </q-item>
               <q-item>
@@ -52,7 +52,6 @@
                   +{{ metalProduction }}/min
                 </q-item-section>
               </q-item>
-              
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -65,7 +64,7 @@
             alt=""
             srcset=""
           />
-          <p>{{ this.$store.getters.activePlanet.ressources.crystal }}</p>
+          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.crystal }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -103,7 +102,6 @@
                   +{{ crystalProduction }}/min
                 </q-item-section>
               </q-item>
-              
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -116,7 +114,7 @@
             alt=""
             srcset=""
           />
-          <p>{{ this.$store.getters.activePlanet.ressources.petrol }}</p>
+          <p class="text-weight-bold text-body1">{{ this.$store.getters.activePlanet.ressources.petrol }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -166,7 +164,7 @@
             alt=""
             srcset=""
           />
-          <p>{{ energyLeft }}</p>
+          <p class="text-weight-bold text-body1">{{ energyLeft }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -193,7 +191,9 @@
                   <q-item-section caption>Current Usage</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-1 text-right text-negative">
-                  -{{ this.$store.getters.activePlanet.ressources.energy_usage }}
+                  -{{
+                    this.$store.getters.activePlanet.ressources.energy_usage
+                  }}
                 </q-item-section>
               </q-item>
             </q-list>
@@ -224,7 +224,7 @@ export default {
   name: "RessourcesDisplay",
   setup() {
     const $store = useStore();
-    
+
     const activePlanet = computed(() => {
       const currentPlanet = $store.getters.activePlanet;
       if (currentPlanet === false) return false;
@@ -236,62 +236,72 @@ export default {
       if ($store.getters.resourceData.metalMine === undefined) return;
 
       const currentLevel = $store.getters.resourceData.metalMine.level;
-      return $store.getters.resourceData.metalMine.upgrades[currentLevel].production;
+      return $store.getters.resourceData.metalMine.upgrades[currentLevel]
+        .production;
     });
 
     const petrolProduction = computed(() => {
       if ($store.getters.resourceData.petrolMine === undefined) return;
 
       const currentLevel = $store.getters.resourceData.petrolMine.level;
-      return $store.getters.resourceData.petrolMine.upgrades[currentLevel].production;
+      return $store.getters.resourceData.petrolMine.upgrades[currentLevel]
+        .production;
     });
 
     const crystalProduction = computed(() => {
       if ($store.getters.resourceData.crystalMine === undefined) return;
 
       const currentLevel = $store.getters.resourceData.crystalMine.level;
-      return $store.getters.resourceData.crystalMine.upgrades[currentLevel].production;
+      return $store.getters.resourceData.crystalMine.upgrades[currentLevel]
+        .production;
     });
 
     const metalCapacity = computed(() => {
       if ($store.getters.resourceData.metalWarehouse === undefined) return;
 
       const currentLevel = $store.getters.resourceData.metalWarehouse.level;
-      return $store.getters.resourceData.metalWarehouse.upgrades[currentLevel].capacity;
+      return $store.getters.resourceData.metalWarehouse.upgrades[currentLevel]
+        .capacity;
     });
-    
+
     const petrolCapacity = computed(() => {
       if ($store.getters.resourceData.petrolWarehouse === undefined) return;
       const currentLevel = $store.getters.resourceData.petrolWarehouse.level;
-      return $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel].capacity;
+      return $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel]
+        .capacity;
     });
 
     const crystalCapacity = computed(() => {
       if ($store.getters.resourceData.crystalWarehouse === undefined) return;
 
       const currentLevel = $store.getters.resourceData.crystalWarehouse.level;
-      return $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel].capacity;
+      return $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel]
+        .capacity;
     });
 
     const energyProduction = computed(() => {
       if ($store.getters.resourceData.solarPlant === undefined) return;
       const currentLevel = $store.getters.resourceData.solarPlant.level;
-      return $store.getters.resourceData.solarPlant.upgrades[currentLevel].production;
+      return $store.getters.resourceData.solarPlant.upgrades[currentLevel]
+        .production;
     });
-    
+
     const energyLeft = computed(() => {
       if ($store.getters.resourceData.solarPlant === undefined) return;
 
       const currentLevel = $store.getters.resourceData.solarPlant.level;
-      const currentUsage = $store.getters.activePlanet.ressources.energy_usage
-      return $store.getters.resourceData.solarPlant.upgrades[currentLevel].production - currentUsage;
+      const currentUsage = $store.getters.activePlanet.ressources.energy_usage;
+      return (
+        $store.getters.resourceData.solarPlant.upgrades[currentLevel]
+          .production - currentUsage
+      );
     });
 
     const updateResources = (rD, resource, mine, warehouse) => {
       const upgrading = rD[mine]["upgrading"];
       const maxCapacity = rD[warehouse]["capacity"];
       const current = $store.getters.activePlanet.ressources[resource];
-      
+
       let production = false;
       switch (mine) {
         case METAL_MINE:
@@ -317,8 +327,7 @@ export default {
 
     setInterval(async () => {
       if ($store.getters.activePlanet === false) return;
-      if ($store.getters.planets.filter((p) => p.claimed).length === 0)
-        return;
+      if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
       console.log("interval resource update");
       let rD = $store.getters.resourceData;
       for (let resourceTypeIndex in RESOURCE_TYPES) {
@@ -338,15 +347,13 @@ export default {
       }
     }, 60000);
 
-    
-
     return {
       metalProduction: metalProduction,
       petrolProduction: petrolProduction,
-      crystalProduction:crystalProduction,
+      crystalProduction: crystalProduction,
       metalCapacity: metalCapacity,
       petrolCapacity: petrolCapacity,
-      crystalCapacity:crystalCapacity,
+      crystalCapacity: crystalCapacity,
       energyProduction: energyProduction,
       energyLeft: energyLeft,
       activePlanet: activePlanet,
