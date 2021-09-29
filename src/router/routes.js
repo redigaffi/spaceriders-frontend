@@ -1,9 +1,9 @@
 
-const mainLayout = import('layouts/MainLayout.vue');
-const resourcesPage = import('src/pages/Resources.vue');
-const installationsPage = import('src/pages/Installations.vue');
-const researchPage = import('src/pages/Research.vue');
-const planetPage = import('pages/Planet.vue');
+const mainLayout = () => import('layouts/MainLayout.vue');
+const resourcesPage = () => import('src/pages/Resources.vue');
+const installationsPage = () => import('src/pages/Installations.vue');
+const researchPage = () => import('src/pages/Research.vue');
+const planetPage = () => import('pages/Planet.vue');
 
 const routes = [
   //TODO: change this component
