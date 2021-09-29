@@ -2,6 +2,7 @@
 const mainLayout = import('layouts/MainLayout.vue');
 const resourcesPage = import('src/pages/Resources.vue');
 const installationsPage = import('src/pages/Installations.vue');
+const researchPage = import('src/pages/Research.vue');
 const planetPage = import('pages/Planet.vue');
 
 const routes = [
@@ -25,6 +26,13 @@ const routes = [
     component:  mainLayout,
     children: [
       { path: '', component: installationsPage },
+    ]
+  },
+  {
+    path: '/research',
+    component:  mainLayout,
+    children: [
+      { path: '', component: researchPage },
     ]
   },
   {

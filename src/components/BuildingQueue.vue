@@ -1,5 +1,5 @@
 <template>
-  <div class="q-py-sm">
+  <div v-if="this.$store.getters.activePlanet !== false" class="q-py-sm">
     <q-card class="glass-element text-white queue-buildings">
       <glass-element-heading class="text-overline"
         ><slot></slot></glass-element-heading
@@ -100,7 +100,6 @@ export default defineComponent({
         const building = data[key];
         if (building.upgrading) {
           re.push(building)
-          //upgradeBuildings[building.label] = setTimeout(() => { }, 3000);
         }
       }
       return re;
@@ -119,6 +118,8 @@ export default defineComponent({
             $store.commit("upgradeBuildingFinish", {label: b.label, type: b.type})
             upgradeBuildings[b.label] = undefined;
           }, diffSeconds);
+          
+          $store.commit("addTimeoutId", {id: upgradeBuildings[b.label]});
         }
       }
 
@@ -130,6 +131,8 @@ export default defineComponent({
             clearInterval(timerId.value);
           } 
         }, 1000);
+
+        $store.commit("addIntervalId", {id: timerId.value})
       }
     }
 

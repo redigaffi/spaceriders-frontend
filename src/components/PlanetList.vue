@@ -1,5 +1,5 @@
 <template>
-  <div class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
+  <div v-if="$store.getters.activePlanet !== false" class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
     <!-- style="max-height: 750px" -->
     <q-card>
       <q-card-section class="q-pa-xs text-center">
@@ -76,7 +76,8 @@ export default defineComponent({
 
     let rows = computed(() => {
       const activePlanet = $store.getters.activePlanet;
-      
+      if (!activePlanet) return [];
+
       let re = [];
 
       re.push({
