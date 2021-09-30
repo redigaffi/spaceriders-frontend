@@ -14,9 +14,9 @@ class Types {
     ]
 
     MAPPING = {
-        RESOURCE_TYPE: ResourceType,
-        INSTALLATION_TYPE: InstallationType,
-        RESEARCH_TYPE: ResearchType
+        "resources": ResourceType,
+        "installations": InstallationType,
+        "research": ResearchType
     }
 
 

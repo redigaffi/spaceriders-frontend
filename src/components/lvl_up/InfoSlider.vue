@@ -78,7 +78,7 @@
                 <q-item>
                   <q-item-section class="col">
                     <q-item-label
-                      >Required to improve to level
+                      >Cost to upgrade to level
                       {{ data.level + 1 }}:</q-item-label
                     >
 
@@ -163,6 +163,45 @@
                   </q-item-section>
                 </q-item>
               </q-list>
+
+              <div v-if="requirements.length > 0" class="q-px-md">
+                <q-list
+                  bordered
+                  class="bg-dark text-white"
+                  :class="{ 'bg-red-5': allRequirementsMeet == false }"
+                >
+                  <!-- <q-list bordered class="bg-red-5 text-white"> -->
+                  <q-expansion-item dense expand-separator label="Requirements">
+                    <q-separator dark />
+                    <q-markup-table flat dense dark>
+                      <tbody>
+                        <tr v-for="(row, index) in requirements" :key="index">
+                          <td
+                            v-if="row.meet"
+                            class="text-left"
+                            style="width: 14px"
+                          >
+                            <q-icon
+                              size="20px"
+                              color="warning"
+                              name="check_circle_outline"
+                            />
+                          </td>
+                          <td v-else class="text-left" style="width: 14px">
+                            <q-icon
+                              size="20px"
+                              color="red-5"
+                              name="highlight_off"
+                            />
+                          </td>
+                          <td class="text-left">{{ row.requirement }}</td>
+                          <td class="text-left">{{ row.level }}</td>
+                        </tr>
+                      </tbody>
+                    </q-markup-table>
+                  </q-expansion-item>
+                </q-list>
+              </div>
             </q-card-section>
           </div>
         </div>
@@ -190,16 +229,70 @@ export default defineComponent({
     data: {
       type: Object,
       default: undefined,
-    }
+    },
   },
   setup(props) {
+    const $store = useStore();
+
+    const dataSource = (type) => {
+      let data = {};
+
+      switch (type) {
+        case Types.RESOURCE_TYPE:
+          data = $store.getters.resourceData;
+          break;
+        case Types.INSTALLATION_TYPE:
+          data = $store.getters.installationData;
+          break;
+        case Types.RESEARCH_TYPE:
+          data = $store.getters.researchData;
+          break;
+      }
+
+      return data;
+    };
+
+    let requirements = computed(() => {
+      if (!props.data) return [];
+
+      let rows = [];
+      for (let requirementIdx in props.data.upgrades[props.data.level + 1].requirements) {
+        const requirement = props.data.upgrades[props.data.level + 1].requirements[requirementIdx]
+        const type = requirement['type'];
+        const asset = requirement['asset'];
+        const requiredLevel = requirement['level'];
+        
+        const dataType = Types.MAPPING[type];
+        if (dataType.RESOURCE_TYPES.includes(asset)) {
+          const info = dataSource(dataType.TYPE);
+          const infoLevel = info[asset];
+          rows.push({
+            requirement: infoLevel.name,
+            level: `Level ${requiredLevel}`,
+            meet: infoLevel.level >= requiredLevel,
+          });
+        }
+      }
+
+      return rows;
+    });
+
+    const allRequirementsMeet = computed(() => {
+      let flag = true;
+      requirements.value.forEach((element) => {
+        if (element.meet == false) {
+          flag = false;
+        }
+      });
+      return flag;
+    });
+
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
 
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-    const $store = useStore();
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
@@ -252,24 +345,6 @@ export default defineComponent({
       return nextEnergyUsage - currentEnergyUsage;
     });
 
-    const dataSource = (type) => {
-      let data = {};
-      
-      switch(type) {
-          case Types.RESOURCE_TYPE:
-            data = $store.getters.resourceData;
-            break;
-          case Types.INSTALLATION_TYPE:
-            data = $store.getters.installationData;
-            break;
-          case Types.RESEARCH_TYPE:
-            data = $store.getters.researchData;
-            break;
-      }
-
-      return data;
-    }
-    
     const alreadyUpgrading = (type) => {
       let data = dataSource(type);
 
@@ -289,7 +364,7 @@ export default defineComponent({
       let data = dataSource(props.data.type);
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
-      
+
       return (
         activePlanet.ressources.metal >= level.cost_metal &&
         activePlanet.ressources.petrol >= level.cost_petrol &&
@@ -311,37 +386,36 @@ export default defineComponent({
       }
 
       const activePlanet = $store.getters.activePlanet;
-      
+
       if (!canUpgrade(props, activePlanet)) {
         $notification("failed", `Can't upgrade, not enough resources...`);
         return;
       }
 
       const activePlanetId = activePlanet.id;
-      const level = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level + 1];
+      const level = dataSource(props.data.type)[props.data.label]["upgrades"][
+        props.data.level + 1
+      ];
 
       let storeUpdateMethod = "";
       let apiCall = "";
       switch (props.data.type) {
         case Types.RESOURCE_TYPE:
-            storeUpdateMethod = "upgradeRessourceData";
-            apiCall = ApiRequests.upgradeRessource;
+          storeUpdateMethod = "upgradeRessourceData";
+          apiCall = ApiRequests.upgradeRessource;
           break;
         case Types.INSTALLATION_TYPE:
-            storeUpdateMethod = "upgradeInstallationData";
-            apiCall = ApiRequests.upgradeInstallation;
+          storeUpdateMethod = "upgradeInstallationData";
+          apiCall = ApiRequests.upgradeInstallation;
           break;
 
         case Types.RESEARCH_TYPE:
-            storeUpdateMethod = "upgradeResearchData";
-            apiCall = ApiRequests.upgradeResearch;
+          storeUpdateMethod = "upgradeResearchData";
+          apiCall = ApiRequests.upgradeResearch;
           break;
       }
 
-      const re = await apiCall(
-        props.data.label,
-        activePlanetId
-      );
+      const re = await apiCall(props.data.label, activePlanetId);
 
       if (re.success) {
         $store.commit(storeUpdateMethod, {
@@ -367,6 +441,8 @@ export default defineComponent({
     };
 
     return {
+      allRequirementsMeet: allRequirementsMeet,
+      requirements: requirements,
       timeString: timeString,
       newEnergyUsage: newEnergyUsage,
       metalCost: metalCost,
