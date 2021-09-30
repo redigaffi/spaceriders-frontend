@@ -234,6 +234,7 @@ export default defineComponent({
       let str = "";
       if (h > 0) str += `${h}h`;
       if (m > 0) str += ` ${m}m`;
+      if (s > 0) str += ` ${s}s`;
 
       return str;
     });

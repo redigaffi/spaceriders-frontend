@@ -20,8 +20,9 @@ export default defineComponent({
   },
   methods: {
     update: async function (activePlanet) {
+      
       this.$store.commit("setActivePlanet", activePlanet);
-
+      
       const resourceData = (await ApiRequest.getResourceData(activePlanet.id))
         .data;
       this.$store.commit("setResourceData", resourceData);
@@ -50,14 +51,16 @@ export default defineComponent({
       this.$store.commit("setPlanets", planets);
 
       if (activePlanetId !== false) {
+        console.log("active planet")
         let activePlanet = planets.filter((o) => o.id === activePlanetId);
-        this.update(activePlanet[0]);
+        await this.update(activePlanet[0]);
 
         // Set default planet
       } else if (!activePlanetId && planets.length > 0) {
         let activePlanets = planets.filter((o) => o.claimed);
         if (activePlanets.length > 0) {
-          this.update(activePlanets[0]);
+          console.log("no active planet")
+          await this.update(activePlanets[0]);
         }
       }
     },

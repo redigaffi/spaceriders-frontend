@@ -38,26 +38,13 @@
           to="/installations"
           no-caps
         />
-        <q-route-tab
-          class="q-py-sm"
-          name="research"
-          icon="remove_red_eye"
-          label="Research"
-          to="/research"
-          no-caps
-        />
-        <q-route-tab
-          name="infrastructure"
-          icon="construction"
-          label="Infrastructure"
-          to="/"
-          no-caps
-        />
+        
+        
         <q-route-tab
           name="research"
           icon="travel_explore"
           label="Research"
-          to="/"
+          to="/research"
           no-caps
         />
         <q-route-tab
