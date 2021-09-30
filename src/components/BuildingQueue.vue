@@ -43,7 +43,7 @@
             style="height: 70px"
           />
         </div>
-        <p class="q-py-sm">No buildings in construction</p>
+        <p class="q-py-sm">Queue is empty</p>
       </div>
     </q-card>
   </div>

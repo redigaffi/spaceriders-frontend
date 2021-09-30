@@ -78,7 +78,7 @@
                 <q-item>
                   <q-item-section class="col">
                     <q-item-label
-                      >Required to improve to level
+                      >Cost to upgrade to level
                       {{ data.level + 1 }}:</q-item-label
                     >
 
@@ -164,18 +164,18 @@
                 </q-item>
               </q-list>
 
-              <div class="q-px-md">
+              <div v-if="requirements.length > 0" class="q-px-md">
                 <q-list
                   bordered
                   class="bg-dark text-white"
                   :class="{ 'bg-red-5': allRequirementsMeet == false }"
                 >
                   <!-- <q-list bordered class="bg-red-5 text-white"> -->
-                  <q-expansion-item dense expand-separator label="Settings">
+                  <q-expansion-item dense expand-separator label="Requirements">
                     <q-separator dark />
                     <q-markup-table flat dense dark>
                       <tbody>
-                        <tr v-for="(row, index) in rows" :key="index">
+                        <tr v-for="(row, index) in requirements" :key="index">
                           <td
                             v-if="row.meet"
                             class="text-left"
@@ -221,25 +221,7 @@ import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
-import Types from "../../constants/Types";
-
-const rows = [
-  {
-    requirement: "Investigation Laboratory",
-    level: "Level 2",
-    meet: true,
-  },
-  {
-    requirement: "Investigation Laboratory",
-    level: "Level 2",
-    meet: true,
-  },
-  {
-    requirement: "Investigation Laboratory",
-    level: "Level 2",
-    meet: false,
-  },
-];
+import Types, {} from "../../constants/Types";
 
 export default defineComponent({
   name: "InfoSlider",
@@ -250,10 +232,54 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // FIXME: FOR CONTROLLING THE SETTINGS MARKUP
+    const $store = useStore();
+
+    const dataSource = (type) => {
+      let data = {};
+
+      switch (type) {
+        case Types.RESOURCE_TYPE:
+          data = $store.getters.resourceData;
+          break;
+        case Types.INSTALLATION_TYPE:
+          data = $store.getters.installationData;
+          break;
+        case Types.RESEARCH_TYPE:
+          data = $store.getters.researchData;
+          break;
+      }
+
+      return data;
+    };
+
+    let requirements = computed(() => {
+      if (!props.data) return [];
+
+      let rows = [];
+      for (let requirementIdx in props.data.upgrades[props.data.level + 1].requirements) {
+        const requirement = props.data.upgrades[props.data.level + 1].requirements[requirementIdx]
+        const type = requirement['type'];
+        const asset = requirement['asset'];
+        const requiredLevel = requirement['level'];
+        
+        const dataType = Types.MAPPING[type];
+        if (dataType.RESOURCE_TYPES.includes(asset)) {
+          const info = dataSource(dataType.TYPE);
+          const infoLevel = info[asset];
+          rows.push({
+            requirement: infoLevel.name,
+            level: `Level ${requiredLevel}`,
+            meet: infoLevel.level >= requiredLevel,
+          });
+        }
+      }
+
+      return rows;
+    });
+
     const allRequirementsMeet = computed(() => {
       let flag = true;
-      rows.forEach((element) => {
+      requirements.value.forEach((element) => {
         if (element.meet == false) {
           flag = false;
         }
@@ -267,7 +293,6 @@ export default defineComponent({
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-    const $store = useStore();
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
@@ -302,6 +327,7 @@ export default defineComponent({
       let str = "";
       if (h > 0) str += `${h}h`;
       if (m > 0) str += ` ${m}m`;
+      if (s > 0) str += ` ${s}s`;
 
       return str;
     });
@@ -318,24 +344,6 @@ export default defineComponent({
 
       return nextEnergyUsage - currentEnergyUsage;
     });
-
-    const dataSource = (type) => {
-      let data = {};
-
-      switch (type) {
-        case Types.RESOURCE_TYPE:
-          data = $store.getters.resourceData;
-          break;
-        case Types.INSTALLATION_TYPE:
-          data = $store.getters.installationData;
-          break;
-        case Types.RESEARCH_TYPE:
-          data = $store.getters.researchData;
-          break;
-      }
-
-      return data;
-    };
 
     const alreadyUpgrading = (type) => {
       let data = dataSource(type);
@@ -434,8 +442,7 @@ export default defineComponent({
 
     return {
       allRequirementsMeet: allRequirementsMeet,
-      rows,
-
+      requirements: requirements,
       timeString: timeString,
       newEnergyUsage: newEnergyUsage,
       metalCost: metalCost,
