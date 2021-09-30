@@ -163,6 +163,45 @@
                   </q-item-section>
                 </q-item>
               </q-list>
+
+              <div class="q-px-md">
+                <q-list
+                  bordered
+                  class="bg-dark text-white"
+                  :class="{ 'bg-red-5': allRequirementsMeet == false }"
+                >
+                  <!-- <q-list bordered class="bg-red-5 text-white"> -->
+                  <q-expansion-item dense expand-separator label="Settings">
+                    <q-separator dark />
+                    <q-markup-table flat dense dark>
+                      <tbody>
+                        <tr v-for="(row, index) in rows" :key="index">
+                          <td
+                            v-if="row.meet"
+                            class="text-left"
+                            style="width: 14px"
+                          >
+                            <q-icon
+                              size="20px"
+                              color="warning"
+                              name="check_circle_outline"
+                            />
+                          </td>
+                          <td v-else class="text-left" style="width: 14px">
+                            <q-icon
+                              size="20px"
+                              color="red-5"
+                              name="highlight_off"
+                            />
+                          </td>
+                          <td class="text-left">{{ row.requirement }}</td>
+                          <td class="text-left">{{ row.level }}</td>
+                        </tr>
+                      </tbody>
+                    </q-markup-table>
+                  </q-expansion-item>
+                </q-list>
+              </div>
             </q-card-section>
           </div>
         </div>
@@ -182,7 +221,25 @@ import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
-import Types, {} from "../../constants/Types";
+import Types from "../../constants/Types";
+
+const rows = [
+  {
+    requirement: "Investigation Laboratory",
+    level: "Level 2",
+    meet: true,
+  },
+  {
+    requirement: "Investigation Laboratory",
+    level: "Level 2",
+    meet: true,
+  },
+  {
+    requirement: "Investigation Laboratory",
+    level: "Level 2",
+    meet: false,
+  },
+];
 
 export default defineComponent({
   name: "InfoSlider",
@@ -190,9 +247,20 @@ export default defineComponent({
     data: {
       type: Object,
       default: undefined,
-    }
+    },
   },
   setup(props) {
+    // FIXME: FOR CONTROLLING THE SETTINGS MARKUP
+    const allRequirementsMeet = computed(() => {
+      let flag = true;
+      rows.forEach((element) => {
+        if (element.meet == false) {
+          flag = false;
+        }
+      });
+      return flag;
+    });
+
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
 
@@ -253,22 +321,22 @@ export default defineComponent({
 
     const dataSource = (type) => {
       let data = {};
-      
-      switch(type) {
-          case Types.RESOURCE_TYPE:
-            data = $store.getters.resourceData;
-            break;
-          case Types.INSTALLATION_TYPE:
-            data = $store.getters.installationData;
-            break;
-          case Types.RESEARCH_TYPE:
-            data = $store.getters.researchData;
-            break;
+
+      switch (type) {
+        case Types.RESOURCE_TYPE:
+          data = $store.getters.resourceData;
+          break;
+        case Types.INSTALLATION_TYPE:
+          data = $store.getters.installationData;
+          break;
+        case Types.RESEARCH_TYPE:
+          data = $store.getters.researchData;
+          break;
       }
 
       return data;
-    }
-    
+    };
+
     const alreadyUpgrading = (type) => {
       let data = dataSource(type);
 
@@ -288,7 +356,7 @@ export default defineComponent({
       let data = dataSource(props.data.type);
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
-      
+
       return (
         activePlanet.ressources.metal >= level.cost_metal &&
         activePlanet.ressources.petrol >= level.cost_petrol &&
@@ -310,37 +378,36 @@ export default defineComponent({
       }
 
       const activePlanet = $store.getters.activePlanet;
-      
+
       if (!canUpgrade(props, activePlanet)) {
         $notification("failed", `Can't upgrade, not enough resources...`);
         return;
       }
 
       const activePlanetId = activePlanet.id;
-      const level = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level + 1];
+      const level = dataSource(props.data.type)[props.data.label]["upgrades"][
+        props.data.level + 1
+      ];
 
       let storeUpdateMethod = "";
       let apiCall = "";
       switch (props.data.type) {
         case Types.RESOURCE_TYPE:
-            storeUpdateMethod = "upgradeRessourceData";
-            apiCall = ApiRequests.upgradeRessource;
+          storeUpdateMethod = "upgradeRessourceData";
+          apiCall = ApiRequests.upgradeRessource;
           break;
         case Types.INSTALLATION_TYPE:
-            storeUpdateMethod = "upgradeInstallationData";
-            apiCall = ApiRequests.upgradeInstallation;
+          storeUpdateMethod = "upgradeInstallationData";
+          apiCall = ApiRequests.upgradeInstallation;
           break;
 
         case Types.RESEARCH_TYPE:
-            storeUpdateMethod = "upgradeResearchData";
-            apiCall = ApiRequests.upgradeResearch;
+          storeUpdateMethod = "upgradeResearchData";
+          apiCall = ApiRequests.upgradeResearch;
           break;
       }
 
-      const re = await apiCall(
-        props.data.label,
-        activePlanetId
-      );
+      const re = await apiCall(props.data.label, activePlanetId);
 
       if (re.success) {
         $store.commit(storeUpdateMethod, {
@@ -366,6 +433,9 @@ export default defineComponent({
     };
 
     return {
+      allRequirementsMeet: allRequirementsMeet,
+      rows,
+
       timeString: timeString,
       newEnergyUsage: newEnergyUsage,
       metalCost: metalCost,

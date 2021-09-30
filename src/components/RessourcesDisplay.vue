@@ -7,7 +7,13 @@
       class="bg-transparent text-secondary text-center row justify-center"
     >
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
-        <q-btn stack flat rounded class="btn-glass-element">
+        <q-btn
+          stack
+          flat
+          rounded
+          class="btn-glass-element"
+          :class="{ 'btn-red-glass-element': metalProduction > metalCapacity }"
+        >
           <img
             src="~assets/img/metal3.svg"
             style="width: 100px; height: 66px"
@@ -60,7 +66,15 @@
         </q-btn>
       </div>
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
-        <q-btn stack flat rounded class="btn-glass-element">
+        <q-btn
+          stack
+          flat
+          rounded
+          class="btn-glass-element"
+          :class="{
+            'btn-red-glass-element': crystalProduction > crystalCapacity,
+          }"
+        >
           <img
             src="~assets/img/crystal.svg"
             style="width: 100px; height: 66px"
@@ -113,7 +127,15 @@
         </q-btn>
       </div>
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
-        <q-btn stack flat rounded class="btn-glass-element">
+        <q-btn
+          stack
+          flat
+          rounded
+          class="btn-glass-element"
+          :class="{
+            'btn-red-glass-element': petrolProduction > petrolCapacity,
+          }"
+        >
           <img
             src="~assets/img/petrol5.svg"
             style="width: 100px; height: 66px"
@@ -166,7 +188,13 @@
         </q-btn>
       </div>
       <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
-        <q-btn stack flat rounded class="btn-glass-element">
+        <q-btn
+          stack
+          flat
+          rounded
+          class="btn-glass-element"
+          :class="{ 'btn-red-glass-element': energyProduction > energyLeft }"
+        >
           <img
             src="~assets/img/energy6.svg"
             style="width: 100px; height: 66px"
@@ -381,5 +409,28 @@ export default {
 <style>
 .resource-div {
   width: 120px;
+}
+
+.btn-red-glass-element {
+  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.2);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  background: inherit;
+  overflow: hidden;
+}
+
+.btn-red-glass-element:before {
+  content: "";
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 2000px rgba(255, 0, 0, 0.6);
+  filter: blur(10px);
+  margin: -20px;
 }
 </style>
