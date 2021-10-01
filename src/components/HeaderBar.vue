@@ -51,7 +51,7 @@
           icon="security"
           label="Defense"
           no-caps
-          to="/"
+          to="/defense"
         />
       </q-tabs>
 

@@ -75,7 +75,7 @@
           }"
         >
           <img
-            src="~assets/img/resources/main_4.png"
+            src="~assets/img/resources/RES_ic_CRYSTAL.png"
             alt=""
             srcset=""
             class="q-pt-sm planet-icons"
@@ -193,10 +193,11 @@
           :class="{ 'btn-red-glass-element': energyProduction > energyLeft }"
         >
           <img
-            src="~assets/img/resources/RES_ic_Energy.png"
+            src="~assets/img/resources/RES_ic_ENERGY.png"
             alt=""
             srcset=""
-            class="q-pt-sm planet-icons"
+            class="q-pt-sm"
+            style="width:72.5px"
           />
           <p class="text-weight-bold text-body1 q-pt-sm">{{ energyLeft }}</p>
 
@@ -410,6 +411,7 @@ export default {
 .btn-red-glass-element {
   box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.2);
   border-radius: 20px;
+  border: 1px solid red;
   position: relative;
   z-index: 1;
   background: inherit;

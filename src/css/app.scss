@@ -8,7 +8,7 @@
 
 body {
   font-family: latofont;
-  
+
   border: 1px solid black;
   /* background: url("../assets/img/background.svg") no-repeat center center fixed; */
   background: url("../assets/img/bg4.jpg") no-repeat center center fixed;
@@ -89,10 +89,11 @@ body {
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   position: relative;
+  border: 1px solid $warning;
   z-index: 1;
   background: inherit;
   overflow: hidden;
-  border:1px solid $warning;
+  border: 1px solid $warning;
 }
 
 .btn-glass-element:before {

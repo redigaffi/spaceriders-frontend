@@ -4,6 +4,7 @@ const resourcesPage = () => import('src/pages/Resources.vue');
 const installationsPage = () => import('src/pages/Installations.vue');
 const researchPage = () => import('src/pages/Research.vue');
 const planetPage = () => import('pages/Planet.vue');
+const defensePage = () => import('pages/Defense.vue');
 
 const routes = [
   //TODO: change this component
@@ -42,6 +43,14 @@ const routes = [
       { path: '', component: planetPage },
     ]
   },
+  {
+    path: '/defense',
+    component:  mainLayout,
+    children: [
+      { path: '', component: defensePage },
+    ]
+  },
+
 
 
   // Always leave this as last one,
