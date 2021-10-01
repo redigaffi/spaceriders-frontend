@@ -1,5 +1,5 @@
 <template>
-  <q-header elevated class="bg-dark">
+  <q-header elevated class="bg-navbar q-py-xs">
     <q-toolbar>
       <q-btn
         class="lt-md"
@@ -13,7 +13,7 @@
       <q-toolbar-title> Cryptoverse </q-toolbar-title>
 
       <q-space />
-      <q-tabs inline-label dense class="text-secondary absolute-center gt-sm">
+      <q-tabs active-color="warning" inline-label dense class="text-secondary absolute-center gt-sm">
         <q-route-tab
           class="q-py-sm"
           icon="fas fa-globe-europe"
@@ -127,3 +127,23 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.bg-navbar {
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  background: inherit;
+  overflow: hidden;
+}
+
+.bg-navbar:before {
+  content: "";
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 2000px rgba(0, 0, 0, 1);
+}
+</style>

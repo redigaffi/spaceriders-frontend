@@ -2,10 +2,9 @@
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
     <q-btn
-      rounded
-      color="info"
-      text-color="white"
       :label="logInButtonText"
+      color="warning"
+      class="btn-glow-element"
       icon="person"
       @click="login"
     />
@@ -62,14 +61,13 @@ export default {
       this.$notification("success", "Successfully started session!", 6000);
 
       this.$store.commit("login", { jwt: re.data.jwt, address: address });
-      
+
       /* const planets = (await ApiRequest.getPlanets()).data;
       
       this.$store.commit("setPlanets", { planets: planets})
       this.$store.commit("setActivePlanet", planets[0]);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, planets[0]); */
-      this.$eventBus.emit(LOGGED_IN)
-
+      this.$eventBus.emit(LOGGED_IN);
     },
   },
 
@@ -96,3 +94,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.btn-glow-element {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0px 100px rgba(34, 83, 244, .9);
+}
+</style>
