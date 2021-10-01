@@ -1,5 +1,8 @@
 <template>
-  <div v-if="$store.getters.activePlanet !== false" class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm">
+  <div
+    v-if="$store.getters.activePlanet !== false"
+    class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm"
+  >
     <!-- style="max-height: 750px" -->
     <q-card>
       <q-card-section class="q-pa-xs text-center">
@@ -62,7 +65,6 @@ import { useStore } from "vuex";
 
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
-
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
   name: "PlanetList",
@@ -87,9 +89,11 @@ export default defineComponent({
         active: true,
         planet: activePlanet,
       });
-  
-      const planets = $store.getters.planets.filter((p) => p.id != activePlanet.id && p.claimed);
-      
+
+      const planets = $store.getters.planets.filter(
+        (p) => p.id != activePlanet.id && p.claimed
+      );
+
       for (let pId in planets) {
         const planet = planets[pId];
         re.push({
@@ -125,7 +129,6 @@ export default defineComponent({
         pagination.value.rowsPerPage = getItemsPerPage();
       }
     );
-
 
     function changeActivatePlanet(planet) {
       $store.commit("setActivePlanet", planet);
@@ -174,8 +177,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
+<style lang="scss">
 .q-table__bottom-item {
   display: none;
 }

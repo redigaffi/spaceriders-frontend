@@ -15,11 +15,10 @@
           :class="{ 'btn-red-glass-element': metalProduction > metalCapacity }"
         >
           <img
-            src="~assets/img/metal3.svg"
-            style="width: 100px; height: 66px"
+            src="~assets/img/resources/RES_ic_Metal.png"
             alt=""
             srcset=""
-            class="q-pt-sm"
+            class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.metal }}
@@ -76,11 +75,10 @@
           }"
         >
           <img
-            src="~assets/img/crystal.svg"
-            style="width: 100px; height: 66px"
+            src="~assets/img/resources/main_4.png"
             alt=""
             srcset=""
-            class="q-pt-sm"
+            class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.crystal }}
@@ -137,11 +135,10 @@
           }"
         >
           <img
-            src="~assets/img/petrol5.svg"
-            style="width: 100px; height: 66px"
+            src="~assets/img/resources/RES_ic_FUEL2.png"
             alt=""
             srcset=""
-            class="q-pt-sm"
+            class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body1 q-pt-sm">
             {{ this.$store.getters.activePlanet.ressources.petrol }}
@@ -196,11 +193,10 @@
           :class="{ 'btn-red-glass-element': energyProduction > energyLeft }"
         >
           <img
-            src="~assets/img/energy6.svg"
-            style="width: 100px; height: 66px"
+            src="~assets/img/resources/RES_ic_Energy.png"
             alt=""
             srcset=""
-            class="q-pt-sm"
+            class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body1 q-pt-sm">{{ energyLeft }}</p>
 
@@ -432,5 +428,10 @@ export default {
   box-shadow: inset 0 0 2000px rgba(255, 0, 0, 0.6);
   filter: blur(10px);
   margin: -20px;
+}
+
+.planet-icons {
+  height: 80px;
+  width: 80px;
 }
 </style>
