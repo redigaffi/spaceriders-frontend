@@ -186,7 +186,7 @@ export default defineComponent({
 }
 
 .active-planet {
-  border-left: 2px solid #f2c037;
+  border-left: 2px solid $warning;
 }
 </style>
 
