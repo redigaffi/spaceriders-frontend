@@ -74,10 +74,10 @@
                         <div class="text-center text-subtitle2">
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_Metal.png"
                               alt=""
-                              style="height: 70px; width: 70px"
                               srcset=""
+                              class="resource-icon-small"
                             />
                             <div class="text-secondary">200 Metal</div>
                             <q-tooltip class="bg-dark"> 200 Metal </q-tooltip>
@@ -87,10 +87,10 @@
                         <div class="text-center text-subtitle2">
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_FUEL2.png"
                               alt=""
-                              style="height: 70px; width: 70px"
                               srcset=""
+                              class="resource-icon-small"
                             />
                             <div class="text-secondary">200 Petrol</div>
                             <q-tooltip class="bg-dark"> 200 Petrol </q-tooltip>
@@ -100,9 +100,9 @@
                         <div class="text-center text-subtitle2">
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_CRYSTAL.png"
                               alt=""
-                              style="height: 70px; width: 70px"
+                              class="resource-icon-small"
                               srcset=""
                             />
                             <div class="text-secondary">200 Crystal</div>
@@ -165,3 +165,9 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss">
+.resource-icon-small {
+  width: 60px;
+  height: 60px;
+}
+</style>

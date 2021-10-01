@@ -74,7 +74,8 @@
                     <q-card-section
                       class="
                         q-pa-xs
-                        text-warning
+                        text-weight-bold
+                        text-positive
                         absolute-bottom
                         tag-glass-element
                       "

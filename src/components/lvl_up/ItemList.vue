@@ -40,22 +40,18 @@
                 </q-tooltip>
               </q-btn>
               <q-card-section class="q-pa-none">
-                <q-card
-                  flat
-                  class="bg-transparent text-dark cursor-pointer"
-                  
-                >
+                <q-card flat class="bg-transparent text-dark cursor-pointer">
                   <img src="~assets/img/planet1.jpg" style="height: 110px" />
 
                   <q-card-section
                     class="
                       q-pa-xs
-                      text-warning
+                      text-weight-bold text-positive
                       absolute-bottom
                       tag-glass-element
                     "
                   >
-                    {{value.level}}
+                    {{ value.level }}
                   </q-card-section>
                   <!-- <q-card-section class="bg-dark">
                     <q-btn color="warning" class="q-px-lg" label="Claim" />

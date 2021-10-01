@@ -93,10 +93,10 @@
                         >
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_Metal.png"
                               alt=""
-                              style="height: 70px; width: 70px"
                               srcset=""
+                              class="resource-icon-small"
                             />
                             <div class="text-secondary">
                               {{ metalCost }} Metal
@@ -113,10 +113,10 @@
                         >
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_FUEL2.png"
                               alt=""
-                              style="height: 70px; width: 70px"
                               srcset=""
+                              class="resource-icon-small"
                             />
                             <div class="text-secondary">
                               {{ petrolCost }} Petrol
@@ -133,9 +133,9 @@
                         >
                           <div>
                             <img
-                              src="~assets/img/gold.jpg"
+                              src="~assets/img/resources/RES_ic_CRYSTAL.png"
                               alt=""
-                              style="height: 70px; width: 70px"
+                              class="resource-icon-small"
                               srcset=""
                             />
                             <div class="text-secondary">
@@ -221,7 +221,7 @@ import { defineComponent, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
-import Types, {} from "../../constants/Types";
+import Types from "../../constants/Types";
 
 export default defineComponent({
   name: "InfoSlider",
@@ -256,12 +256,16 @@ export default defineComponent({
       if (!props.data) return [];
 
       let rows = [];
-      for (let requirementIdx in props.data.upgrades[props.data.level + 1].requirements) {
-        const requirement = props.data.upgrades[props.data.level + 1].requirements[requirementIdx]
-        const type = requirement['type'];
-        const asset = requirement['asset'];
-        const requiredLevel = requirement['level'];
-        
+      for (let requirementIdx in props.data.upgrades[props.data.level + 1]
+        .requirements) {
+        const requirement =
+          props.data.upgrades[props.data.level + 1].requirements[
+            requirementIdx
+          ];
+        const type = requirement["type"];
+        const asset = requirement["asset"];
+        const requiredLevel = requirement["level"];
+
         const dataType = Types.MAPPING[type];
         if (dataType.RESOURCE_TYPES.includes(asset)) {
           const info = dataSource(dataType.TYPE);
@@ -292,7 +296,6 @@ export default defineComponent({
 
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
-
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
