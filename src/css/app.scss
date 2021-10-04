@@ -2,12 +2,12 @@
 
 // CUSTOM FONT
 @font-face {
-  font-family: latofont;
-  src: url("../assets/font/Lato-Regular.ttf");
+  font-family: OrbitronFont;
+  src: url("../assets/font/Orbitron-Regular.ttf");
 }
 
 body {
-  font-family: latofont;
+  font-family: OrbitronFont;
 
   border: 1px solid black;
   /* background: url("../assets/img/background.svg") no-repeat center center fixed; */
@@ -113,4 +113,39 @@ body {
 .resource-icon-small {
   width: 60px;
   height: 60px;
+}
+
+.footer__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+  padding-top: 0.3rem;
+  position: relative;
+}
+
+.footer__title:before {
+  content: "";
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #fff;
+}
+
+.footer__title:after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 4px;
+  background: #2253f4;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.blue {
+  color: #2253f4;
 }

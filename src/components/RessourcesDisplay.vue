@@ -411,11 +411,11 @@ export default {
 .btn-red-glass-element {
   box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.2);
   border-radius: 20px;
-  border: 1px solid red;
   position: relative;
   z-index: 1;
   background: inherit;
   overflow: hidden;
+  color: red;
 }
 
 .btn-red-glass-element:before {
@@ -427,8 +427,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  box-shadow: inset 0 0 2000px rgba(255, 0, 0, 0.6);
-  filter: blur(10px);
   margin: -20px;
 }
 

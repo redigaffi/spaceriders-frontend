@@ -53,14 +53,6 @@ input::-webkit-inner-spin-button{
 	border: none;
 }
 
-.input{
-	
-}
-
-.input::placeholder{
-
-}
-
 .input:focus::placeholder{
 	opacity: 0;	
 }

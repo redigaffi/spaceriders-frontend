@@ -10,10 +10,15 @@
         aria-label="Menu"
         @click="toggleLeftDrawer"
       />
-      <q-toolbar-title> Cryptoverse </q-toolbar-title>
+      <div class="footer__title"><span class="blue">Space</span>riders</div>
 
       <q-space />
-      <q-tabs active-color="warning" inline-label dense class="text-secondary absolute-center gt-sm">
+      <q-tabs
+        active-color="warning"
+        inline-label
+        dense
+        class="text-secondary absolute-center gt-sm"
+      >
         <q-route-tab
           class="q-py-sm"
           icon="fas fa-globe-europe"
@@ -38,7 +43,7 @@
           to="/installations"
           no-caps
         />
-        
+
         <q-route-tab
           name="research"
           icon="travel_explore"
