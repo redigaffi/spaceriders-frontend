@@ -1,11 +1,16 @@
-
+// LAYOUTS
 const mainLayout = () => import('layouts/MainLayout.vue');
+const landingLayout = () => import('layouts/LandingLayout.vue');
+
+// PAGES
 const resourcesPage = () => import('src/pages/Resources.vue');
 const installationsPage = () => import('src/pages/Installations.vue');
 const researchPage = () => import('src/pages/Research.vue');
 const planetPage = () => import('pages/Planet.vue');
 const defensePage = () => import('pages/Defense.vue');
+const landingPage = () => import('pages/Landing.vue');
 
+// ROUTES
 const routes = [
   //TODO: change this component
   {
@@ -48,6 +53,13 @@ const routes = [
     component:  mainLayout,
     children: [
       { path: '', component: defensePage },
+    ]
+  },
+  {
+    path: '/landing',
+    component:  landingLayout,
+    children: [
+      { path: '', component: landingPage },
     ]
   },
 
