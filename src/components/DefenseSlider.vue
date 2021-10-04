@@ -165,9 +165,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss">
-.resource-icon-small {
-  width: 60px;
-  height: 60px;
-}
-</style>

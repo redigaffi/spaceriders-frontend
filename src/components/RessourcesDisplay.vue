@@ -6,7 +6,7 @@
       flat
       class="bg-transparent text-secondary text-center row justify-center"
     >
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
+      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
         <q-btn
           stack
           flat
@@ -20,7 +20,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1 q-pt-sm">
+          <p class="text-weight-bold text-body1">
             {{ this.$store.getters.activePlanet.ressources.metal }}
           </p>
 
@@ -64,7 +64,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
+      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
         <q-btn
           stack
           flat
@@ -80,7 +80,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1 q-pt-sm">
+          <p class="text-weight-bold text-body1">
             {{ this.$store.getters.activePlanet.ressources.crystal }}
           </p>
 
@@ -124,7 +124,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
+      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
         <q-btn
           stack
           flat
@@ -140,7 +140,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1 q-pt-sm">
+          <p class="text-weight-bold text-body1">
             {{ this.$store.getters.activePlanet.ressources.petrol }}
           </p>
 
@@ -184,7 +184,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div class="col-xs-6 col-sm-3 q-pa-sm" style="width: 140px">
+      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
         <q-btn
           stack
           flat
@@ -197,9 +197,9 @@
             alt=""
             srcset=""
             class="q-pt-sm"
-            style="width:72.5px"
+            style="width: 42.5px"
           />
-          <p class="text-weight-bold text-body1 q-pt-sm">{{ energyLeft }}</p>
+          <p class="text-weight-bold text-body1">{{ energyLeft }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -404,8 +404,8 @@ export default {
 };
 </script>
 <style>
-.resource-div {
-  width: 120px;
+#equal-width {
+  width: 110px;
 }
 
 .btn-red-glass-element {
