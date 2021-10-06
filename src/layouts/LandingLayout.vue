@@ -8,7 +8,7 @@
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "MainLayout",
+  name: "LandingLayout",
   setup() {},
   methods: {},
 });

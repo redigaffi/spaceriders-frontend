@@ -79,7 +79,7 @@
               },
               bubble: {
                 distance: 200,
-                size: 80,
+                size: 10,
                 duration: 0.4,
               },
               repulse: {
@@ -97,10 +97,10 @@
           },
           particles: {
             number: {
-              value: 120,
+              value: 200,
               density: {
                 enable: true,
-                value_area: 800,
+                value_area: 2000,
               },
             },
             color: {
