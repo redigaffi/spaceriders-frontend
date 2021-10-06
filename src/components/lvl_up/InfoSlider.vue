@@ -42,7 +42,13 @@
             >
               <q-list dense>
                 <q-item>
-                  <q-item-section class="col">
+                  <q-item-section v-if="quantity" class="col">
+                    <q-item-label>Production Duration:</q-item-label>
+                    <q-item-label class="text-warning text-h6 text-weight-bold"
+                      >20m/item</q-item-label
+                    >
+                  </q-item-section>
+                  <q-item-section v-else class="col">
                     <q-item-label>Upgrade time:</q-item-label>
                     <q-item-label
                       class="text-warning text-h6 text-weight-bold"
@@ -58,16 +64,27 @@
                       >
                     </div>
                   </q-item-section>
-                  <q-item-section class="col">
+                  <!--<q-item-section class="col">
                     <div class="text-right">
-                      <!-- <q-btn
+                     <q-btn
                         push
                         color="red"
                         icon="expand_more"
                         label="Tear Down"
                         no-caps
-                      /> -->
+                      /> 
                     </div>
+                  </q-item-section>-->
+                  <q-item-section v-if="quantity" class="col-xs-6 col-sm-3">
+                    <q-input
+                      outlined
+                      square
+                      v-model="text"
+                      type="number"
+                      stack-label
+                      color="secondary"
+                      label="Number"
+                    />
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -229,6 +246,10 @@ export default defineComponent({
     data: {
       type: Object,
       default: undefined,
+    },
+    quantity: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
