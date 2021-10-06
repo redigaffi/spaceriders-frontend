@@ -313,11 +313,9 @@ export default {
     const energyLeft = computed(() => {
       if ($store.getters.resourceData.solarPlant === undefined) return;
 
-      const currentLevel = $store.getters.resourceData.solarPlant.level;
       const currentUsage = $store.getters.activePlanet.ressources.energy_usage;
       return (
-        $store.getters.resourceData.solarPlant.upgrades[currentLevel]
-          .production - currentUsage
+        energyProduction.value - currentUsage
       );
     });
 
