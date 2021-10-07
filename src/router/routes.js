@@ -8,6 +8,8 @@ const installationsPage = () => import('src/pages/Installations.vue');
 const researchPage = () => import('src/pages/Research.vue');
 const planetPage = () => import('pages/Planet.vue');
 const defensePage = () => import('pages/Defense.vue');
+const convertPage = () => import('pages/Convert.vue');
+
 const landingPage = () => import('pages/Landing.vue');
 
 // ROUTES
@@ -53,6 +55,13 @@ const routes = [
     component:  mainLayout,
     children: [
       { path: '', component: defensePage },
+    ]
+  },
+  {
+    path: '/convert',
+    component:  mainLayout,
+    children: [
+      { path: '', component: convertPage },
     ]
   },
   {
