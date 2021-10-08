@@ -130,7 +130,7 @@
                         >
                           <div>
                             <img
-                              src="~assets/img/resources/RES_ic_FUEL5.png"
+                              src="~assets/img/resources/RES_ic_FUEL2.png"
                               alt=""
                               srcset=""
                               class="resource-icon-small"
