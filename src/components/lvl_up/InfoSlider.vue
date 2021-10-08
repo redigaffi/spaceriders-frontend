@@ -83,7 +83,7 @@
                       type="number"
                       stack-label
                       color="secondary"
-                      label="Number"
+                      label="Quantity"
                     />
                   </q-item-section>
                 </q-item>

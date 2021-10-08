@@ -13,7 +13,7 @@
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
               <DefaultSlider
-                :name="`Research - ${this.$store.getters.activePlanet.name}`"
+                :name="`Defense - ${this.$store.getters.activePlanet.name}`"
                 key="defaultSlider"
               ></DefaultSlider>
             </div>
@@ -23,7 +23,7 @@
               <InfoSlider
                 quantity
                 :data="researchInfo"
-                type="installation"
+                type="defense"
                 key="defenseSlider"
                 @cancelled="cancelled"
               />
