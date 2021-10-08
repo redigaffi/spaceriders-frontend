@@ -58,6 +58,13 @@
           no-caps
           to="/defense"
         />
+        <q-route-tab
+          name="convert"
+          icon="security"
+          label="Convert"
+          no-caps
+          to="/convert"
+        />
       </q-tabs>
 
       <user />
