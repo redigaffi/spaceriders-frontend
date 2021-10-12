@@ -41,7 +41,7 @@
               </q-btn>
               <q-card-section class="q-pa-none">
                 <q-card flat class="bg-transparent text-dark cursor-pointer">
-                  <img src="~assets/img/planet1.jpg" style="height: 110px" />
+                  <img :src="`data_img/${value.label}.png`" style="height: 110px" />
 
                   <q-card-section
                     v-if="itemType"
@@ -105,13 +105,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const number = computed(() => {
-        if (props.itemType) {
-
-        }
-        return true;
-    });
-    return {};
+    
+    return {
+      
+    };
   },
 });
 </script>
