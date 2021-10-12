@@ -35,6 +35,13 @@ export default defineComponent({
       const researchData = (await ApiRequest.getResearchData(activePlanet.id))
         .data;
       this.$store.commit("setResearchData", researchData);
+
+      const defenseData = (await ApiRequest.getDefenseData(activePlanet.id))
+        .data;
+
+      this.$store.commit("setDefenseData", defenseData);
+
+
     },
     updateAll: async function () {
       //TODO: Delete all intervals ..

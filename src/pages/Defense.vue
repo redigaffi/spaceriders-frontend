@@ -21,7 +21,7 @@
           <q-slide-transition duration="1000">
             <div v-show="currentTabComponent != 'DefaultSlider'">
               <InfoSlider
-                quantity
+                itemType
                 :data="researchInfo"
                 type="installation"
                 key="defenseSlider"
@@ -33,8 +33,9 @@
       </q-card>
     </div>
     <ItemList
-      listName="Installations"
-      :data="this.$store.getters.installationData"
+      itemType
+      listName="Defense"
+      :data="this.$store.getters.defenseData"
       @change="slideDiv"
     />
   </div>

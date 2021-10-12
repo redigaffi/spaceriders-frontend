@@ -44,6 +44,18 @@
                   <img src="~assets/img/planet1.jpg" style="height: 110px" />
 
                   <q-card-section
+                    v-if="itemType"
+                    class="
+                      q-pa-xs
+                      text-weight-bold text-positive
+                      absolute-bottom
+                      tag-glass-element
+                    "
+                  >
+                    {{ value.available }}
+                  </q-card-section>
+                  <q-card-section
+                    v-else
                     class="
                       q-pa-xs
                       text-weight-bold text-positive
@@ -74,7 +86,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 
 export default defineComponent({
   name: "ItemList",
@@ -87,8 +99,18 @@ export default defineComponent({
       type: String,
       default: undefined,
     },
+    itemType: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup() {
+  setup(props) {
+    const number = computed(() => {
+        if (props.itemType) {
+
+        }
+        return true;
+    });
     return {};
   },
 });

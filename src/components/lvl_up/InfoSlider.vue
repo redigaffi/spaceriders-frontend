@@ -23,7 +23,7 @@
               "
             >
               {{ data.name }}
-              <span class="text-warning q-ml-md">Level {{ data.level }}</span>
+              <span v-if="!itemType" class="text-warning q-ml-md">Level {{ data.level }}</span>
               <div class="absolute-right q-ma-md">
                 <q-btn
                   dense
@@ -42,11 +42,21 @@
             >
               <q-list dense>
                 <q-item>
-                  <q-item-section v-if="quantity" class="col">
+                  <q-item-section v-if="itemType" class="col">
                     <q-item-label>Production Duration:</q-item-label>
                     <q-item-label class="text-warning text-h6 text-weight-bold"
-                      >20m/item</q-item-label
+                      >{{ timeString }}</q-item-label
                     >
+
+                    <div v-if="newEnergyUsage > 0">
+                      <q-item-label> Energy usage/item: </q-item-label>
+                      <q-item-label
+                        class="text-warning text-h6 text-weight-bold"
+                      >
+                        +{{ newEnergyUsage }}</q-item-label
+                      >
+                    </div>
+
                   </q-item-section>
                   <q-item-section v-else class="col">
                     <q-item-label>Upgrade time:</q-item-label>
@@ -54,7 +64,7 @@
                       class="text-warning text-h6 text-weight-bold"
                       >{{ timeString }}</q-item-label
                     >
-
+                  
                     <div v-if="newEnergyUsage > 0">
                       <q-item-label> Energy needed: </q-item-label>
                       <q-item-label
@@ -63,6 +73,8 @@
                         +{{ newEnergyUsage }}</q-item-label
                       >
                     </div>
+
+                    
                   </q-item-section>
                   <!--<q-item-section class="col">
                     <div class="text-right">
@@ -75,11 +87,11 @@
                       /> 
                     </div>
                   </q-item-section>-->
-                  <q-item-section v-if="quantity" class="col-xs-6 col-sm-3">
+                  <q-item-section v-if="itemType" class="col-xs-6 col-sm-3">
                     <q-input
                       outlined
                       square
-                      v-model="text"
+                      v-model="quantity"
                       type="number"
                       stack-label
                       color="secondary"
@@ -98,7 +110,11 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <q-item-label
+                    
+                    <q-item-label v-if="itemType"
+                      >Cost to build:</q-item-label
+                    >
+                    <q-item-label v-else
                       >Cost to upgrade to level
                       {{ data.level + 1 }}:</q-item-label
                     >
@@ -175,7 +191,7 @@
                       <q-btn
                         color="warning"
                         icon="expand_less"
-                        label="Upgrade"
+                        :label="itemType ? 'Build' : 'Upgrade'"
                         no-caps
                         push
                         @click="upgrade"
@@ -238,7 +254,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, getCurrentInstance } from "vue";
+import { defineComponent, computed, getCurrentInstance, ref } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
@@ -251,12 +267,14 @@ export default defineComponent({
       type: Object,
       default: undefined,
     },
-    quantity: {
+    itemType: {
       type: Boolean,
       default: false,
     },
   },
   setup(props) {
+    const quantity = ref(1);
+
     const $store = useStore();
 
     const dataSource = (type) => {
@@ -272,6 +290,9 @@ export default defineComponent({
         case Types.RESEARCH_TYPE:
           data = $store.getters.researchData;
           break;
+        case Types.DEFENSE_TYPE:
+          data = $store.getters.defenseData;
+          break;
       }
 
       return data;
@@ -281,12 +302,18 @@ export default defineComponent({
       if (!props.data) return [];
 
       let rows = [];
-      for (let requirementIdx in props.data.upgrades[props.data.level + 1]
-        .requirements) {
-        const requirement =
-          props.data.upgrades[props.data.level + 1].requirements[
-            requirementIdx
-          ];
+
+      let requirementData = [];
+      if (props.itemType) {
+        requirementData = props.data.data.requirements;
+      } else {
+        requirementData = props.data.upgrades[props.data.level + 1].requirements;
+      }
+
+      for (let requirementIdx in requirementData) {
+
+        const requirement = requirementData[requirementIdx];
+
         const type = requirement["type"];
         const asset = requirement["asset"];
         const requiredLevel = requirement["level"];
@@ -324,23 +351,43 @@ export default defineComponent({
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
+      
+      if (props.itemType) {
+        return props.data.data.cost_metal*quantity.value;
+      }
+
       return props.data.upgrades[props.data.level + 1].cost_metal;
     });
 
     const petrolCost = computed(() => {
       if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.cost_petrol*quantity.value;
+      }
+
       return props.data.upgrades[props.data.level + 1].cost_petrol;
     });
 
     const crystalCost = computed(() => {
       if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.cost_crystal*quantity.value;
+      }
+
       return props.data.upgrades[props.data.level + 1].cost_crystal;
     });
 
     const timeString = computed(() => {
       if (!props.data) return "0m";
 
-      let timeNeeded = props.data.upgrades[props.data.level + 1].upgrade_time;
+      let timeNeeded = 0;
+      if (props.itemType) {
+        timeNeeded = props.data.data.build_time*quantity.value;
+      } else {
+        timeNeeded = props.data.upgrades[props.data.level + 1].upgrade_time;
+      }
 
       const now = new Date();
       const finish = new Date(now.getTime() + timeNeeded * 1000);
@@ -362,6 +409,11 @@ export default defineComponent({
 
     const newEnergyUsage = computed(() => {
       if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.energy_usage*quantity.value;
+      } 
+      
       const nextEnergyUsage =
         props.data.upgrades[props.data.level + 1].energy_usage;
 
@@ -379,7 +431,7 @@ export default defineComponent({
       let anyUpgrade = false;
       for (let key in data) {
         const ressource = data[key];
-        if (ressource.upgrading) {
+        if (ressource.upgrading || ressource.building) {
           anyUpgrade = true;
           break;
         }
@@ -390,6 +442,19 @@ export default defineComponent({
 
     const canUpgrade = (props, activePlanet) => {
       let data = dataSource(props.data.type);
+
+      if (props.itemType) {
+        const dataItem = data[props.data.label].data;
+        const metalCost = dataItem.cost_metal*quantity.value;
+        const crystalCost = dataItem.cost_crystal*quantity.value;
+        const petrolCost = dataItem.cost_petrol*quantity.value;
+
+        return (
+          activePlanet.ressources.metal >= metalCost &&
+          activePlanet.ressources.petrol >= petrolCost &&
+          activePlanet.ressources.crystal >= crystalCost
+        );
+      } 
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
 
@@ -408,7 +473,7 @@ export default defineComponent({
       if (anyUpgrade) {
         $notification(
           "failed",
-          `A building is already being upgraded, wait until it finishes...`
+          `Queue is full, wait until it finishes...`
         );
         return;
       }
@@ -421,9 +486,6 @@ export default defineComponent({
       }
 
       const activePlanetId = activePlanet.id;
-      const level = dataSource(props.data.type)[props.data.label]["upgrades"][
-        props.data.level + 1
-      ];
 
       let storeUpdateMethod = "";
       let apiCall = "";
@@ -441,27 +503,61 @@ export default defineComponent({
           storeUpdateMethod = "upgradeResearchData";
           apiCall = ApiRequests.upgradeResearch;
           break;
+
+        case Types.DEFENSE_TYPE:
+          storeUpdateMethod = "buildDefenseData";
+          apiCall = ApiRequests.buildDefense;
+          break;
       }
 
-      const re = await apiCall(props.data.label, activePlanetId);
+      let data = {
+        label: props.data.label,
+        planetGuid: activePlanetId,
+      };
+
+      if (props.itemType) {
+        data.quantity = quantity.value;
+      }
+
+      const re = await apiCall(data);
 
       if (re.success) {
-        $store.commit(storeUpdateMethod, {
+        let saveStore = {
           label: props.data.label,
           upgradeFinish: re.data.upgrade_finish,
-        });
+        };
+
+        if (props.itemType) {
+          saveStore.quantity = re.data.quantity;
+        }
+
+        $store.commit(storeUpdateMethod, saveStore);
+        
+        let prices = {};
+        if (props.itemType) {
+          prices = dataSource(props.data.type)[props.data.label].data;
+        } else {
+          prices = dataSource(props.data.type)[props.data.label]["upgrades"][
+            props.data.level + 1
+          ];
+        }
 
         $store.commit("restPlanetResources", {
-          metal: level.cost_metal,
-          crystal: level.cost_crystal,
-          petrol: level.cost_petrol,
+          metal: prices.cost_metal,
+          crystal: prices.cost_crystal,
+          petrol: prices.cost_petrol,
         });
 
         $eventBus.emit(BUILDING_UPGRADED);
 
+        let notificationMessage = `${props.data.name} upgraded and added to the building queue.`;
+        if (props.itemType) {
+          notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
+        }
+
         $notification(
           "success",
-          `${props.data.name} upgraded and added to the building queue.`
+          notificationMessage
         );
       } else {
         $notification("failed", re.error);
@@ -477,6 +573,7 @@ export default defineComponent({
       petrolCost: petrolCost,
       crystalCost: crystalCost,
       upgrade: upgrade,
+      quantity: quantity
     };
   },
 });
