@@ -9,7 +9,7 @@
           <!-- IMAGE -->
           <div class="col-4 gt-sm">
             <img
-              src="~assets/img/body-backgrounds-2.jpg"
+              :src="`data_img/${data.label}.png`"
               width="100%"
               style="height: 100%; width: 100%"
             />
