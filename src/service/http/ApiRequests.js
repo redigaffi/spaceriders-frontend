@@ -207,5 +207,24 @@ export default class ApiRequests {
   
       return (await axios.post(path, body)).data;
     }
+    
+    /**
+   * Conversion Request.
+   * @param {string} label
+   * @param {string} planetGuid 
+   * @returns 
+   */
+     static async conversionRequest(data) {
+      const path = `${process.env.BASE_API_PATH}/conversion/convert`;
   
+      const body = {
+        type: data.type,
+        planetId: data.planetGuid,
+        metal: data.metal,
+        crystal: data.crystal,
+        petrol: data.petrol,
+      };
+  
+      return (await axios.post(path, body)).data;
+    }
 }

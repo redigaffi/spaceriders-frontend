@@ -292,7 +292,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>0 Petrol</div>
+                    <div>50 Petrol</div>
                   </div>
                 </div>
 
@@ -430,7 +430,7 @@ import GlassElementHeading from "components/GlassElementHeading";
 const deserts = [];
 
 const rows = [
-  {
+  /*{
     id: "1",
     name: "Convert Resources to Tokens",
     metal: "100",
@@ -451,7 +451,7 @@ const rows = [
     convertToToken: false,
     readyToClaim: true,
     claim: false,
-  },
+  },*/
 ];
 
 export default defineComponent({
