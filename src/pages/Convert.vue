@@ -170,7 +170,7 @@
                         <q-icon name="trending_flat" size="40px" />
                       </div>
 
-                      <div class="text-center text-subtitle2">
+                      <div class="text-center text-subtitle2 text-weight-bold">
                         <div>
                           <img
                             src="~assets/img/resources/RES_ic_FUEL5.png"
@@ -179,21 +179,7 @@
                             class="resource-icon-small"
                           />
                           <div class="text-secondary">
-                            {{ props.row.petrol }} Petrol
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="text-center text-subtitle2">
-                        <div>
-                          <img
-                            src="~assets/img/resources/RES_ic_CRYSTAL.png"
-                            alt=""
-                            class="resource-icon-small"
-                            srcset=""
-                          />
-                          <div class="text-secondary">
-                            {{ props.row.crystal }} Crystal
+                            {{ props.row.petrol }} Metal
                           </div>
                         </div>
                       </div>
@@ -207,7 +193,21 @@
                             srcset=""
                           />
                           <div class="text-secondary">
-                            {{ props.row.token }} Tokens
+                            {{ props.row.crystal }} Petrol
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="text-center text-subtitle2 text-weight-bold">
+                        <div>
+                          <img
+                            src="~assets/img/resources/RES_ic_CRYSTAL.png"
+                            alt=""
+                            class="resource-icon-small"
+                            srcset=""
+                          />
+                          <div class="text-secondary">
+                            {{ props.row.token }} Crystal
                           </div>
                         </div>
                       </div>
@@ -485,8 +485,8 @@ export default defineComponent({
       }
     );
 
-    const convertResourcesDialog = ref(true);
-    const convertTokensDialog = ref(true);
+    const convertResourcesDialog = ref(false);
+    const convertTokensDialog = ref(false);
     return {
       rows,
       convertResourcesDialog,

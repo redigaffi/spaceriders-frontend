@@ -10,7 +10,9 @@
         aria-label="Menu"
         @click="toggleLeftDrawer"
       />
-      <div class="footer__title_logo"><span class="blue">Space</span>riders</div>
+      <div class="footer__title_logo">
+        <span class="blue">Space</span>riders
+      </div>
 
       <q-space />
       <q-tabs
@@ -20,51 +22,23 @@
         class="text-secondary absolute-center gt-sm"
       >
         <q-route-tab
+          v-for="nav in essentialLinks"
+          :key="nav"
           class="q-py-sm"
-          icon="fas fa-globe-europe"
-          label="Planets"
-          to="/planet"
+          :icon="nav.icon"
+          :label="nav.title"
+          :to="nav.link"
           no-caps
           exact
-        />
-        <q-route-tab
-          class="q-py-sm"
-          name="general"
-          icon="remove_red_eye"
-          label="Resources"
-          to="/resources"
-          no-caps
-        />
-        <q-route-tab
-          class="q-py-sm"
-          name="installation"
-          icon="remove_red_eye"
-          label="Installations"
-          to="/installations"
-          no-caps
-        />
-
-        <q-route-tab
-          name="research"
-          icon="travel_explore"
-          label="Research"
-          to="/research"
-          no-caps
-        />
-        <q-route-tab
-          name="defense"
-          icon="security"
-          label="Defense"
-          no-caps
-          to="/defense"
-        />
-        <q-route-tab
-          name="convert"
-          icon="security"
-          label="Convert"
-          no-caps
-          to="/convert"
-        />
+        >
+          <q-tooltip
+            class="bg-primary"
+            transition-show="scale"
+            transition-hide="scale"
+          >
+            {{ nav.title }}
+          </q-tooltip>
+        </q-route-tab>
       </q-tabs>
 
       <user />
@@ -92,22 +66,32 @@ const linksList = [
   {
     title: "Planets",
     link: "/planet",
+    icon: "fas fa-globe-europe",
   },
   {
-    title: "General Vision",
-    link: "/",
+    title: "Resources",
+    link: "/resources",
+    icon: "remove_red_eye",
   },
   {
-    title: "Infrastructure",
-    link: "/infrastructure",
+    title: "Installations",
+    link: "/installations",
+    icon: "remove_red_eye",
   },
   {
     title: "Research",
     link: "/research",
+    icon: "travel_explore",
   },
   {
     title: "Defense",
     link: "/defense",
+    icon: "security",
+  },
+  {
+    title: "Convert",
+    link: "/convert",
+    icon: "security",
   },
 ];
 export default {
@@ -159,8 +143,6 @@ export default {
   box-shadow: inset 0 0 2000px rgba(0, 0, 0, 1);
 }
 
-
-
 .footer__title_logo {
   font-size: 1.2rem;
   font-weight: 700;
@@ -195,5 +177,4 @@ export default {
 .blue {
   color: #2253f4;
 }
-
 </style>
