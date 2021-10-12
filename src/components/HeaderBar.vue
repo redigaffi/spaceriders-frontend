@@ -10,7 +10,7 @@
         aria-label="Menu"
         @click="toggleLeftDrawer"
       />
-      <div class="footer__title"><span class="blue">Space</span>riders</div>
+      <div class="footer__title_logo"><span class="blue">Space</span>riders</div>
 
       <q-space />
       <q-tabs
@@ -57,6 +57,13 @@
           label="Defense"
           no-caps
           to="/defense"
+        />
+        <q-route-tab
+          name="convert"
+          icon="security"
+          label="Convert"
+          no-caps
+          to="/convert"
         />
       </q-tabs>
 
@@ -151,4 +158,42 @@ export default {
   bottom: 0;
   box-shadow: inset 0 0 2000px rgba(0, 0, 0, 1);
 }
+
+
+
+.footer__title_logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+  padding-top: 0.3rem;
+  position: relative;
+}
+
+.footer__title_logo:before {
+  content: "";
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #fff;
+}
+
+.footer__title_logo:after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 4px;
+  background: #2253f4;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.blue {
+  color: #2253f4;
+}
+
 </style>

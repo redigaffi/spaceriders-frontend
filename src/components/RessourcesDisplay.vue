@@ -20,7 +20,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body2">
             {{ this.$store.getters.activePlanet.ressources.metal }}
           </p>
 
@@ -80,7 +80,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body2">
             {{ this.$store.getters.activePlanet.ressources.crystal }}
           </p>
 
@@ -140,7 +140,7 @@
             srcset=""
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1">
+          <p class="text-weight-bold text-body2">
             {{ this.$store.getters.activePlanet.ressources.petrol }}
           </p>
 
@@ -196,10 +196,9 @@
             src="~assets/img/resources/RES_ic_ENERGY.png"
             alt=""
             srcset=""
-            class="q-pt-sm"
-            style="width: 42.5px"
+            class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body1">{{ energyLeft }}</p>
+          <p class="text-weight-bold text-body2">{{ energyLeft }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -314,9 +313,7 @@ export default {
       if ($store.getters.resourceData.solarPlant === undefined) return;
 
       const currentUsage = $store.getters.activePlanet.ressources.energy_usage;
-      return (
-        energyProduction.value - currentUsage
-      );
+      return energyProduction.value - currentUsage;
     });
 
     const updateResources = (rD, resource, mine, warehouse) => {
@@ -403,7 +400,7 @@ export default {
 </script>
 <style>
 #equal-width {
-  width: 110px;
+  width: 80px;
 }
 
 .btn-red-glass-element {
@@ -429,7 +426,7 @@ export default {
 }
 
 .planet-icons {
-  height: 80px;
-  width: 80px;
+  width: 42px;
+  height: 48px;
 }
 </style>
