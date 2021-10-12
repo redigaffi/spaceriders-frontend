@@ -18,7 +18,6 @@
             row-key="name"
             :filter="filter"
             hide-header
-            hide-bottom
             v-model:pagination="pagination"
             :rows-per-page-options="rowsPerPageOptions"
           >
@@ -237,6 +236,38 @@
                       Ready to Claim in
                       <span class="text-weight-bold">2h</span>
                     </div>
+                  </q-card-section>
+                </q-card>
+              </div>
+            </template>
+
+            <template v-slot:no-data="{}">
+              <div class="full-width row flex-center text-accent q-gutter-sm">
+                <q-card flat class="bg-transparent text-center">
+                  <img
+                    src="~assets/img/searching.svg"
+                    alt=""
+                    srcset=""
+                    style="height: 230px"
+                  />
+                  <q-card-section>
+                    <q-icon size="2em" name="sentiment_dissatisfied" />
+                    <span> No Claimable Resources</span>
+                  </q-card-section>
+                  <q-card-section>
+                    <q-btn
+                      color="primary"
+                      no-caps
+                      label="Convert Resources"
+                      class="q-mr-sm"
+                      @click="convertResourcesDialog = true"
+                    />
+                    <q-btn
+                      color="primary"
+                      no-caps
+                      label="Convert Tokens"
+                      @click="convertTokensDialog = true"
+                    />
                   </q-card-section>
                 </q-card>
               </div>

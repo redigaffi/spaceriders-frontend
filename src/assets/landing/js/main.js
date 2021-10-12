@@ -11,8 +11,8 @@ $(document).ready(function(){
 
 	var austDay = new Date();
 	austDay = new Date(austDay.getFullYear(), 10 - 1, 15);
-	$('.main__timer').countdown({until: austDay});
-	$(".ico__timer").countdown({until: austDay});
+	// $('.main__timer').countdown({until: austDay});
+	// $(".ico__timer").countdown({until: austDay});
 
 	$(".road__item--read").on("click", function(){
 		$(this).siblings('.readmore__text').slideToggle(200);
