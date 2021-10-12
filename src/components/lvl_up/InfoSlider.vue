@@ -83,8 +83,12 @@
                       type="number"
                       stack-label
                       color="secondary"
-                      label="Quantity"
-                    />
+                      label="Number"
+                    >
+                      <template v-slot:prepend>
+                        <q-icon name="tag" /> 
+                      </template>
+                    </q-input>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -166,7 +170,7 @@
                       </q-card>
                     </q-item-label>
                   </q-item-section>
-                  <q-item-section class="col">
+                  <q-item-section class="col-2">
                     <div class="text-right">
                       <q-btn
                         color="warning"

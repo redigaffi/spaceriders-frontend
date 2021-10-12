@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="landing">
     <header class="header">
       <div class="container">
         <div class="header__inner">
           <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
 
-          <a href="/" class="logo"> Spaceriders </a>
+          <router-link to="/landing" class="logo"> Spaceriders </router-link>
 
           <div class="header__nav">
             <a href="#" class="header__nav--link go" data-point="ico"
@@ -690,7 +690,7 @@ export default defineComponent({
   setup() {},
 });
 </script>
-<style>
+<style scoped>
 @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap";
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
