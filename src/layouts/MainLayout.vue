@@ -16,7 +16,7 @@
         <div class="row q-col-gutter-md">
           <BuildingQueue :data="buildingQueueData" class="col-xs-12 col-sm-6 col-md-4">Buildings</BuildingQueue>
           <BuildingQueue :data="researchQueueData" class="col-xs-12 col-sm-6 col-md-4">Research</BuildingQueue>
-          <!--<BuildingQueue class="col-xs-12 col-sm-6 col-md-4">Spaceships/ Defense</BuildingQueue> -->
+          <BuildingQueue itemType :data="defenseFleetQueueData" class="col-xs-12 col-sm-6 col-md-4">Spaceships/Defense</BuildingQueue>
         </div>
       </q-page>
     </q-page-container>
@@ -55,9 +55,14 @@ export default defineComponent({
       return $store.getters.researchData;
     });
 
+    let defenseFleetQueueData = computed(() => {
+      return $store.getters.defenseData;
+    });
+
     return {
       buildingQueueData: buildingQueueData,
-      researchQueueData: researchQueueData
+      researchQueueData: researchQueueData,
+      defenseFleetQueueData: defenseFleetQueueData,
     }
   },
   methods: {},

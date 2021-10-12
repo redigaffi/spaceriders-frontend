@@ -22,6 +22,7 @@ export default function (/* { ssrContext } */) {
         resourceData: false,
         installationData: false,
         researchData: false,
+        defenseData: false,
         timeoutIds: [],
         intervalIds: [],
       };
@@ -62,6 +63,10 @@ export default function (/* { ssrContext } */) {
         state.researchData = payload;
       },
 
+      setDefenseData(state, payload) {
+        state.defenseData = payload;
+      },
+
       setPlanets(state, payload) {
         state.planets = payload;
       },
@@ -74,9 +79,11 @@ export default function (/* { ssrContext } */) {
         state.planets = [...state.planets];
       },
 
-      refreshBuildingData(state) {
+      refreshAllData(state) {
         state.resourceData = {...state.resourceData};
         state.installationData = {...state.installationData};
+        state.researchData = {...state.researchData};
+        state.defenseData = {...state.defenseData};
       },
 
       restPlanetResources(state, payload) {
@@ -138,26 +145,49 @@ export default function (/* { ssrContext } */) {
         state.researchData[label] = resource;
       },
 
+      buildDefenseData(state, payload) {
+        const label = payload.label;
+        let resource = state.defenseData[label];
+        resource.building = true;
+        resource.quantity_building = payload.quantity;
+        resource.current_upgrade_time_left = payload.upgradeFinish;
+        state.defenseData[label] = resource;
+      },
 
       upgradeFinished(state, payload) {
         const label = payload.label;
         let dataSource = {};
         
+        let type = "";
         switch(payload.type) {
           case "resources":
+            type = "infrastructure";
             dataSource = state.resourceData[label]
             break;
           case "installations":
+            type = "infrastructure";
             dataSource = state.installationData[label]
             break;
           case "research":
+            type = "infrastructure";
             dataSource = state.researchData[label]
             break;
+          case "defense":
+              type = "item";
+              dataSource = state.defenseData[label]
+              break;
         }
+        
+        if (type === "infrastructure") {
+          dataSource.upgrading = false;
+          dataSource.level = dataSource.level+1;
+          dataSource.current_upgrade_time_left = false;
 
-        dataSource.upgrading = false;
-        dataSource.level = dataSource.level+1;
-        dataSource.current_upgrade_time_left = false;
+        } else if (type === "item") {
+          dataSource.building = false;
+          dataSource.available = dataSource.quantity_building;
+          dataSource.current_upgrade_time_left = false;
+        }
         
         switch(payload.type) {
           case "resources":
@@ -168,6 +198,9 @@ export default function (/* { ssrContext } */) {
             break;
           case "research":
             state.researchData[label] = dataSource;
+            break;
+          case "defense":
+            state.defenseData[label] = dataSource;
             break;
         }
         
@@ -194,6 +227,10 @@ export default function (/* { ssrContext } */) {
 
       researchData: (state) => {
         return state.researchData;
+      },
+      
+      defenseData: (state) => {
+        return state.defenseData;
       },
 
       activePlanet: (state) => {

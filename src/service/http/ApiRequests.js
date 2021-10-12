@@ -93,6 +93,36 @@ export default class ApiRequests {
   }
 
   /**
+   * Gets defense data for a given planet 
+   * 
+   * @param {string} planetId 
+   * @returns 
+   */
+   static async getDefenseData(planetId) {
+    const path = `${process.env.BASE_API_PATH}/defense/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+
+    /**
+   * Upgrades defense.
+   * @param {string} label
+   * @param {string} planetGuid 
+   * @returns 
+   */
+    static async buildDefense(data) {
+      const path = `${process.env.BASE_API_PATH}/defense/build`;
+  
+      const body = {
+        label: data.label,
+        planetId: data.planetGuid,
+        quantity: data.quantity,
+      };
+  
+      return (await axios.post(path, body)).data;
+    }
+
+    
+  /**
    * Gets all resources for a given planet 
    * 
    * @param {string} planetId 
@@ -103,18 +133,19 @@ export default class ApiRequests {
     return (await axios.get(path)).data;
   }
 
+
   /**
    * Upgrades a Ressource Building.
    * @param {string} label
    * @param {string} planetGuid 
    * @returns 
    */
-   static async upgradeRessource(label, planetGuid) {
+   static async upgradeRessource(data) {
     const path = `${process.env.BASE_API_PATH}/ressource/upgrade`;
 
     const body = {
-      label: label,
-      planetId: planetGuid,
+      label: data.label,
+      planetId: data.planetGuid,
     };
 
     return (await axios.post(path, body)).data;
@@ -137,12 +168,12 @@ export default class ApiRequests {
    * @param {string} planetGuid 
    * @returns 
    */
-   static async upgradeInstallation(label, planetGuid) {
+   static async upgradeInstallation(data) {
     const path = `${process.env.BASE_API_PATH}/installation/upgrade`;
 
     const body = {
-      label: label,
-      planetId: planetGuid,
+      label: data.label,
+      planetId: data.planetGuid,
     };
 
     return (await axios.post(path, body)).data;
@@ -166,12 +197,12 @@ export default class ApiRequests {
    * @param {string} planetGuid 
    * @returns 
    */
-    static async upgradeResearch(label, planetGuid) {
+    static async upgradeResearch(data) {
       const path = `${process.env.BASE_API_PATH}/research/upgrade`;
   
       const body = {
-        label: label,
-        planetId: planetGuid,
+        label: data.label,
+        planetId: data.planetGuid,
       };
   
       return (await axios.post(path, body)).data;

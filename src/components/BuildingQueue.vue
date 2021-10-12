@@ -2,10 +2,14 @@
   <div v-if="this.$store.getters.activePlanet !== false" class="q-py-sm">
     <q-card class="glass-element text-white queue-buildings">
       <glass-element-heading class="text-overline"
-        ><slot></slot></glass-element-heading
-      >
+        ><slot></slot
+      ></glass-element-heading>
       <div v-if="buildingsInQueue.length > 0">
-        <div class="col-12 q-pa-sm text-center" v-for="bQ in buildingsInQueue" :key="`${bQ.name}`">
+        <div
+          class="col-12 q-pa-sm text-center"
+          v-for="bQ in buildingsInQueue"
+          :key="`${bQ.name}`"
+        >
           <div class="text-center c-subscribe-box">
             <q-list rounded class="rainbow bg-dark q-pa-none">
               <div class="text-warning q-pa-sm text-subtitle2">
@@ -22,12 +26,34 @@
                 </q-item-section>
 
                 <q-item-label caption class="text-left">
-                  <div class="text-body2">
-                    Upgrade to : <span class="text-secondary text-weight-bold">{{ bQ.level+1 }}</span>
+                  <div v-if="!itemType" class="text-body2">
+                    Upgrade to :
+                    <span class="text-secondary text-weight-bold">{{
+                      bQ.level + 1
+                    }}</span>
                   </div>
-                  <div class="text-body2">Time left : <span class="text-secondary text-weight-bold">{{ calculateClaimDate(bQ) }}</span></div>
+                  <div v-else class="text-body2">
+                    Quantity:
+                    <span class="text-secondary text-weight-bold">{{
+                      bQ.quantity_building
+                    }}</span>
+                  </div>
                   <div class="text-body2">
-                    Status : <span class="text-secondary text-weight-bold">Upgrading...</span>
+                    Time left :
+                    <span class="text-secondary text-weight-bold">{{
+                      calculateClaimDate(bQ)
+                    }}</span>
+                  </div>
+                  <div class="text-body2">
+                    Status :
+                    <span
+                      v-if="!itemType"
+                      class="text-secondary text-weight-bold"
+                      >Upgrading...</span
+                    >
+                    <span v-else class="text-secondary text-weight-bold"
+                      >Building...</span
+                    >
                   </div>
                 </q-item-label>
               </q-item>
@@ -50,7 +76,14 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed, getCurrentInstance } from "vue";
+import {
+  defineComponent,
+  ref,
+  reactive,
+  watchEffect,
+  computed,
+  getCurrentInstance,
+} from "vue";
 import GlassElementHeading from "components/GlassElementHeading";
 import { useStore } from "vuex";
 import { BUILDING_UPGRADED } from "../constants/Events";
@@ -64,17 +97,21 @@ export default defineComponent({
     data: {
       type: Object,
       default: undefined,
-    }
+    },
+    itemType: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const $store = useStore();
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-    let timerId = ref(-1);
-    let upgradeBuildings = reactive({});
+    let refreshTimerId = ref(-1);
+    let queueTimeoutIds = reactive({});
 
-    function calculateClaimDate (building) {
+    function calculateClaimDate(building) {
       const now = new Date();
       const claim = new Date(building.current_upgrade_time_left * 1000);
 
@@ -86,65 +123,69 @@ export default defineComponent({
       const h = Math.round(minutes - m) / 60;
 
       let str = "";
-      
+
       if (h > 0) str += `${h}h`;
       if (m > 0) str += ` ${m}m`;
       if (s >= 0) str += ` ${s}s`;
 
-      
       return str;
-    };
+    }
+
+    function startTimers(data) {
+      for (let d in data) {
+        const b = data[d];
+        if (queueTimeoutIds[b.label] === undefined) {
+          const now = new Date();
+          const claim = new Date(b.current_upgrade_time_left * 1000);
+          const diffSeconds = claim.getTime() - now.getTime();
+
+          queueTimeoutIds[b.label] = setTimeout(() => {
+            $store.commit("upgradeFinished", { label: b.label, type: b.type });
+            queueTimeoutIds[b.label] = undefined;
+          }, diffSeconds);
+        }
+      }
+    }
 
     const buildingsInQueue = computed(() => {
       const data = props.data;
 
-      let re = []
-      for(let key in data) {
+      let re = [];
+      for (let key in data) {
         const building = data[key];
-        if (building.upgrading) {
-          re.push(building)
+        if (building.upgrading || building.building) {
+          re.push(building);
         }
       }
+    
       return re;
-      
     });
 
-    function startTimers() {
-      let data = buildingsInQueue.value;
-      for (let d in data) {
-        const b = data[d];
-        if (upgradeBuildings[b.label] === undefined) {
-          const now = new Date();
-          const claim = new Date(b.current_upgrade_time_left * 1000);
-          const diffSeconds = (claim.getTime() - now.getTime());
+    /* $eventBus.on(BUILDING_UPGRADED, () => {
+      startTimers(buildingsInQueue.value);
+    }); */
 
-          upgradeBuildings[b.label] = setTimeout(() => { 
-            $store.commit("upgradeFinished", {label: b.label, type: b.type})
-            upgradeBuildings[b.label] = undefined;
-          }, diffSeconds);
-          
-          $store.commit("addTimeoutId", {id: upgradeBuildings[b.label]});
+    //startTimers(buildingsInQueue.value);
+    function refreshAll() {
+      if (refreshTimerId.value !== -1) {
+        return;
+      }
+
+      refreshTimerId.value = setInterval(() => {
+        $store.commit("refreshAllData");
+        if (buildingsInQueue.value.length === 0) {
+          clearInterval(refreshTimerId.value);
+          refreshTimerId.value = -1;
         }
-      }
-
-      if (data.length > 0) {
-        timerId.value = setInterval(() => {
-          console.log("buildin queue interval")
-          $store.commit("refreshBuildingData");
-          if (buildingsInQueue.value.length === 0 ) {
-            clearInterval(timerId.value);
-          } 
-        }, 1000);
-
-        $store.commit("addIntervalId", {id: timerId.value})
-      }
+      }, 1000);
     }
 
-    $eventBus.on(BUILDING_UPGRADED, () => {
-      startTimers();
+    watchEffect(() => {
+      if (buildingsInQueue.value.length > 0) {
+        startTimers(buildingsInQueue.value);
+        refreshAll();
+      }
     });
-
-    startTimers(); 
 
     return {
       buildingsInQueue: buildingsInQueue,
