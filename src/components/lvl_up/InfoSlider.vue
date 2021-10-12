@@ -49,7 +49,7 @@
                     >
 
                     <div v-if="newEnergyUsage > 0">
-                      <q-item-label> Energy usage/item: </q-item-label>
+                      <q-item-label> Energy usage: </q-item-label>
                       <q-item-label
                         class="text-warning text-h6 text-weight-bold"
                       >
@@ -95,7 +95,7 @@
                       type="number"
                       stack-label
                       color="secondary"
-                      label="Number"
+                      label="Quantity"
                     >
                       <template v-slot:prepend>
                         <q-icon name="tag" /> 
