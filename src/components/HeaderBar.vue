@@ -24,12 +24,13 @@
         <q-route-tab
           v-for="nav in essentialLinks"
           :key="nav"
-          class="q-py-sm"
+          class="q-py-sm showIconOnly"
           :icon="nav.icon"
           :label="nav.title"
           :to="nav.link"
           no-caps
           exact
+          exact-active-class="showNameWithIcon"
         >
           <q-tooltip
             class="bg-primary"
@@ -71,12 +72,12 @@ const linksList = [
   {
     title: "Resources",
     link: "/resources",
-    icon: "remove_red_eye",
+    icon: "widgets",
   },
   {
     title: "Installations",
     link: "/installations",
-    icon: "remove_red_eye",
+    icon: "construction",
   },
   {
     title: "Research",
@@ -91,7 +92,7 @@ const linksList = [
   {
     title: "Convert",
     link: "/convert",
-    icon: "security",
+    icon: "sync_alt",
   },
 ];
 export default {
@@ -176,5 +177,19 @@ export default {
 
 .blue {
   color: #2253f4;
+}
+
+.showIconOnly {
+  width: 90px;
+  .q-tab__label {
+    display: none;
+  }
+}
+
+.showNameWithIcon {
+  width: 130px;
+  .q-tab__label {
+    display: inline;
+  }
 }
 </style>
