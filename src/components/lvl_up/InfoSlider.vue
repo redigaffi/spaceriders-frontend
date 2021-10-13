@@ -23,7 +23,9 @@
               "
             >
               {{ data.name }}
-              <span v-if="!itemType" class="text-warning q-ml-md">Level {{ data.level }}</span>
+              <span v-if="!itemType" class="text-warning q-ml-md"
+                >Level {{ data.level }}</span
+              >
               <div class="absolute-right q-ma-md">
                 <q-btn
                   dense
@@ -44,7 +46,8 @@
                 <q-item>
                   <q-item-section v-if="itemType" class="col">
                     <q-item-label>Production Duration:</q-item-label>
-                    <q-item-label class="text-warning text-h6 text-weight-bold"
+                    <q-item-label
+                      class="text-warning text-h6 text-weight-bold"
                       >{{ timeString }}</q-item-label
                     >
 
@@ -56,7 +59,6 @@
                         +{{ newEnergyUsage }}</q-item-label
                       >
                     </div>
-
                   </q-item-section>
                   <q-item-section v-else class="col">
                     <q-item-label>Upgrade time:</q-item-label>
@@ -64,7 +66,7 @@
                       class="text-warning text-h6 text-weight-bold"
                       >{{ timeString }}</q-item-label
                     >
-                  
+
                     <div v-if="newEnergyUsage > 0">
                       <q-item-label> Energy needed: </q-item-label>
                       <q-item-label
@@ -73,8 +75,6 @@
                         +{{ newEnergyUsage }}</q-item-label
                       >
                     </div>
-
-                    
                   </q-item-section>
                   <!--<q-item-section class="col">
                     <div class="text-right">
@@ -91,14 +91,15 @@
                     <q-input
                       outlined
                       square
+                      autofocus
                       v-model="quantity"
                       type="number"
                       stack-label
-                      color="secondary"
+                      color="warning"
                       label="Quantity"
                     >
                       <template v-slot:prepend>
-                        <q-icon name="tag" /> 
+                        <q-icon name="tag" color="warning" />
                       </template>
                     </q-input>
                   </q-item-section>
@@ -110,10 +111,7 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    
-                    <q-item-label v-if="itemType"
-                      >Cost to build:</q-item-label
-                    >
+                    <q-item-label v-if="itemType">Cost to build:</q-item-label>
                     <q-item-label v-else
                       >Cost to upgrade to level
                       {{ data.level + 1 }}:</q-item-label
@@ -186,9 +184,11 @@
                       </q-card>
                     </q-item-label>
                   </q-item-section>
-                  <q-item-section class="col-3">
+                  <q-item-section class="col-2">
                     <div class="text-right">
                       <q-btn
+                        dense
+                        class="q-px-sm"
                         color="warning"
                         icon="expand_less"
                         :label="itemType ? 'Build' : 'Upgrade'"
@@ -307,11 +307,11 @@ export default defineComponent({
       if (props.itemType) {
         requirementData = props.data.data.requirements;
       } else {
-        requirementData = props.data.upgrades[props.data.level + 1].requirements;
+        requirementData =
+          props.data.upgrades[props.data.level + 1].requirements;
       }
 
       for (let requirementIdx in requirementData) {
-
         const requirement = requirementData[requirementIdx];
 
         const type = requirement["type"];
@@ -351,9 +351,9 @@ export default defineComponent({
 
     const metalCost = computed(() => {
       if (!props.data) return 0;
-      
+
       if (props.itemType) {
-        return props.data.data.cost_metal*quantity.value;
+        return props.data.data.cost_metal * quantity.value;
       }
 
       return props.data.upgrades[props.data.level + 1].cost_metal;
@@ -363,7 +363,7 @@ export default defineComponent({
       if (!props.data) return 0;
 
       if (props.itemType) {
-        return props.data.data.cost_petrol*quantity.value;
+        return props.data.data.cost_petrol * quantity.value;
       }
 
       return props.data.upgrades[props.data.level + 1].cost_petrol;
@@ -373,7 +373,7 @@ export default defineComponent({
       if (!props.data) return 0;
 
       if (props.itemType) {
-        return props.data.data.cost_crystal*quantity.value;
+        return props.data.data.cost_crystal * quantity.value;
       }
 
       return props.data.upgrades[props.data.level + 1].cost_crystal;
@@ -384,7 +384,7 @@ export default defineComponent({
 
       let timeNeeded = 0;
       if (props.itemType) {
-        timeNeeded = props.data.data.build_time*quantity.value;
+        timeNeeded = props.data.data.build_time * quantity.value;
       } else {
         timeNeeded = props.data.upgrades[props.data.level + 1].upgrade_time;
       }
@@ -411,9 +411,9 @@ export default defineComponent({
       if (!props.data) return 0;
 
       if (props.itemType) {
-        return props.data.data.energy_usage*quantity.value;
-      } 
-      
+        return props.data.data.energy_usage * quantity.value;
+      }
+
       const nextEnergyUsage =
         props.data.upgrades[props.data.level + 1].energy_usage;
 
@@ -445,16 +445,16 @@ export default defineComponent({
 
       if (props.itemType) {
         const dataItem = data[props.data.label].data;
-        const metalCost = dataItem.cost_metal*quantity.value;
-        const crystalCost = dataItem.cost_crystal*quantity.value;
-        const petrolCost = dataItem.cost_petrol*quantity.value;
+        const metalCost = dataItem.cost_metal * quantity.value;
+        const crystalCost = dataItem.cost_crystal * quantity.value;
+        const petrolCost = dataItem.cost_petrol * quantity.value;
 
         return (
           activePlanet.ressources.metal >= metalCost &&
           activePlanet.ressources.petrol >= petrolCost &&
           activePlanet.ressources.crystal >= crystalCost
         );
-      } 
+      }
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
 
@@ -471,10 +471,7 @@ export default defineComponent({
       const anyUpgrade = alreadyUpgrading(props.data.type);
 
       if (anyUpgrade) {
-        $notification(
-          "failed",
-          `Queue is full, wait until it finishes...`
-        );
+        $notification("failed", `Queue is full, wait until it finishes...`);
         return;
       }
 
@@ -532,7 +529,7 @@ export default defineComponent({
         }
 
         $store.commit(storeUpdateMethod, saveStore);
-        
+
         let prices = {};
         if (props.itemType) {
           prices = dataSource(props.data.type)[props.data.label].data;
@@ -555,10 +552,7 @@ export default defineComponent({
           notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
         }
 
-        $notification(
-          "success",
-          notificationMessage
-        );
+        $notification("success", notificationMessage);
       } else {
         $notification("failed", re.error);
       }
@@ -573,7 +567,7 @@ export default defineComponent({
       petrolCost: petrolCost,
       crystalCost: crystalCost,
       upgrade: upgrade,
-      quantity: quantity
+      quantity: quantity,
     };
   },
 });

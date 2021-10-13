@@ -400,7 +400,7 @@ export default {
 </script>
 <style>
 #equal-width {
-  width: 80px;
+  width: 100px;
 }
 
 .btn-red-glass-element {
@@ -426,7 +426,7 @@ export default {
 }
 
 .planet-icons {
-  width: 42px;
-  height: 48px;
+  width: 56px;
+  height: 64px;
 }
 </style>

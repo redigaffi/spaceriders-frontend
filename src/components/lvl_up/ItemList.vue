@@ -58,7 +58,7 @@
                     v-else
                     class="
                       q-pa-xs
-                      text-weight-bold text-positive
+                      text-weight-bold text-secondary
                       absolute-bottom
                       tag-glass-element
                     "
