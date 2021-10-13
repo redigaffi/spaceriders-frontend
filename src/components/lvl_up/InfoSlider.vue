@@ -11,7 +11,7 @@
             <img
               src="~assets/img/body-backgrounds-2.jpg"
               width="100%"
-              style="height: 100%; width: 100%"
+              style="height: 440px; width: 100%"
             />
           </div>
           <!-- CARD -->
@@ -184,7 +184,7 @@
                       </q-card>
                     </q-item-label>
                   </q-item-section>
-                  <q-item-section class="col-2">
+                  <q-item-section class="col-3">
                     <div class="text-right">
                       <q-btn
                         dense
