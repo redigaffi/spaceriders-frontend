@@ -13,6 +13,7 @@
       <div class="footer__title"><span class="blue">Space</span>riders</div>
 
       <q-space />
+      
       <q-tabs
         active-color="warning"
         inline-label
