@@ -11,7 +11,7 @@
             <img
               :src="`data_img/${data.label}.png`"
               width="100%"
-              style="height: 440px; width: 100%"
+              style="height: 340px; width: 100%"
             />
           </div>
           <!-- CARD -->
