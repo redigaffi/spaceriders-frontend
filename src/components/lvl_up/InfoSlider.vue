@@ -186,7 +186,7 @@
                       </q-card>
                     </q-item-label>
                   </q-item-section>
-                  <q-item-section class="col-2">
+                  <q-item-section class="col-3">
                     <div class="text-right">
                       <q-btn
                         color="warning"

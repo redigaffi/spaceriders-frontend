@@ -13,7 +13,6 @@
       <div class="footer__title_logo">
         <span class="blue">Space</span>riders
       </div>
-
       <q-space />
       <q-tabs
         active-color="warning"
@@ -187,7 +186,8 @@ export default {
 }
 
 .showNameWithIcon {
-  width: 130px;
+  padding-right: 20px;
+  width: 100%;
   .q-tab__label {
     display: inline;
   }
