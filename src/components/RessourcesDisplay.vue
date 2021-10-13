@@ -30,7 +30,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2">
+            <q-list dense class="text-subtitle2" style="width: 260px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Metal</q-item-label>
@@ -40,7 +40,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available </q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ this.$store.getters.activePlanet.ressources.metal }}
                 </q-item-section>
               </q-item>
@@ -48,7 +48,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ metalCapacity }}
                 </q-item-section>
               </q-item>
@@ -56,7 +56,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right text-positive">
+                <q-item-section class="col-4 text-right text-positive">
                   +{{ metalProduction }}/min
                 </q-item-section>
               </q-item>
@@ -90,7 +90,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2">
+            <q-list dense class="text-subtitle2" style="width: 260px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Crystal</q-item-label>
@@ -100,7 +100,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ this.$store.getters.activePlanet.ressources.crystal }}
                 </q-item-section>
               </q-item>
@@ -108,7 +108,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ crystalCapacity }}
                 </q-item-section>
               </q-item>
@@ -116,7 +116,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right text-positive">
+                <q-item-section class="col-4 text-right text-positive">
                   +{{ crystalProduction }}/min
                 </q-item-section>
               </q-item>
@@ -149,8 +149,9 @@
             class="bg-primary"
             transition-show="scale"
             transition-hide="scale"
+            
           >
-            <q-list dense class="text-subtitle2">
+            <q-list dense class="text-subtitle2" style="width: 260px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Petrol</q-item-label>
@@ -160,7 +161,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-3 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ this.$store.getters.activePlanet.ressources.petrol }}
                 </q-item-section>
               </q-item>
@@ -168,7 +169,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right">
+                <q-item-section class="col-4 text-right">
                   {{ petrolCapacity }}
                 </q-item-section>
               </q-item>
@@ -176,7 +177,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-2 text-right text-positive">
+                <q-item-section class="col-4 text-right text-positive">
                   +{{ petrolProduction }}/min
                 </q-item-section>
               </q-item>
@@ -206,7 +207,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2">
+            <q-list dense class="text-subtitle2" style="width: 260px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Energy</q-item-label>
@@ -216,7 +217,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Production </q-item-section>
                 </q-item-section>
-                <q-item-section class="col-1 text-right text-positive">
+                <q-item-section class="col-4 text-right text-positive">
                   +{{ energyProduction }}
                 </q-item-section>
               </q-item>
@@ -224,7 +225,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Current Usage</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-1 text-right text-negative">
+                <q-item-section class="col-4 text-right text-negative">
                   -{{
                     this.$store.getters.activePlanet.ressources.energy_usage
                   }}
