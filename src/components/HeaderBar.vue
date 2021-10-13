@@ -18,7 +18,7 @@
         active-color="warning"
         inline-label
         dense
-        class="text-secondary absolute-center gt-sm"
+        class="text-secondary absolute-center gt-sm header-tabs"
       >
         <q-route-tab
           v-for="nav in essentialLinks"
@@ -172,6 +172,16 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.header-tabs {
+  .q-tab__label {
+    font-size: 1.4em;
+  }
+
+  .q-tab__icon {
+    font-size: 2.4em;
+  }
 }
 
 .blue {
