@@ -15,6 +15,7 @@
       </div>
 
       <q-space />
+      
       <q-tabs
         active-color="warning"
         inline-label

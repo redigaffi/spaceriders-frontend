@@ -135,7 +135,7 @@
           }"
         >
           <img
-            src="~assets/img/resources/RES_ic_FUEL5.png"
+            src="~assets/img/resources/RES_ic_FUEL2.png"
             alt=""
             srcset=""
             class="q-pt-sm planet-icons"
