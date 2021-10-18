@@ -57,6 +57,8 @@ export default {
           sD
         );
 
+        console.log(tx)
+
         receipt = await tx.wait();
       } catch (e) {
         console.log("error");
