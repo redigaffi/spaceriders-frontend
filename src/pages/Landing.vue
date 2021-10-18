@@ -675,19 +675,31 @@
 </template>
 
 <script>
-  // import 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js';
-  // import '../assets/landing/js/app.js';
-  // import '../assets/landing/js/jquery.countdown.js';
-  // import '../assets/landing/js/wow.min.js';
-  // import '../assets/landing/js/main.js';
+// import 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+// import '../assets/landing/js/particles.js';
+// import '../assets/landing/js/app.js';
+// import '../assets/landing/js/jquery.countdown.js';
+import '../assets/landing/js/wow.min.js';
+import '../assets/landing/js/main.js';
 
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 //   new WOW().init();
 export default defineComponent({
   name: "PageLanding",
-  mounted() {},
-  setup() {},
+  // mounted() {
+  //   window.addEventListener("scroll", this.updateScroll);
+  // },
+  setup() {
+    // const scrollPosition = ref();
+    // const updateScroll = () => {
+    //   scrollPosition.value = window.scrollY;
+    // };
+    return {
+      // scrollPosition,
+      // updateScroll,
+    };
+  },
 });
 </script>
 <style scoped>
