@@ -176,11 +176,11 @@ export default {
 
 .header-tabs {
   .q-tab__label {
-    font-size: 1.2em;
+    font-size: 1em;
   }
 
   .q-tab__icon {
-    font-size: 2em;
+    font-size: 1.8em;
   }
 }
 

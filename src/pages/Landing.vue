@@ -194,7 +194,7 @@
     <section class="game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
-          <h2 class="title game__title">Game mechanics</h2>
+          <div class="text-2 title game__title">Game mechanics</div>
 
           <p class="subtitle">These funds will then be allocated</p>
 
@@ -679,8 +679,8 @@
 // import '../assets/landing/js/particles.js';
 // import '../assets/landing/js/app.js';
 // import '../assets/landing/js/jquery.countdown.js';
-import '../assets/landing/js/wow.min.js';
-import '../assets/landing/js/main.js';
+import "../assets/landing/js/wow.min.js";
+import "../assets/landing/js/main.js";
 
 import { defineComponent, ref } from "vue";
 
