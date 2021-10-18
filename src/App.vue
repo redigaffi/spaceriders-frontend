@@ -38,10 +38,12 @@ export default defineComponent({
 
       const defenseData = (await ApiRequest.getDefenseData(activePlanet.id))
         .data;
-
       this.$store.commit("setDefenseData", defenseData);
 
-
+      const conversionRequest = (await ApiRequest.getPendingConversions(activePlanet.id))
+        .data;
+      this.$store.commit("setConversionRequests", conversionRequest);
+      
     },
     updateAll: async function () {
       //TODO: Delete all intervals ..

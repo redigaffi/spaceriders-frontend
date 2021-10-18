@@ -13,7 +13,7 @@
         <div>
           <q-table
             grid
-            :rows="rows"
+            :rows="dataRows"
             :columns="columns"
             row-key="name"
             :filter="filter"
@@ -40,12 +40,12 @@
             <template v-slot:item="props">
               <div
                 class="q-pa-xs col-12"
-                v-if="props.row.convertToToken == true"
+                v-if="props.row.conversionType == 'RT'"
               >
                 <q-card class="row">
                   <q-card-section class="col">
                     <strong>{{
-                      "#" + props.row.id + " " + props.row.name
+                      "# " + props.row.name
                     }}</strong>
                     <br />
                     <q-card
@@ -115,7 +115,7 @@
                     class="col-2 flex flex-center text-weight-bold"
                     style="letter-spacing: 3px"
                   >
-                    10/13/21
+                    <!-- DATE 10/13/21 -->
                   </q-card-section>
                   <q-card-section
                     class="col-2 flex flex-center"
@@ -132,21 +132,21 @@
                       v-if="props.row.readyToClaim == false"
                       class="text-caption"
                     >
-                      Ready to Claim in
-                      <span class="text-weight-bold">2h</span>
+                      Claimable in:
+                      <span class="text-weight-bold">{{ props.row.timeLeft }}</span>
                     </div>
                   </q-card-section>
                 </q-card>
               </div>
               <div
                 class="q-pa-xs col-12"
-                v-if="props.row.convertToToken == false"
+                v-if="props.row.conversionType == 'RR'"
               >
                 <q-card class="row">
                   <q-card-section class="col">
-                    <strong>{{
+                    <!-- <strong>{{
                       "#" + props.row.id + " " + props.row.name
-                    }}</strong>
+                    }}</strong> -->
                     <br />
                     <q-card
                       flat
@@ -311,7 +311,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>0 Metal</div>
+                    <div>-{{ 300*tokens }} Metal</div>
                   </div>
                 </div>
 
@@ -323,7 +323,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>50 Petrol</div>
+                    <div>-{{ 300*tokens }} Petrol</div>
                   </div>
                 </div>
 
@@ -335,7 +335,7 @@
                       class="resource-icon-small"
                       srcset=""
                     />
-                    <div>0 Crystal</div>
+                    <div>-{{ 300*tokens }} Crystal</div>
                   </div>
                 </div>
               </q-card>
@@ -347,7 +347,7 @@
                 <span class="q-pl-md text-weight-bold">+ {{ tokens }}</span>
               </q-badge>
 
-              <q-slider v-model="tokens" :min="0" color="green" />
+              <q-slider v-model="tokens" :min="0" :max="10" color="green" />
             </q-card-section>
           </q-card>
         </q-card-section>
@@ -358,6 +358,7 @@
             color="warning"
             no-caps
             class="q-px-lg"
+            @click="convert('RT')"
             v-close-popup
           />
         </q-card-section>
@@ -454,21 +455,23 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, watch } from "vue";
+import { defineComponent, ref, computed, watch, getCurrentInstance } from "vue";
 import { useQuasar } from "quasar";
 import GlassElementHeading from "components/GlassElementHeading";
-
-const deserts = [];
+import ApiRequests from "../service/http/ApiRequests";
+import ConversionTypes from "../constants/ConversionTypes";
+import { useStore } from "vuex";
 
 const rows = [
-  /*{
+  /* {
     id: "1",
     name: "Convert Resources to Tokens",
     metal: "100",
     crystal: "100",
     petrol: "100",
     token: "300",
-    convertToToken: true,
+    conversionType: 'RT',
+    
     readyToClaim: false,
     claim: false,
   },
@@ -479,10 +482,11 @@ const rows = [
     crystal: "100",
     petrol: "100",
     token: "300",
-    convertToToken: false,
+    conversionType: 'RR',
+   
     readyToClaim: true,
     claim: false,
-  },*/
+  }, */
 ];
 
 export default defineComponent({
@@ -491,6 +495,61 @@ export default defineComponent({
     GlassElementHeading,
   },
   setup() {
+    const $store = useStore();
+ /*{
+    id: "1",
+    name: "Convert Resources to Tokens",
+    metal: "100",
+    crystal: "100",
+    petrol: "100",
+    token: "300",
+    convertToToken: true,
+    readyToClaim: false,
+    claim: false,
+  },*/
+
+  function calculateClaimTime(conversion) {
+      const now = new Date();
+      const claim = new Date(conversion.claimable * 1000);
+
+      const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
+      const s = Math.round(diffSeconds % 60);
+      const minutes = Math.round((diffSeconds - s) / 60);
+
+      const m = minutes % 60;
+      const h = Math.round(minutes - m) / 60;
+
+      let str = "";
+
+      if (h > 0) str += `${h}h`;
+      if (m > 0) str += ` ${m}m`;
+      if (s >= 0) str += ` ${s}s`;
+
+      return str;
+    }
+    
+    let dataRows = [];
+    for (const key in $store.getters.conversionRequests) {
+      const conversionRequest = $store.getters.conversionRequests[key];
+      
+      rows.push({
+        id: conversionRequest.id,
+        name: "Convert Resources to Tokens",
+        metal: conversionRequest.metal,
+        crystal: conversionRequest.crystal,
+        petrol: conversionRequest.petrol,
+        token: conversionRequest.token,
+        conversionType: conversionRequest.conversion_type,
+        timeLeft: calculateClaimTime(conversionRequest),
+        readyToClaim: false,
+        claim: false,
+      });
+    }
+    dataRows= rows;
+
+    const $notification =
+      getCurrentInstance().appContext.config.globalProperties.$notification;
+
     const $q = useQuasar();
 
     function getItemsPerPage() {
@@ -518,8 +577,46 @@ export default defineComponent({
 
     const convertResourcesDialog = ref(false);
     const convertTokensDialog = ref(false);
+    let tokens = ref(1);
+    
+    async function convert(type) {
+      const metalCost = 300*tokens.value;
+      const petrolCost = 300*tokens.value;
+      const crystalCost = 300*tokens.value;
+
+      switch(type) {
+        case ConversionTypes.RECEIVE_TOKENS:
+
+          if ($store.getters.activePlanet.ressources.metal < metalCost || 
+            $store.getters.activePlanet.ressources.petrol < petrolCost   || 
+            $store.getters.activePlanet.ressources.crystal < crystalCost) {
+              $notification("failed", "Not enough resources to perform this exchange.")
+              return;
+          }
+          
+          const request = {
+            type: ConversionTypes.RECEIVE_TOKENS,
+            planetGuid: $store.getters.activePlanet.id,
+            metal: metalCost,
+            crystal: crystalCost,
+            petrol: petrolCost,
+          };
+
+          const re = await ApiRequests.conversionRequest(request);
+          if (re.success) {
+            $notification("success", "Conversion added, you have to wait 24h");
+          } else {
+            $notification("failed", re.error);
+          }
+          
+          break;
+      }
+
+    }
     return {
+      convert: convert,
       rows,
+      dataRows: dataRows,
       convertResourcesDialog,
       convertTokensDialog,
 
@@ -535,7 +632,7 @@ export default defineComponent({
       }),
 
       tab: ref("claimable"),
-      tokens: ref(2),
+      tokens: tokens,
     };
   },
 });

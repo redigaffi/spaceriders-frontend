@@ -208,6 +208,19 @@ export default class ApiRequests {
       return (await axios.post(path, body)).data;
     }
     
+
+    /**
+   * Get pending conversion request
+   * 
+   * @param {string} planetId 
+   * @returns 
+   */
+   static async getPendingConversions(planetId) {
+    const path = `${process.env.BASE_API_PATH}/conversion/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+
+
     /**
    * Conversion Request.
    * @param {string} label

@@ -25,6 +25,7 @@ export default function (/* { ssrContext } */) {
         defenseData: false,
         timeoutIds: [],
         intervalIds: [],
+        conversionRequests: [],
       };
     },
     mutations: {
@@ -45,6 +46,10 @@ export default function (/* { ssrContext } */) {
         localStorage.removeItem("store");
         state.jwt = false;
         state.address = false;
+      },
+
+      setConversionRequests(state, payload) {
+        state.conversionRequests = payload;
       },
 
       setActivePlanet(state, payload) {
@@ -213,6 +218,10 @@ export default function (/* { ssrContext } */) {
     },
 
     getters: {
+      conversionRequests: (state) => {
+        return state.conversionRequests;
+      },
+
       planets: (state) => {
         return state.planets;
       },
