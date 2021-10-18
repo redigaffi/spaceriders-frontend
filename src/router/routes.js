@@ -11,7 +11,7 @@ const defensePage = () => import("pages/Defense.vue");
 const convertPage = () => import("pages/Convert.vue");
 const planetInfoPage = () => import("pages/PlanetInfo.vue");
 
-const landingPage = () => import("pages/Landing.vue");
+const landingPage = () => import("src/pages/Landing1.vue");
 
 // ROUTES
 const routes = [
@@ -52,14 +52,14 @@ const routes = [
     children: [{ path: "", component: convertPage }],
   },
   {
-    path: "/landing",
-    component: landingLayout,
-    children: [{ path: "", component: landingPage }],
-  },
-  {
     path: "/planetinfo",
     component: mainLayout,
     children: [{ path: "", component: planetInfoPage }],
+  },
+  {
+    path: "/landing",
+    component: landingLayout,
+    children: [{ path: "", component: landingPage }],
   },
 
   // Always leave this as last one,
