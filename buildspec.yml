@@ -10,4 +10,6 @@ phases:
   post_build:
     commands:
       - aws s3 sync ./dist/spa s3://spaceriders-api --acl 'public-read' --delete
+      - aws cloudfront create-invalidation --distribution-id ECTGTZVLT7V2E --paths "/*"
+
 
