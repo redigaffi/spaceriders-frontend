@@ -180,7 +180,7 @@ export default {
   }
 
   .q-tab__icon {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
 }
 

@@ -203,7 +203,7 @@ input::-webkit-inner-spin-button{
 	left: 0;
 	width: 46.5%;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 }
 
 .main__button2, .main__button3, .ico__button{

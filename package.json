@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Cryptoverse",
+  "productName": "Space Riders",
   "author": "Jordi <jordixboy@gmail.com>",
   "private": true,
   "scripts": {

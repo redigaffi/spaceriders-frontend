@@ -167,7 +167,28 @@
           detectRetina: true,
         }"
       />
-      <div class="main__timer"></div>
+      <div class="main__timer">
+        <q-card class="bg-transparent">
+          <div class="row q-col-gutter-lg text-center">
+            <!-- <div class="col">
+              <div class="text-h2 text-weight-bolder">{{ d }}</div>
+              <div class="text-h4 q-pt-md text-weight-bolder">Days</div>
+            </div> -->
+            <div class="col">
+              <div class="text-h2 text-weight-bolder">{{ h }}</div>
+              <div class="text-h4 q-pt-md text-weight-bolder">Hours</div>
+            </div>
+            <div class="col">
+              <div class="text-h2 text-weight-bolder">{{ m }}</div>
+              <div class="text-h4 q-pt-md text-weight-bolder">Minutes</div>
+            </div>
+            <div class="col">
+              <div class="text-h2 text-weight-bolder">{{ s }}</div>
+              <div class="text-h4 q-pt-md text-weight-bolder">Seconds</div>
+            </div>
+          </div>
+        </q-card>
+      </div>
 
       <div class="container">
         <div class="main__inner">
@@ -691,11 +712,55 @@ export default defineComponent({
   //   window.addEventListener("scroll", this.updateScroll);
   // },
   setup() {
-    // const scrollPosition = ref();
-    // const updateScroll = () => {
-    //   scrollPosition.value = window.scrollY;
-    // };
+    const d = ref(0);
+    const h = ref(0);
+    const m = ref(0);
+    const s = ref(0);
+
+    const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+
+    //I'm adding this section so I don't have to keep updating this pen every year :-)
+    //remove this if you don't need it
+    let today = new Date(),
+      dd = String(today.getDate()).padStart(2, "0"),
+      mm = String(today.getMonth() + 1).padStart(2, "0"),
+      yyyy = today.getFullYear(),
+      nextYear = yyyy,
+      dayMonth = "11/22/",
+      birthday = dayMonth + yyyy;
+
+    today = mm + "/" + dd + "/" + yyyy;
+    if (today > birthday) {
+      birthday = dayMonth + nextYear;
+    }
+    //end
+
+    const countDown = new Date(birthday).getTime(),
+      x = setInterval(function () {
+        const now = new Date().getTime(),
+          distance = countDown - now;
+
+        (d.value = Math.floor(distance / day)),
+          (h.value = Math.floor(distance / (1000 * 60 * 60))),
+          (m.value = Math.floor((distance % hour) / minute));
+        s.value = Math.floor((distance % minute) / second);
+
+        //do something later when date is reached
+        //seconds
+      }, 0);
+
+    const scrollPosition = ref();
+    const updateScroll = () => {
+      scrollPosition.value = window.scrollY;
+    };
     return {
+      d,
+      h,
+      m,
+      s,
       // scrollPosition,
       // updateScroll,
     };
