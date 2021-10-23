@@ -3,7 +3,7 @@
     <q-btn
       icon="add"
       label="Buy Planet"
-      color="accent"
+      color="warning"
       v-if="!$q.screen.xs"
       @click="buyPlanetPopup = true"
     />
@@ -11,7 +11,7 @@
     <q-btn
       icon="add"
       v-if="$q.screen.xs"
-      color="accent"
+      color="warning"
       @click="buyPlanetPopup = true"
     />
 
