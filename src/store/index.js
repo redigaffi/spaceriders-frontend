@@ -37,6 +37,17 @@ export default function (/* { ssrContext } */) {
           );
         }
       },
+
+      removeConversionRequest(state, payload) {
+        const conversionRequest = payload.conversionRequest;
+        let index = state.conversionRequests.findIndex(cR => cR.id == conversionRequest.id);
+        state.conversionRequests.splice(index, 1);
+      },
+
+      addConversionRequest(state, payload) {
+        state.conversionRequests.push(payload.conversionRequest);
+      },
+
       login(state, payload) {
         state.jwt = payload.jwt;
         state.address = payload.address;
@@ -46,6 +57,15 @@ export default function (/* { ssrContext } */) {
         localStorage.removeItem("store");
         state.jwt = false;
         state.address = false;
+        state.planets = [];
+        state.activePlanet = false;
+        state.resourceData = false;
+        state.installationData = false;
+        state.researchData = false;
+        state.defenseData = false;
+        state.timeoutIds = [];
+        state.intervalIds = [];
+        state.conversionRequests = [];
       },
 
       setConversionRequests(state, payload) {
@@ -95,6 +115,12 @@ export default function (/* { ssrContext } */) {
         state.activePlanet.ressources.metal -= payload.metal;
         state.activePlanet.ressources.petrol -= payload.petrol;
         state.activePlanet.ressources.crystal -= payload.crystal;
+      },
+
+      addPlanetResources(state, payload) {
+        state.activePlanet.ressources.metal += payload.metal;
+        state.activePlanet.ressources.petrol += payload.petrol;
+        state.activePlanet.ressources.crystal += payload.crystal;
       },
 
       addTimeoutId(state, payload) {

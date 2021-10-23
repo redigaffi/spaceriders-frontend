@@ -30,7 +30,7 @@ export default boot(async ({ app, router, store }) => {
     (error) => {
       console.log(error);
       if (error.response.status === 401) {
-        state.commit("destroySession");
+        store.commit("destroySession");
       }
 
       return Promise.reject(error);

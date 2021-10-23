@@ -221,13 +221,13 @@ export default class ApiRequests {
   }
 
 
-    /**
+  /**
    * Conversion Request.
    * @param {string} label
    * @param {string} planetGuid 
    * @returns 
    */
-     static async conversionRequest(data) {
+    static async conversionRequest(data) {
       const path = `${process.env.BASE_API_PATH}/conversion/convert`;
   
       const body = {
@@ -236,6 +236,39 @@ export default class ApiRequests {
         metal: data.metal,
         crystal: data.crystal,
         petrol: data.petrol,
+        tokenAmount: data.tokenAmount,
+      };
+  
+      return (await axios.post(path, body)).data;
+    }
+
+  /**
+   * Claim Conversion Request.
+   * @param {string} label
+   * @param {string} planetGuid 
+   * @returns 
+   */
+    static async claimConversionRequest(data) {
+      const path = `${process.env.BASE_API_PATH}/conversion/claim`;
+  
+      const body = {
+        conversionId: data.conversionId,
+      };
+  
+      return (await axios.post(path, body)).data;
+    }
+
+   /**
+   * Claim Conversion Request.
+   * @param {string} label
+   * @param {string} planetGuid 
+   * @returns 
+   */
+    static async confirmConversionRequest(data) {
+      const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
+  
+      const body = {
+        conversionId: data.conversionId,
       };
   
       return (await axios.post(path, body)).data;
