@@ -103,7 +103,7 @@
                             srcset=""
                           />
                           <div class="text-secondary">
-                            {{ props.row.token }} Tokens
+                            {{ props.row.token }}
                           </div>
                         </div>
                       </div>
@@ -157,7 +157,7 @@
                             class="resource-icon-small"
                           />
                           <div class="text-secondary">
-                            {{ props.row.token }} Token
+                            {{ props.row.token }}
                           </div>
                         </div>
                       </div>
