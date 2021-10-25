@@ -626,8 +626,10 @@ export default defineComponent({
       }
 
       const data = claimReq.data;
-
+      console.log("aa")
       if (data.action === "CALL_SMART_CONTRACT") {
+        console.log("bb")
+
         const sD = new SignatureData(data.v, data.r, data.s);
         let params = new Attributes(
           data.id,
@@ -641,6 +643,8 @@ export default defineComponent({
           let tx;
 
           if (data.type === ConversionTypes.RECEIVE_TOKENS) {
+            console.log("cc")
+
             tx = await TokenManagementContract.convertFromPrimaryResources(
               sD,
               params
@@ -648,8 +652,10 @@ export default defineComponent({
           } else if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
             tx = await TokenManagementContract.convertFromToken(sD, params);
           }
-
+          console.log(tx)
           receipt = await tx.wait();
+          console.log(receipt)
+
         } catch (e) {
           console.log("error");
           console.log(e);
