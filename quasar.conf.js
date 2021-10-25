@@ -149,9 +149,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `Cryptoverse`,
-        short_name: `Cryptoverse`,
-        description: `A Quasar Framework app`,
+        name: `Spaceriders`,
+        short_name: `Spaceriders`,
+        description: `a Space game app`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

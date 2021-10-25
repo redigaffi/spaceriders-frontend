@@ -12,7 +12,7 @@
           flat
           rounded
           class="btn-glass-element"
-          :class="{ 'btn-red-glass-element': this.$store.getters.activePlanet.ressources.metal > metalCapacity }"
+          :class="{ 'btn-red-glass-element': this.$store.getters.activePlanet.ressources.metal >= metalCapacity }"
         >
           <img
             src="~assets/img/resources/RES_ic_Metal.png"
@@ -74,7 +74,7 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.crystal > crystalCapacity,
+            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.crystal >= crystalCapacity,
           }"
         >
           <img
@@ -137,7 +137,7 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.petrol > petrolCapacity,
+            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.petrol >= petrolCapacity,
           }"
         >
           <img

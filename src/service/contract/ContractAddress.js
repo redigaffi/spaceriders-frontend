@@ -3,6 +3,10 @@ export default class ContractAddress {
         return this.removeSingleOrDoubleQuotes(process.env.PLANET_MANAGEMENT_CONTRACT_ADDRESS);
     }
 
+    static getTokenManagementAddress() {
+        return this.removeSingleOrDoubleQuotes(process.env.TOKEN_MANAGEMENT_CONTRACT_ADDRESS);
+    }
+
     static removeSingleOrDoubleQuotes(str) {
         return str.replace(/['"]+/g, '');
     }

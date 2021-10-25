@@ -44,9 +44,7 @@
               >
                 <q-card class="row">
                   <q-card-section class="col">
-                    <strong>{{
-                      "# " + props.row.name
-                    }}</strong>
+                    <strong>{{ "# " + props.row.name }}</strong>
                     <br />
                     <q-card
                       flat
@@ -105,35 +103,32 @@
                             srcset=""
                           />
                           <div class="text-secondary">
-                            {{ props.row.token }} Tokens
+                            {{ props.row.token }}
                           </div>
                         </div>
                       </div>
                     </q-card>
                   </q-card-section>
-                  <q-card-section
+                  <!-- <q-card-section
                     class="col-2 flex flex-center text-weight-bold"
                     style="letter-spacing: 3px"
                   >
-                    <!-- DATE 10/13/21 -->
-                  </q-card-section>
-                  <q-card-section
-                    class="col-2 flex flex-center"
-                    v-if="props.row.claim == false"
-                  >
+                    DATE 10/13/21 
+                  </q-card-section> -->
+                  <q-card-section class="col-2 flex flex-center">
                     <q-btn
                       color="warning"
                       glossy
                       label="Claim"
                       no-caps
-                      v-if="props.row.readyToClaim == true"
+                      @click="claim(props.row)"
+                      v-if="props.row.readyToClaim"
                     />
-                    <div
-                      v-if="props.row.readyToClaim == false"
-                      class="text-caption"
-                    >
+                    <div v-if="!props.row.readyToClaim" class="text-caption">
                       Claimable in:
-                      <span class="text-weight-bold">{{ props.row.timeLeft }}</span>
+                      <span class="text-weight-bold">{{
+                        props.row.timeLeft
+                      }}</span>
                     </div>
                   </q-card-section>
                 </q-card>
@@ -144,6 +139,7 @@
               >
                 <q-card class="row">
                   <q-card-section class="col">
+                    {{ "# " + props.row.name }}
                     <!-- <strong>{{
                       "#" + props.row.id + " " + props.row.name
                     }}</strong> -->
@@ -161,7 +157,7 @@
                             class="resource-icon-small"
                           />
                           <div class="text-secondary">
-                            {{ props.row.token }} Token
+                            {{ props.row.token }}
                           </div>
                         </div>
                       </div>
@@ -172,13 +168,27 @@
                       <div class="text-center text-subtitle2 text-weight-bold">
                         <div>
                           <img
+                            src="~assets/img/resources/RES_ic_Metal.png"
+                            alt=""
+                            srcset=""
+                            class="resource-icon-small"
+                          />
+                          <div class="text-secondary">
+                            {{ props.row.metal }} Metal
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="text-center text-subtitle2 text-weight-bold">
+                        <div>
+                          <img
                             src="~assets/img/resources/RES_ic_FUEL5.png"
                             alt=""
-                            srcset=""
                             class="resource-icon-small"
+                            srcset=""
                           />
                           <div class="text-secondary">
-                            {{ props.row.petrol }} Metal
+                            {{ props.row.petrol }} Petrol
                           </div>
                         </div>
                       </div>
@@ -192,49 +202,32 @@
                             srcset=""
                           />
                           <div class="text-secondary">
-                            {{ props.row.crystal }} Petrol
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="text-center text-subtitle2 text-weight-bold">
-                        <div>
-                          <img
-                            src="~assets/img/resources/RES_ic_CRYSTAL.png"
-                            alt=""
-                            class="resource-icon-small"
-                            srcset=""
-                          />
-                          <div class="text-secondary">
-                            {{ props.row.token }} Crystal
+                            {{ props.row.crystal }} Crystal
                           </div>
                         </div>
                       </div>
                     </q-card>
                   </q-card-section>
-                  <q-card-section
+                  <!-- <q-card-section
                     class="col-2 flex flex-center text-weight-bold"
                     style="letter-spacing: 3px"
                   >
                     10/13/21
-                  </q-card-section>
-                  <q-card-section
-                    class="col-2 flex flex-center"
-                    v-if="props.row.claim == false"
-                  >
+                  </q-card-section> -->
+                  <q-card-section class="col-2 flex flex-center">
                     <q-btn
                       color="warning"
                       glossy
                       label="Claim"
                       no-caps
-                      v-if="props.row.readyToClaim == true"
+                      @click="claim(props.row)"
+                      v-if="props.row.readyToClaim"
                     />
-                    <div
-                      v-if="props.row.readyToClaim == false"
-                      class="text-caption"
-                    >
-                      Ready to Claim in
-                      <span class="text-weight-bold">2h</span>
+                    <div v-if="!props.row.readyToClaim" class="text-caption">
+                      Claimable in
+                      <span class="text-weight-bold">{{
+                        props.row.timeLeft
+                      }}</span>
                     </div>
                   </q-card-section>
                 </q-card>
@@ -311,7 +304,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>-{{ 300*tokens }} Metal</div>
+                    <div>-{{ 300 * tokens }} Metal</div>
                   </div>
                 </div>
 
@@ -323,7 +316,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>-{{ 300*tokens }} Petrol</div>
+                    <div>-{{ 300 * tokens }} Petrol</div>
                   </div>
                 </div>
 
@@ -335,7 +328,7 @@
                       class="resource-icon-small"
                       srcset=""
                     />
-                    <div>-{{ 300*tokens }} Crystal</div>
+                    <div>-{{ 300 * tokens }} Crystal</div>
                   </div>
                 </div>
               </q-card>
@@ -399,7 +392,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>0 Metal</div>
+                    <div>+{{ 300 * tokens }} Metal</div>
                   </div>
                 </div>
 
@@ -411,7 +404,7 @@
                       srcset=""
                       class="resource-icon-small"
                     />
-                    <div>0 Petrol</div>
+                    <div>+{{ 300 * tokens }} Petrol</div>
                   </div>
                 </div>
 
@@ -423,7 +416,7 @@
                       class="resource-icon-small"
                       srcset=""
                     />
-                    <div>0 Crystal</div>
+                    <div>+{{ 300 * tokens }} Crystal</div>
                   </div>
                 </div>
               </q-card>
@@ -435,7 +428,7 @@
                 <span class="q-pl-md text-weight-bold">- {{ tokens }}</span>
               </q-badge>
 
-              <q-slider v-model="tokens" :min="0" color="negative" />
+              <q-slider v-model="tokens" :min="1" :max="10" color="negative" />
             </q-card-section>
           </q-card>
         </q-card-section>
@@ -446,6 +439,7 @@
             color="warning"
             no-caps
             class="q-px-lg"
+            @click="convert('RR')"
             v-close-popup
           />
         </q-card-section>
@@ -461,54 +455,25 @@ import GlassElementHeading from "components/GlassElementHeading";
 import ApiRequests from "../service/http/ApiRequests";
 import ConversionTypes from "../constants/ConversionTypes";
 import { useStore } from "vuex";
+import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
-const rows = [
-  /* {
-    id: "1",
-    name: "Convert Resources to Tokens",
-    metal: "100",
-    crystal: "100",
-    petrol: "100",
-    token: "300",
-    conversionType: 'RT',
-    
-    readyToClaim: false,
-    claim: false,
-  },
-  {
-    id: "2",
-    name: "Convert Tokens to Resources",
-    metal: "100",
-    crystal: "100",
-    petrol: "100",
-    token: "300",
-    conversionType: 'RR',
-   
-    readyToClaim: true,
-    claim: false,
-  }, */
-];
+import TokenManagementContract, {
+  Attributes,
+  SignatureData,
+} from "../service/contract/TokenManagementContract";
 
 export default defineComponent({
-  name: "Research",
+  name: "Convert",
   components: {
     GlassElementHeading,
   },
+
   setup() {
     const $store = useStore();
- /*{
-    id: "1",
-    name: "Convert Resources to Tokens",
-    metal: "100",
-    crystal: "100",
-    petrol: "100",
-    token: "300",
-    convertToToken: true,
-    readyToClaim: false,
-    claim: false,
-  },*/
+    const $eventBus =
+      getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-  function calculateClaimTime(conversion) {
+    function calculateClaimTime(conversion) {
       const now = new Date();
       const claim = new Date(conversion.claimable * 1000);
 
@@ -523,29 +488,47 @@ export default defineComponent({
 
       if (h > 0) str += `${h}h`;
       if (m > 0) str += ` ${m}m`;
-      if (s >= 0) str += ` ${s}s`;
+      //if (s >= 0) str += ` ${s}s`;
 
       return str;
     }
-    
-    let dataRows = [];
-    for (const key in $store.getters.conversionRequests) {
-      const conversionRequest = $store.getters.conversionRequests[key];
-      
-      rows.push({
-        id: conversionRequest.id,
-        name: "Convert Resources to Tokens",
-        metal: conversionRequest.metal,
-        crystal: conversionRequest.crystal,
-        petrol: conversionRequest.petrol,
-        token: conversionRequest.token,
-        conversionType: conversionRequest.conversion_type,
-        timeLeft: calculateClaimTime(conversionRequest),
-        readyToClaim: false,
-        claim: false,
-      });
+
+    function claimable(conversion) {
+      const now = new Date();
+      const claim = new Date(conversion.claimable * 1000);
+      const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
+      return diffSeconds <= 0;
     }
-    dataRows= rows;
+
+    let dataRows = computed(() => {
+      let tmp = [];
+      for (const key in $store.getters.conversionRequests) {
+        const conversionRequest = $store.getters.conversionRequests[key];
+        let name = "";
+
+        if (
+          conversionRequest.conversion_type === ConversionTypes.RECEIVE_TOKENS
+        ) {
+          name = "Convert Resources to Tokens";
+        } else {
+          name = "Convert Tokens to Resources";
+        }
+
+        tmp.push({
+          id: conversionRequest.id,
+          name: name,
+          metal: conversionRequest.metal,
+          crystal: conversionRequest.crystal,
+          petrol: conversionRequest.petrol,
+          token: conversionRequest.token,
+          conversionType: conversionRequest.conversion_type,
+          timeLeft: calculateClaimTime(conversionRequest),
+          readyToClaim: claimable(conversionRequest),
+        });
+      }
+
+      return tmp;
+    });
 
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -578,44 +561,140 @@ export default defineComponent({
     const convertResourcesDialog = ref(false);
     const convertTokensDialog = ref(false);
     let tokens = ref(1);
-    
+
     async function convert(type) {
-      const metalCost = 300*tokens.value;
-      const petrolCost = 300*tokens.value;
-      const crystalCost = 300*tokens.value;
+      let request = {
+        type: type,
+        planetGuid: $store.getters.activePlanet.id,
+      };
 
-      switch(type) {
+      switch (type) {
         case ConversionTypes.RECEIVE_TOKENS:
-
-          if ($store.getters.activePlanet.ressources.metal < metalCost || 
-            $store.getters.activePlanet.ressources.petrol < petrolCost   || 
-            $store.getters.activePlanet.ressources.crystal < crystalCost) {
+          const resourceCost = 300 * tokens.value;
+          //TODO: Remove comment
+          /* if ($store.getters.activePlanet.ressources.metal < resourceCost || 
+            $store.getters.activePlanet.ressources.petrol < resourceCost   || 
+            $store.getters.activePlanet.ressources.crystal < resourceCost) {
               $notification("failed", "Not enough resources to perform this exchange.")
               return;
-          }
-          
-          const request = {
-            type: ConversionTypes.RECEIVE_TOKENS,
-            planetGuid: $store.getters.activePlanet.id,
-            metal: metalCost,
-            crystal: crystalCost,
-            petrol: petrolCost,
-          };
+          } */
 
-          const re = await ApiRequests.conversionRequest(request);
-          if (re.success) {
-            $notification("success", "Conversion added, you have to wait 24h");
-          } else {
-            $notification("failed", re.error);
-          }
-          
+          request.metal = resourceCost;
+          request.crystal = resourceCost;
+          request.petrol = resourceCost;
+          break;
+
+        case ConversionTypes.RECEIVE_RESOURCES:
+          request.tokenAmount = tokens.value;
           break;
       }
 
+      const re = await ApiRequests.conversionRequest(request);
+      if (re.success) {
+        if (type === ConversionTypes.RECEIVE_TOKENS) {
+          const cost = 300 * tokens.value;
+          $store.commit("restPlanetResources", {
+            metal: cost,
+            petrol: cost,
+            crystal: cost,
+          });
+        }
+
+        $store.commit("addConversionRequest", { conversionRequest: re.data });
+        $notification("success", "Conversion added, you have to wait 24h");
+      } else {
+        $notification("failed", re.error);
+      }
     }
+
+    async function claim(conversionRequest) {
+      const closeLoadingNotification = $notification(
+        "progress",
+        "Waiting for transaction to complete...",
+        0
+      );
+
+      const claimReq = await ApiRequests.claimConversionRequest({
+        conversionId: conversionRequest.id,
+      });
+
+      if (!claimReq.success) {
+        console.log("error");
+        closeLoadingNotification();
+        $notification("failed", claimReq.error);
+        return;
+      }
+
+      const data = claimReq.data;
+
+      if (data.action === "CALL_SMART_CONTRACT") {
+        const sD = new SignatureData(data.v, data.r, data.s);
+        let params = new Attributes(
+          data.id,
+          data.tokens.toString(),
+          data.valid,
+          data.forAddress
+        );
+        let receipt = { status: 0 };
+
+        try {
+          let tx;
+
+          if (data.type === ConversionTypes.RECEIVE_TOKENS) {
+            tx = await TokenManagementContract.convertFromPrimaryResources(
+              sD,
+              params
+            );
+          } else if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
+            tx = await TokenManagementContract.convertFromToken(sD, params);
+          }
+
+          receipt = await tx.wait();
+        } catch (e) {
+          console.log("error");
+          console.log(e);
+        }
+
+        if (receipt.status !== 1) {
+          console.log("receipt");
+          console.log(receipt);
+          closeLoadingNotification();
+          $notification(
+            "failed",
+            "Something failed calling the smart contract"
+          );
+          return;
+        }
+      }
+
+      const confirmReq = await ApiRequests.confirmConversionRequest({
+        conversionId: conversionRequest.id,
+      });
+      if (!confirmReq.success) {
+        closeLoadingNotification();
+        $notification("failed", confirmReq.error);
+        return;
+      }
+
+      $store.commit("removeConversionRequest", {
+        conversionRequest: conversionRequest,
+      });
+
+      if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
+        $store.commit("addPlanetResources", {
+          metal: conversionRequest.metal,
+          petrol: conversionRequest.petrol,
+          crystal: conversionRequest.crystal,
+        });
+      }
+
+      closeLoadingNotification();
+      $notification("success", "Successfully claimed!");
+    }
+
     return {
+      claim: claim,
       convert: convert,
-      rows,
       dataRows: dataRows,
       convertResourcesDialog,
       convertTokensDialog,
