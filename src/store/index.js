@@ -216,7 +216,7 @@ export default function (/* { ssrContext } */) {
 
         } else if (type === "item") {
           dataSource.building = false;
-          dataSource.available = dataSource.quantity_building;
+          dataSource.available += dataSource.quantity_building;
           dataSource.current_upgrade_time_left = false;
         }
         

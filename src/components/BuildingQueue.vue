@@ -128,6 +128,9 @@ export default defineComponent({
       if (m > 0) str += ` ${m}m`;
       if (s >= 0) str += ` ${s}s`;
 
+      if (str === "") {
+        str = "Finishing..."
+      }
       return str;
     }
 
