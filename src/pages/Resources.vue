@@ -65,7 +65,7 @@
                 fuga similique, est esse voluptas repudiandae.
               </div>
               <div class="q-pt-md">
-                <q-table
+                <!-- <q-table
                   dense
                   :rows="rows"
                   :columns="columns"
@@ -73,7 +73,69 @@
                   rows-per-page-label=" "
                   hide-bottom
                   :rows-per-page-options="[0]"
-                />
+                /> -->
+
+                <q-list dense class="text-center bg-warning">
+                  <q-item>
+                    <q-item-section class="col-1">Level</q-item-section>
+                    <q-item-section>Energy Balance</q-item-section>
+                    <q-item-section>Difference</q-item-section>
+                    <q-item-section>Difference / Level</q-item-section>
+                    <q-item-section>Protected</q-item-section>
+                  </q-item>
+                </q-list>
+
+                <q-table
+                  grid
+                  :rows="rows"
+                  :columns="columns"
+                  row-key="name"
+                  rows-per-page-label=" "
+                  hide-bottom
+                  :rows-per-page-options="[0]"
+                >
+                  <template v-slot:item="props">
+                    <div class="q-pa-xs col-12">
+                      <!-- <q-card>
+                        <q-card-section class="text-center">
+                          Calories for
+                          <br />
+                          <strong>{{ props.row.name }}</strong>
+                        </q-card-section>
+                        <q-separator />
+                        <q-card-section
+                          class="flex flex-center"
+                          :style="{ fontSize: props.row.calories + 'px' }"
+                        >
+                          <div>{{ props.row.calories }} g</div>
+                        </q-card-section>
+                      </q-card> -->
+                      <q-list dense class="text-center">
+                        <q-item
+                          clickable
+                          v-ripple
+                          :class="{ 'text-green': props.row.currentLevel }"
+                        >
+                          <q-item-section class="col-1">{{
+                            props.row.level
+                          }}</q-item-section>
+                          <q-item-section>{{
+                            props.row.energy
+                          }}</q-item-section>
+                          <q-item-section>{{
+                            props.row.difference
+                          }}</q-item-section>
+                          <q-item-section>{{
+                            props.row.difference_level
+                          }}</q-item-section>
+                          <q-item-section>{{
+                            props.row.protected
+                          }}</q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+                  </template>
+                </q-table>
               </div>
             </q-card-section>
           </div>
@@ -132,6 +194,7 @@ const rows = [
     difference: 22,
     difference_level: 22,
     protected: 0,
+    currentLevel: true,
   },
   {
     level: 2,
