@@ -9,8 +9,6 @@
           OVERVIEW
         </glass-element-heading>
 
-        <div></div>
-
         <q-card-section class="row q-col-gutter-sm text-center">
           <div class="col-12 q-pa-sm">
             <q-card flat class="bg-transparent text-dark">
@@ -22,7 +20,7 @@
               <q-card-section
                 class="text-secondary absolute-top tag-glass-element"
               >
-                PLANET NAME
+                {{ this.$store.getters.activePlanet.name }}
               </q-card-section>
               <q-card-section
                 class="text-secondary absolute-bottom-right tag-glass-element"
@@ -32,27 +30,17 @@
                     <q-item-section class="text-subtitle2 text-weight-bold"
                       >Diameter :</q-item-section
                     >
-                    <q-item-section avatar> 12.800km (0/163) </q-item-section>
+                    <q-item-section avatar> {{ this.$store.getters.activePlanet.diameter}} km ({{ this.$store.getters.activePlanet.slots_used}}/{{ this.$store.getters.activePlanet.slots}}) </q-item-section>
                   </q-item>
                   <q-item>
                     <q-item-section class="text-subtitle2 text-weight-bold">Temperature :</q-item-section>
-                    <q-item-section avatar> 45°C to 85°C </q-item-section>
+                    <q-item-section avatar> {{ temperature }} </q-item-section>
                   </q-item>
                   <q-item>
                     <q-item-section class="text-subtitle2 text-weight-bold">Position : </q-item-section>
-                    <q-item-section avatar> [2:327:6] </q-item-section>
+                    <q-item-section avatar> [{{position}}] </q-item-section>
                   </q-item>
 
-                  <q-item>
-                    <q-item-section class="text-subtitle2 text-weight-bold">Points : </q-item-section>
-                    <q-item-section avatar>
-                      0 (Place 822 of 2.491)
-                    </q-item-section>
-                  </q-item>
-                  <q-item>
-                    <q-item-section class="text-subtitle2 text-weight-bold">Honour points : </q-item-section>
-                    <q-item-section avatar> 0 </q-item-section>
-                  </q-item>
                 </q-list>
               </q-card-section>
             </q-card>
@@ -64,7 +52,8 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 import GlassElementHeading from "components/GlassElementHeading";
 
 export default defineComponent({
@@ -73,7 +62,40 @@ export default defineComponent({
     GlassElementHeading,
   },
   setup() {
-    return {};
+    const $store = useStore();
+    
+    const temperature = computed(() => {
+      const minTemperature = $store.getters.activePlanet.min_temperature;
+      const maxTemperature = $store.getters.activePlanet.max_temperature;
+
+      let str = "";
+      if (minTemperature < 0) {
+        str += `-`;
+      }
+
+      str += `${minTemperature}°C to `;
+    
+      if (maxTemperature > 0) {
+        str += `+`;
+      }
+
+      str += `${maxTemperature}°C`;
+
+      return str;
+    });
+
+    const position = computed(() => {
+      const position = $store.getters.activePlanet.position;
+      const solarSystem = $store.getters.activePlanet.solar_system;
+      const galaxy = $store.getters.activePlanet.galaxy;
+
+      return `${position}:${solarSystem}:${galaxy}`;
+    });
+    
+    return {
+      temperature: temperature,
+      position: position,
+    };
   },
 });
 </script>

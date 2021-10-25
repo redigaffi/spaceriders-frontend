@@ -64,6 +64,11 @@ import NavLinks from "components/NavLinks.vue";
 
 const linksList = [
   {
+    title: "Overview",
+    link: "/overview",
+    icon: "info",
+  },
+  {
     title: "Planets",
     link: "/planet",
     icon: "fas fa-globe-europe",

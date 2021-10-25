@@ -52,7 +52,7 @@ const routes = [
     children: [{ path: "", component: convertPage }],
   },
   {
-    path: "/planetinfo",
+    path: "/overview",
     component: mainLayout,
     children: [{ path: "", component: planetInfoPage }],
   },
