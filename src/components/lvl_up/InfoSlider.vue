@@ -246,10 +246,21 @@
         <q-card-section
           class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
         >
+          <q-btn
+            size="sm"
+            flat
+            color="dark"
+            icon="info"
+            @click="popup = true"
+          />
           {{ data.description }}
         </q-card-section>
       </q-card>
     </div>
+
+    <q-dialog v-model="showInfo">
+      <popup></popup>
+    </q-dialog>
   </q-card-section>
 </template>
 
@@ -259,9 +270,13 @@ import { useStore } from "vuex";
 import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
+import popup from "src/components/lvl_up/Popup.vue";
 
 export default defineComponent({
   name: "InfoSlider",
+  components: {
+    popup
+  },
   props: {
     data: {
       type: Object,
@@ -568,6 +583,8 @@ export default defineComponent({
       crystalCost: crystalCost,
       upgrade: upgrade,
       quantity: quantity,
+
+      showInfo: ref(true),
     };
   },
 });
