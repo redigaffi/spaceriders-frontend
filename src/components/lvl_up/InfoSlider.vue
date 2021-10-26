@@ -247,12 +247,15 @@
           class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
         >
           <q-btn
-            size="sm"
-            flat
-            color="dark"
+            size="md"
+            color="warning"
+            class="text-white q-mr-md"
+            glossy
+            dense
             icon="info"
-            @click="popup = true"
+            @click="showInfo = true"
           />
+
           {{ data.description }}
         </q-card-section>
       </q-card>
@@ -275,7 +278,7 @@ import popup from "src/components/lvl_up/Popup.vue";
 export default defineComponent({
   name: "InfoSlider",
   components: {
-    popup
+    popup,
   },
   props: {
     data: {
@@ -584,7 +587,7 @@ export default defineComponent({
       upgrade: upgrade,
       quantity: quantity,
 
-      showInfo: ref(true),
+      showInfo: ref(false),
     };
   },
 });
