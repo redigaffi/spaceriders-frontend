@@ -5,7 +5,7 @@
     >
       TECHNOLOGY - SOLAR PLANT
       <div class="absolute-right q-mr-sm">
-        <q-btn round color="primary" icon="close" v-close-popup />
+        <q-btn size="sm" round color="primary" icon="close" v-close-popup />
       </div>
     </glass-element-heading>
 
@@ -56,7 +56,7 @@
               :rows-per-page-options="[0]"
             >
               <template v-slot:item="props">
-                <div class="q-pa-xs col-12">
+                <div class="col-12">
                   <!-- <q-card>
                         <q-card-section class="text-center">
                           Calories for
@@ -71,7 +71,7 @@
                           <div>{{ props.row.calories }} g</div>
                         </q-card-section>
                       </q-card> -->
-                  <q-list dense class="text-center">
+                  <q-list dense bordered class="text-center">
                     <q-item
                       clickable
                       v-ripple
@@ -102,6 +102,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import GlassElementHeading from "components/GlassElementHeading";
 
 const columns = [
   {
@@ -214,6 +215,9 @@ const rows = [
 
 export default defineComponent({
   name: "Popup",
+  components: {
+    GlassElementHeading,
+  },
   setup() {
     return {
       columns,
