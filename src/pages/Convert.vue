@@ -572,12 +572,12 @@ export default defineComponent({
         case ConversionTypes.RECEIVE_TOKENS:
           const resourceCost = 300 * tokens.value;
           //TODO: Remove comment
-          /* if ($store.getters.activePlanet.ressources.metal < resourceCost || 
+          if ($store.getters.activePlanet.ressources.metal < resourceCost || 
             $store.getters.activePlanet.ressources.petrol < resourceCost   || 
             $store.getters.activePlanet.ressources.crystal < resourceCost) {
               $notification("failed", "Not enough resources to perform this exchange.")
               return;
-          } */
+          }
 
           request.metal = resourceCost;
           request.crystal = resourceCost;
@@ -619,15 +619,14 @@ export default defineComponent({
       });
 
       if (!claimReq.success) {
-        console.log("error");
         closeLoadingNotification();
         $notification("failed", claimReq.error);
         return;
       }
 
       const data = claimReq.data;
-
       if (data.action === "CALL_SMART_CONTRACT") {
+
         const sD = new SignatureData(data.v, data.r, data.s);
         let params = new Attributes(
           data.id,
@@ -641,6 +640,7 @@ export default defineComponent({
           let tx;
 
           if (data.type === ConversionTypes.RECEIVE_TOKENS) {
+
             tx = await TokenManagementContract.convertFromPrimaryResources(
               sD,
               params
@@ -648,8 +648,10 @@ export default defineComponent({
           } else if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
             tx = await TokenManagementContract.convertFromToken(sD, params);
           }
-
+          console.log(tx)
           receipt = await tx.wait();
+          console.log(receipt)
+
         } catch (e) {
           console.log("error");
           console.log(e);

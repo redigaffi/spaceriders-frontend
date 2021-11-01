@@ -90,6 +90,7 @@ export default {
       try {
         const tx = await PlanetManagementContract.buyPlanet(planetGuid);
         receipt = await tx.wait();
+        console.log(receipt);
       } catch (e) {
         console.log("error");
         console.log(e);
