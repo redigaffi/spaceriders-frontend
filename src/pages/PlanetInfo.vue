@@ -30,17 +30,47 @@
                     <q-item-section class="text-subtitle2 text-weight-bold"
                       >Diameter :</q-item-section
                     >
-                    <q-item-section avatar> {{ this.$store.getters.activePlanet.diameter}} km ({{ this.$store.getters.activePlanet.slots_used}}/{{ this.$store.getters.activePlanet.slots}}) </q-item-section>
+                    <q-item-section avatar>
+                      {{ diameter }} KM ({{ slotsAvailable }})
+                    </q-item-section>
                   </q-item>
                   <q-item>
-                    <q-item-section class="text-subtitle2 text-weight-bold">Temperature :</q-item-section>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Temperature :</q-item-section
+                    >
                     <q-item-section avatar> {{ temperature }} </q-item-section>
                   </q-item>
                   <q-item>
-                    <q-item-section class="text-subtitle2 text-weight-bold">Position : </q-item-section>
-                    <q-item-section avatar> [{{position}}] </q-item-section>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Position :
+                    </q-item-section>
+                    <q-item-section avatar> [{{ position }}] </q-item-section>
                   </q-item>
 
+                  <q-item>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Metal Reserve :
+                    </q-item-section>
+                    <q-item-section avatar> {{ metalReserve }} </q-item-section>
+                  </q-item>
+
+                  <q-item>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Crystal Reserve :
+                    </q-item-section>
+                    <q-item-section avatar>
+                      {{ crystalReserve }}
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Petrol Reserve :
+                    </q-item-section>
+                    <q-item-section avatar>
+                      {{ petrolReserve }}
+                    </q-item-section>
+                  </q-item>
                 </q-list>
               </q-card-section>
             </q-card>
@@ -51,51 +81,57 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, computed } from "vue";
+<script setup>
+import { computed } from "vue";
 import { useStore } from "vuex";
 import GlassElementHeading from "components/GlassElementHeading";
+import tc from "thousands-counter";
 
-export default defineComponent({
-  name: "PlanetInfo",
-  components: {
-    GlassElementHeading,
-  },
-  setup() {
-    const $store = useStore();
-    
-    const temperature = computed(() => {
-      const minTemperature = $store.getters.activePlanet.min_temperature;
-      const maxTemperature = $store.getters.activePlanet.max_temperature;
+const $store = useStore();
 
-      let str = "";
-      if (minTemperature < 0) {
-        str += `-`;
-      }
+const temperature = computed(() => {
+  const minTemperature = $store.getters.activePlanet.min_temperature;
+  const maxTemperature = $store.getters.activePlanet.max_temperature;
 
-      str += `${minTemperature}°C to `;
-    
-      if (maxTemperature > 0) {
-        str += `+`;
-      }
+  let str = "";
 
-      str += `${maxTemperature}°C`;
+  str += `${minTemperature}°C to `;
 
-      return str;
-    });
+  if (maxTemperature > 0) {
+    str += `+`;
+  }
 
-    const position = computed(() => {
-      const position = $store.getters.activePlanet.position;
-      const solarSystem = $store.getters.activePlanet.solar_system;
-      const galaxy = $store.getters.activePlanet.galaxy;
+  str += `${maxTemperature}°C`;
 
-      return `${position}:${solarSystem}:${galaxy}`;
-    });
-    
-    return {
-      temperature: temperature,
-      position: position,
-    };
-  },
+  return str;
 });
+
+const position = computed(() => {
+  const position = $store.getters.activePlanet.position;
+  const solarSystem = $store.getters.activePlanet.solar_system;
+  const galaxy = $store.getters.activePlanet.galaxy;
+
+  return `${position}:${solarSystem}:${galaxy}`;
+});
+
+const diameter = computed(() => {
+  return tc($store.getters.activePlanet.diameter, { digits: 2 });
+});
+
+const metalReserve = computed(() => {
+  return tc($store.getters.activePlanet.max_resources.metal, { digits: 2 });
+});
+
+const crystalReserve = computed(() => {
+  return tc($store.getters.activePlanet.max_resources.crystal, { digits: 2 });
+});
+
+const petrolReserve = computed(() => {
+  return tc($store.getters.activePlanet.max_resources.petrol, { digits: 2 });
+});
+
+const slotsAvailable = computed(() => {
+  return `${$store.getters.activePlanet.slots_used}/${$store.getters.activePlanet.slots}`
+});
+
 </script>

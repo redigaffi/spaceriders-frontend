@@ -21,7 +21,7 @@
             class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body2">
-            {{ this.$store.getters.activePlanet.ressources.metal }}
+            {{ metalAvailable }}
           </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
@@ -41,7 +41,7 @@
                   <q-item-section caption>Available </q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ this.$store.getters.activePlanet.ressources.metal }}
+                  {{ metalAvailable }}
                 </q-item-section>
               </q-item>
               <q-item>
@@ -54,7 +54,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Production</q-item-section>
+                  <q-item-section caption>Production</q-item-section>
                 </q-item-section>
                 <q-item-section v-if="this.$store.getters.activePlanet.ressources.metal < metalCapacity" class="col-4 text-right text-positive">
                   +{{ metalProduction }}/min
@@ -84,7 +84,7 @@
             class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body2">
-            {{ this.$store.getters.activePlanet.ressources.crystal }}
+            {{ crystalAvailable }}
           </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
@@ -104,7 +104,7 @@
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ this.$store.getters.activePlanet.ressources.crystal }}
+                  {{ crystalAvailable }}
                 </q-item-section>
               </q-item>
               <q-item>
@@ -117,7 +117,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Production</q-item-section>
+                  <q-item-section caption>Production</q-item-section>
                 </q-item-section>
                 <q-item-section v-if="this.$store.getters.activePlanet.ressources.crystal < crystalCapacity" class="col-4 text-right text-positive">
                   +{{ crystalProduction }}/min
@@ -147,7 +147,7 @@
             class="q-pt-sm planet-icons"
           />
           <p class="text-weight-bold text-body2">
-            {{ this.$store.getters.activePlanet.ressources.petrol }}
+            {{ petrolAvailable }}
           </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
@@ -168,7 +168,7 @@
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ this.$store.getters.activePlanet.ressources.petrol }}
+                  {{ petrolAvailable }}
                 </q-item-section>
               </q-item>
               <q-item>
@@ -181,7 +181,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Production</q-item-section>
+                  <q-item-section caption>Production</q-item-section>
                 </q-item-section>
                 <q-item-section v-if="this.$store.getters.activePlanet.ressources.petrol < petrolCapacity" class="col-4 text-right text-positive">
                   +{{ petrolProduction }}/min
@@ -224,7 +224,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Production </q-item-section>
+                  <q-item-section caption>Production </q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right text-positive">
                   +{{ energyProduction }}
@@ -232,7 +232,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Current Usage</q-item-section>
+                  <q-item-section caption>Usage</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right text-negative">
                   -{{
@@ -252,6 +252,7 @@
 import ResourceType from "../constants/ResourceType";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import tc from "thousands-counter";
 
 export default {
   name: "RessourcesDisplay",
@@ -263,6 +264,18 @@ export default {
       if (currentPlanet === false) return false;
 
       return currentPlanet;
+    });
+
+    const metalAvailable = computed(() => {
+      return tc($store.getters.activePlanet.ressources.metal, { digits: 1 });
+    });
+
+    const crystalAvailable = computed(() => {
+      return tc($store.getters.activePlanet.ressources.crystal, { digits: 1 });
+    });
+
+    const petrolAvailable = computed(() => {
+      return tc($store.getters.activePlanet.ressources.petrol, { digits: 1 });
     });
 
     const metalProduction = computed(() => {
@@ -293,23 +306,30 @@ export default {
       if ($store.getters.resourceData.metalWarehouse === undefined) return;
 
       const currentLevel = $store.getters.resourceData.metalWarehouse.level;
-      return $store.getters.resourceData.metalWarehouse.upgrades[currentLevel]
+      const capacity = $store.getters.resourceData.metalWarehouse.upgrades[currentLevel]
         .capacity;
+
+      return tc(capacity, { digits: 1 });
     });
 
     const petrolCapacity = computed(() => {
       if ($store.getters.resourceData.petrolWarehouse === undefined) return;
       const currentLevel = $store.getters.resourceData.petrolWarehouse.level;
-      return $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel]
+
+      const capacity = $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel]
         .capacity;
+
+      return tc(capacity, { digits: 1 });
     });
 
     const crystalCapacity = computed(() => {
       if ($store.getters.resourceData.crystalWarehouse === undefined) return;
 
       const currentLevel = $store.getters.resourceData.crystalWarehouse.level;
-      return $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel]
+      const capacity = $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel]
         .capacity;
+
+      return tc(capacity, { digits: 1 });
     });
 
     const energyProduction = computed(() => {
@@ -404,6 +424,9 @@ export default {
       energyProduction: energyProduction,
       energyLeft: energyLeft,
       activePlanet: activePlanet,
+      metalAvailable: metalAvailable,
+      petrolAvailable: petrolAvailable,
+      crystalAvailable: crystalAvailable,
     };
   },
 };
