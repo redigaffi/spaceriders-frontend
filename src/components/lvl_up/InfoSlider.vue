@@ -262,7 +262,7 @@
     </div>
 
     <q-dialog v-model="showInfo">
-      <popup></popup>
+      <popup :item="this.$props.data"></popup>
     </q-dialog>
   </q-card-section>
 </template>
