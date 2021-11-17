@@ -12,7 +12,7 @@
           :data-content="this.calculateClaimDate(p)"
         >
           <img src="~assets/img/planet_queue.jpg" 
-               style="height: 250px; width: 100%"
+               style="height: 200px; width: 100%"
           />
           <q-card-section class="text-center text-secondary bg-dark">
             {{ p.name }}
@@ -29,7 +29,7 @@
       >
         <q-card flat class="bg-transparent text-dark claimable-cards">
           <img src="~assets/img/planet_claimable.jpg" 
-               style="height: 250px; width: 100%"
+               style="height: 200px; width: 100%"
           />
           <q-card-section class="text-secondary absolute-top tag-glass-element">
             {{ p.name }}
