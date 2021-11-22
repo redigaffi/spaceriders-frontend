@@ -45,8 +45,6 @@
               />
             </a>
           </div>
-
-          <button class="button header__button">White peper</button>
         </div>
       </div>
     </header>

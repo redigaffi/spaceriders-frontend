@@ -12,6 +12,7 @@
           <q-slide-transition>
             <div v-show="currentTabComponent == 'DefaultSlider'">
               <DefaultSlider
+                keyName="resources"
                 :name="`Resources - ${this.$store.getters.activePlanet.name}`"
                 key="defaultSlider"
               ></DefaultSlider>

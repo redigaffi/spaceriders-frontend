@@ -31,7 +31,7 @@
       <q-card-section
         class="q-pb-none text-secondary text-subtitle1 text-weight-bolder"
       >
-        Ready to Claim
+        Claimable
       </q-card-section>
 
       <ClaimPlanetList
@@ -45,7 +45,7 @@
       <q-card-section class="text-center">
         <div>
           <img
-            src="~assets/img/searching.svg"
+            src="~assets/img/no-planet.png"
             alt=""
             srcset=""
             style="height: 230px"
@@ -59,7 +59,7 @@
           text-secondary text-subtitle1 text-weight-bolder text-center
         "
       >
-        No purchased planets
+        No planets in queue
       </q-card-section>
       <q-card-section
         class="

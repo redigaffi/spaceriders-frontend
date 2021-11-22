@@ -3,7 +3,7 @@
     <div class="col-12 q-pa-sm">
       <q-card flat class="bg-transparent text-dark">
         <img
-          src="~assets/img/body-backgrounds-7.jpg"
+          :src="`data_img/${keyName}.jpg`"
           width="100%"
           style="height: 300px; width: 100%"
         />
@@ -25,6 +25,10 @@ export default defineComponent({
   name: "DefaultSlider",
   props: {
     name: {
+      type: String,
+      default: undefined,
+    },
+    keyName: {
       type: String,
       default: undefined,
     },

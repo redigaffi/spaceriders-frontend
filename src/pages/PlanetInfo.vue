@@ -13,7 +13,7 @@
           <div class="col-12 q-pa-sm">
             <q-card flat class="bg-transparent text-dark">
               <img
-                src="~assets/img/body-backgrounds-7.jpg"
+                src="~assets/img/planet-info-header.jpg"
                 width="100%"
                 style="height: 300px; width: 100%"
               />
