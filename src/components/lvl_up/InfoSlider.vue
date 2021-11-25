@@ -262,7 +262,7 @@
     </div>
 
     <q-dialog v-model="showInfo">
-      <popup></popup>
+      <popup :item="this.$props.data"></popup>
     </q-dialog>
   </q-card-section>
 </template>
@@ -443,21 +443,6 @@ export default defineComponent({
       return nextEnergyUsage - currentEnergyUsage;
     });
 
-    const alreadyUpgrading = (type) => {
-      let data = dataSource(type);
-
-      let anyUpgrade = false;
-      for (let key in data) {
-        const ressource = data[key];
-        if (ressource.upgrading || ressource.building) {
-          anyUpgrade = true;
-          break;
-        }
-      }
-
-      return anyUpgrade;
-    };
-
     const canUpgrade = (props, activePlanet) => {
       let data = dataSource(props.data.type);
 
@@ -485,13 +470,6 @@ export default defineComponent({
 
     const upgrade = async (label) => {
       if (!props.data) return;
-
-      const anyUpgrade = alreadyUpgrading(props.data.type);
-
-      if (anyUpgrade) {
-        $notification("failed", `Queue is full, wait until it finishes...`);
-        return;
-      }
 
       const activePlanet = $store.getters.activePlanet;
 

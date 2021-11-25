@@ -367,7 +367,12 @@ export default {
       }
 
       if (current < maxCapacity && !upgrading) {
+        
         $store.commit("incrementResources", {
+          ressource: resource,
+          value: production,
+        });
+        $store.commit("decrementReserve", {
           ressource: resource,
           value: production,
         });

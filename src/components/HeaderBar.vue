@@ -41,7 +41,7 @@
         </q-route-tab>
       </q-tabs>
 
-      <user />
+      <User />
     </q-toolbar>
     <q-drawer v-model="leftDrawerOpen" bordered overlay>
       <q-list>

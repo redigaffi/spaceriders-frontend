@@ -18,11 +18,6 @@
 
               <q-item class="q-pa-none">
                 <q-item-section avatar>
-                  <img
-                    src="~assets/img/body-backgrounds-1.jpg"
-                    style="width: 70px; height: 70px"
-                    alt=""
-                  />
                 </q-item-section>
 
                 <q-item-label caption class="text-left">

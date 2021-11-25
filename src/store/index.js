@@ -241,6 +241,10 @@ export default function (/* { ssrContext } */) {
         const key = payload.ressource;
         state.activePlanet.ressources[key] += payload.value;
       },
+      decrementReserve(state, payload) {
+        const key = payload.ressource;
+        state.activePlanet.max_resources[key] -= payload.value;
+      },
     },
 
     getters: {
