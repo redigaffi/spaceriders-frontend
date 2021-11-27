@@ -1,6 +1,9 @@
 <template>
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
+    
+    <div :class="tier != 'TIER 0' ? 'glitch': 'boring'" :data-text="tier">{{ tier }}</div>
+        
     <q-btn
       v-if="!this.error"
       :label="logInButtonText"
@@ -156,6 +159,14 @@ export default {
   },
 
   computed: {
+    tier: function () {
+      const tiers = {
+        "T0": "TIER 0",
+        "T1": "TIER 1",
+        "T2": "TIER 2",
+      };
+      return tiers[this.$store.getters.activePlanet.tierCode];
+    },
     loggedIn: function () {
       return this.$store.getters.loggedIn;
     },
@@ -179,6 +190,99 @@ export default {
 };
 </script>
 <style lang="scss">
+.boring {
+  color: rgb(223, 191, 191);
+  position: relative;
+  font-size: 25px;
+  float:left;
+  margin-right: 20px;
+}
+.glitch {
+  color: rgb(223, 191, 191);
+  position: relative;
+  font-size: 25px;
+  float:left;
+  margin-right: 20px;
+  // margin: 70px 200px;
+  animation: glitch 5s 5s infinite;
+}
+
+.glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  left: -2px;
+  text-shadow: -5px 0 magenta;
+  background: black;
+  overflow: hidden;
+  top: 0;
+  animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
+}
+
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -5px 0 lightgreen;
+  background: black;
+  overflow: hidden;
+  top: 0;
+  animation: noise-2 3s linear infinite alternate-reverse, glitch 5s 5s infinite;
+}
+
+@keyframes glitch {
+  1%{
+    transform: rotateX(10deg) skewX(90deg);
+  }
+  2%{
+    transform: rotateX(0deg) skewX(0deg);
+  }
+}
+
+@keyframes noise-1 {
+  $steps: 30;
+  @for $i from 1 through $steps {
+    #{percentage($i*(1/$steps))} {
+      $top: random(100);
+      $bottom: random(101 - $top);
+      clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+    }
+  }
+}
+
+@keyframes noise-2 {
+  $steps: 30;
+  @for $i from 0 through $steps {
+    #{percentage($i*(1/$steps))} {
+      $top: random(100);
+      $bottom: random(101 - $top);
+      clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+    }
+  }
+}
+
+
+
+
+@keyframes fudge {
+  from {
+    transform: translate(0px, 0px);
+  }
+  to {
+    transform: translate(0px, 2%);
+  }
+}
+
+
+
+@keyframes glitch-2 {
+  1%{
+    transform: rotateX(10deg) skewX(70deg);
+  }
+  2%{
+    transform: rotateX(0deg) skewX(0deg);
+  }
+}
+
 .btn-glow-element {
   color: rgba(255, 255, 255, 1);
   box-shadow: 0 0px 100px rgba(34, 83, 244, 0.9);
