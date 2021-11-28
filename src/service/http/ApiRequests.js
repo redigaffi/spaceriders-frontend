@@ -270,6 +270,17 @@ export default class ApiRequests {
   }
 
   /**
+   * Get tier upgrade info
+   *
+   * @param {string} planetId
+   * @returns
+   */
+  static async getTierInfo() {
+    const path = `${process.env.BASE_API_PATH}/staking/info`;
+    return (await axios.get(path)).data;
+  }
+
+  /**
    * Create staking request.
    * @param {string} label
    * @param {string} planetGuid
@@ -280,7 +291,7 @@ export default class ApiRequests {
 
     const body = {
       tier: data.tier,
-      planetId: data.planetId
+      planetId: data.planetId,
     };
 
     return (await axios.post(path, body)).data;
@@ -292,11 +303,11 @@ export default class ApiRequests {
    * @param {string} planetGuid
    * @returns
    */
-   static async confirmStakingRequest(data) {
+  static async confirmStakingRequest(data) {
     const path = `${process.env.BASE_API_PATH}/staking/confirm`;
 
     const body = {
-      planetId: data.planetId
+      planetId: data.planetId,
     };
 
     return (await axios.post(path, body)).data;
