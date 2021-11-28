@@ -152,6 +152,15 @@ export default function (/* { ssrContext } */) {
         state.planets[pI] = p;
       },
 
+      /**
+       * Update active planet
+       * @param {*} state
+       * @param {*} payload
+       */
+      updateActivePlanet(state, payload) {
+        state.activePlanet = payload.planet;
+      },
+
       upgradeRessourceData(state, payload) {
         const label = payload.label;
         let resource = state.resourceData[label];

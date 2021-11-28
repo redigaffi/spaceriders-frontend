@@ -160,13 +160,9 @@ export default {
 
   computed: {
     tier: function () {
-      const tiers = {
-        "T0": "TIER 0",
-        "T1": "TIER 1",
-        "T2": "TIER 2",
-      };
-      return tiers[this.$store.getters.activePlanet.tierCode];
+      return this.$store.getters.activePlanet.tier.tierName.toUpperCase();
     },
+    
     loggedIn: function () {
       return this.$store.getters.loggedIn;
     },
@@ -196,6 +192,7 @@ export default {
   font-size: 25px;
   float:left;
   margin-right: 20px;
+  text-transform: uppercase;
 }
 .glitch {
   color: rgb(223, 191, 191);
@@ -205,6 +202,7 @@ export default {
   margin-right: 20px;
   // margin: 70px 200px;
   animation: glitch 5s 5s infinite;
+  text-transform: uppercase;
 }
 
 .glitch::before {

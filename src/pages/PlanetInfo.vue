@@ -166,6 +166,7 @@ import BenefitStakingContract, {
   Attributes,
   SignatureData,
 } from "../service/contract/BenefitStakingContract";
+import ApiRequests from "../service/http/ApiRequests";
 
 const $store = useStore();
 const $notification =
@@ -277,6 +278,7 @@ async function stake() {
     stakingRequest.r,
     stakingRequest.s
   );
+  
   let receipt = { status: 0 };
 
   try {
@@ -299,6 +301,10 @@ async function stake() {
       closeWaitingNotification();
       return;
     }
+
+    const updatedPlanet = (await ApiRequests.getActivePlanet($store.getters.activePlanet.id)).data;
+    $store.commit('updateActivePlanet', {planet: updatedPlanet});
+    layout.value = false;
   }
 
   $notification("success", "Staked successfully, enjoy!", 6000);
