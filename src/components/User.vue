@@ -160,6 +160,7 @@ export default {
 
   computed: {
     tier: function () {
+      if (this.$store.getters.activePlanet === false) return;
       return this.$store.getters.activePlanet.tier.tierName.toUpperCase();
     },
     

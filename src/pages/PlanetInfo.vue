@@ -73,16 +73,29 @@
                   </q-item>
 
                   <q-item>
-                    <q-item-section class="text-subtitle2 text-weight-bold"
-                      >Planet Tier :
-                    </q-item-section>
-                    <q-item-section avatar>
                       <q-btn
+                        v-if="!isStaking"
                         @click="openTierDialog"
                         color="warning"
                         label="Upgrade"
+                        class="full-width"
                       />
-                    </q-item-section>
+                      <q-btn
+                        v-else
+                        @click="unstake"
+                        color="negative"
+                        class="full-width text-weight-bolder"
+                        :loading="unstakeDisabled"
+                        :disable="unstakeDisabled"
+                      > 
+                         Withdraw
+                         <template v-slot:loading>
+                          <q-spinner-rings size="1.45em" class="on-left"  />
+                           {{ stakingHoursLeft }}
+                         </template>
+                         
+                      </q-btn>
+
                   </q-item>
                 </q-list>
               </q-card-section>
@@ -103,12 +116,12 @@
         </q-header>
 
         <q-page-container>
-          <q-page padding>
+          <q-page padding v-if="!isStaking">
             <q-select
               filled
               v-model="selectedTier"
               :options="tierOptions"
-              label="Label (stacked)"
+              label="CHOOSE NEW TIER"
               stack-label
             >
               <template v-slot:label>
@@ -124,13 +137,16 @@
             <img
               src="~assets/img/logo.png"
               alt=""
-              style="height: 20px; width: 20px; vertical-align:middle"
+              style="height: 20px; width: 20px; vertical-align: middle"
             />)
             <br />
             <br />
             Benefits: <br />
             <ul>
-              <li v-for="benefit in selectedTierInfo.benefit_lines" :key="benefit">
+              <li
+                v-for="benefit in selectedTierInfo.benefit_lines"
+                :key="benefit"
+              >
                 {{ benefit }}
               </li>
             </ul>
@@ -156,7 +172,7 @@
 </template>
 
 <script setup>
-import { computed, ref, getCurrentInstance } from "vue";
+import { computed, ref, getCurrentInstance, onUnmounted } from "vue";
 
 import tc from "thousands-counter";
 import { useStore } from "vuex";
@@ -217,6 +233,10 @@ const slotsAvailable = computed(() => {
   return `${$store.getters.activePlanet.slots_used}/${$store.getters.activePlanet.slots}`;
 });
 
+const isStaking = computed(() => {
+  return $store.getters.activePlanet.tier.staked;
+});
+
 const layout = ref(false);
 
 const selectedTier = ref({ value: "TIER_1", label: "Tier 1" });
@@ -234,9 +254,46 @@ const selectedTierInfo = computed(() => {
 const stakingLockedDays = computed(() => {
   if (tierInfoReq.value === "") return;
   const selTier = tierInfoReq.value[selectedTier.value.value];
-  const stakeTime = selTier['tokens_time_locked'];
-  
-  return Math.ceil(stakeTime/86400); // 1 day in seconds
+  const stakeTime = selTier["tokens_time_locked"];
+  console.log(stakeTime)
+  return Math.ceil(stakeTime / 86400); // 1 day in seconds
+});
+
+const activeTier = computed(() => {
+  if ($store.getters.activePlanet === false) return;
+  if (!$store.getters.activePlanet.tier.staked) return;
+
+  return $store.getters.activePlanet.tier.tierName;
+});
+
+function calculateClaimDate (time) {
+  const now = new Date();
+  const claim = new Date(time * 1000);
+
+  const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
+  if (diffSeconds <= 0) return false;
+  const s = Math.round(diffSeconds % 60);
+  const minutes = Math.round((diffSeconds - s) / 60);
+
+  const m = minutes % 60;
+  const h = Math.round(minutes - m) / 60;
+
+  let str = "";
+  if (h > 0) str += `${h}h`;
+  if (m > 0) str += ` ${m}m`;
+  if (s >= 0) str += ` ${s}s`;
+
+  return str;
+}
+
+const stakingHoursLeft = computed(() => {
+  if ($store.getters.activePlanet === false) return;
+  if (!$store.getters.activePlanet.tier.staked) return;
+  const stakingFinished = $store.getters.activePlanet.tier.timeRelease;
+
+  let timeString = calculateClaimDate(stakingFinished); 
+  if (timeString === false) return "Withdraw";
+  return timeString;
 });
 
 async function openTierDialog() {
@@ -278,7 +335,7 @@ async function stake() {
     stakingRequest.r,
     stakingRequest.s
   );
-  
+
   let receipt = { status: 0 };
 
   try {
@@ -302,12 +359,67 @@ async function stake() {
       return;
     }
 
-    const updatedPlanet = (await ApiRequests.getActivePlanet($store.getters.activePlanet.id)).data;
-    $store.commit('updateActivePlanet', {planet: updatedPlanet});
+    const updatedPlanet = (
+      await ApiRequests.getActivePlanet($store.getters.activePlanet.id)
+    ).data;
+    $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
   }
 
   $notification("success", "Staked successfully, enjoy!", 6000);
+  closeWaitingNotification();
+}
+
+const unstakeDisabled = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
+  if (!$store.getters.activePlanet.tier.staked) return false;
+
+  const timeRelease = $store.getters.activePlanet.tier.timeRelease;
+  const now = Date.now() / 1000;
+
+  return timeRelease - now >= 0;
+});
+
+async function unstake() {
+  const closeWaitingNotification = $notification(
+    "progress",
+    "Waiting for transaction to complete...",
+    0
+  );
+
+  let receipt = { status: 0 };
+
+  try {
+    const tx = await BenefitStakingContract.unstakingRequest(
+      $store.getters.activePlanet.id
+    );
+    receipt = await tx.wait();
+  } catch (e) {
+    console.log(e);
+    closeWaitingNotification();
+  }
+
+  if (receipt.status === 1) { 
+    const req = {
+      planetId: $store.getters.activePlanet.id,
+    };
+  
+    const unstakeRequest = await ApiRequest.unstakeRequest(req);
+  
+    if (!unstakeRequest.success) {
+      $notification("failed", unstakeRequest.error, 6000);
+      closeWaitingNotification();
+      return;
+    }
+
+    const updatedPlanet = (await ApiRequests.getActivePlanet($store.getters.activePlanet.id)).data;
+    $store.commit("updateActivePlanet", { planet: updatedPlanet });
+    layout.value = false;
+    $notification("success", "Un-staked successfully, thank you!", 6000);
+  } else {
+    $notification("failed", "Something happened...", 6000);
+  }
+
   closeWaitingNotification();
 }
 </script>

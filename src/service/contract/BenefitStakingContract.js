@@ -53,6 +53,24 @@ class BenefitStakingContract extends Contract {
   }
 
 
+  /**
+   * @param {string} planetGuid Planet GUID.
+   *
+   **/
+   async unstakingRequest(planetId) {
+    const contract = await this.getContract();
+    
+    const overrides = {
+      gasLimit: 6721975,
+    };
+    
+    return await contract.withdrawStaking(
+      planetId,
+      overrides
+    );
+  }
+
+
 }
 
 export default new BenefitStakingContract();
