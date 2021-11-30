@@ -76,8 +76,8 @@ export default class ApiRequests {
 
   /**
    * Gets current active planet
-   * @param {number} planetId 
-   * @returns 
+   * @param {number} planetId
+   * @returns
    */
   static async getActivePlanet(planetId) {
     const path = `${process.env.BASE_API_PATH}/planet/${planetId}`;
@@ -93,54 +93,52 @@ export default class ApiRequests {
   }
 
   /**
-   * Gets defense data for a given planet 
-   * 
-   * @param {string} planetId 
-   * @returns 
+   * Gets defense data for a given planet
+   *
+   * @param {string} planetId
+   * @returns
    */
-   static async getDefenseData(planetId) {
+  static async getDefenseData(planetId) {
     const path = `${process.env.BASE_API_PATH}/defense/${planetId}`;
     return (await axios.get(path)).data;
   }
 
-    /**
+  /**
    * Upgrades defense.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-    static async buildDefense(data) {
-      const path = `${process.env.BASE_API_PATH}/defense/build`;
-  
-      const body = {
-        label: data.label,
-        planetId: data.planetGuid,
-        quantity: data.quantity,
-      };
-  
-      return (await axios.post(path, body)).data;
-    }
+  static async buildDefense(data) {
+    const path = `${process.env.BASE_API_PATH}/defense/build`;
 
-    
+    const body = {
+      label: data.label,
+      planetId: data.planetGuid,
+      quantity: data.quantity,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
   /**
-   * Gets all resources for a given planet 
-   * 
-   * @param {string} planetId 
-   * @returns 
+   * Gets all resources for a given planet
+   *
+   * @param {string} planetId
+   * @returns
    */
   static async getResourceData(planetId) {
     const path = `${process.env.BASE_API_PATH}/ressource/${planetId}`;
     return (await axios.get(path)).data;
   }
 
-
   /**
    * Upgrades a Ressource Building.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-   static async upgradeRessource(data) {
+  static async upgradeRessource(data) {
     const path = `${process.env.BASE_API_PATH}/ressource/upgrade`;
 
     const body = {
@@ -152,12 +150,12 @@ export default class ApiRequests {
   }
 
   /**
-   * Gets all installations for a given planet 
-   * 
-   * @param {string} planetId 
-   * @returns 
+   * Gets all installations for a given planet
+   *
+   * @param {string} planetId
+   * @returns
    */
-   static async getInstallationData(planetId) {
+  static async getInstallationData(planetId) {
     const path = `${process.env.BASE_API_PATH}/installation/${planetId}`;
     return (await axios.get(path)).data;
   }
@@ -165,10 +163,10 @@ export default class ApiRequests {
   /**
    * Upgrades a Installation Building.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-   static async upgradeInstallation(data) {
+  static async upgradeInstallation(data) {
     const path = `${process.env.BASE_API_PATH}/installation/upgrade`;
 
     const body = {
@@ -179,98 +177,139 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
-
   /**
-   * Gets all research data for a given planet 
-   * 
-   * @param {string} planetId 
-   * @returns 
+   * Gets all research data for a given planet
+   *
+   * @param {string} planetId
+   * @returns
    */
-   static async getResearchData(planetId) {
+  static async getResearchData(planetId) {
     const path = `${process.env.BASE_API_PATH}/research/${planetId}`;
     return (await axios.get(path)).data;
   }
 
-   /**
+  /**
    * Upgrades Research.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-    static async upgradeResearch(data) {
-      const path = `${process.env.BASE_API_PATH}/research/upgrade`;
-  
-      const body = {
-        label: data.label,
-        planetId: data.planetGuid,
-      };
-  
-      return (await axios.post(path, body)).data;
-    }
-    
+  static async upgradeResearch(data) {
+    const path = `${process.env.BASE_API_PATH}/research/upgrade`;
 
-    /**
+    const body = {
+      label: data.label,
+      planetId: data.planetGuid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
    * Get pending conversion request
-   * 
-   * @param {string} planetId 
-   * @returns 
+   *
+   * @param {string} planetId
+   * @returns
    */
-   static async getPendingConversions(planetId) {
+  static async getPendingConversions(planetId) {
     const path = `${process.env.BASE_API_PATH}/conversion/${planetId}`;
     return (await axios.get(path)).data;
   }
 
-
   /**
    * Conversion Request.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-    static async conversionRequest(data) {
-      const path = `${process.env.BASE_API_PATH}/conversion/convert`;
-  
-      const body = {
-        type: data.type,
-        planetId: data.planetGuid,
-        metal: data.metal,
-        crystal: data.crystal,
-        petrol: data.petrol,
-        tokenAmount: data.tokenAmount,
-      };
-  
-      return (await axios.post(path, body)).data;
-    }
+  static async conversionRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/conversion/convert`;
+
+    const body = {
+      type: data.type,
+      planetId: data.planetGuid,
+      metal: data.metal,
+      crystal: data.crystal,
+      petrol: data.petrol,
+      tokenAmount: data.tokenAmount,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
 
   /**
    * Claim Conversion Request.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-    static async claimConversionRequest(data) {
-      const path = `${process.env.BASE_API_PATH}/conversion/claim`;
-  
-      const body = {
-        conversionId: data.conversionId,
-      };
-  
-      return (await axios.post(path, body)).data;
-    }
+  static async claimConversionRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/conversion/claim`;
 
-   /**
+    const body = {
+      conversionId: data.conversionId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
    * Claim Conversion Request.
    * @param {string} label
-   * @param {string} planetGuid 
-   * @returns 
+   * @param {string} planetGuid
+   * @returns
    */
-    static async confirmConversionRequest(data) {
-      const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
-  
-      const body = {
-        conversionId: data.conversionId,
-      };
-  
-      return (await axios.post(path, body)).data;
-    }
+  static async confirmConversionRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
+
+    const body = {
+      conversionId: data.conversionId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Get tier upgrade info
+   *
+   * @param {string} planetId
+   * @returns
+   */
+  static async getTierInfo() {
+    const path = `${process.env.BASE_API_PATH}/staking/info`;
+    return (await axios.get(path)).data;
+  }
+
+  /**
+   * Create staking request.
+   * @param {string} label
+   * @param {string} planetGuid
+   * @returns
+   */
+  static async createStakingRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/staking/request`;
+
+    const body = {
+      tier: data.tier,
+      planetId: data.planetId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Confirm staking request.
+   * @param {string} label
+   * @param {string} planetGuid
+   * @returns
+   */
+  static async confirmStakingRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/staking/confirm`;
+
+    const body = {
+      planetId: data.planetId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
 }

@@ -18,6 +18,11 @@
 
               <q-item class="q-pa-none">
                 <q-item-section avatar>
+                  <img
+                    :src="`data_img/${bQ.label}.png`"
+                    style="width: 70px; height: 70px"
+                    alt=""
+                  />
                 </q-item-section>
 
                 <q-item-label caption class="text-left">
