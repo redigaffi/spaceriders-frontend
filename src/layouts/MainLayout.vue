@@ -1,11 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-
     <headerbar />
     <q-page-container id="main">
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
 
       <RessourcesDisplay />
       <q-page class="container">
@@ -36,6 +35,85 @@
             >Spaceships/Defense</BuildingQueue
           >
         </div>
+
+        <q-page-sticky position="bottom-right" :offset="[24, 24]">
+          <q-btn
+            size="sm"
+            fab
+            icon="mail"
+            color="primary"
+            @click="openInbox = !openInbox"
+          >
+            <q-badge floating color="info" rounded />
+          </q-btn>
+        </q-page-sticky>
+
+        <q-dialog v-model="openInbox">
+          <q-card>
+            <q-card-section class="q-pa-none">
+              <div class="text-h6 q-pa-sm">
+                <q-input
+                  dark
+                  dense
+                  standout
+                  v-model="text"
+                  placeholder="Search"
+                >
+                  <template v-slot:append>
+                    <q-icon v-if="text === ''" name="search" />
+                    <q-icon
+                      v-else
+                      name="clear"
+                      class="cursor-pointer"
+                      @click="text = ''"
+                    />
+                  </template>
+                </q-input>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-px-none">
+              <q-list>
+                <q-scroll-area style="height: 300px; min-width: 500px">
+                  <q-item clickable>
+                    <q-item-section>
+                      <q-item-label>Convert Resources to Token</q-item-label>
+                      <q-item-label caption lines="2"
+                        >Your Convert Resourses to Tokens request has been
+                        generated</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-btn
+                        flat
+                        size="sm"
+                        color="white"
+                        icon="mark_email_read"
+                        round
+                        v-if="read"
+                      >
+                      </q-btn>
+                      <q-btn
+                        v-else
+                        round
+                        flat
+                        size="sm"
+                        color="white"
+                        icon="mark_email_unread"
+                        @click="markEmailRead"
+                      >
+                        <q-tooltip> Mark as Read </q-tooltip>
+                      </q-btn>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset />
+                </q-scroll-area>
+              </q-list>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -77,10 +155,20 @@ export default defineComponent({
       return $store.getters.defenseData;
     });
 
+    const read = ref(false);
+
+    function markEmailRead() {
+      read.value = true;
+    }
+
     return {
       buildingQueueData: buildingQueueData,
       researchQueueData: researchQueueData,
       defenseFleetQueueData: defenseFleetQueueData,
+      openInbox: ref(false),
+      text: ref(""),
+      read,
+      markEmailRead,
     };
   },
   methods: {},
@@ -91,7 +179,7 @@ export default defineComponent({
 /*
 https://codepen.io/mattmarble/pen/qBdamQz
 */
-#main{
+#main {
   height: 100%;
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
@@ -647,7 +735,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
     1067px 296px #fff, 746px 463px #fff, 412px 349px #fff, 1193px 1421px #fff,
     564px 455px #fff, 1675px 589px #fff;
 }
-
 
 @keyframes animStar {
   from {
