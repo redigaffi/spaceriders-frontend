@@ -42,14 +42,36 @@
             fab
             icon="mail"
             color="primary"
-            @click="openInbox = !openInbox"
+            @click="openInboxModel = !openInboxModel"
           >
             <q-badge floating color="info" rounded />
           </q-btn>
         </q-page-sticky>
 
-        <q-dialog v-model="openInbox">
+        <q-drawer
+          v-model="openInboxModel"
+          :width="400"
+          :breakpoint="500"
+          overlay
+          side="right"
+          class="bg-dark-3"
+        >
           <q-card>
+            <q-card-section class="text-h6 text-weight-bold">
+              <div class="row justify-between">
+                <div>NOTIFICATIONS</div>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="white"
+                    icon="close"
+                    @click="openInboxModel = !openInboxModel"
+                  />
+                </div>
+              </div>
+            </q-card-section>
             <q-card-section class="q-pa-none">
               <div class="text-h6 q-pa-sm">
                 <q-input
@@ -74,8 +96,16 @@
 
             <q-card-section class="q-px-none">
               <q-list>
-                <q-scroll-area style="height: 300px; min-width: 500px">
-                  <q-item clickable>
+                <q-scroll-area style="height: 70vh">
+                  <q-item
+                    clickable
+                    v-ripple
+                    v-for="x in 40"
+                    :key="x"
+                    @click="openInbox = !openInbox"
+                    style="border-left:4px solid #2253F4"
+                    class="q-mb-xs"
+                  >
                     <q-item-section>
                       <q-item-label>Convert Resources to Token</q-item-label>
                       <q-item-label caption lines="2"
@@ -85,25 +115,8 @@
                     </q-item-section>
 
                     <q-item-section side>
-                      <q-btn
-                        flat
-                        size="sm"
-                        color="white"
-                        icon="mark_email_read"
-                        round
-                        v-if="read"
-                      >
-                      </q-btn>
-                      <q-btn
-                        v-else
-                        round
-                        flat
-                        size="sm"
-                        color="white"
-                        icon="mark_email_unread"
-                        @click="markEmailRead"
-                      >
-                        <q-tooltip> Mark as Read </q-tooltip>
+                      <q-btn round flat size="sm" color="red" icon="delete">
+                        <q-tooltip> Delete Message </q-tooltip>
                       </q-btn>
                     </q-item-section>
                   </q-item>
@@ -111,6 +124,50 @@
                   <q-separator spaced inset />
                 </q-scroll-area>
               </q-list>
+            </q-card-section>
+          </q-card>
+        </q-drawer>
+
+        <q-dialog v-model="openInbox">
+          <q-card>
+            <q-card-section class="b">
+              <div class="row justify-between">
+                <div>TITLE</div>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="red"
+                    icon="delete"
+                    v-close-popup
+                    class="q-mr-md"
+                  />
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="white"
+                    icon="close"
+                    v-close-popup
+                  />
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <div class="text-subtitle2 text-justify">
+                lLorem Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type
+                specimen book. It has survived not only five centuries, but also
+                the leap into electronic typesetting, remaining essentially
+                unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more
+                recently with desktop publishing software like Aldus PageMaker
+                including versions of Lorem Ipsum.orem
+              </div>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -165,6 +222,7 @@ export default defineComponent({
       buildingQueueData: buildingQueueData,
       researchQueueData: researchQueueData,
       defenseFleetQueueData: defenseFleetQueueData,
+      openInboxModel: ref(false),
       openInbox: ref(false),
       text: ref(""),
       read,
