@@ -1,11 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-
     <headerbar />
     <q-page-container id="main">
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
 
       <RessourcesDisplay />
       <q-page class="container">
@@ -36,6 +35,142 @@
             >Spaceships/Defense</BuildingQueue
           >
         </div>
+
+        <q-page-sticky position="bottom-right" :offset="[24, 24]">
+          <q-btn
+            size="sm"
+            fab
+            icon="mail"
+            color="primary"
+            @click="openInboxModel = !openInboxModel"
+          >
+            <q-badge floating color="info" rounded />
+          </q-btn>
+        </q-page-sticky>
+
+        <q-drawer
+          v-model="openInboxModel"
+          :width="400"
+          :breakpoint="500"
+          overlay
+          side="right"
+          class="bg-dark-3"
+        >
+          <q-card>
+            <q-card-section class="text-h6 text-weight-bold">
+              <div class="row justify-between">
+                <div>NOTIFICATIONS</div>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="white"
+                    icon="close"
+                    @click="openInboxModel = !openInboxModel"
+                  />
+                </div>
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pa-none">
+              <div class="text-h6 q-pa-sm">
+                <q-input
+                  dark
+                  dense
+                  standout
+                  v-model="text"
+                  placeholder="Search"
+                >
+                  <template v-slot:append>
+                    <q-icon v-if="text === ''" name="search" />
+                    <q-icon
+                      v-else
+                      name="clear"
+                      class="cursor-pointer"
+                      @click="text = ''"
+                    />
+                  </template>
+                </q-input>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-px-none">
+              <q-list>
+                <q-scroll-area style="height: 70vh">
+                  <q-item
+                    clickable
+                    v-ripple
+                    v-for="x in 40"
+                    :key="x"
+                    @click="openInbox = !openInbox"
+                    style="border-left:4px solid #2253F4"
+                    class="q-mb-xs"
+                  >
+                    <q-item-section>
+                      <q-item-label>Convert Resources to Token</q-item-label>
+                      <q-item-label caption lines="2"
+                        >Your Convert Resourses to Tokens request has been
+                        generated</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-btn round flat size="sm" color="red" icon="delete">
+                        <q-tooltip> Delete Message </q-tooltip>
+                      </q-btn>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset />
+                </q-scroll-area>
+              </q-list>
+            </q-card-section>
+          </q-card>
+        </q-drawer>
+
+        <q-dialog v-model="openInbox">
+          <q-card>
+            <q-card-section class="b">
+              <div class="row justify-between">
+                <div>TITLE</div>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="red"
+                    icon="delete"
+                    v-close-popup
+                    class="q-mr-md"
+                  />
+                  <q-btn
+                    flat
+                    round
+                    size="sm"
+                    color="white"
+                    icon="close"
+                    v-close-popup
+                  />
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <div class="text-subtitle2 text-justify">
+                lLorem Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type
+                specimen book. It has survived not only five centuries, but also
+                the leap into electronic typesetting, remaining essentially
+                unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more
+                recently with desktop publishing software like Aldus PageMaker
+                including versions of Lorem Ipsum.orem
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -77,10 +212,21 @@ export default defineComponent({
       return $store.getters.defenseData;
     });
 
+    const read = ref(false);
+
+    function markEmailRead() {
+      read.value = true;
+    }
+
     return {
       buildingQueueData: buildingQueueData,
       researchQueueData: researchQueueData,
       defenseFleetQueueData: defenseFleetQueueData,
+      openInboxModel: ref(false),
+      openInbox: ref(false),
+      text: ref(""),
+      read,
+      markEmailRead,
     };
   },
   methods: {},
@@ -91,7 +237,7 @@ export default defineComponent({
 /*
 https://codepen.io/mattmarble/pen/qBdamQz
 */
-#main{
+#main {
   height: 100%;
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
@@ -647,7 +793,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
     1067px 296px #fff, 746px 463px #fff, 412px 349px #fff, 1193px 1421px #fff,
     564px 455px #fff, 1675px 589px #fff;
 }
-
 
 @keyframes animStar {
   from {

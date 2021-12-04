@@ -1,9 +1,10 @@
 <template>
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
-    
-    <div :class="tier != 'TIER 0' ? 'glitch': 'boring'" :data-text="tier">{{ tier }}</div>
-        
+    <div :class="tier != 'TIER 0' ? 'glitch' : 'boring'" :data-text="tier">
+      {{ tier }}
+    </div>
+
     <q-btn
       v-if="!this.error"
       :label="logInButtonText"
@@ -163,7 +164,7 @@ export default {
       if (this.$store.getters.activePlanet === false) return;
       return this.$store.getters.activePlanet.tier.tierName.toUpperCase();
     },
-    
+
     loggedIn: function () {
       return this.$store.getters.loggedIn;
     },
@@ -191,7 +192,7 @@ export default {
   color: rgb(223, 191, 191);
   position: relative;
   font-size: 25px;
-  float:left;
+  float: left;
   margin-right: 20px;
   text-transform: uppercase;
 }
@@ -199,7 +200,7 @@ export default {
   color: rgb(223, 191, 191);
   position: relative;
   font-size: 25px;
-  float:left;
+  float: left;
   margin-right: 20px;
   // margin: 70px 200px;
   animation: glitch 5s 5s infinite;
@@ -214,7 +215,8 @@ export default {
   background: black;
   overflow: hidden;
   top: 0;
-  animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
+  animation: noise-1 3s linear infinite alternate-reverse,
+    glitch 5s 5.05s infinite;
 }
 
 .glitch::after {
@@ -229,10 +231,10 @@ export default {
 }
 
 @keyframes glitch {
-  1%{
+  1% {
     transform: rotateX(10deg) skewX(90deg);
   }
-  2%{
+  2% {
     transform: rotateX(0deg) skewX(0deg);
   }
 }
@@ -259,9 +261,6 @@ export default {
   }
 }
 
-
-
-
 @keyframes fudge {
   from {
     transform: translate(0px, 0px);
@@ -271,13 +270,11 @@ export default {
   }
 }
 
-
-
 @keyframes glitch-2 {
-  1%{
+  1% {
     transform: rotateX(10deg) skewX(70deg);
   }
-  2%{
+  2% {
     transform: rotateX(0deg) skewX(0deg);
   }
 }
