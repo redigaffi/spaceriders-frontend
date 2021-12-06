@@ -108,8 +108,7 @@
                   >
                     <q-item-section>
                       <q-item-label>{{ email.title }}</q-item-label>
-                      <q-item-label caption lines="2"
-                        >{{ email.body.substring(0, 20) }}...</q-item-label
+                      <q-item-label caption lines="2" v-html="shortBody(email)"></q-item-label
                       >
                     </q-item-section>
 
@@ -156,8 +155,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              <div class="text-subtitle2 text-justify" style="word-break: break-all;">
-                {{ activeEmail.body }}
+              <div class="text-subtitle2 text-justify" style="word-break: break-all;" v-html="activeEmail.body">
               </div>
             </q-card-section>
           </q-card>
@@ -217,10 +215,14 @@ export default defineComponent({
     const emails = computed(() => {
       return $store.getters.emails;
     });
+    
+    function shortBody(email){
+      return `${email.body.substring(0, 20) }...`;
+    }
 
     const openInbox = ref(false);
     const activeEmail = ref({});
-    
+
     function openEmail(email) {
       
       const newEmail = {...email}
@@ -249,7 +251,8 @@ export default defineComponent({
       openEmail: openEmail,
       activeEmail: activeEmail,
       anyUnreadMessage: anyUnreadMessage,
-      deleteEmail: deleteEmail
+      deleteEmail: deleteEmail,
+      shortBody:shortBody
     };
   },
   methods: {},
