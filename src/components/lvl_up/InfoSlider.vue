@@ -328,7 +328,7 @@ export default defineComponent({
         requirementData =
           props.data.upgrades[props.data.level + 1].requirements;
       }
-
+      
       for (let requirementIdx in requirementData) {
         const requirement = requirementData[requirementIdx];
 

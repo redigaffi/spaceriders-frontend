@@ -1,8 +1,10 @@
 class InstallationType {
     INVESTIGATION_LABORATORY = "investigationLaboratory";
+    HANGAR = "hangar";
     TYPE = "installations";
     RESOURCE_TYPES = [
-        this.INVESTIGATION_LABORATORY
+        this.INVESTIGATION_LABORATORY,
+        this.HANGAR
     ];
 }
 

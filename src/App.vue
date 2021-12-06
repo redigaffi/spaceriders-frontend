@@ -23,31 +23,15 @@ export default defineComponent({
       
       this.$store.commit("setActivePlanet", activePlanet);
       
-      const resourceData = (await ApiRequest.getResourceData(activePlanet.id))
+      const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
         .data;
-      this.$store.commit("setResourceData", resourceData);
-
-      const installationData = (
-        await ApiRequest.getInstallationData(activePlanet.id)
-      ).data;
-      this.$store.commit("setInstallationData", installationData);
-
-      const researchData = (await ApiRequest.getResearchData(activePlanet.id))
-        .data;
-      this.$store.commit("setResearchData", researchData);
-
-      const defenseData = (await ApiRequest.getDefenseData(activePlanet.id))
-        .data;
-      this.$store.commit("setDefenseData", defenseData);
-
-      const conversionRequest = (await ApiRequest.getPendingConversions(activePlanet.id))
-        .data;
-      this.$store.commit("setConversionRequests", conversionRequest);
-
-      const emails = (await ApiRequest.getEmails(activePlanet.id))
-        .data;
-
-      this.$store.commit("addEmails", {emails: emails});      
+      
+      this.$store.commit("setResourceData", allPlanetInfo.resources);      
+      this.$store.commit("setInstallationData", allPlanetInfo.installation);
+      this.$store.commit("setResearchData", allPlanetInfo.research);
+      this.$store.commit("setDefenseData", allPlanetInfo.defense);
+      this.$store.commit("setConversionRequests", allPlanetInfo.conversion);
+      this.$store.commit("addEmails", {emails: allPlanetInfo.email});      
     },
     updateAll: async function () {
       //TODO: Delete all intervals ..

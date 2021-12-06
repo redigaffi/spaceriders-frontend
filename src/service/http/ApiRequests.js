@@ -354,4 +354,14 @@ export default class ApiRequests {
     
     return (await axios.post(path, body)).data;
   }
+
+   /**
+   * Get All planet info
+   * @param {string} planetId
+   * @returns
+   */
+    static async getAllInfoPlanet(planetId) {
+      const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
+      return (await axios.get(path)).data;
+    }
 }
