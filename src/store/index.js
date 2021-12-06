@@ -26,6 +26,7 @@ export default function (/* { ssrContext } */) {
         timeoutIds: [],
         intervalIds: [],
         conversionRequests: [],
+        emails: [],
       };
     },
     mutations: {
@@ -36,6 +37,22 @@ export default function (/* { ssrContext } */) {
             Object.assign(state, JSON.parse(localStorage.getItem("store")))
           );
         }
+      },
+
+      addEmails(state, payload) {
+        state.emails = payload.emails
+      },
+      
+      updateEmail(state, payload) {
+        let email = payload.email;
+        let eI = state.emails.findIndex((e) => e.id === email.id);
+        state.emails[eI] = email;
+      },
+
+      deleteEmail(state, payload) {
+        let email = payload.email;
+        let eI = state.emails.findIndex((e) => e.id === email.id);
+        state.emails.splice(eI, 1);
       },
 
       removeConversionRequest(state, payload) {
@@ -257,6 +274,9 @@ export default function (/* { ssrContext } */) {
     },
 
     getters: {
+      emails: (state) => {
+        return state.emails;
+      },
       conversionRequests: (state) => {
         return state.conversionRequests;
       },

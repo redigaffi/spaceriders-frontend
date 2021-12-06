@@ -402,9 +402,9 @@ export default defineComponent({
 
       let timeNeeded = 0;
       if (props.itemType) {
-        timeNeeded = props.data.data.build_time * quantity.value;
+        timeNeeded = props.data.data.time * quantity.value;
       } else {
-        timeNeeded = props.data.upgrades[props.data.level + 1].upgrade_time;
+        timeNeeded = props.data.upgrades[props.data.level + 1].time;
       }
 
       const now = new Date();

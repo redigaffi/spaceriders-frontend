@@ -312,4 +312,46 @@ export default class ApiRequests {
 
     return (await axios.post(path, body)).data;
   }
+
+   /**
+   * Get Emails
+   * @param {string} planetId
+   * @returns
+   */
+    static async getEmails(planetId) {
+      const path = `${process.env.BASE_API_PATH}/email/${planetId}`;
+      return (await axios.get(path)).data;
+    }
+
+  /**
+   * Mark Email as read
+   * @param {string} planetId
+   * @returns
+   */
+   static async markEmailRead(planetId, emailId) {
+    const path = `${process.env.BASE_API_PATH}/email/read`;
+
+    const body = {
+      planetId: planetId,
+      emailId:  emailId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Mark Email as read
+   * @param {string} planetId
+   * @returns
+   */
+  static async deleteEmail(planetId, emailId) {
+    const path = `${process.env.BASE_API_PATH}/email/delete`;
+
+    const body = {
+      planetId: planetId,
+      emailId:  emailId,
+    };
+    
+    return (await axios.post(path, body)).data;
+  }
 }

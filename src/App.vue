@@ -43,7 +43,11 @@ export default defineComponent({
       const conversionRequest = (await ApiRequest.getPendingConversions(activePlanet.id))
         .data;
       this.$store.commit("setConversionRequests", conversionRequest);
-      
+
+      const emails = (await ApiRequest.getEmails(activePlanet.id))
+        .data;
+
+      this.$store.commit("addEmails", {emails: emails});      
     },
     updateAll: async function () {
       //TODO: Delete all intervals ..

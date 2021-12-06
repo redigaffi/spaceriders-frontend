@@ -44,11 +44,11 @@
             color="primary"
             @click="openInboxModel = !openInboxModel"
           >
-            <q-badge floating color="info" rounded />
+            <q-badge v-if="anyUnreadMessage" floating color="info" rounded />
           </q-btn>
         </q-page-sticky>
 
-        <q-drawer
+         <q-drawer
           v-model="openInboxModel"
           :width="400"
           :breakpoint="500"
@@ -74,7 +74,7 @@
             </q-card-section>
             <q-card-section class="q-pa-none">
               <div class="text-h6 q-pa-sm">
-                <q-input
+                <!--<q-input
                   dark
                   dense
                   standout
@@ -90,7 +90,7 @@
                       @click="text = ''"
                     />
                   </template>
-                </q-input>
+                </q-input>-->
               </div>
             </q-card-section>
 
@@ -100,22 +100,21 @@
                   <q-item
                     clickable
                     v-ripple
-                    v-for="x in 40"
-                    :key="x"
-                    @click="openInbox = !openInbox"
-                    style="border-left:4px solid #2253F4"
+                    v-for="email in emails"
+                    :key="email.id"
+                    @click="openEmail(email)"
                     class="q-mb-xs"
+                    :class="{'unread_msg':!email.read}"
                   >
                     <q-item-section>
-                      <q-item-label>Convert Resources to Token</q-item-label>
+                      <q-item-label>{{ email.title }}</q-item-label>
                       <q-item-label caption lines="2"
-                        >Your Convert Resourses to Tokens request has been
-                        generated</q-item-label
+                        >{{ email.body.substring(0, 20) }}...</q-item-label
                       >
                     </q-item-section>
 
                     <q-item-section side>
-                      <q-btn round flat size="sm" color="red" icon="delete">
+                      <q-btn @click="deleteEmail(email)" round flat size="sm" color="red" icon="delete">
                         <q-tooltip> Delete Message </q-tooltip>
                       </q-btn>
                     </q-item-section>
@@ -126,13 +125,13 @@
               </q-list>
             </q-card-section>
           </q-card>
-        </q-drawer>
+        </q-drawer> 
 
         <q-dialog v-model="openInbox">
           <q-card>
             <q-card-section class="b">
               <div class="row justify-between">
-                <div>TITLE</div>
+                <div>{{ activeEmail.title }}</div>
                 <div>
                   <q-btn
                     flat
@@ -141,6 +140,7 @@
                     color="red"
                     icon="delete"
                     v-close-popup
+                    @click="deleteEmail(activeEmail)"
                     class="q-mr-md"
                   />
                   <q-btn
@@ -156,17 +156,8 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              <div class="text-subtitle2 text-justify">
-                lLorem Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also
-                the leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more
-                recently with desktop publishing software like Aldus PageMaker
-                including versions of Lorem Ipsum.orem
+              <div class="text-subtitle2 text-justify" style="word-break: break-all;">
+                {{ activeEmail.body }}
               </div>
             </q-card-section>
           </q-card>
@@ -182,6 +173,7 @@ import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import PlanetList from "../components/PlanetList.vue";
+import ApiRequest from "../service/http/ApiRequests";
 
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 export default defineComponent({
@@ -212,10 +204,39 @@ export default defineComponent({
       return $store.getters.defenseData;
     });
 
-    const read = ref(false);
+    const anyUnreadMessage = computed(() => {
+      const emails = $store.getters.emails;
+      
+      for (let id in emails) {  
+        if (!emails[id].read) return true;
+      }
+      
+      return false;
+    });
 
-    function markEmailRead() {
-      read.value = true;
+    const emails = computed(() => {
+      return $store.getters.emails;
+    });
+
+    const openInbox = ref(false);
+    const activeEmail = ref({});
+    
+    function openEmail(email) {
+      
+      const newEmail = {...email}
+      if (!email.read) {
+        ApiRequest.markEmailRead($store.getters.activePlanet.id, email.id);
+        newEmail.read = true;
+        $store.commit('updateEmail', {email: newEmail});
+      }
+
+      openInbox.value = true;
+      activeEmail.value = newEmail;
+    }
+
+    function deleteEmail(email) {
+      $store.commit('deleteEmail', {email: email});
+      ApiRequest.deleteEmail($store.getters.activePlanet.id, email.id);
     }
 
     return {
@@ -223,10 +244,12 @@ export default defineComponent({
       researchQueueData: researchQueueData,
       defenseFleetQueueData: defenseFleetQueueData,
       openInboxModel: ref(false),
-      openInbox: ref(false),
-      text: ref(""),
-      read,
-      markEmailRead,
+      openInbox: openInbox,
+      emails: emails,
+      openEmail: openEmail,
+      activeEmail: activeEmail,
+      anyUnreadMessage: anyUnreadMessage,
+      deleteEmail: deleteEmail
     };
   },
   methods: {},
@@ -801,5 +824,9 @@ https://codepen.io/mattmarble/pen/qBdamQz
   to {
     transform: translateY(-1000px);
   }
+}
+
+.unread_msg {
+  border-left:4px solid #2253F4
 }
 </style>
