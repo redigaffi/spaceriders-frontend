@@ -73,29 +73,86 @@
                   </q-item>
 
                   <q-item>
-                      <q-btn
-                        v-if="!isStaking"
-                        @click="openTierDialog"
-                        color="warning"
-                        label="Upgrade"
-                        class="full-width"
-                      />
-                      <q-btn
-                        v-else
-                        @click="unstake"
-                        color="negative"
-                        class="full-width text-weight-bolder"
-                        :loading="unstakeDisabled"
-                        :disable="unstakeDisabled"
-                      > 
-                         Withdraw
-                         <template v-slot:loading>
-                          <q-spinner-rings size="1.45em" class="on-left"  />
-                           {{ stakingHoursLeft }}
-                         </template>
-                         
-                      </q-btn>
+                    <q-btn
+                      @click="openUpdateDialog = !openUpdateDialog"
+                      color="dark"
+                      label="Update"
+                      class="q-mr-xs"
+                    />
 
+                    <q-dialog v-model="openUpdateDialog">
+                      <q-card
+                        class="bg-dark text-white"
+                        style="
+                          width: 600px;
+                          max-width: 70vw;
+                          border-radius: 20px;
+                        "
+                      >
+                        <q-btn
+                          round
+                          class="absolute-top-right"
+                          flat
+                          color="warning"
+                          icon="close"
+                          v-close-popup
+                        />
+                        <img
+                          src="~assets/img/buyplanet_footer-scaled.jpg"
+                          alt=""
+                          srcset=""
+                        />
+                        <q-card-section class="text-center">
+                          <div class="text-h6">UPDATE PLANET</div>
+                          <div class="text-subtitle1">
+                            Updating a planet costs 0.5BNB, also, you can choose
+                            a planet name (which can be changed later).
+                          </div>
+                        </q-card-section>
+                        <q-card-section class="q-pt-none">
+                          <q-input
+                            label-color="info"
+                            v-model="planetName"
+                            autofocus
+                            label="Planet Name"
+                            standout="bg-secondary"
+                            
+                          />
+                        </q-card-section>
+
+                        <q-card-section class="q-pt-none text-center">
+                          <q-btn
+                            label="Update Planet"
+                            color="warning"
+                            no-caps
+                            class="q-px-lg"
+                            v-close-popup
+                          />
+                        </q-card-section>
+                      </q-card>
+                    </q-dialog>
+
+                    <q-btn
+                      v-if="!isStaking"
+                      @click="openTierDialog"
+                      color="warning"
+                      label="Upgrade"
+                      class="full-width"
+                    />
+                    <q-btn
+                      v-else
+                      @click="unstake"
+                      color="negative"
+                      class="full-width text-weight-bolder"
+                      :loading="unstakeDisabled"
+                      :disable="unstakeDisabled"
+                    >
+                      Withdraw
+                      <template v-slot:loading>
+                        <q-spinner-rings size="1.45em" class="on-left" />
+                        {{ stakingHoursLeft }}
+                      </template>
+                    </q-btn>
                   </q-item>
                 </q-list>
               </q-card-section>
@@ -184,6 +241,8 @@ import BenefitStakingContract, {
 } from "../service/contract/BenefitStakingContract";
 import ApiRequests from "../service/http/ApiRequests";
 
+const openUpdateDialog = ref(false);
+
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -255,7 +314,7 @@ const stakingLockedDays = computed(() => {
   if (tierInfoReq.value === "") return;
   const selTier = tierInfoReq.value[selectedTier.value.value];
   const stakeTime = selTier["tokens_time_locked"];
-  console.log(stakeTime)
+  console.log(stakeTime);
   return Math.ceil(stakeTime / 86400); // 1 day in seconds
 });
 
@@ -266,7 +325,7 @@ const activeTier = computed(() => {
   return $store.getters.activePlanet.tier.tierName;
 });
 
-function calculateClaimDate (time) {
+function calculateClaimDate(time) {
   const now = new Date();
   const claim = new Date(time * 1000);
 
@@ -291,7 +350,7 @@ const stakingHoursLeft = computed(() => {
   if (!$store.getters.activePlanet.tier.staked) return;
   const stakingFinished = $store.getters.activePlanet.tier.timeRelease;
 
-  let timeString = calculateClaimDate(stakingFinished); 
+  let timeString = calculateClaimDate(stakingFinished);
   if (timeString === false) return "Withdraw";
   return timeString;
 });
@@ -399,20 +458,22 @@ async function unstake() {
     closeWaitingNotification();
   }
 
-  if (receipt.status === 1) { 
+  if (receipt.status === 1) {
     const req = {
       planetId: $store.getters.activePlanet.id,
     };
-  
+
     const unstakeRequest = await ApiRequest.unstakeRequest(req);
-  
+
     if (!unstakeRequest.success) {
       $notification("failed", unstakeRequest.error, 6000);
       closeWaitingNotification();
       return;
     }
 
-    const updatedPlanet = (await ApiRequests.getActivePlanet($store.getters.activePlanet.id)).data;
+    const updatedPlanet = (
+      await ApiRequests.getActivePlanet($store.getters.activePlanet.id)
+    ).data;
     $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
     $notification("success", "Un-staked successfully, thank you!", 6000);
