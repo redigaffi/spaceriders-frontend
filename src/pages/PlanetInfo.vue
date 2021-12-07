@@ -17,9 +17,7 @@
                 width="100%"
                 style="height: 325px; width: 100%"
               />
-              <q-card-section
-                class="text-secondary absolute-top tag-glass-element"
-              >
+              <q-card-section class="text-secondary absolute-top tag-glass-element">
                 {{ this.$store.getters.activePlanet.name }}
               </q-card-section>
               <q-card-section
@@ -73,29 +71,27 @@
                   </q-item>
 
                   <q-item>
-                      <q-btn
-                        v-if="!isStaking"
-                        @click="openTierDialog"
-                        color="warning"
-                        label="Upgrade"
-                        class="full-width"
-                      />
-                      <q-btn
-                        v-else
-                        @click="unstake"
-                        color="negative"
-                        class="full-width text-weight-bolder"
-                        :loading="unstakeDisabled"
-                        :disable="unstakeDisabled"
-                      > 
-                         Withdraw
-                         <template v-slot:loading>
-                          <q-spinner-rings size="1.45em" class="on-left"  />
-                           {{ stakingHoursLeft }}
-                         </template>
-                         
-                      </q-btn>
-
+                    <q-btn
+                      v-if="!isStaking"
+                      @click="openTierDialog"
+                      color="warning"
+                      label="Upgrade"
+                      class="full-width"
+                    />
+                    <q-btn
+                      v-else
+                      @click="unstake"
+                      color="negative"
+                      class="full-width text-weight-bolder"
+                      :loading="unstakeDisabled"
+                      :disable="unstakeDisabled"
+                    >
+                      Withdraw
+                      <template v-slot:loading>
+                        <q-spinner-rings size="1.45em" class="on-left" />
+                        {{ stakingHoursLeft }}
+                      </template>
+                    </q-btn>
                   </q-item>
                 </q-list>
               </q-card-section>
@@ -131,9 +127,7 @@
               </template>
             </q-select>
             <br />
-            Price: ${{ selectedTierInfo.usd_cost }} ({{
-              selectedTierInfo.token_cost
-            }}
+            Price: ${{ selectedTierInfo.usd_cost }} ({{ selectedTierInfo.token_cost }}
             <img
               src="~assets/img/logo.png"
               alt=""
@@ -143,10 +137,7 @@
             <br />
             Benefits: <br />
             <ul>
-              <li
-                v-for="benefit in selectedTierInfo.benefit_lines"
-                :key="benefit"
-              >
+              <li v-for="benefit in selectedTierInfo.benefit_lines" :key="benefit">
                 {{ benefit }}
               </li>
             </ul>
@@ -158,12 +149,7 @@
             <br />
             <br />
 
-            <q-btn
-              style="float: right"
-              color="warning"
-              label="Upgrade"
-              @click="stake"
-            />
+            <q-btn style="float: right" color="warning" label="Upgrade" @click="stake" />
           </q-page>
         </q-page-container>
       </q-layout>
@@ -185,8 +171,8 @@ import BenefitStakingContract, {
 import ApiRequests from "../service/http/ApiRequests";
 
 const $store = useStore();
-const $notification =
-  getCurrentInstance().appContext.config.globalProperties.$notification;
+const $notification = getCurrentInstance().appContext.config.globalProperties
+  .$notification;
 
 const temperature = computed(() => {
   const minTemperature = $store.getters.activePlanet.min_temperature;
@@ -255,7 +241,7 @@ const stakingLockedDays = computed(() => {
   if (tierInfoReq.value === "") return;
   const selTier = tierInfoReq.value[selectedTier.value.value];
   const stakeTime = selTier["tokens_time_locked"];
-  console.log(stakeTime)
+  console.log(stakeTime);
   return Math.ceil(stakeTime / 86400); // 1 day in seconds
 });
 
@@ -266,7 +252,7 @@ const activeTier = computed(() => {
   return $store.getters.activePlanet.tier.tierName;
 });
 
-function calculateClaimDate (time) {
+function calculateClaimDate(time) {
   const now = new Date();
   const claim = new Date(time * 1000);
 
@@ -291,7 +277,7 @@ const stakingHoursLeft = computed(() => {
   if (!$store.getters.activePlanet.tier.staked) return;
   const stakingFinished = $store.getters.activePlanet.tier.timeRelease;
 
-  let timeString = calculateClaimDate(stakingFinished); 
+  let timeString = calculateClaimDate(stakingFinished);
   if (timeString === false) return "Withdraw";
   return timeString;
 });
@@ -330,11 +316,7 @@ async function stake() {
     stakingRequest.timeRelease
   );
 
-  const sD = new SignatureData(
-    stakingRequest.v,
-    stakingRequest.r,
-    stakingRequest.s
-  );
+  const sD = new SignatureData(stakingRequest.v, stakingRequest.r, stakingRequest.s);
 
   let receipt = { status: 0 };
 
@@ -399,20 +381,22 @@ async function unstake() {
     closeWaitingNotification();
   }
 
-  if (receipt.status === 1) { 
+  if (receipt.status === 1) {
     const req = {
       planetId: $store.getters.activePlanet.id,
     };
-  
+
     const unstakeRequest = await ApiRequest.unstakeRequest(req);
-  
+
     if (!unstakeRequest.success) {
       $notification("failed", unstakeRequest.error, 6000);
       closeWaitingNotification();
       return;
     }
 
-    const updatedPlanet = (await ApiRequests.getActivePlanet($store.getters.activePlanet.id)).data;
+    const updatedPlanet = (
+      await ApiRequests.getActivePlanet($store.getters.activePlanet.id)
+    ).data;
     $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
     $notification("success", "Un-staked successfully, thank you!", 6000);
