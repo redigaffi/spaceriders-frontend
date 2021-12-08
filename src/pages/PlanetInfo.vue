@@ -17,7 +17,9 @@
                 width="100%"
                 style="height: 325px; width: 100%"
               />
-              <q-card-section class="text-secondary absolute-top tag-glass-element">
+              <q-card-section
+                class="text-secondary absolute-top tag-glass-element"
+              >
                 {{ this.$store.getters.activePlanet.name }}
               </q-card-section>
               <q-card-section
@@ -71,6 +73,64 @@
                   </q-item>
 
                   <q-item>
+                    <q-btn
+                      @click="openUpdateDialog = !openUpdateDialog"
+                      color="dark"
+                      label="Update"
+                      class="q-mr-xs"
+                    />
+
+                    <q-dialog v-model="openUpdateDialog">
+                      <q-card
+                        class="bg-dark text-white"
+                        style="
+                          width: 600px;
+                          max-width: 70vw;
+                          border-radius: 20px;
+                        "
+                      >
+                        <q-btn
+                          round
+                          class="absolute-top-right"
+                          flat
+                          color="warning"
+                          icon="close"
+                          v-close-popup
+                        />
+                        <img
+                          src="~assets/img/buyplanet_footer-scaled.jpg"
+                          alt=""
+                          srcset=""
+                        />
+                        <q-card-section class="text-center">
+                          <div class="text-h6">UPDATE PLANET</div>
+                          <div class="text-subtitle1">
+                            Updating a planet costs 0.5BNB, also, you can choose
+                            a planet name (which can be changed later).
+                          </div>
+                        </q-card-section>
+                        <q-card-section class="q-pt-none">
+                          <q-input
+                            label-color="info"
+                            v-model="planetName"
+                            autofocus
+                            label="Planet Name"
+                            standout="bg-secondary"
+                          />
+                        </q-card-section>
+
+                        <q-card-section class="q-pt-none text-center">
+                          <q-btn
+                            label="Update Planet"
+                            color="warning"
+                            no-caps
+                            class="q-px-lg"
+                            v-close-popup
+                          />
+                        </q-card-section>
+                      </q-card>
+                    </q-dialog>
+
                     <q-btn
                       v-if="!isStaking"
                       @click="openTierDialog"
@@ -127,7 +187,9 @@
               </template>
             </q-select>
             <br />
-            Price: ${{ selectedTierInfo.usd_cost }} ({{ selectedTierInfo.token_cost }}
+            Price: ${{ selectedTierInfo.usd_cost }} ({{
+              selectedTierInfo.token_cost
+            }}
             <img
               src="~assets/img/logo.png"
               alt=""
@@ -137,7 +199,10 @@
             <br />
             Benefits: <br />
             <ul>
-              <li v-for="benefit in selectedTierInfo.benefit_lines" :key="benefit">
+              <li
+                v-for="benefit in selectedTierInfo.benefit_lines"
+                :key="benefit"
+              >
                 {{ benefit }}
               </li>
             </ul>
@@ -149,7 +214,12 @@
             <br />
             <br />
 
-            <q-btn style="float: right" color="warning" label="Upgrade" @click="stake" />
+            <q-btn
+              style="float: right"
+              color="warning"
+              label="Upgrade"
+              @click="stake"
+            />
           </q-page>
         </q-page-container>
       </q-layout>
@@ -173,8 +243,8 @@ import ApiRequests from "../service/http/ApiRequests";
 const openUpdateDialog = ref(false);
 
 const $store = useStore();
-const $notification = getCurrentInstance().appContext.config.globalProperties
-  .$notification;
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const temperature = computed(() => {
   const minTemperature = $store.getters.activePlanet.min_temperature;
@@ -318,7 +388,11 @@ async function stake() {
     stakingRequest.timeRelease
   );
 
-  const sD = new SignatureData(stakingRequest.v, stakingRequest.r, stakingRequest.s);
+  const sD = new SignatureData(
+    stakingRequest.v,
+    stakingRequest.r,
+    stakingRequest.s
+  );
 
   let receipt = { status: 0 };
 

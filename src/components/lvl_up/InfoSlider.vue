@@ -61,7 +61,10 @@
                     </div>
                   </q-item-section>
                   <q-item-section v-else class="col">
-                    <q-item-label>Upgrade time:</q-item-label>
+                    <q-item-label v-if="health < 100"
+                      >Repair time:</q-item-label
+                    >
+                    <q-item-label v-else>Upgrade time:</q-item-label>
                     <q-item-label
                       class="text-warning text-h6 text-weight-bold"
                       >{{ timeString }}</q-item-label
@@ -76,6 +79,38 @@
                       >
                     </div>
                   </q-item-section>
+
+                  <q-circular-progress
+                    v-if="health > 25"
+                    show-value
+                    class="text-white"
+                    :value="health"
+                    size="60px"
+                    :thickness="0.15"
+                    color="info"
+                    track-color="dark"
+                  >
+                    <q-icon name="health_and_safety" size="26px" color="info" />
+                    <q-tooltip v-model="showing"> Health </q-tooltip>
+                  </q-circular-progress>
+
+                  <q-circular-progress
+                    v-else
+                    show-value
+                    class="text-white q-ml-md"
+                    :value="health"
+                    size="60px"
+                    :thickness="0.15"
+                    color="negative"
+                    track-color="dark"
+                  >
+                    <q-icon
+                      name="fas fa-shield-virus"
+                      size="23px"
+                      color="negative"
+                    />
+                    <q-tooltip v-model="showing"> Health </q-tooltip>
+                  </q-circular-progress>
                   <!--<q-item-section class="col">
                     <div class="text-right">
                      <q-btn
@@ -111,11 +146,18 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <q-item-label v-if="itemType">Cost to build:</q-item-label>
-                    <q-item-label v-else
-                      >Cost to upgrade to level
-                      {{ data.level + 1 }}:</q-item-label
-                    >
+                    <div v-if="health < 100">
+                      <q-item-label>Cost to repair:</q-item-label>
+                    </div>
+                    <div v-else>
+                      <q-item-label v-if="itemType"
+                        >Cost to build:</q-item-label
+                      >
+                      <q-item-label v-else
+                        >Cost to upgrade to level
+                        {{ data.level + 1 }}:</q-item-label
+                      >
+                    </div>
 
                     <q-item-label caption>
                       <q-card
@@ -187,6 +229,17 @@
                   <q-item-section class="col-3">
                     <div class="text-right">
                       <q-btn
+                        v-if="health < 100"
+                        dense
+                        class="q-px-sm"
+                        color="warning"
+                        icon="construction"
+                        label="Repair"
+                        no-caps
+                        push
+                      />
+                      <q-btn
+                        v-else
                         dense
                         class="q-px-sm"
                         color="warning"
@@ -328,7 +381,7 @@ export default defineComponent({
         requirementData =
           props.data.upgrades[props.data.level + 1].requirements;
       }
-      
+
       for (let requirementIdx in requirementData) {
         const requirement = requirementData[requirementIdx];
 
@@ -554,6 +607,8 @@ export default defineComponent({
       }
     };
 
+    const health = ref(100);
+
     return {
       allRequirementsMeet: allRequirementsMeet,
       requirements: requirements,
@@ -564,7 +619,7 @@ export default defineComponent({
       crystalCost: crystalCost,
       upgrade: upgrade,
       quantity: quantity,
-
+      health,
       showInfo: ref(false),
     };
   },
