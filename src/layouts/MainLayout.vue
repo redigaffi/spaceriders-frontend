@@ -48,7 +48,7 @@
           </q-btn>
         </q-page-sticky>
 
-         <q-drawer
+        <q-drawer
           v-model="openInboxModel"
           :width="400"
           :breakpoint="500"
@@ -104,16 +104,24 @@
                     :key="email.id"
                     @click="openEmail(email)"
                     class="q-mb-xs"
-                    :class="{'unread_msg':!email.read}"
+                    :class="{ unread_msg: !email.read }"
                   >
                     <q-item-section>
                       <q-item-label>{{ email.title }}</q-item-label>
-                      <q-item-label caption lines="2" v-html="shortBody(email)"></q-item-label
-                      >
+                      <q-item-label caption lines="2">{{
+                        email.subTitle
+                      }}</q-item-label>
                     </q-item-section>
 
                     <q-item-section side>
-                      <q-btn @click="deleteEmail(email)" round flat size="sm" color="red" icon="delete">
+                      <q-btn
+                        @click="deleteEmail(email)"
+                        round
+                        flat
+                        size="sm"
+                        color="red"
+                        icon="delete"
+                      >
                         <q-tooltip> Delete Message </q-tooltip>
                       </q-btn>
                     </q-item-section>
@@ -124,7 +132,7 @@
               </q-list>
             </q-card-section>
           </q-card>
-        </q-drawer> 
+        </q-drawer>
 
         <q-dialog v-model="openInbox">
           <q-card>
@@ -155,8 +163,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              <div class="text-subtitle2 text-justify" style="word-break: break-all;" v-html="activeEmail.body">
-              </div>
+                <component :is="templateName" :body="body"></component>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -164,99 +171,90 @@
     </q-page-container>
   </q-layout>
 </template>
-<script>
+<script setup>
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
+import AsteroidCollision from "../components/email_templates/AsteroidCollision.vue";
 import PlanetList from "../components/PlanetList.vue";
 import ApiRequest from "../service/http/ApiRequests";
 
-//https://quasar.dev/layout/routing-with-layouts-and-pages
-export default defineComponent({
-  name: "MainLayout",
+const $store = useStore();
 
-  components: {
-    Headerbar,
-    RessourcesDisplay,
-    BuildingQueue,
-    PlanetList,
-  },
-
-  setup() {
-    const $store = useStore();
-
-    let buildingQueueData = computed(() => {
-      return {
-        ...$store.getters.resourceData,
-        ...$store.getters.installationData,
-      };
-    });
-
-    let researchQueueData = computed(() => {
-      return $store.getters.researchData;
-    });
-
-    let defenseFleetQueueData = computed(() => {
-      return $store.getters.defenseData;
-    });
-
-    const anyUnreadMessage = computed(() => {
-      const emails = $store.getters.emails;
-      
-      for (let id in emails) {  
-        if (!emails[id].read) return true;
-      }
-      
-      return false;
-    });
-
-    const emails = computed(() => {
-      return $store.getters.emails;
-    });
-    
-    function shortBody(email){
-      return `${email.body.substring(0, 20) }...`;
-    }
-
-    const openInbox = ref(false);
-    const activeEmail = ref({});
-
-    function openEmail(email) {
-      
-      const newEmail = {...email}
-      if (!email.read) {
-        ApiRequest.markEmailRead($store.getters.activePlanet.id, email.id);
-        newEmail.read = true;
-        $store.commit('updateEmail', {email: newEmail});
-      }
-
-      openInbox.value = true;
-      activeEmail.value = newEmail;
-    }
-
-    function deleteEmail(email) {
-      $store.commit('deleteEmail', {email: email});
-      ApiRequest.deleteEmail($store.getters.activePlanet.id, email.id);
-    }
-
-    return {
-      buildingQueueData: buildingQueueData,
-      researchQueueData: researchQueueData,
-      defenseFleetQueueData: defenseFleetQueueData,
-      openInboxModel: ref(false),
-      openInbox: openInbox,
-      emails: emails,
-      openEmail: openEmail,
-      activeEmail: activeEmail,
-      anyUnreadMessage: anyUnreadMessage,
-      deleteEmail: deleteEmail,
-      shortBody:shortBody
-    };
-  },
-  methods: {},
+let buildingQueueData = computed(() => {
+  return {
+    ...$store.getters.resourceData,
+    ...$store.getters.installationData,
+  };
 });
+
+let researchQueueData = computed(() => {
+  return $store.getters.researchData;
+});
+
+let defenseFleetQueueData = computed(() => {
+  return $store.getters.defenseData;
+});
+
+const anyUnreadMessage = computed(() => {
+  const emails = $store.getters.emails;
+
+  for (let id in emails) {
+    if (!emails[id].read) return true;
+  }
+
+  return false;
+});
+
+const emails = computed(() => {
+  return $store.getters.emails;
+});
+
+const openInbox = ref(false);
+const activeEmail = ref({});
+
+const templateName = computed(() => {
+  if (!activeEmail.value.template) return;
+  
+  switch(activeEmail.value.template) {
+    case "asteroid_collision": 
+      return AsteroidCollision;
+  }
+
+  return "";
+});
+
+const body = computed(() => {
+  if (!activeEmail.value.template) return;
+  
+  switch(activeEmail.value.template) {
+    case "asteroid_collision": 
+      return JSON.parse(activeEmail.value.body);
+  }
+
+  return "";
+});
+
+function openEmail(email) {
+  const newEmail = { ...email };
+  if (!email.read) {
+    ApiRequest.markEmailRead($store.getters.activePlanet.id, email.id);
+    newEmail.read = true;
+    $store.commit("updateEmail", { email: newEmail });
+  }
+
+  openInbox.value = true;
+  activeEmail.value = newEmail;
+}
+
+function deleteEmail(email) {
+  $store.commit("deleteEmail", { email: email });
+  ApiRequest.deleteEmail($store.getters.activePlanet.id, email.id);
+}
+
+const openInboxModel = ref(false);
 </script>
 
 <style>
@@ -830,6 +828,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
 }
 
 .unread_msg {
-  border-left:4px solid #2253F4
+  border-left: 4px solid #2253f4;
 }
 </style>
