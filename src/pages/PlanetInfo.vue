@@ -170,6 +170,8 @@ import BenefitStakingContract, {
 } from "../service/contract/BenefitStakingContract";
 import ApiRequests from "../service/http/ApiRequests";
 
+const openUpdateDialog = ref(false);
+
 const $store = useStore();
 const $notification = getCurrentInstance().appContext.config.globalProperties
   .$notification;

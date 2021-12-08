@@ -38,10 +38,9 @@
         </q-card-section>
         <q-card-section class="q-pt-none">
           <q-input
-            label-color="white"
+            label-color="info"
             v-model="planetName"
             label="Planet Name"
-            class="text-secondary"
             standout="bg-secondary"
           />
         </q-card-section>
