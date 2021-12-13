@@ -284,6 +284,137 @@
 
         <q-card-section>
           <q-card flat>
+            <q-card-section class="text-center q-pb-none">
+              <q-toggle
+                v-model="combineResources"
+                color="info"
+                label="Combine Resources"
+                left-label
+              />
+            </q-card-section>
+            <q-card-section>
+              <q-card
+                flat
+                class="
+                  bg-transparent
+                  row
+                  text-negative
+                  q-col-gutter-sm
+                  justify-between
+                  q-py-md
+                "
+              >
+                <div class="text-center text-subtitle2">
+                  <div>
+                    <img
+                      src="~assets/img/resources/RES_ic_Metal.png"
+                      alt=""
+                      srcset=""
+                      class="resource-icon-small"
+                    />
+                    <div>-{{ 300 * tokens }} Metal</div>
+                  </div>
+
+                  <q-slide-transition>
+                    <div v-if="!combineResources">
+                      <q-slider
+                        v-model="tokens"
+                        :min="0"
+                        :max="10"
+                        color="green"
+                      />
+                    </div>
+                  </q-slide-transition>
+                </div>
+
+                <div class="text-center text-subtitle2">
+                  <div>
+                    <img
+                      src="~assets/img/resources/RES_ic_FUEL5.png"
+                      alt=""
+                      srcset=""
+                      class="resource-icon-small"
+                    />
+                    <div>-{{ 300 * tokens }} Petrol</div>
+                  </div>
+                  <q-slide-transition>
+                    <div v-if="!combineResources">
+                      <q-slider
+                        v-model="tokens"
+                        :min="0"
+                        :max="10"
+                        color="green"
+                      />
+                    </div>
+                  </q-slide-transition>
+                </div>
+
+                <div class="text-center text-subtitle2">
+                  <div>
+                    <img
+                      src="~assets/img/resources/RES_ic_CRYSTAL.png"
+                      alt=""
+                      class="resource-icon-small"
+                      srcset=""
+                    />
+                    <div>-{{ 300 * tokens }} Crystal</div>
+                  </div>
+                  <q-slide-transition>
+                    <div v-if="!combineResources">
+                      <q-slider
+                        v-model="tokens"
+                        :min="0"
+                        :max="10"
+                        color="green"
+                      />
+                    </div>
+                  </q-slide-transition>
+                </div>
+              </q-card>
+            </q-card-section>
+
+            <q-card-section class="text-center">
+              <q-badge color="green" class="text-subtitle2 q-px-lg">
+                Tokens
+                <span class="q-pl-md text-weight-bold">+ {{ tokens }}</span>
+              </q-badge>
+            </q-card-section>
+
+            <q-slide-transition>
+              <div v-if="combineResources">
+                <q-slider v-model="tokens" :min="0" :max="10" color="green" />
+              </div>
+            </q-slide-transition>
+          </q-card>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none text-center">
+          <q-btn
+            label="Convert"
+            color="warning"
+            no-caps
+            class="q-px-lg"
+            @click="convert('RT')"
+            v-close-popup
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!-- <q-dialog v-model="convertResourcesDialog" persistent>
+      <q-card
+        class="bg-dark text-white"
+        style="width: 600px; max-width: 70vw; border-radius: 20px"
+      >
+        <q-toolbar class="bg-primary text-white">
+          <q-toolbar-title class="text-body2">
+            Convert Resources to Tokens
+          </q-toolbar-title>
+          <q-btn round flat icon="close" v-close-popup />
+        </q-toolbar>
+
+        <q-card-section>
+          <q-card flat>
             <q-card-section>
               <q-card
                 flat
@@ -356,7 +487,7 @@
           />
         </q-card-section>
       </q-card>
-    </q-dialog>
+    </q-dialog> -->
 
     <q-dialog v-model="convertTokensDialog" persistent>
       <q-card
@@ -559,6 +690,7 @@ export default defineComponent({
     );
 
     const convertResourcesDialog = ref(false);
+    const combineResources = ref(true);
     const convertTokensDialog = ref(false);
     let tokens = ref(1);
 
@@ -572,11 +704,16 @@ export default defineComponent({
         case ConversionTypes.RECEIVE_TOKENS:
           const resourceCost = 300 * tokens.value;
           //TODO: Remove comment
-          if ($store.getters.activePlanet.ressources.metal < resourceCost || 
-            $store.getters.activePlanet.ressources.petrol < resourceCost   || 
-            $store.getters.activePlanet.ressources.crystal < resourceCost) {
-              $notification("failed", "Not enough resources to perform this exchange.")
-              return;
+          if (
+            $store.getters.activePlanet.ressources.metal < resourceCost ||
+            $store.getters.activePlanet.ressources.petrol < resourceCost ||
+            $store.getters.activePlanet.ressources.crystal < resourceCost
+          ) {
+            $notification(
+              "failed",
+              "Not enough resources to perform this exchange."
+            );
+            return;
           }
 
           request.metal = resourceCost;
@@ -626,7 +763,6 @@ export default defineComponent({
 
       const data = claimReq.data;
       if (data.action === "CALL_SMART_CONTRACT") {
-
         const sD = new SignatureData(data.v, data.r, data.s);
         let params = new Attributes(
           data.id,
@@ -640,7 +776,6 @@ export default defineComponent({
           let tx;
 
           if (data.type === ConversionTypes.RECEIVE_TOKENS) {
-
             tx = await TokenManagementContract.convertFromPrimaryResources(
               sD,
               params
@@ -648,10 +783,9 @@ export default defineComponent({
           } else if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
             tx = await TokenManagementContract.convertFromToken(sD, params);
           }
-          console.log(tx)
+          console.log(tx);
           receipt = await tx.wait();
-          console.log(receipt)
-
+          console.log(receipt);
         } catch (e) {
           console.log("error");
           console.log(e);
@@ -700,6 +834,7 @@ export default defineComponent({
       dataRows: dataRows,
       convertResourcesDialog,
       convertTokensDialog,
+      combineResources,
 
       filter,
       pagination,

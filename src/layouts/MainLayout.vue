@@ -135,10 +135,15 @@
         </q-drawer>
 
         <q-dialog v-model="openInbox">
-          <q-card>
+          <q-card style="width: 700px; max-width: 80vw">
             <q-card-section class="b">
               <div class="row justify-between">
-                <div>{{ activeEmail.title }}</div>
+                <div>
+                  <span class="text-subtitle1 text-weight-bold"
+                    >azhar_786 |
+                  </span>
+                  {{ activeEmail.title }}
+                </div>
                 <div>
                   <q-btn
                     flat
@@ -163,7 +168,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-                <component :is="templateName" :body="body"></component>
+              <component :is="templateName" :body="body"></component>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -217,9 +222,9 @@ const activeEmail = ref({});
 
 const templateName = computed(() => {
   if (!activeEmail.value.template) return;
-  
-  switch(activeEmail.value.template) {
-    case "asteroid_collision": 
+
+  switch (activeEmail.value.template) {
+    case "asteroid_collision":
       return AsteroidCollision;
   }
 
@@ -228,9 +233,9 @@ const templateName = computed(() => {
 
 const body = computed(() => {
   if (!activeEmail.value.template) return;
-  
-  switch(activeEmail.value.template) {
-    case "asteroid_collision": 
+
+  switch (activeEmail.value.template) {
+    case "asteroid_collision":
       return JSON.parse(activeEmail.value.body);
   }
 

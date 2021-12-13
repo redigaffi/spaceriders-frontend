@@ -174,6 +174,7 @@
         <q-page-container>
           <q-page padding v-if="!isStaking">
             <q-select
+              color="info"
               filled
               v-model="selectedTier"
               :options="tierOptions"
