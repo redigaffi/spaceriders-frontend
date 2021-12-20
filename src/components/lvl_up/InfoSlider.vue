@@ -92,7 +92,7 @@
                       track-color="dark"
                     >
                       <q-icon name="health_and_safety" size="26px" color="info" />
-                      <q-tooltip v-model="showing"> Health </q-tooltip>
+                      <q-tooltip v-model="showing"> {{ health }}% Health </q-tooltip>
                     </q-circular-progress>
 
                     <q-circular-progress
@@ -465,6 +465,17 @@ export default defineComponent({
         activePlanet.ressources.crystal >= level.cost_crystal
       );
     };
+    
+    const canRepair = (props, activePlanet) => {
+      let data = dataSource(props.data.type);
+      const level = data[props.data.label]["upgrades"][props.data.level];
+
+      return (
+        activePlanet.ressources.metal >= level.cost_metal &&
+        activePlanet.ressources.petrol >= level.cost_petrol &&
+        activePlanet.ressources.crystal >= level.cost_crystal
+      );
+    };
 
     const upgrade = async (label) => {
       if (!props.data) return;
@@ -561,7 +572,6 @@ export default defineComponent({
       return healthPercentage;
     });
 
-
     const timeString = computed(() => {
       if (!props.data) return "0m";
 
@@ -570,6 +580,10 @@ export default defineComponent({
         timeNeeded = props.data.data.time * quantity.value;
       } else {
         timeNeeded = props.data.upgrades[props.data.level + 1].time;
+      }
+
+      if (health.value !== false && health.value < 100) {
+        timeNeeded = props.data.upgrades[props.data.level].time;
       }
 
       const now = new Date();
@@ -601,13 +615,17 @@ export default defineComponent({
         return props.data.data.cost_metal * quantity.value;
       }
 
-      const metalCost = props.data.upgrades[props.data.level + 1].cost_metal;
+      let metalCost = props.data.upgrades[props.data.level + 1].cost_metal;
       if (health.value === false) {
         return metalCost;
       }
+      if (health.value < 100) {
+        metalCost = props.data.upgrades[props.data.level].cost_metal;
+      }
+        
 
-      const h = health.value/100;
-
+      const h = 1-health.value/100;
+      
       return (metalCost-(metalCost*h)).toFixed(1);
     });
 
@@ -618,36 +636,83 @@ export default defineComponent({
         return props.data.data.cost_petrol * quantity.value;
       }
 
-      const petrolCost = props.data.upgrades[props.data.level + 1].cost_petrol;
+      let petrolCost = props.data.upgrades[props.data.level + 1].cost_petrol;
       if (health.value === false) {
         return petrolCost;
       }
 
-      const h = health.value/100;
+      if (health.value < 100) {
+        petrolCost = props.data.upgrades[props.data.level].cost_petrol;
+      }
+
+      const h = 1-health.value/100;
 
       return (petrolCost-(petrolCost*h)).toFixed(1);
     });
-
+    
     const crystalCost = computed(() => {
       if (!props.data) return 0;
 
       if (props.itemType) {
         return props.data.data.cost_crystal * quantity.value;
       }
-      const crystalCost = props.data.upgrades[props.data.level + 1].cost_crystal;
+
+      let crystalCost = props.data.upgrades[props.data.level + 1].cost_crystal;
       
       if (health.value === false) {
         return crystalCost;
       }
+    
+      if (health.value < 100) {
+        crystalCost = props.data.upgrades[props.data.level].cost_crystal;
+      }
 
-      const h = health.value/100;
+      const h = 1-health.value/100;
 
       return (crystalCost-(crystalCost*h)).toFixed(1);
     });
     
     const repair = async (label) => {
-      console.log("TODO: repair")
-      //#TODO: add 2 new columns to know an item is being repaired, repairing & repair_finish
+      // This can only be called by resource items ATM.
+      const activePlanet = $store.getters.activePlanet;
+
+      if (!canRepair(props, activePlanet)) {
+        $notification("failed", `Can't repair, not enough resources...`);
+        return;
+      }
+      
+      const data = {
+        label: props.data.label,
+        planetGuid: activePlanet.id,
+      };
+      
+      const re = await ApiRequests.repairResource(data);
+
+      if (re.success) {
+        let prices = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level];
+        const h = 1 - (health.value/100);
+
+        const cost_metal  = Math.ceil(prices.cost_metal*h);
+        const cost_crystal =  Math.ceil(prices.cost_crystal*h);
+        const cost_petrol  = Math.ceil(prices.cost_petrol*h);
+
+        $store.commit("restPlanetResources", {
+          metal:   cost_metal,
+          crystal: cost_crystal,
+          petrol:  cost_petrol,
+        });
+
+        const saveStore = {
+          label: props.data.label,
+          repairFinish: re.data.repair_finish,
+        };
+
+        $store.commit("repairRessourceData", saveStore);
+        $notification("success", "Repairing biatch");
+      } else {
+        $notification("failed", re.error);
+      }
+    
     };
 
     return {

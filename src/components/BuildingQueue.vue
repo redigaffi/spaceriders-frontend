@@ -26,13 +26,13 @@
                 </q-item-section>
 
                 <q-item-label caption class="text-left">
-                  <div v-if="!itemType" class="text-body2">
+                  <div v-if="!itemType && !bQ.repairing" class="text-body2">
                     Upgrade to :
                     <span class="text-secondary text-weight-bold">{{
                       bQ.level + 1
                     }}</span>
                   </div>
-                  <div v-else class="text-body2">
+                  <div v-if="itemType" class="text-body2">
                     Quantity:
                     <span class="text-secondary text-weight-bold">{{
                       bQ.quantity_building
@@ -48,9 +48,10 @@
                     Status :
                     <span
                       v-if="!itemType"
-                      class="text-secondary text-weight-bold"
-                      >Upgrading...</span
-                    >
+                      class="text-secondary text-weight-bold">
+                        <span v-if="bQ.repairing">Repairing...</span>
+                        <span v-else>Upgrading...</span>
+                      </span>
                     <span v-else class="text-secondary text-weight-bold"
                       >Building...</span
                     >
@@ -113,9 +114,15 @@ export default defineComponent({
 
     function calculateClaimDate(building) {
       const now = new Date();
-      const claim = new Date(building.current_upgrade_time_left * 1000);
-
-      const diffSeconds = (claim.getTime() - now.getTime()) / 1000;
+      
+      let finish;
+      if (building.upgrading || building.building) {
+        finish  = new Date(building.current_upgrade_time_left * 1000);
+      } else if (building.repairing) {
+        finish  = new Date(building.current_repair_time_left * 1000);
+      }
+    
+      const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
       const s = Math.round(diffSeconds % 60);
       const minutes = Math.round((diffSeconds - s) / 60);
 
@@ -139,11 +146,23 @@ export default defineComponent({
         const b = data[d];
         if (queueTimeoutIds[b.label] === undefined) {
           const now = new Date();
-          const claim = new Date(b.current_upgrade_time_left * 1000);
-          const diffSeconds = claim.getTime() - now.getTime();
+          
+          let finish;
+          if (b.upgrading || b.building) {
+            finish  = new Date(b.current_upgrade_time_left * 1000);
+          } else if (b.repairing) {
+            finish  = new Date(b.current_repair_time_left * 1000);
+          }
+
+          const diffSeconds = finish.getTime() - now.getTime();
 
           queueTimeoutIds[b.label] = setTimeout(() => {
-            $store.commit("upgradeFinished", { label: b.label, type: b.type });
+            if (b.upgrading || b.building) {
+              $store.commit("upgradeFinished", { label: b.label, type: b.type });
+            } else if (b.repairing) {
+              console.log("repairing queue")
+              $store.commit("repairFinished", { label: b.label, type: b.type });
+            }
             queueTimeoutIds[b.label] = undefined;
           }, diffSeconds);
         }
@@ -156,7 +175,7 @@ export default defineComponent({
       let re = [];
       for (let key in data) {
         const building = data[key];
-        if (building.upgrading || building.building) {
+        if (building.repairing || building.upgrading || building.building) {
           re.push(building);
         }
       }

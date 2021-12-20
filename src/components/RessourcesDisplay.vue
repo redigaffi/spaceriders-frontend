@@ -12,7 +12,10 @@
           flat
           rounded
           class="btn-glass-element"
-          :class="{ 'btn-red-glass-element': this.$store.getters.activePlanet.ressources.metal >= metalCapacity }"
+          :class="{ 
+            'btn-yellow-glass-element': isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
+            'btn-red-glass-element': isStorageFull('metalWarehouse'),
+          }"
         >
           <img
             src="~assets/img/resources/RES_ic_Metal.png"
@@ -30,7 +33,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+            <q-list dense class="text-subtitle2" style="width: 290px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Metal</q-item-label>
@@ -49,18 +52,22 @@
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ metalCapacity }}
+                  {{ metalCapacityDisplay }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.metal < metalCapacity" class="col-4 text-right text-positive">
-                  +{{ metalProduction }}/min
+                <q-item-section v-if="!isStorageFull('metalWarehouse')" class="col-6 text-right"
+                :class="{
+                  'text-positive': isFullProduction('metalMine'),
+                  'text-yellow-12': !isFullProduction('metalMine'),
+                  }">
+                  +{{ metalProductionDisplay }}
                 </q-item-section>
                 <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
+                  -{{metalProduction}}/min
                 </q-item-section>
               </q-item>
             </q-list>
@@ -74,7 +81,9 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.crystal >= crystalCapacity,
+            'btn-yellow-glass-element': isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
+            'btn-red-glass-element': isStorageFull('crystalWarehouse'),
+
           }"
         >
           <img
@@ -93,7 +102,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+            <q-list dense class="text-subtitle2" style="width: 290px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Crystal</q-item-label>
@@ -112,18 +121,23 @@
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ crystalCapacity }}
+                  {{ crystalCapacityDisplay }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.crystal < crystalCapacity" class="col-4 text-right text-positive">
-                  +{{ crystalProduction }}/min
+                <q-item-section v-if="!isStorageFull('crystalWarehouse')" class="col-6 text-right"
+                :class="{
+                  'text-positive': isFullProduction('crystalMine'),
+                  'text-yellow-12': !isFullProduction('crystalMine'),
+                  }">
+                
+                  +{{ crystalProductionDisplay }}
                 </q-item-section>
                 <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
+                  -{{crystalProduction}}/min
                 </q-item-section>
               </q-item>
             </q-list>
@@ -137,7 +151,8 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.petrol >= petrolCapacity,
+            'btn-yellow-glass-element': isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
+            'btn-red-glass-element': isStorageFull('petrolWarehouse'),
           }"
         >
           <img
@@ -157,7 +172,7 @@
             transition-hide="scale"
             
           >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+            <q-list dense class="text-subtitle2" style="width: 290px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Petrol</q-item-label>
@@ -176,18 +191,22 @@
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right">
-                  {{ petrolCapacity }}
+                  {{ petrolCapacityDisplay }}
                 </q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.petrol < petrolCapacity" class="col-4 text-right text-positive">
-                  +{{ petrolProduction }}/min
+                <q-item-section v-if="!isStorageFull('petrolWarehouse')" class="col-6 text-right"
+                 :class="{
+                  'text-positive': isFullProduction('petrolMine'),
+                  'text-yellow-12': !isFullProduction('petrolMine'),
+                  }">
+                  +{{ petrolProductionDisplay }}
                 </q-item-section>
                 <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
+                  -{{petrolProduction}}/min
                 </q-item-section>
               </q-item>
             </q-list>
@@ -267,70 +286,140 @@ export default {
     });
 
     const metalAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.metal, { digits: 1 });
+      return tc(($store.getters.activePlanet.ressources.metal).toFixed(1), { digits: 1 });
     });
 
     const crystalAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.crystal, { digits: 1 });
+      return tc(($store.getters.activePlanet.ressources.crystal).toFixed(1), { digits: 1 });
     });
 
     const petrolAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.petrol, { digits: 1 });
+      return tc(($store.getters.activePlanet.ressources.petrol).toFixed(1), { digits: 1 });
     });
-
+    
     const metalProduction = computed(() => {
       if ($store.getters.resourceData.metalMine === undefined) return;
+      const info = calculateProduction(ResourceType.METAL_MINE);
+      return info.production;
+    });
 
-      const currentLevel = $store.getters.resourceData.metalMine.level;
-      return $store.getters.resourceData.metalMine.upgrades[currentLevel]
-        .production;
+    const metalProductionDisplay = computed(() => {
+      if ($store.getters.resourceData.metalMine === undefined) return;
+      const info = calculateProduction(ResourceType.METAL_MINE);
+
+      if (info.production < info.maxProduction) {
+        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+      }
+
+      return tc(info.production, { digits: 1 });
     });
 
     const petrolProduction = computed(() => {
       if ($store.getters.resourceData.petrolMine === undefined) return;
+      const info = calculateProduction(ResourceType.PETROL_MINE);
+      return info.production;
+    });
 
-      const currentLevel = $store.getters.resourceData.petrolMine.level;
-      return $store.getters.resourceData.petrolMine.upgrades[currentLevel]
-        .production;
+    const petrolProductionDisplay = computed(() => {
+      if ($store.getters.resourceData.petrolMine === undefined) return;
+      const info = calculateProduction(ResourceType.PETROL_MINE);
+
+      if (info.production < info.maxProduction) {
+        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+      }
+
+      return tc(info.production, { digits: 1 });
     });
 
     const crystalProduction = computed(() => {
       if ($store.getters.resourceData.crystalMine === undefined) return;
+      const info = calculateProduction(ResourceType.CRYSTAL_MINE);
+      return info.production;
+    });
+    
+    const crystalProductionDisplay = computed(() => {
+      if ($store.getters.resourceData.crystalMine === undefined) return;
+      const info = calculateProduction(ResourceType.CRYSTAL_MINE);
 
-      const currentLevel = $store.getters.resourceData.crystalMine.level;
-      return $store.getters.resourceData.crystalMine.upgrades[currentLevel]
-        .production;
+      if (info.production < info.maxProduction) {
+        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+      }
+
+      return tc(info.production, { digits: 1 });
     });
 
     const metalCapacity = computed(() => {
       if ($store.getters.resourceData.metalWarehouse === undefined) return;
+      const capacity = calculateWarehouseCapacity(ResourceType.METAL_WAREHOUSE);
+      return capacity.capacity;
+    });
 
-      const currentLevel = $store.getters.resourceData.metalWarehouse.level;
-      const capacity = $store.getters.resourceData.metalWarehouse.upgrades[currentLevel]
-        .capacity;
+    const metalCapacityDisplay = computed(() => {
+      if ($store.getters.resourceData.metalWarehouse === undefined) return;
+      const capacity = calculateWarehouseCapacity(ResourceType.METAL_WAREHOUSE);
 
-      return tc(capacity, { digits: 1 });
+      if (capacity.capacity < capacity.maxCapacity) {
+        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+      }
+
+      return tc(capacity.capacity, { digits: 1 });
     });
 
     const petrolCapacity = computed(() => {
       if ($store.getters.resourceData.petrolWarehouse === undefined) return;
-      const currentLevel = $store.getters.resourceData.petrolWarehouse.level;
+      const capacity = calculateWarehouseCapacity(ResourceType.PETROL_WAREHOUSE);
+      return capacity.capacity;
+    });
 
-      const capacity = $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel]
-        .capacity;
+    const petrolCapacityDisplay = computed(() => {
+      if ($store.getters.resourceData.petrolWarehouse === undefined) return;
+      const capacity = calculateWarehouseCapacity(ResourceType.PETROL_WAREHOUSE);
 
-      return tc(capacity, { digits: 1 });
+      if (capacity.capacity < capacity.maxCapacity) {
+        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+      }
+
+      return tc(capacity.capacity, { digits: 1 });
     });
 
     const crystalCapacity = computed(() => {
       if ($store.getters.resourceData.crystalWarehouse === undefined) return;
-
-      const currentLevel = $store.getters.resourceData.crystalWarehouse.level;
-      const capacity = $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel]
-        .capacity;
-
-      return tc(capacity, { digits: 1 });
+      const capacity = calculateWarehouseCapacity(ResourceType.CRYSTAL_WAREHOUSE);
+      return capacity.capacity;
     });
+
+    const crystalCapacityDisplay = computed(() => {
+      if ($store.getters.resourceData.crystalWarehouse === undefined) return;
+      const capacity = calculateWarehouseCapacity(ResourceType.CRYSTAL_WAREHOUSE);
+
+      if (capacity.capacity < capacity.maxCapacity) {
+        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+      }
+
+      return tc(capacity.capacity, { digits: 1 });
+    });
+
+    const isFullProduction = (mine) => {
+      const {
+          production,
+          maxProduction
+        } = calculateProduction(mine);
+
+      return production >= maxProduction;
+    }
+
+    const isStorageFull = (warehouse) => {
+      const {capacity, maxStorage} = calculateWarehouseCapacity(warehouse);
+      
+      const mapping = { 
+        "metalWarehouse": metalAvailable,
+        "petrolWarehouse": petrolAvailable,
+        "crystalWarehouse": crystalAvailable,
+      }
+
+      const amount = mapping[warehouse].value;
+      return amount >= capacity;
+    }
 
     const energyProduction = computed(() => {
       if ($store.getters.resourceData.solarPlant === undefined) return;
@@ -346,9 +435,44 @@ export default {
       return energyProduction.value - currentUsage;
     });
 
+    const calculateProduction = (mine) => {
+      const data = $store.getters.resourceData;
+
+      const mineInfo = data[mine];
+      const currentProduction = mineInfo["production"]; 
+      const currentLevel = mineInfo["level"]; 
+      const currentHealth = mineInfo["health"];
+      const maxHealth = mineInfo["upgrades"][currentLevel]["health"];
+
+      const healthPercentage = currentHealth/maxHealth;
+      return {
+        production: currentProduction*healthPercentage, 
+        maxProduction: currentProduction,
+      };
+    };
+
+    const calculateWarehouseCapacity = (warehouse) => {
+      const data = $store.getters.resourceData;
+      const warehouseInfo = data[warehouse];
+      const currentCapacity = warehouseInfo["capacity"]; 
+      const currentLevel = warehouseInfo["level"]; 
+      const currentHealth = warehouseInfo["health"];
+      const maxHealth = warehouseInfo["upgrades"][currentLevel]["health"];
+
+      const healthPercentage = currentHealth/maxHealth;
+      return {
+        capacity: currentCapacity*healthPercentage, 
+        maxCapacity: currentCapacity,
+      };
+    };
+
     const updateResources = (rD, resource, mine, warehouse) => {
-      const upgrading = rD[mine]["upgrading"];
-      const maxCapacity = rD[warehouse]["capacity"];
+      const mineData = rD[mine];
+      
+      const upgrading = mineData["upgrading"];
+      const repairing = mineData["repairing"];
+      const maxCapacity = calculateWarehouseCapacity(warehouse);
+      
       const current = $store.getters.activePlanet.ressources[resource];
 
       let production = false;
@@ -366,7 +490,7 @@ export default {
           break;
       }
 
-      if (current < maxCapacity && !upgrading) {
+      if (current < maxCapacity.capacity && !upgrading && !repairing) {
         
         $store.commit("incrementResources", {
           ressource: resource,
@@ -418,20 +542,61 @@ export default {
     }, 60000);
 
     $store.commit("addIntervalId", { id: id });
+    
+    const isResourceAlert = (resourceType) => {
+      const mappings = {};
+      mappings[ResourceType.METAL] = {
+        "mine": ResourceType.METAL_MINE,
+        "warehouse": ResourceType.METAL_WAREHOUSE,
+      };
+
+      mappings[ResourceType.CRYSTAL] = {
+        "mine": ResourceType.CRYSTAL_MINE,
+        "warehouse": ResourceType.CRYSTAL_WAREHOUSE,
+      };
+
+      mappings[ResourceType.PETROL] = {
+        "mine": ResourceType.PETROL_MINE,
+        "warehouse": ResourceType.PETROL_WAREHOUSE,
+      };
+
+      const rD = $store.getters.resourceData;
+      
+      const mine = rD[mappings[resourceType]["mine"]];
+      const mineCurrentHealth = mine["health"];
+      const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
+      const mineFullHealth = (mineCurrentHealth/mineMaxHealth) < 1;
+
+      const warehouse = rD[mappings[resourceType]["warehouse"]];
+      const warehouseCurrentHealth = warehouse["health"];
+      const warehouseMaxHealth = warehouse["upgrades"][mine["level"]]["health"];
+      const warehouseFullHealth = (warehouseCurrentHealth/warehouseMaxHealth) < 1;
+      
+      return mineFullHealth || warehouseFullHealth;
+    };
 
     return {
       metalProduction: metalProduction,
       petrolProduction: petrolProduction,
       crystalProduction: crystalProduction,
       metalCapacity: metalCapacity,
+      metalCapacityDisplay: metalCapacityDisplay,
+      metalProductionDisplay: metalProductionDisplay,
       petrolCapacity: petrolCapacity,
+      petrolCapacityDisplay: petrolCapacityDisplay,
+      petrolProductionDisplay: petrolProductionDisplay,
       crystalCapacity: crystalCapacity,
+      crystalCapacityDisplay: crystalCapacityDisplay,
+      crystalProductionDisplay: crystalProductionDisplay,
       energyProduction: energyProduction,
       energyLeft: energyLeft,
       activePlanet: activePlanet,
       metalAvailable: metalAvailable,
       petrolAvailable: petrolAvailable,
       crystalAvailable: crystalAvailable,
+      isResourceAlert: isResourceAlert,
+      isStorageFull: isStorageFull,
+      isFullProduction: isFullProduction,
     };
   },
 };
@@ -442,13 +607,23 @@ export default {
 }
 
 .btn-red-glass-element {
-  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.4);
   border-radius: 20px;
   position: relative;
   z-index: 1;
   background: inherit;
   overflow: hidden;
   color: red;
+}
+
+.btn-yellow-glass-element {
+  box-shadow: 0 0 1rem 0 rgb(203, 212, 75);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  background: inherit;
+  overflow: hidden;
+  color: yellow;
 }
 
 .btn-red-glass-element:before {

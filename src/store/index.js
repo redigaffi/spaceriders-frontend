@@ -185,7 +185,15 @@ export default function (/* { ssrContext } */) {
         resource.current_upgrade_time_left = payload.upgradeFinish;
         state.resourceData[label] = resource;
       },
+      repairRessourceData(state, payload) {
+        const label = payload.label;
+        let resource = state.resourceData[label];
 
+        resource.repairing = true;
+        resource.current_repair_time_left = payload.repairFinish;
+
+        state.resourceData[label] = resource;
+      },
       upgradeInstallationData(state, payload) {
         const label = payload.label;
         let resource = state.installationData[label];
@@ -209,6 +217,18 @@ export default function (/* { ssrContext } */) {
         resource.quantity_building = payload.quantity;
         resource.current_upgrade_time_left = payload.upgradeFinish;
         state.defenseData[label] = resource;
+      },
+
+      repairFinished(state, payload) {
+        const label = payload.label;
+        let dataSource = state.resourceData[label];
+        const level = dataSource.level;
+
+        dataSource.repairing = false;
+        dataSource.health = dataSource["upgrades"][level].health;
+        dataSource.current_repair_time_left = false;
+
+        state.resourceData[label] = dataSource;
       },
 
       upgradeFinished(state, payload) {

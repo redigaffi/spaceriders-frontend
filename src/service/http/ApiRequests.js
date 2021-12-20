@@ -364,4 +364,22 @@ export default class ApiRequests {
       const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
       return (await axios.get(path)).data;
     }
+
+
+
+   /**
+   * Repair Resource
+   * @param {object} data
+   * @returns
+   */
+  static async repairResource(data) {
+    const path = `${process.env.BASE_API_PATH}/ressource/repair`;
+
+    const body = {
+      label: data.label,
+      planetId: data.planetGuid,
+    };
+    
+    return (await axios.post(path, body)).data;
+  }
 }
