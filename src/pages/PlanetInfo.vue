@@ -15,7 +15,7 @@
               <img
                 src="~assets/img/planet-info-header.jpg"
                 width="100%"
-                style="height: 325px; width: 100%"
+                style="height: 360px; width: 100%"
               />
               <q-card-section
                 class="text-secondary absolute-top tag-glass-element"
@@ -69,6 +69,15 @@
                     </q-item-section>
                     <q-item-section avatar>
                       {{ petrolReserve }}
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Rarity :
+                    </q-item-section>
+                    <q-item-section avatar>
+                      {{ rarity }}
                     </q-item-section>
                   </q-item>
 
@@ -269,6 +278,10 @@ const position = computed(() => {
   const galaxy = $store.getters.activePlanet.galaxy;
 
   return `${position}:${solarSystem}:${galaxy}`;
+});
+
+const rarity = computed(() => {
+  return $store.getters.activePlanet.rarity.toUpperCase();
 });
 
 const diameter = computed(() => {
