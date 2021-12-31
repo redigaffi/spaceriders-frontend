@@ -15,7 +15,7 @@
               <img
                 src="~assets/img/planet-info-header.jpg"
                 width="100%"
-                style="height: 360px; width: 100%"
+                style="height: 390px; width: 100%"
               />
               <q-card-section
                 class="text-secondary absolute-top tag-glass-element"
@@ -78,6 +78,15 @@
                     </q-item-section>
                     <q-item-section avatar>
                       {{ rarity }}
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item>
+                    <q-item-section class="text-subtitle2 text-weight-bold"
+                      >Level :
+                    </q-item-section>
+                    <q-item-section avatar>
+                      {{ level }}
                     </q-item-section>
                   </q-item>
 
@@ -168,6 +177,7 @@
           </div>
         </q-card-section>
       </q-card>
+      
     </div>
 
     <q-dialog v-model="layout">
@@ -282,6 +292,10 @@ const position = computed(() => {
 
 const rarity = computed(() => {
   return $store.getters.activePlanet.rarity.toUpperCase();
+});
+
+const level = computed(() => {
+  return `${$store.getters.activePlanet.level} (${$store.getters.activePlanet.experience} XP)`
 });
 
 const diameter = computed(() => {
