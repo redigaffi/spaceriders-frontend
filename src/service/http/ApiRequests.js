@@ -313,7 +313,17 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
-   /**
+  static async unstakeRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/staking/unstake`;
+    
+    const body = {
+      planetId: data.planetId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
    * Get Emails
    * @param {string} planetId
    * @returns
