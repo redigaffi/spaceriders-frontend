@@ -61,6 +61,24 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
+  static async fetchPlanetCost() {
+    const path = `${process.env.BASE_API_PATH}/planet/fetch_cost`;
+    return (await axios.get(path)).data;
+  }
+
+  /**
+   * @param {string} planetGuid planetGuid
+   */
+   static async fetchPlanetCostData(planetGuid) {
+    const path = `${process.env.BASE_API_PATH}/planet/fetch_cost_data`;
+
+    const body = {
+      planetId: planetGuid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
   static async getUnClaimPlanet() {
     const path = `${process.env.BASE_API_PATH}/planet/unclaimed`;
     return (await axios.get(path)).data;

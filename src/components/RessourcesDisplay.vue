@@ -33,7 +33,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2" style="width: 290px">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Metal</q-item-label>
@@ -51,7 +51,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
+                <q-item-section class="col-8 text-right">
                   {{ metalCapacityDisplay }}
                 </q-item-section>
               </q-item>
@@ -59,14 +59,14 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="!isStorageFull('metalWarehouse')" class="col-6 text-right"
+                <q-item-section v-if="!isStorageFull('metalWarehouse')" class="col-8 text-right"
                 :class="{
                   'text-positive': isFullProduction('metalMine'),
                   'text-yellow-12': !isFullProduction('metalMine'),
                   }">
                   +{{ metalProductionDisplay }}
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
+                <q-item-section v-else class="col-8 text-right text-negative">
                   -{{metalProduction}}/min
                 </q-item-section>
               </q-item>
@@ -102,7 +102,7 @@
             transition-show="scale"
             transition-hide="scale"
           >
-            <q-list dense class="text-subtitle2" style="width: 290px">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Crystal</q-item-label>
@@ -120,7 +120,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
+                <q-item-section class="col-8 text-right">
                   {{ crystalCapacityDisplay }}
                 </q-item-section>
               </q-item>
@@ -128,15 +128,15 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="!isStorageFull('crystalWarehouse')" class="col-6 text-right"
+                <q-item-section v-if="!isStorageFull('crystalWarehouse')" class="col-8 text-right"
                 :class="{
                   'text-positive': isFullProduction('crystalMine'),
                   'text-yellow-12': !isFullProduction('crystalMine'),
                   }">
                 
-                  +{{ crystalProductionDisplay }}
+                  +{{ crystalProductionDisplay }}/min
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
+                <q-item-section v-else class="col-8 text-right text-negative">
                   -{{crystalProduction}}/min
                 </q-item-section>
               </q-item>
@@ -172,7 +172,7 @@
             transition-hide="scale"
             
           >
-            <q-list dense class="text-subtitle2" style="width: 290px">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Petrol</q-item-label>
@@ -190,7 +190,7 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
+                <q-item-section class="col-8 text-right">
                   {{ petrolCapacityDisplay }}
                 </q-item-section>
               </q-item>
@@ -198,14 +198,14 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="!isStorageFull('petrolWarehouse')" class="col-6 text-right"
+                <q-item-section v-if="!isStorageFull('petrolWarehouse')" class="col-8 text-right"
                  :class="{
                   'text-positive': isFullProduction('petrolMine'),
                   'text-yellow-12': !isFullProduction('petrolMine'),
                   }">
                   +{{ petrolProductionDisplay }}
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
+                <q-item-section v-else class="col-8 text-right text-negative">
                   -{{petrolProduction}}/min
                 </q-item-section>
               </q-item>
@@ -308,7 +308,7 @@ export default {
       const info = calculateProduction(ResourceType.METAL_MINE);
 
       if (info.production < info.maxProduction) {
-        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+        return `${info.production.toFixed(4)} (-${(info.maxProduction-info.production).toFixed(4)})/min`;
       }
 
       return tc(info.production, { digits: 1 });
@@ -325,7 +325,7 @@ export default {
       const info = calculateProduction(ResourceType.PETROL_MINE);
 
       if (info.production < info.maxProduction) {
-        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+        return `${info.production.toFixed(4)} (-${(info.maxProduction-info.production).toFixed(4)})/min`;
       }
 
       return tc(info.production, { digits: 1 });
@@ -342,7 +342,7 @@ export default {
       const info = calculateProduction(ResourceType.CRYSTAL_MINE);
 
       if (info.production < info.maxProduction) {
-        return `${info.production} (-${(info.maxProduction-info.production).toFixed(1)})/min`;
+        return `${info.production.toFixed(4)} (-${(info.maxProduction-info.production).toFixed(4)})/min`;
       }
 
       return tc(info.production, { digits: 1 });
@@ -359,7 +359,7 @@ export default {
       const capacity = calculateWarehouseCapacity(ResourceType.METAL_WAREHOUSE);
 
       if (capacity.capacity < capacity.maxCapacity) {
-        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+        return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity-capacity.capacity).toFixed(4)})`;
       }
 
       return tc(capacity.capacity, { digits: 1 });
@@ -376,7 +376,7 @@ export default {
       const capacity = calculateWarehouseCapacity(ResourceType.PETROL_WAREHOUSE);
 
       if (capacity.capacity < capacity.maxCapacity) {
-        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+        return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity-capacity.capacity).toFixed(4)})`;
       }
 
       return tc(capacity.capacity, { digits: 1 });
@@ -393,7 +393,7 @@ export default {
       const capacity = calculateWarehouseCapacity(ResourceType.CRYSTAL_WAREHOUSE);
 
       if (capacity.capacity < capacity.maxCapacity) {
-        return `${tc(capacity.capacity, { digits: 1 })} (-${capacity.maxCapacity-capacity.capacity})`;
+        return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity-capacity.capacity).toFixed(4)})`;
       }
 
       return tc(capacity.capacity, { digits: 1 });

@@ -43,7 +43,7 @@ class PlanetManagementContract extends Contract {
      * @param {string} planetGuid Planet GUID.
      * 
      **/
-    async buyPlanet(planetGuid) {
+    async buyPlanet(planetGuid, price, sD) {
         const contract = await this.getContract();
         
         const overrides = {
@@ -55,6 +55,8 @@ class PlanetManagementContract extends Contract {
 
         return await contract.buyPlanet(
             planetGuid,
+            price,
+            sD,
             overrides
         );
     }
