@@ -433,10 +433,9 @@ export default class ApiRequests {
      * @returns
     */
     static async tokenPrice() {
-      //const smartContract = process.env.TOKEN_PRICE_API.replace(/['"]+/g, '');
-      //const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
-      //@TODO: Remove this
-      const path = "https://5e2ff3c29c29c900145db604.mockapi.io/test/0xc748aF989F90EF03845cB7CB5D7DB3b7a6BFD465"
+      const smartContract = process.env.TOKEN_PRICE_API.replace(/['"]+/g, '');
+      const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
+      
       let price = 0;
       
       try {
@@ -444,8 +443,7 @@ export default class ApiRequests {
       } catch (err) {
         //@TODO: Throw exception and abort process.
       }
-      //@TODO: Remove this
-      price = 0.5
+      
       return price;
     }
 }
