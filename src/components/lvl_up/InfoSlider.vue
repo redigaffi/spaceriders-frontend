@@ -71,11 +71,11 @@
                     >
 
                     <div v-if="newEnergyUsage > 0">
-                      <q-item-label> Energy needed: </q-item-label>
+                      <q-item-label> Energy consumption: </q-item-label>
                       <q-item-label
                         class="text-warning text-h6 text-weight-bold"
                       >
-                        +{{ newEnergyUsage }}</q-item-label
+                        +{{ newEnergyUsage }}$ / min</q-item-label
                       >
                     </div>
                   </q-item-section>

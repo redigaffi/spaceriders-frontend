@@ -395,7 +395,7 @@ export default class ApiRequests {
 
 
 
-   /**
+  /**
    * Repair Resource
    * @param {object} data
    * @returns
@@ -410,4 +410,42 @@ export default class ApiRequests {
     
     return (await axios.post(path, body)).data;
   }
+
+  /**
+   * Energy deposit
+   * @param {object} data
+   * @returns
+   */
+    static async depositEnergy(data) {
+      const path = `${process.env.BASE_API_PATH}/energy/deposit`;
+  
+      const body = {
+        planetId: data.planetId,
+        guid: data.guid,
+      };
+      
+      return (await axios.post(path, body)).data;
+    }
+
+    /**
+     * Token Price
+     * @param {object} data
+     * @returns
+    */
+    static async tokenPrice() {
+      //const smartContract = process.env.TOKEN_PRICE_API.replace(/['"]+/g, '');
+      //const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
+      //@TODO: Remove this
+      const path = "https://5e2ff3c29c29c900145db604.mockapi.io/test/0xc748aF989F90EF03845cB7CB5D7DB3b7a6BFD465"
+      let price = 0;
+      
+      try {
+        price = parseFloat((await axios.get(path)).data.data.price);
+      } catch (err) {
+        //@TODO: Throw exception and abort process.
+      }
+      //@TODO: Remove this
+      price = 0.5
+      return price;
+    }
 }

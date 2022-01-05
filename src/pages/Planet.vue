@@ -95,7 +95,6 @@ export default defineComponent({
   methods: {
     startInterval: function () {
       this.claimRefreshId = setInterval(() => {
-        console.log("refresh planets")
         this.$store.commit("refreshPlanets");
         if (this.unClaimedNotReadyPlanets.length === 0)
           clearInterval(this.claimRefreshId);

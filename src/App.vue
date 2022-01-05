@@ -23,9 +23,11 @@ export default defineComponent({
       
       this.$store.commit("setActivePlanet", activePlanet);
       
+      const tokenPrice = (await ApiRequest.tokenPrice());
       const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
         .data;
       
+      this.$store.commit('setTokenPrice', {tokenPrice: tokenPrice});
       this.$store.commit("setResourceData", allPlanetInfo.resources);      
       this.$store.commit("setInstallationData", allPlanetInfo.installation);
       this.$store.commit("setResearchData", allPlanetInfo.research);

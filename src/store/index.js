@@ -15,6 +15,7 @@ export default function (/* { ssrContext } */) {
   const Store = createStore({
     state() {
       return {
+        tokenPrice: false,
         jwt: false,
         address: false,
         planets: [],
@@ -37,6 +38,10 @@ export default function (/* { ssrContext } */) {
             Object.assign(state, JSON.parse(localStorage.getItem("store")))
           );
         }
+      },
+
+      setTokenPrice(state, payload) {
+        state.tokenPrice = payload.tokenPrice;
       },
 
       addEmails(state, payload) {
@@ -287,13 +292,22 @@ export default function (/* { ssrContext } */) {
         const key = payload.ressource;
         state.activePlanet.ressources[key] += payload.value;
       },
+
       decrementReserve(state, payload) {
         const key = payload.ressource;
         state.activePlanet.max_resources[key] -= payload.value;
       },
+
+      decrementEnergy(state, payload) {
+        state.activePlanet.ressources.energy -= payload.energy;
+      },
     },
 
     getters: {
+      tokenPrice: (state) => {
+        return state.tokenPrice;
+      },
+
       emails: (state) => {
         return state.emails;
       },
