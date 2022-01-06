@@ -441,6 +441,8 @@ export default class ApiRequests {
       try {
         price = parseFloat((await axios.get(path)).data.data.price);
       } catch (err) {
+        //@TODO: Remove this
+        price = 1
         //@TODO: Throw exception and abort process.
       }
       
