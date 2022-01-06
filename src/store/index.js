@@ -297,6 +297,10 @@ export default function (/* { ssrContext } */) {
         const key = payload.ressource;
         state.activePlanet.max_resources[key] -= payload.value;
       },
+      
+      incrementEnergy(state, payload) {
+        state.activePlanet.ressources.energy += payload.energy;
+      },
 
       decrementEnergy(state, payload) {
         state.activePlanet.ressources.energy -= payload.energy;

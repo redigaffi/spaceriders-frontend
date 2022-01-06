@@ -757,6 +757,8 @@ async function depositEnergy(amount) {
 
     if (req.success) {
       $notification("success", "Energy deposited successfuly!", 6000);
+      $store.commit('incrementEnergy', {energy: amount});
+      energyDepositPopup.value = false;
     } else {
       $notification("failed", "Failed depositing energy...", 6000);
     }
@@ -812,3 +814,4 @@ async function depositEnergy(amount) {
   height: 64px;
 }
 </style>
+

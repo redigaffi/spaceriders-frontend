@@ -38,6 +38,12 @@
               </div>
 
               <q-card-section class="q-pt-none" style="line-height: 1">
+                <div class="q-mb-xs"> 
+                  <q-badge :color="props.row.color">
+                    {{ props.row.rarity }} 
+                  </q-badge>  
+                </div>
+                <br />
                 <span> {{ props.row.name }} </span>
                 <br />
                 <span style="font-size: 12px">{{ props.row.position }}</span>
@@ -76,6 +82,12 @@ export default defineComponent({
 
     const $store = useStore();
 
+    const colorMapping = {
+      common: "blue-grey-6",
+      epic: "info",
+      legendary: "purple-9"
+    };
+
     let rows = computed(() => {
       const activePlanet = $store.getters.activePlanet;
       if (!activePlanet) return [];
@@ -86,6 +98,8 @@ export default defineComponent({
         id: activePlanet.id,
         name: activePlanet.name,
         image_url: activePlanet.image_url,
+        rarity: activePlanet.rarity,
+        color: colorMapping[activePlanet.rarity],
         position: `${activePlanet.position}:${activePlanet.solar_system}:${activePlanet.galaxy}`,
         active: true,
         planet: activePlanet,
@@ -100,6 +114,8 @@ export default defineComponent({
         re.push({
           id: planet.id,
           image_url: planet.image_url,
+          rarity: activePlanet.rarity,
+          color: colorMapping[activePlanet.rarity],
           name: planet.name,
           position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
           active: false,
