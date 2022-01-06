@@ -61,7 +61,7 @@
                     </div>
                   </q-item-section>
                   <q-item-section v-else class="col">
-                    <q-item-label v-if="health < 100"
+                    <q-item-label v-if="health !== false && health < 100"
                       >Repair time:</q-item-label
                     >
                     <q-item-label v-else>Upgrade time:</q-item-label>
@@ -71,46 +71,48 @@
                     >
 
                     <div v-if="newEnergyUsage > 0">
-                      <q-item-label> Energy needed: </q-item-label>
+                      <q-item-label> Energy consumption: </q-item-label>
                       <q-item-label
                         class="text-warning text-h6 text-weight-bold"
                       >
-                        +{{ newEnergyUsage }}</q-item-label
+                        +{{ newEnergyUsage }}$ / min</q-item-label
                       >
                     </div>
                   </q-item-section>
 
-                  <q-circular-progress
-                    v-if="health > 25"
-                    show-value
-                    class="text-white"
-                    :value="health"
-                    size="60px"
-                    :thickness="0.15"
-                    color="info"
-                    track-color="dark"
-                  >
-                    <q-icon name="health_and_safety" size="26px" color="info" />
-                    <q-tooltip v-model="showing"> Health </q-tooltip>
-                  </q-circular-progress>
+                  <div v-if="health !== false">
+                    <q-circular-progress
+                      v-if="health > 25"
+                      show-value
+                      class="text-white"
+                      :value="health"
+                      size="60px"
+                      :thickness="0.15"
+                      color="info"
+                      track-color="dark"
+                    >
+                      <q-icon name="health_and_safety" size="26px" color="info" />
+                      <q-tooltip v-model="showing"> {{ health }}% Health </q-tooltip>
+                    </q-circular-progress>
 
-                  <q-circular-progress
-                    v-else
-                    show-value
-                    class="text-white q-ml-md"
-                    :value="health"
-                    size="60px"
-                    :thickness="0.15"
-                    color="negative"
-                    track-color="dark"
-                  >
-                    <q-icon
-                      name="fas fa-shield-virus"
-                      size="23px"
+                    <q-circular-progress
+                      v-else
+                      show-value
+                      class="text-white q-ml-md"
+                      :value="health"
+                      size="60px"
+                      :thickness="0.15"
                       color="negative"
-                    />
-                    <q-tooltip v-model="showing"> Health </q-tooltip>
-                  </q-circular-progress>
+                      track-color="dark"
+                    >
+                      <q-icon
+                        name="fas fa-shield-virus"
+                        size="23px"
+                        color="negative"
+                      />
+                      <q-tooltip v-model="showing"> Health </q-tooltip>
+                    </q-circular-progress>
+                  </div>
                   <!--<q-item-section class="col">
                     <div class="text-right">
                      <q-btn
@@ -146,7 +148,7 @@
               <q-list dense>
                 <q-item>
                   <q-item-section class="col">
-                    <div v-if="health < 100">
+                    <div v-if="health !== false && health < 100">
                       <q-item-label>Cost to repair:</q-item-label>
                     </div>
                     <div v-else>
@@ -229,7 +231,7 @@
                   <q-item-section class="col-3">
                     <div class="text-right">
                       <q-btn
-                        v-if="health < 100"
+                        v-if="health !== false && health < 100"
                         dense
                         class="q-px-sm"
                         color="warning"
@@ -237,6 +239,7 @@
                         label="Repair"
                         no-caps
                         push
+                        @click="repair"
                       />
                       <q-btn
                         v-else
@@ -420,64 +423,6 @@ export default defineComponent({
     const $eventBus =
       getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-    const metalCost = computed(() => {
-      if (!props.data) return 0;
-
-      if (props.itemType) {
-        return props.data.data.cost_metal * quantity.value;
-      }
-
-      return props.data.upgrades[props.data.level + 1].cost_metal;
-    });
-
-    const petrolCost = computed(() => {
-      if (!props.data) return 0;
-
-      if (props.itemType) {
-        return props.data.data.cost_petrol * quantity.value;
-      }
-
-      return props.data.upgrades[props.data.level + 1].cost_petrol;
-    });
-
-    const crystalCost = computed(() => {
-      if (!props.data) return 0;
-
-      if (props.itemType) {
-        return props.data.data.cost_crystal * quantity.value;
-      }
-
-      return props.data.upgrades[props.data.level + 1].cost_crystal;
-    });
-
-    const timeString = computed(() => {
-      if (!props.data) return "0m";
-
-      let timeNeeded = 0;
-      if (props.itemType) {
-        timeNeeded = props.data.data.time * quantity.value;
-      } else {
-        timeNeeded = props.data.upgrades[props.data.level + 1].time;
-      }
-
-      const now = new Date();
-      const finish = new Date(now.getTime() + timeNeeded * 1000);
-
-      const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
-      const s = Math.round(diffSeconds % 60);
-      const minutes = Math.round((diffSeconds - s) / 60);
-
-      const m = minutes % 60;
-      const h = Math.round(minutes - m) / 60;
-
-      let str = "";
-      if (h > 0) str += `${h}h`;
-      if (m > 0) str += ` ${m}m`;
-      if (s > 0) str += ` ${s}s`;
-
-      return str;
-    });
-
     const newEnergyUsage = computed(() => {
       if (!props.data) return 0;
 
@@ -513,6 +458,17 @@ export default defineComponent({
       }
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
+
+      return (
+        activePlanet.ressources.metal >= level.cost_metal &&
+        activePlanet.ressources.petrol >= level.cost_petrol &&
+        activePlanet.ressources.crystal >= level.cost_crystal
+      );
+    };
+    
+    const canRepair = (props, activePlanet) => {
+      let data = dataSource(props.data.type);
+      const level = data[props.data.label]["upgrades"][props.data.level];
 
       return (
         activePlanet.ressources.metal >= level.cost_metal &&
@@ -607,7 +563,157 @@ export default defineComponent({
       }
     };
 
-    const health = ref(100);
+    const health = computed(() => {
+      if (props.data.health === undefined) return false;
+
+      const fullHealth = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level].health;
+      const healthPercentage = ((props.data.health/fullHealth)*100).toFixed(2)
+      
+      return healthPercentage;
+    });
+
+    const timeString = computed(() => {
+      if (!props.data) return "0m";
+
+      let timeNeeded = 0;
+      if (props.itemType) {
+        timeNeeded = props.data.data.time * quantity.value;
+      } else {
+        timeNeeded = props.data.upgrades[props.data.level + 1].time;
+      }
+
+      if (health.value !== false && health.value < 100) {
+        timeNeeded = props.data.upgrades[props.data.level].time;
+      }
+
+      const now = new Date();
+      const finish = new Date(now.getTime() + timeNeeded * 1000);
+
+      let diffSeconds = (finish.getTime() - now.getTime()) / 1000;
+      if (health.value !== false && health.value < 100) {
+        diffSeconds = diffSeconds - (diffSeconds*(health.value/100));
+      }
+
+      const s = Math.round(diffSeconds % 60);
+      const minutes = Math.round((diffSeconds - s) / 60);
+
+      const m = minutes % 60;
+      const h = Math.round(minutes - m) / 60;
+
+      let str = "";
+      if (h > 0) str += `${h}h`;
+      if (m > 0) str += ` ${m}m`;
+      if (s > 0) str += ` ${s}s`;
+
+      return str;
+    });
+
+    const metalCost = computed(() => {
+      if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.cost_metal * quantity.value;
+      }
+
+      let metalCost = props.data.upgrades[props.data.level + 1].cost_metal;
+      if (health.value === false) {
+        return metalCost;
+      }
+      if (health.value < 100) {
+        metalCost = props.data.upgrades[props.data.level].cost_metal;
+      }
+        
+
+      const h = 1-health.value/100;
+      
+      return (metalCost-(metalCost*h)).toFixed(1);
+    });
+
+    const petrolCost = computed(() => {
+      if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.cost_petrol * quantity.value;
+      }
+
+      let petrolCost = props.data.upgrades[props.data.level + 1].cost_petrol;
+      if (health.value === false) {
+        return petrolCost;
+      }
+
+      if (health.value < 100) {
+        petrolCost = props.data.upgrades[props.data.level].cost_petrol;
+      }
+
+      const h = 1-health.value/100;
+
+      return (petrolCost-(petrolCost*h)).toFixed(1);
+    });
+    
+    const crystalCost = computed(() => {
+      if (!props.data) return 0;
+
+      if (props.itemType) {
+        return props.data.data.cost_crystal * quantity.value;
+      }
+
+      let crystalCost = props.data.upgrades[props.data.level + 1].cost_crystal;
+      
+      if (health.value === false) {
+        return crystalCost;
+      }
+    
+      if (health.value < 100) {
+        crystalCost = props.data.upgrades[props.data.level].cost_crystal;
+      }
+
+      const h = 1-health.value/100;
+
+      return (crystalCost-(crystalCost*h)).toFixed(1);
+    });
+    
+    const repair = async (label) => {
+      // This can only be called by resource items ATM.
+      const activePlanet = $store.getters.activePlanet;
+
+      if (!canRepair(props, activePlanet)) {
+        $notification("failed", `Can't repair, not enough resources...`);
+        return;
+      }
+      
+      const data = {
+        label: props.data.label,
+        planetGuid: activePlanet.id,
+      };
+      
+      const re = await ApiRequests.repairResource(data);
+
+      if (re.success) {
+        let prices = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level];
+        const h = 1 - (health.value/100);
+
+        const cost_metal  = Math.ceil(prices.cost_metal*h);
+        const cost_crystal =  Math.ceil(prices.cost_crystal*h);
+        const cost_petrol  = Math.ceil(prices.cost_petrol*h);
+
+        $store.commit("restPlanetResources", {
+          metal:   cost_metal,
+          crystal: cost_crystal,
+          petrol:  cost_petrol,
+        });
+
+        const saveStore = {
+          label: props.data.label,
+          repairFinish: re.data.repair_finish,
+        };
+
+        $store.commit("repairRessourceData", saveStore);
+        $notification("success", "Repairing biatch");
+      } else {
+        $notification("failed", re.error);
+      }
+    
+    };
 
     return {
       allRequirementsMeet: allRequirementsMeet,
@@ -618,6 +724,7 @@ export default defineComponent({
       petrolCost: petrolCost,
       crystalCost: crystalCost,
       upgrade: upgrade,
+      repair,
       quantity: quantity,
       health,
       showInfo: ref(false),

@@ -61,6 +61,24 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
+  static async fetchPlanetCost() {
+    const path = `${process.env.BASE_API_PATH}/planet/fetch_cost`;
+    return (await axios.get(path)).data;
+  }
+
+  /**
+   * @param {string} planetGuid planetGuid
+   */
+   static async fetchPlanetCostData(planetGuid) {
+    const path = `${process.env.BASE_API_PATH}/planet/fetch_cost_data`;
+
+    const body = {
+      planetId: planetGuid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
   static async getUnClaimPlanet() {
     const path = `${process.env.BASE_API_PATH}/planet/unclaimed`;
     return (await axios.get(path)).data;
@@ -313,7 +331,17 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
-   /**
+  static async unstakeRequest(data) {
+    const path = `${process.env.BASE_API_PATH}/staking/unstake`;
+    
+    const body = {
+      planetId: data.planetId,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
    * Get Emails
    * @param {string} planetId
    * @returns
@@ -363,5 +391,59 @@ export default class ApiRequests {
     static async getAllInfoPlanet(planetId) {
       const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
       return (await axios.get(path)).data;
+    }
+
+
+
+  /**
+   * Repair Resource
+   * @param {object} data
+   * @returns
+   */
+  static async repairResource(data) {
+    const path = `${process.env.BASE_API_PATH}/ressource/repair`;
+
+    const body = {
+      label: data.label,
+      planetId: data.planetGuid,
+    };
+    
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Energy deposit
+   * @param {object} data
+   * @returns
+   */
+    static async depositEnergy(data) {
+      const path = `${process.env.BASE_API_PATH}/energy/deposit`;
+  
+      const body = {
+        planetId: data.planetId,
+        guid: data.guid,
+      };
+      
+      return (await axios.post(path, body)).data;
+    }
+
+    /**
+     * Token Price
+     * @param {object} data
+     * @returns
+    */
+    static async tokenPrice() {
+      const smartContract = process.env.SPACERIDERS_TOKEN_CONTRACT_ADDRESS.replace(/['"]+/g, '');
+      const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
+      
+      let price = 0;
+      
+      try {
+        price = parseFloat((await axios.get(path)).data.data.price);
+      } catch (err) {
+        //@TODO: Throw exception and abort process.
+      }
+      
+      return price;
     }
 }

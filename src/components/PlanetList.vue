@@ -32,7 +32,7 @@
             >
               <div>
                 <img
-                  src="~assets/img/mercury-transparent.png"
+                  :src="props.row.image_url"
                   style="height: 100px; width: 100px"
                 />
               </div>
@@ -85,6 +85,7 @@ export default defineComponent({
       re.push({
         id: activePlanet.id,
         name: activePlanet.name,
+        image_url: activePlanet.image_url,
         position: `${activePlanet.position}:${activePlanet.solar_system}:${activePlanet.galaxy}`,
         active: true,
         planet: activePlanet,
@@ -98,6 +99,7 @@ export default defineComponent({
         const planet = planets[pId];
         re.push({
           id: planet.id,
+          image_url: planet.image_url,
           name: planet.name,
           position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
           active: false,

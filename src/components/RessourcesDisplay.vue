@@ -12,25 +12,17 @@
           flat
           rounded
           class="btn-glass-element"
-          :class="{ 'btn-red-glass-element': this.$store.getters.activePlanet.ressources.metal >= metalCapacity }"
+          :class="{
+            'btn-yellow-glass-element': isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
+            'btn-red-glass-element': isStorageFull('metalWarehouse'),
+          }"
         >
-          <img
-            src="~assets/img/resources/RES_ic_Metal.png"
-            alt=""
-            srcset=""
-            class="q-pt-sm planet-icons"
-          />
-          <p class="text-weight-bold text-body2">
-            {{ metalAvailable }}
-          </p>
+          <img src="~assets/img/resources/RES_ic_Metal.png" alt srcset class="q-pt-sm planet-icons" />
+          <p class="text-weight-bold text-body2">{{ metalAvailable }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
-          <q-tooltip
-            class="bg-primary"
-            transition-show="scale"
-            transition-hide="scale"
-          >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+          <q-tooltip class="bg-primary" transition-show="scale" transition-hide="scale">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Metal</q-item-label>
@@ -38,30 +30,38 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Available </q-item-section>
+                  <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ metalAvailable }}
-                </q-item-section>
+                <q-item-section class="col-4 text-right">{{ metalAvailable }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ metalCapacity }}
-                </q-item-section>
+                <q-item-section class="col-8 text-right">{{ metalCapacityDisplay }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.metal < metalCapacity" class="col-4 text-right text-positive">
-                  +{{ metalProduction }}/min
+                <q-item-section
+                  v-if="!isStorageFull('metalWarehouse')"
+                  class="col-8 text-right"
+                  :class="{
+                    'text-positive': isFullProduction('metalMine'),
+                    'text-yellow-12': !isFullProduction('metalMine'),
+                  }"
+                >+{{ metalProductionDisplay }}</q-item-section>
+                <q-item-section
+                  v-else
+                  class="col-8 text-right text-negative"
+                >-{{ metalProduction }}/min</q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section class="text-white">
+                  <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
-                </q-item-section>
+                <q-item-section class="col-6 text-right">{{ metalMineEnergyUsage }}/min</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -74,26 +74,21 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.crystal >= crystalCapacity,
+            'btn-yellow-glass-element': isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
+            'btn-red-glass-element': isStorageFull('crystalWarehouse'),
           }"
         >
           <img
             src="~assets/img/resources/RES_ic_CRYSTAL.png"
-            alt=""
-            srcset=""
+            alt
+            srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">
-            {{ crystalAvailable }}
-          </p>
+          <p class="text-weight-bold text-body2">{{ crystalAvailable }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
-          <q-tooltip
-            class="bg-primary"
-            transition-show="scale"
-            transition-hide="scale"
-          >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+          <q-tooltip class="bg-primary" transition-show="scale" transition-hide="scale">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Crystal</q-item-label>
@@ -103,28 +98,36 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ crystalAvailable }}
-                </q-item-section>
+                <q-item-section class="col-4 text-right">{{ crystalAvailable }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ crystalCapacity }}
-                </q-item-section>
+                <q-item-section class="col-8 text-right">{{ crystalCapacityDisplay }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.crystal < crystalCapacity" class="col-4 text-right text-positive">
-                  +{{ crystalProduction }}/min
+                <q-item-section
+                  v-if="!isStorageFull('crystalWarehouse')"
+                  class="col-8 text-right"
+                  :class="{
+                    'text-positive': isFullProduction('crystalMine'),
+                    'text-yellow-12': !isFullProduction('crystalMine'),
+                  }"
+                >+{{ crystalProductionDisplay }}/min</q-item-section>
+                <q-item-section
+                  v-else
+                  class="col-8 text-right text-negative"
+                >-{{ crystalProduction }}/min</q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section class="text-white">
+                  <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
-                </q-item-section>
+                <q-item-section class="col-6 text-right">{{ crystalMineEnergyUsage }}/min</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -137,27 +140,16 @@
           rounded
           class="btn-glass-element"
           :class="{
-            'btn-red-glass-element': this.$store.getters.activePlanet.ressources.petrol >= petrolCapacity,
+            'btn-yellow-glass-element': isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
+            'btn-red-glass-element': isStorageFull('petrolWarehouse'),
           }"
         >
-          <img
-            src="~assets/img/resources/RES_ic_FUEL5.png"
-            alt=""
-            srcset=""
-            class="q-pt-sm planet-icons"
-          />
-          <p class="text-weight-bold text-body2">
-            {{ petrolAvailable }}
-          </p>
+          <img src="~assets/img/resources/RES_ic_FUEL5.png" alt srcset class="q-pt-sm planet-icons" />
+          <p class="text-weight-bold text-body2">{{ petrolAvailable }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
-          <q-tooltip
-            class="bg-primary"
-            transition-show="scale"
-            transition-hide="scale"
-            
-          >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+          <q-tooltip class="bg-primary" transition-show="scale" transition-hide="scale">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Petrol</q-item-label>
@@ -167,28 +159,36 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ petrolAvailable }}
-                </q-item-section>
+                <q-item-section class="col-4 text-right">{{ petrolAvailable }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Storage Capacity</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right">
-                  {{ petrolCapacity }}
-                </q-item-section>
+                <q-item-section class="col-8 text-right">{{ petrolCapacityDisplay }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="this.$store.getters.activePlanet.ressources.petrol < petrolCapacity" class="col-4 text-right text-positive">
-                  +{{ petrolProduction }}/min
+                <q-item-section
+                  v-if="!isStorageFull('petrolWarehouse')"
+                  class="col-8 text-right"
+                  :class="{
+                    'text-positive': isFullProduction('petrolMine'),
+                    'text-yellow-12': !isFullProduction('petrolMine'),
+                  }"
+                >+{{ petrolProductionDisplay }}/min</q-item-section>
+                <q-item-section
+                  v-else
+                  class="col-8 text-right text-negative"
+                >-{{ petrolProduction }}/min</q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section class="text-white">
+                  <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-else class="col-2 text-right text-negative">
-                  +0/min
-                </q-item-section>
+                <q-item-section class="col-6 text-right">{{ petrolMineEnergyUsage }}/min</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -196,27 +196,24 @@
       </div>
       <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
         <q-btn
+          @click="energyDepositPopup = true"
           stack
           flat
           rounded
           class="btn-glass-element"
-          :class="{ 'btn-red-glass-element': energyLeft <= 0  }"
+          :class="{ 'btn-red-glass-element': 1 <= 0 }"
         >
           <img
             src="~assets/img/resources/RES_ic_ENERGY.png"
-            alt=""
-            srcset=""
+            alt
+            srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">{{ energyLeft }}</p>
+          <p class="text-weight-bold text-body2">{{ energyAvailableDisplay }} (+)</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
-          <q-tooltip
-            class="bg-primary"
-            transition-show="scale"
-            transition-hide="scale"
-          >
-            <q-list dense class="text-subtitle2" style="width: 260px">
+          <q-tooltip class="bg-primary" transition-show="scale" transition-hide="scale">
+            <q-list dense class="text-subtitle2" style="width: 350px">
               <q-item>
                 <q-item-section class="text-warning">
                   <q-item-label class="text-subtitle1">Energy</q-item-label>
@@ -224,20 +221,25 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Production </q-item-section>
+                  <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right text-positive">
-                  +{{ energyProduction }}
-                </q-item-section>
+                <q-item-section class="col-4 text-right text-positive">{{ energyAvailableDisplay }}</q-item-section>
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Usage</q-item-section>
+                  <q-item-section caption>Consumption</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right text-negative">
-                  -{{
-                    this.$store.getters.activePlanet.ressources.energy_usage
-                  }}
+                  -{{ energyConsumption }}/min
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section class="text-white">
+                  <q-item-section caption>Time left</q-item-section>
+                </q-item-section>
+                <q-item-section class="col-4 text-right ">
+                  {{ energyTimeLeft }}
                 </q-item-section>
               </q-item>
             </q-list>
@@ -245,196 +247,528 @@
         </q-btn>
       </div>
     </q-card>
+    <q-dialog v-model="energyDepositPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 600px; max-width: 70vw; border-radius: 20px"
+      >
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="warning"
+          icon="close"
+          v-close-popup
+        />
+        <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
+        <q-card-section class="text-center">
+          <div class="text-h6">DEPOSIT ENERGY</div>
+          <div class="text-subtitle1">
+            test
+          </div>
+        </q-card-section>
+        
+        <q-card-section class="q-pt-none">
+          <q-badge class="q-mb-lg" color="warning">
+            {{ energyCostBreakdown }}
+          </q-badge>
+          <q-slider
+            v-model="depositAmount"
+            :min="0.5"
+            :max="100"
+            :step="0.5"
+            label
+            label-always
+            color="warning"
+          />
+        </q-card-section>
+
+        <q-card-section class="q-pt-none text-center">
+          <q-btn
+            label="Approve"
+            color="yellow"
+            @click="approve(sprCost)"
+            no-caps
+            class="q-px-lg q-mr-sm"
+          />
+          <q-btn
+            label="Deposit"
+            color="warning"
+            no-caps
+            class="q-px-lg"
+            @click="depositEnergy(sprCost)"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
-<script>
+<script setup>
 import ResourceType from "../constants/ResourceType";
-import { computed } from "vue";
+import { ref, computed, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
+import SpaceRiders from "../service/contract/SpaceRiders";
+import EnergyDeposit, { EnergyDepositAttributes } from "../service/contract/EnergyDeposit";
+import { v4 as uuidv4 } from "uuid";
+import ApiRequest from "../service/http/ApiRequests";
 
-export default {
-  name: "RessourcesDisplay",
-  setup() {
-    const $store = useStore();
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
-    const activePlanet = computed(() => {
-      const currentPlanet = $store.getters.activePlanet;
-      if (currentPlanet === false) return false;
+const $store = useStore();
 
-      return currentPlanet;
-    });
+const activePlanet = computed(() => {
+  const currentPlanet = $store.getters.activePlanet;
+  if (currentPlanet === false) return false;
 
-    const metalAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.metal, { digits: 1 });
-    });
+  return currentPlanet;
+});
 
-    const crystalAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.crystal, { digits: 1 });
-    });
+const energyAvailable = computed(() => {
+  return $store.getters.activePlanet.ressources.energy;
+});
 
-    const petrolAvailable = computed(() => {
-      return tc($store.getters.activePlanet.ressources.petrol, { digits: 1 });
-    });
+const energyAvailableDisplay = computed(() => {
+  return tc(energyAvailable.value.toFixed(2), { digits: 2 });
+});
 
-    const metalProduction = computed(() => {
-      if ($store.getters.resourceData.metalMine === undefined) return;
+function timeLeft (minLeft) {
+  const now = new Date();
+  const end = new Date((now.getTime()/1000 + minLeft*60) * 1000);
 
-      const currentLevel = $store.getters.resourceData.metalMine.level;
-      return $store.getters.resourceData.metalMine.upgrades[currentLevel]
-        .production;
-    });
+  const diffSeconds = (end.getTime() - now.getTime()) / 1000;
+  const s = Math.round(diffSeconds % 60);
+  const minutes = Math.round((diffSeconds - s) / 60);
 
-    const petrolProduction = computed(() => {
-      if ($store.getters.resourceData.petrolMine === undefined) return;
+  const m = minutes % 60;
+  const h = Math.round(minutes - m) / 60;
 
-      const currentLevel = $store.getters.resourceData.petrolMine.level;
-      return $store.getters.resourceData.petrolMine.upgrades[currentLevel]
-        .production;
-    });
+  let str = "";
+  if (h > 0) str += `${h}h`;
+  if (m > 0) str += ` ${m}m`;
+  if (s >= 0) str += ` ${s}s`;
 
-    const crystalProduction = computed(() => {
-      if ($store.getters.resourceData.crystalMine === undefined) return;
+  return str;
+}
 
-      const currentLevel = $store.getters.resourceData.crystalMine.level;
-      return $store.getters.resourceData.crystalMine.upgrades[currentLevel]
-        .production;
-    });
+const energyConsumption = computed(() => {
+  return $store.getters.activePlanet.ressources.energy_usage;
+});
 
-    const metalCapacity = computed(() => {
-      if ($store.getters.resourceData.metalWarehouse === undefined) return;
+const energyTimeLeft = computed(() => {
+  const availableEnergy = $store.getters.activePlanet.ressources.energy;
+  const consumption = energyConsumption.value;
+  const minutesLeft = availableEnergy / consumption;
+  return timeLeft(minutesLeft);
+});
 
-      const currentLevel = $store.getters.resourceData.metalWarehouse.level;
-      const capacity = $store.getters.resourceData.metalWarehouse.upgrades[currentLevel]
-        .capacity;
+const metalAvailable = computed(() => {
+  return tc(($store.getters.activePlanet.ressources.metal).toFixed(1), { digits: 1 });
+});
 
-      return tc(capacity, { digits: 1 });
-    });
+const crystalAvailable = computed(() => {
+  return tc(($store.getters.activePlanet.ressources.crystal).toFixed(1), { digits: 1 });
+});
 
-    const petrolCapacity = computed(() => {
-      if ($store.getters.resourceData.petrolWarehouse === undefined) return;
-      const currentLevel = $store.getters.resourceData.petrolWarehouse.level;
+const petrolAvailable = computed(() => {
+  return tc(($store.getters.activePlanet.ressources.petrol).toFixed(1), { digits: 1 });
+});
 
-      const capacity = $store.getters.resourceData.petrolWarehouse.upgrades[currentLevel]
-        .capacity;
+const metalProduction = computed(() => {
+  if ($store.getters.resourceData.metalMine === undefined) return;
+  const info = calculateProduction(ResourceType.METAL_MINE);
+  return info.production;
+});
 
-      return tc(capacity, { digits: 1 });
-    });
+const metalMineEnergyUsage = computed(() => {
+  if ($store.getters.resourceData.metalMine === undefined) return;
+  const mine = $store.getters.resourceData.metalMine;
+  return mine.upgrades[mine.level].energy_usage;
+});
 
-    const crystalCapacity = computed(() => {
-      if ($store.getters.resourceData.crystalWarehouse === undefined) return;
+const crystalMineEnergyUsage = computed(() => {
+  if ($store.getters.resourceData.crystalMine === undefined) return;
+  const mine = $store.getters.resourceData.metalMine;
+  return mine.upgrades[mine.level].energy_usage;
+});
 
-      const currentLevel = $store.getters.resourceData.crystalWarehouse.level;
-      const capacity = $store.getters.resourceData.crystalWarehouse.upgrades[currentLevel]
-        .capacity;
+const petrolMineEnergyUsage = computed(() => {
+  if ($store.getters.resourceData.petrolMine === undefined) return;
+  const mine = $store.getters.resourceData.metalMine;
+  return mine.upgrades[mine.level].energy_usage;
+});
 
-      return tc(capacity, { digits: 1 });
-    });
+const metalProductionDisplay = computed(() => {
+  if ($store.getters.resourceData.metalMine === undefined) return;
+  const info = calculateProduction(ResourceType.METAL_MINE);
 
-    const energyProduction = computed(() => {
-      if ($store.getters.resourceData.solarPlant === undefined) return;
-      const currentLevel = $store.getters.resourceData.solarPlant.level;
-      return $store.getters.resourceData.solarPlant.upgrades[currentLevel]
-        .production;
-    });
+  if (info.production < info.maxProduction) {
+    return `${info.production.toFixed(4)} (-${(info.maxProduction - info.production).toFixed(4)})/min`;
+  }
 
-    const energyLeft = computed(() => {
-      if ($store.getters.resourceData.solarPlant === undefined) return;
+  return tc(info.production, { digits: 1 });
+});
 
-      const currentUsage = $store.getters.activePlanet.ressources.energy_usage;
-      return energyProduction.value - currentUsage;
-    });
+const petrolProduction = computed(() => {
+  if ($store.getters.resourceData.petrolMine === undefined) return;
+  const info = calculateProduction(ResourceType.PETROL_MINE);
+  return info.production;
+});
 
-    const updateResources = (rD, resource, mine, warehouse) => {
-      const upgrading = rD[mine]["upgrading"];
-      const maxCapacity = rD[warehouse]["capacity"];
-      const current = $store.getters.activePlanet.ressources[resource];
+const petrolProductionDisplay = computed(() => {
+  if ($store.getters.resourceData.petrolMine === undefined) return;
+  const info = calculateProduction(ResourceType.PETROL_MINE);
 
-      let production = false;
-      switch (mine) {
-        case ResourceType.METAL_MINE:
-          production = metalProduction.value;
-          break;
+  if (info.production < info.maxProduction) {
+    return `${info.production.toFixed(4)} (-${(info.maxProduction - info.production).toFixed(4)})/min`;
+  }
 
-        case ResourceType.PETROL_MINE:
-          production = petrolProduction.value;
-          break;
+  return tc(info.production, { digits: 1 });
+});
 
-        case ResourceType.CRYSTAL_MINE:
-          production = crystalProduction.value;
-          break;
-      }
+const crystalProduction = computed(() => {
+  if ($store.getters.resourceData.crystalMine === undefined) return;
+  const info = calculateProduction(ResourceType.CRYSTAL_MINE);
+  return info.production;
+});
 
-      if (current < maxCapacity && !upgrading) {
-        
-        $store.commit("incrementResources", {
-          ressource: resource,
-          value: production,
-        });
-        $store.commit("decrementReserve", {
-          ressource: resource,
-          value: production,
-        });
-      }
-    };
+const crystalProductionDisplay = computed(() => {
+  if ($store.getters.resourceData.crystalMine === undefined) return;
+  const info = calculateProduction(ResourceType.CRYSTAL_MINE);
 
-    let id = setInterval(async () => {
-      if ($store.getters.activePlanet === false) return;
-      if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
-      console.log("interval resource update");
-      let rD = $store.getters.resourceData;
+  if (info.production < info.maxProduction) {
+    return `${info.production.toFixed(4)} (-${(info.maxProduction - info.production).toFixed(4)})/min`;
+  }
 
-      for (let resourceTypeIndex in ResourceType.RESOURCE_TYPES) {
-        const resourceType = ResourceType.RESOURCE_TYPES[resourceTypeIndex];
+  return tc(info.production, { digits: 1 });
+});
 
-        switch (resourceType) {
-          case ResourceType.METAL_MINE:
-            updateResources(
-              rD,
-              ResourceType.METAL,
-              ResourceType.METAL_MINE,
-              ResourceType.METAL_WAREHOUSE
-            );
-            break;
-          case ResourceType.PETROL_MINE:
-            updateResources(
-              rD,
-              ResourceType.PETROL,
-              ResourceType.PETROL_MINE,
-              ResourceType.PETROL_WAREHOUSE
-            );
-            break;
-          case ResourceType.CRYSTAL_MINE:
-            updateResources(
-              rD,
-              ResourceType.CRYSTAL,
-              ResourceType.CRYSTAL_MINE,
-              ResourceType.CRYSTAL_WAREHOUSE
-            );
-            break;
-        }
-      }
-    }, 60000);
+const metalCapacity = computed(() => {
+  if ($store.getters.resourceData.metalWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.METAL_WAREHOUSE);
+  return capacity.capacity;
+});
 
-    $store.commit("addIntervalId", { id: id });
+const metalCapacityDisplay = computed(() => {
+  if ($store.getters.resourceData.metalWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.METAL_WAREHOUSE);
 
-    return {
-      metalProduction: metalProduction,
-      petrolProduction: petrolProduction,
-      crystalProduction: crystalProduction,
-      metalCapacity: metalCapacity,
-      petrolCapacity: petrolCapacity,
-      crystalCapacity: crystalCapacity,
-      energyProduction: energyProduction,
-      energyLeft: energyLeft,
-      activePlanet: activePlanet,
-      metalAvailable: metalAvailable,
-      petrolAvailable: petrolAvailable,
-      crystalAvailable: crystalAvailable,
-    };
-  },
+  if (capacity.capacity < capacity.maxCapacity) {
+    return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity - capacity.capacity).toFixed(4)})`;
+  }
+
+  return tc(capacity.capacity, { digits: 1 });
+});
+
+const petrolCapacity = computed(() => {
+  if ($store.getters.resourceData.petrolWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.PETROL_WAREHOUSE);
+  return capacity.capacity;
+});
+
+const petrolCapacityDisplay = computed(() => {
+  if ($store.getters.resourceData.petrolWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.PETROL_WAREHOUSE);
+
+  if (capacity.capacity < capacity.maxCapacity) {
+    return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity - capacity.capacity).toFixed(4)})`;
+  }
+
+  return tc(capacity.capacity, { digits: 1 });
+});
+
+const crystalCapacity = computed(() => {
+  if ($store.getters.resourceData.crystalWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.CRYSTAL_WAREHOUSE);
+  return capacity.capacity;
+});
+
+const crystalCapacityDisplay = computed(() => {
+  if ($store.getters.resourceData.crystalWarehouse === undefined) return;
+  const capacity = calculateWarehouseCapacity(ResourceType.CRYSTAL_WAREHOUSE);
+
+  if (capacity.capacity < capacity.maxCapacity) {
+    return `${tc(capacity.capacity.toFixed(4), { digits: 1 })} (-${(capacity.maxCapacity - capacity.capacity).toFixed(4)})`;
+  }
+
+  return tc(capacity.capacity, { digits: 1 });
+});
+
+const isFullProduction = (mine) => {
+  const {
+    production,
+    maxProduction
+  } = calculateProduction(mine);
+
+  return production >= maxProduction;
+}
+
+const isStorageFull = (warehouse) => {
+  const { capacity, maxStorage } = calculateWarehouseCapacity(warehouse);
+
+  const mapping = {
+    "metalWarehouse": metalAvailable,
+    "petrolWarehouse": petrolAvailable,
+    "crystalWarehouse": crystalAvailable,
+  }
+
+  const amount = mapping[warehouse].value;
+  return amount >= capacity;
+}
+
+const calculateProduction = (mine) => {
+  const data = $store.getters.resourceData;
+
+  const mineInfo = data[mine];
+  const currentProduction = mineInfo["production"];
+  const currentLevel = mineInfo["level"];
+  const currentHealth = mineInfo["health"];
+  const maxHealth = mineInfo["upgrades"][currentLevel]["health"];
+
+  const healthPercentage = currentHealth / maxHealth;
+  return {
+    production: currentProduction * healthPercentage,
+    maxProduction: currentProduction,
+  };
 };
+
+const calculateWarehouseCapacity = (warehouse) => {
+  const data = $store.getters.resourceData;
+  const warehouseInfo = data[warehouse];
+  const currentCapacity = warehouseInfo["capacity"];
+  const currentLevel = warehouseInfo["level"];
+  const currentHealth = warehouseInfo["health"];
+  const maxHealth = warehouseInfo["upgrades"][currentLevel]["health"];
+
+  const healthPercentage = currentHealth / maxHealth;
+  return {
+    capacity: currentCapacity * healthPercentage,
+    maxCapacity: currentCapacity,
+  };
+};
+
+const updateResources = (rD, resource, mine, warehouse) => {
+  const mineData = rD[mine];
+
+  const upgrading = mineData["upgrading"];
+  const repairing = mineData["repairing"];
+  const maxCapacity = calculateWarehouseCapacity(warehouse);
+
+  const current = $store.getters.activePlanet.ressources[resource];
+
+  const level = mineData["level"];
+  const energyUsage = mineData["upgrades"][level]['energy_usage'];
+
+  if (energyUsage > energyAvailable.value) return;
+
+  let production = false;
+  switch (mine) {
+    case ResourceType.METAL_MINE:
+      production = metalProduction.value;
+      break;
+
+    case ResourceType.PETROL_MINE:
+      production = petrolProduction.value;
+      break;
+
+    case ResourceType.CRYSTAL_MINE:
+      production = crystalProduction.value;
+      break;
+  }
+  
+  if (current < maxCapacity.capacity && !upgrading && !repairing) {
+
+    $store.commit("incrementResources", {
+      ressource: resource,
+      value: production,
+    });
+
+    $store.commit("decrementReserve", {
+      ressource: resource,
+      value: production,
+    });
+
+    $store.commit("decrementEnergy", {
+      energy: energyUsage,
+    });
+
+  } else if (current >= maxCapacity.capacity && !upgrading && !repairing) {
+    $store.commit("decrementReserve", {
+      ressource: resource,
+      value: production,
+    });
+
+    $store.commit("decrementEnergy", {
+      energy: energyUsage,
+    });
+
+  }
+};
+
+setInterval(async () => {
+  if ($store.getters.activePlanet === false) return;
+  if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
+  let rD = $store.getters.resourceData;
+
+  for (let resourceTypeIndex in ResourceType.RESOURCE_TYPES) {
+    const resourceType = ResourceType.RESOURCE_TYPES[resourceTypeIndex];
+
+    switch (resourceType) {
+      case ResourceType.METAL_MINE:
+        updateResources(
+          rD,
+          ResourceType.METAL,
+          ResourceType.METAL_MINE,
+          ResourceType.METAL_WAREHOUSE
+        );
+        break;
+      case ResourceType.PETROL_MINE:
+        updateResources(
+          rD,
+          ResourceType.PETROL,
+          ResourceType.PETROL_MINE,
+          ResourceType.PETROL_WAREHOUSE
+        );
+        break;
+      case ResourceType.CRYSTAL_MINE:
+        updateResources(
+          rD,
+          ResourceType.CRYSTAL,
+          ResourceType.CRYSTAL_MINE,
+          ResourceType.CRYSTAL_WAREHOUSE
+        );
+        break;
+    }
+  }
+}, 60000);
+
+const isResourceAlert = (resourceType) => {
+  const mappings = {};
+  mappings[ResourceType.METAL] = {
+    "mine": ResourceType.METAL_MINE,
+    "warehouse": ResourceType.METAL_WAREHOUSE,
+  };
+
+  mappings[ResourceType.CRYSTAL] = {
+    "mine": ResourceType.CRYSTAL_MINE,
+    "warehouse": ResourceType.CRYSTAL_WAREHOUSE,
+  };
+
+  mappings[ResourceType.PETROL] = {
+    "mine": ResourceType.PETROL_MINE,
+    "warehouse": ResourceType.PETROL_WAREHOUSE,
+  };
+
+  const rD = $store.getters.resourceData;
+
+  const mine = rD[mappings[resourceType]["mine"]];
+  const mineCurrentHealth = mine["health"];
+  const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
+  const mineFullHealth = (mineCurrentHealth / mineMaxHealth) < 1;
+
+  const warehouse = rD[mappings[resourceType]["warehouse"]];
+  const warehouseCurrentHealth = warehouse["health"];
+  const warehouseMaxHealth = warehouse["upgrades"][mine["level"]]["health"];
+  const warehouseFullHealth = (warehouseCurrentHealth / warehouseMaxHealth) < 1;
+
+  return mineFullHealth || warehouseFullHealth;
+};
+
+const energyDepositPopup = ref(false);
+const depositAmount = ref(0.0);
+
+const sprCost = computed(() => {
+  const tokenPrice = $store.getters.tokenPrice;
+  const sprCost = 1/tokenPrice*depositAmount.value;
+  return sprCost;
+});
+
+const energyCostBreakdown = computed(() => {
+  if (!energyDepositPopup.value) return false;
+  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value} $SPR `;
+});
+
+async function approve(amount) {
+  const userBalance = await SpaceRiders.balanceOf($store.getters.address);
+  
+  if (amount > userBalance) {
+    $notification("failed", "Not enough $SPR tokens", 6000);
+    return;
+  }
+
+  const closeNotification = $notification(
+    "progress",
+    "Waiting for transaction to complete...",
+    0
+  );
+
+  let receipt = { status: 0 };
+  
+  try { 
+    const tx = await SpaceRiders.increaseAllowance(amount.toString());
+    receipt = await tx.wait();
+    
+  } catch (e) {
+    console.log("error");
+    console.log(e);
+    closeNotification();
+  }
+  
+  if (receipt.status === 1) {
+    $notification("success", "Increased allowance successfuly!", 6000);
+    
+  } else {
+    $notification("failed", "Failed increasing allowance...", 6000);
+    closeNotification();
+  }
+
+  closeNotification();
+}
+
+async function depositEnergy(amount) {
+  const uuid = uuidv4();
+  const energyDeposit = new EnergyDepositAttributes(uuid, amount.toString(), $store.getters.activePlanet.id);
+
+  const closeNotification = $notification(
+    "progress",
+    "Waiting for transaction to complete...",
+    0
+  );
+
+  let receipt = { status: 1 };
+  
+  try { 
+    const tx = await EnergyDeposit.energyDeposit(energyDeposit);
+    receipt = await tx.wait();
+    
+  } catch (e) {
+    console.log("error");
+    console.log(e);
+    closeNotification();
+  }
+
+  if (receipt.status === 1) {
+    const req = await ApiRequest.depositEnergy({
+      planetId: $store.getters.activePlanet.id,
+      guid: uuid
+    });
+
+    if (req.success) {
+      $notification("success", "Energy deposited successfuly!", 6000);
+    } else {
+      $notification("failed", "Failed depositing energy...", 6000);
+    }
+
+  } else {
+    $notification("failed", "Failed depositing energy...", 6000);
+    closeNotification();
+  }
+
+  closeNotification();
+}
+
 </script>
 <style>
 #equal-width {
@@ -442,13 +776,23 @@ export default {
 }
 
 .btn-red-glass-element {
-  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.4);
   border-radius: 20px;
   position: relative;
   z-index: 1;
   background: inherit;
   overflow: hidden;
   color: red;
+}
+
+.btn-yellow-glass-element {
+  box-shadow: 0 0 1rem 0 rgb(203, 212, 75);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  background: inherit;
+  overflow: hidden;
+  color: yellow;
 }
 
 .btn-red-glass-element:before {
