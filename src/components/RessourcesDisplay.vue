@@ -284,13 +284,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
-          <q-btn
-            label="Approve"
-            color="yellow"
-            @click="approve(sprCost)"
-            no-caps
-            class="q-px-lg q-mr-sm"
-          />
+          <IncreaseAllowance :amount="sprCost"/>
           <q-btn
             label="Deposit"
             color="warning"
@@ -313,6 +307,7 @@ import SpaceRiders from "../service/contract/SpaceRiders";
 import EnergyDeposit, { EnergyDepositAttributes } from "../service/contract/EnergyDeposit";
 import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
+import IncreaseAllowance from "./IncreaseAllowance";
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -690,7 +685,7 @@ const energyCostBreakdown = computed(() => {
   return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value} $SPR `;
 });
 
-async function approve(amount) {
+/* async function approve(amount) {
   const userBalance = await SpaceRiders.balanceOf($store.getters.address);
   
   if (amount > userBalance) {
@@ -725,7 +720,7 @@ async function approve(amount) {
   }
 
   closeNotification();
-}
+} */
 
 async function depositEnergy(amount) {
   const uuid = uuidv4();
