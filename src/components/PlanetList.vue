@@ -114,8 +114,8 @@ export default defineComponent({
         re.push({
           id: planet.id,
           image_url: planet.image_url,
-          rarity: activePlanet.rarity,
-          color: colorMapping[activePlanet.rarity],
+          rarity: planet.rarity,
+          color: colorMapping[planet.rarity],
           name: planet.name,
           position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
           active: false,
