@@ -37,6 +37,98 @@
       :data="this.$store.getters.resourceData"
       @change="slideDiv"
     />
+
+    <q-dialog v-model="planetClaimedFlag" persistent>
+      <q-card style="width: 410px; max-width: 80vw; border-radius: 20px">
+        <q-card-section class="q-pa-xs text-center">
+          <q-avatar>
+            <img src="~assets/img/fireworks.svg" style="height: 35px" />
+          </q-avatar>
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >CONGRATULATIONS</span
+          >
+        </q-card-section>
+        <q-card-section class="q-pa-none row items-center">
+          <div class="col">
+            <q-img src="~assets/img/1-epic.png">
+              <div class="absolute-full text-subtitle2 flex flex-center">
+                <q-card-section>
+                  <div class="text-center q-pb-md">
+                    New Planet has been claimed
+                  </div>
+                  <div style="width: 400px">
+                    <div class="text-secondary tag-glass-element">
+                      <q-list dense class="text-left">
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Diameter :</q-item-section
+                          >
+                          <q-item-section avatar>
+                            {{ diameter }} KM ({{ slotsAvailable }})
+                          </q-item-section>
+                        </q-item>
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Temperature :</q-item-section
+                          >
+                          <q-item-section avatar>
+                            {{ temperature }}
+                          </q-item-section>
+                        </q-item>
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Position :
+                          </q-item-section>
+                          <q-item-section avatar>
+                            [{{ position }}]
+                          </q-item-section>
+                        </q-item>
+
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Metal Reserve :
+                          </q-item-section>
+                          <q-item-section avatar>
+                            {{ metalReserve }}
+                          </q-item-section>
+                        </q-item>
+
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Crystal Reserve :
+                          </q-item-section>
+                          <q-item-section avatar>
+                            {{ crystalReserve }}
+                          </q-item-section>
+                        </q-item>
+
+                        <q-item>
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            >Petrol Reserve :
+                          </q-item-section>
+                          <q-item-section avatar>
+                            {{ petrolReserve }}
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+                  </div>
+                  <div class="text-center q-mr-sm q-pt-md">
+                    <q-btn flat label="Close" color="secondary" v-close-popup />
+                  </div>
+                </q-card-section>
+              </div>
+            </q-img>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -72,7 +164,10 @@ export default defineComponent({
       currentTab.value = "DefaultSlider";
     }
 
+    const planetClaimedFlag = ref(true);
+
     return {
+      planetClaimedFlag,
       duration: 1000,
       slideDiv: slideDiv,
       cancelled: cancelled,
