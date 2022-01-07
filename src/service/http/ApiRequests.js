@@ -432,7 +432,7 @@ export default class ApiRequests {
      * @param {object} data
      * @returns
     */
-    static async tokenPrice() {   
+    static async tokenPrice() { 
       const smartContract = process.env.SPACERIDERS_TOKEN_CONTRACT_ADDRESS.replace(/['"]+/g, '');
       const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
       

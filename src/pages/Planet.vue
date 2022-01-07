@@ -71,13 +71,79 @@
       </q-card-section>
     </div>
   </q-card>
+   <q-dialog v-model="planetCongratulationsPopup" persistent>
+    <q-card style="width: 410px; max-width: 80vw; border-radius: 20px">
+      <q-card-section class="q-pa-xs text-center">
+        <span class="q-ml-sm text-overline" style="font-size: 14px">CONGRATULATIONS</span>
+      </q-card-section>
+      <q-card-section class="q-pa-none row items-center">
+        <div class="col">
+          <q-img :src="`https://spaceriders-planets.s3.us-east-2.amazonaws.com/${this.newPlanetInfo.image}-${this.newPlanetInfo.rarity}.png`">
+            <div class="absolute-full text-subtitle2 flex flex-center">
+              <q-card-section>
+                <div class="text-center q-pb-md">New Planet has been claimed</div>
+                <div style="width: 400px">
+                  <div class="text-secondary tag-glass-element">
+                    <q-list dense class="text-left">
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Diameter :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.diameter }}</q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Temperature :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.temperature }}</q-item-section>
+                      </q-item>
+                      
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Position :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.position }}</q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Metal Reserve :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.metalReserve }}</q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Crystal Reserve :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.crystalReserve }}</q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Petrol Reserve :</q-item-section>
+                        <q-item-section avatar>{{ this.newPlanetInfo.petrolReserve }}</q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section class="text-subtitle2 text-weight-bold">Rarity :</q-item-section>
+                        <q-item-section avatar>
+                          <q-badge :color="this.newPlanetInfo.rarityColor">
+                            {{ this.newPlanetInfo.rarity.toUpperCase() }}
+                          </q-badge>  
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </div>
+                </div>
+                <div class="text-center q-mr-sm q-pt-md">
+                  <q-btn flat label="Close" color="secondary" v-close-popup />
+                </div>
+              </q-card-section>
+            </div>
+          </q-img>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import ClaimPlanetList from "../components/ClaimPlanetList.vue";
 import BuyPlanet from "../components/BuyPlanet.vue";
-import { NEW_PLANET_PURCHASED } from "../constants/Events";
+import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
+import tc from "thousands-counter";
 
 export default defineComponent({
   name: "PageIndex",
@@ -90,7 +156,16 @@ export default defineComponent({
   data: function () {
     return {
       claimRefreshId: -1,
+      planetCongratulationsPopup: false,
+      newPlanetStats: false,
     };
+  },
+  watch: {
+    planetCongratulationsPopup: function () {
+      if(!this.planetCongratulationsPopup) {
+        this.newPlanetStats = false;
+      }
+    }
   },
   methods: {
     startInterval: function () {
@@ -108,10 +183,53 @@ export default defineComponent({
       this.startInterval();
     });
 
+    this.$eventBus.on(PLANET_CLAIMED, (e) => {
+      this.newPlanetStats = e.planet;
+      this.planetCongratulationsPopup = true;
+    });
+
     if (this.unClaimedNotReadyPlanets.length > 0) this.startInterval();
   },
 
   computed: {
+    newPlanetInfo: function () {
+      if (!this.planetCongratulationsPopup) return {};
+      let obj = {};
+
+      const position = this.newPlanetStats.position;
+      const solarSystem = this.newPlanetStats.solar_system;
+      const galaxy = this.newPlanetStats.galaxy;
+
+      obj.position = `${position}:${solarSystem}:${galaxy}`;
+      obj.diameter = tc(this.newPlanetStats.diameter, { digits: 2 });
+
+      obj.metalReserve = tc(this.newPlanetStats.max_resources.metal, { digits: 2 });
+      obj.crystalReserve = tc(this.newPlanetStats.max_resources.crystal, { digits: 2 });
+      obj.petrolReserve = tc(this.newPlanetStats.max_resources.petrol, { digits: 2 });
+      obj.rarity = this.newPlanetStats.rarity;
+
+      const colorMapping = {
+        common: "blue-grey-6",
+        epic: "info",
+        legendary: "purple-9"
+      };
+      
+      obj.rarityColor = colorMapping[obj.rarity];
+
+      const minTemperature = this.newPlanetStats.min_temperature;
+      const maxTemperature = this.newPlanetStats.max_temperature;
+
+      obj.temperature = "";
+      obj.temperature += `${minTemperature}°C to `;
+      if (maxTemperature > 0) {
+        obj.temperature += `+`;
+      }
+      
+      obj.temperature += `${maxTemperature}°C`;
+      obj.image = this.newPlanetStats.image;
+
+      return obj;
+    },
     unClaimedNotReadyPlanets: function () {
       return this.$store.getters.planets.filter((obj) => {
         const now = new Date();
