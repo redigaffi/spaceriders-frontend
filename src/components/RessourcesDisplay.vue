@@ -275,7 +275,7 @@
           <q-slider
             v-model="depositAmount"
             :min="0.5"
-            :max="100"
+            :max="maxEnergyDeposit"
             :step="0.5"
             label
             label-always
@@ -688,43 +688,6 @@ const energyCostBreakdown = computed(() => {
   return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value} $SPR `;
 });
 
-/* async function approve(amount) {
-  const userBalance = await SpaceRiders.balanceOf($store.getters.address);
-  
-  if (amount > userBalance) {
-    $notification("failed", "Not enough $SPR tokens", 6000);
-    return;
-  }
-
-  const closeNotification = $notification(
-    "progress",
-    "Waiting for transaction to complete...",
-    0
-  );
-
-  let receipt = { status: 0 };
-  
-  try { 
-    const tx = await SpaceRiders.increaseAllowance(amount.toString());
-    receipt = await tx.wait();
-    
-  } catch (e) {
-    console.log("error");
-    console.log(e);
-    closeNotification();
-  }
-  
-  if (receipt.status === 1) {
-    $notification("success", "Increased allowance successfuly!", 6000);
-    
-  } else {
-    $notification("failed", "Failed increasing allowance...", 6000);
-    closeNotification();
-  }
-
-  closeNotification();
-} */
-
 async function depositEnergy(amount) {
   const uuid = uuidv4();
   const energyDeposit = new EnergyDepositAttributes(uuid, amount.toString(), $store.getters.activePlanet.id);
@@ -768,6 +731,12 @@ async function depositEnergy(amount) {
 
   closeNotification();
 }
+
+const maxEnergyDeposit = computed(() => {
+  const planet = $store.getters.activePlanet;
+  if (!planet) return 0;
+  return planet.ressources.energy_max_deposit;
+});
 
 </script>
 <style>
