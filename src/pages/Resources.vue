@@ -164,7 +164,7 @@ export default defineComponent({
       currentTab.value = "DefaultSlider";
     }
 
-    const planetClaimedFlag = ref(true);
+    const planetClaimedFlag = ref(false);
 
     return {
       planetClaimedFlag,
