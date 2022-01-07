@@ -32,7 +32,7 @@
         <q-card-section class="text-center">
           <div class="text-h6">BUY A PLANET</div>
           <div class="text-subtitle1">
-            Buying a planet costs ${{ planetCost.usd_cost }} ({{planetCost.token_cost}} $SPR), also, you can choose a planet name
+            Buying a planet costs ${{ planetCost.usd_cost }} ({{planetCost.token_cost}} $SPR) + 0.0025 BNB, also, you can choose a planet name
             (which can be changed later).
           </div>
         </q-card-section>
@@ -46,6 +46,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
+          <IncreaseAllowance :address="ContractAddress.getPlanetManagementAddress()" :amount="planetCost.token_cost" />
           <q-btn
             label="Buy Planet"
             color="warning"
@@ -63,11 +64,14 @@
 <script setup>
 import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
+import IncreaseAllowance from "./IncreaseAllowance";
+import ContractAddress from "../service/contract/ContractAddress";
 
 import PlanetManagementContract, {
   SignatureData,
 } from "../service/contract/PlanetManagementContract";
 
+import {useCheckAllowance} from "../service/util/useCheckAllowance.js";
 import { NEW_PLANET_PURCHASED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
@@ -83,6 +87,7 @@ const $store = useStore();
 const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const planetCost = ref({});
+
 
 watchEffect(async () => {
   if (buyPlanetPopup.value) {

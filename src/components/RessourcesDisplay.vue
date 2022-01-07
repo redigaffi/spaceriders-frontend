@@ -270,7 +270,7 @@
         
         <q-card-section class="q-pt-none">
           <q-badge class="q-mb-lg" color="warning">
-            {{ energyCostBreakdown }}
+            {{ energyCostBreakdown }} + 0.0025 BNB
           </q-badge>
           <q-slider
             v-model="depositAmount"
@@ -284,7 +284,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
-          <IncreaseAllowance :amount="sprCost"/>
+          <IncreaseAllowance :address="ContractAddress.getEnergyDepositAddress()" :amount="sprCost"/>
           <q-btn
             label="Deposit"
             color="warning"
@@ -303,11 +303,11 @@ import ResourceType from "../constants/ResourceType";
 import { ref, computed, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
-import SpaceRiders from "../service/contract/SpaceRiders";
 import EnergyDeposit, { EnergyDepositAttributes } from "../service/contract/EnergyDeposit";
 import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
+import ContractAddress from "../service/contract/ContractAddress";
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -349,10 +349,13 @@ function timeLeft (minLeft) {
 }
 
 const energyConsumption = computed(() => {
+  //@TODO: Count health in energy usage.
+  if ($store.getters.activePlanet === false) return false;
   return $store.getters.activePlanet.ressources.energy_usage;
 });
 
 const energyTimeLeft = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
   const availableEnergy = $store.getters.activePlanet.ressources.energy;
   const consumption = energyConsumption.value;
   const minutesLeft = availableEnergy / consumption;

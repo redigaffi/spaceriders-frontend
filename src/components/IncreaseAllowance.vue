@@ -16,10 +16,11 @@ const $store = useStore();
 const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const props = defineProps({
+    address: String,
     amount: Number
 })
 
-const { amount } = toRefs(props);
+const { address, amount } = toRefs(props);
 
 async function approve() {
     const userBalance = await SpaceRiders.balanceOf($store.getters.address);
@@ -38,7 +39,7 @@ async function approve() {
     let receipt = { status: 0 };
 
     try {
-        const tx = await SpaceRiders.increaseAllowance(amount.value.toString());
+        const tx = await SpaceRiders.increaseAllowance(address.value, amount.value.toString());
         receipt = await tx.wait();
 
     } catch (e) {
