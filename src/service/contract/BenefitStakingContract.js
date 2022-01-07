@@ -39,7 +39,8 @@ class BenefitStakingContract extends Contract {
     const contract = await this.getContract();
     
     const overrides = {
-      gasLimit: 6721975,
+      value: ethers.utils.parseEther("0.0025"),
+      gasLimit: 672197,
     };
     
     return await contract.stakingRequest(

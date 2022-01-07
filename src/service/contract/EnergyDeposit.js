@@ -38,7 +38,8 @@ class EnergyDepositContract extends Contract {
             // To convert Ether to Wei:
             //@todo: get price from smart contract
             //value: ethers.utils.parseEther("0.05"),
-            gasLimit: 6721975,
+            value: ethers.utils.parseEther("0.0025"),
+            gasLimit: 672197,
         };
         
         const amountInWei = ethers.utils.parseEther(energyDeposit.amount).toString();

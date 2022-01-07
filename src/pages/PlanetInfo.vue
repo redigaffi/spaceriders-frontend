@@ -234,6 +234,7 @@
             <br />
             <br />
 
+            <IncreaseAllowance :address="ContractAddress.getBenefitStakingAddress()" :amount="selectedTierInfo.token_cost" />
             <q-btn
               style="float: right"
               color="warning"
@@ -259,6 +260,8 @@ import BenefitStakingContract, {
   SignatureData,
 } from "../service/contract/BenefitStakingContract";
 import ApiRequests from "../service/http/ApiRequests";
+import IncreaseAllowance from "../components/IncreaseAllowance";
+import ContractAddress from "../service/contract/ContractAddress";
 
 const openUpdateDialog = ref(false);
 

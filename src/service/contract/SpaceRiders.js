@@ -15,9 +15,10 @@ class SpaceRidersContract extends Contract {
     }
 
     /**
+     * @param {string} contractAddress
      * @param {number} amount
      **/
-    async increaseAllowance(amount) {
+    async increaseAllowance(contractAddress, amount) {
         const contract = await this.getContract();
         
         const overrides = {
@@ -30,7 +31,7 @@ class SpaceRidersContract extends Contract {
         const amountInWei = ethers.utils.parseEther(amount).toString();
         
         return await contract.increaseAllowance(
-            ContractAddress.getEnergyDepositAddress(),
+            contractAddress,
             amountInWei,
             overrides
         );
@@ -39,11 +40,26 @@ class SpaceRidersContract extends Contract {
     /**
      * @param {string} address
      **/
-     async balanceOf(address) {
+    async balanceOf(address) {
         const contract = await this.getContract();
         
         const balance = await contract.balanceOf(
             address
+        );
+        
+        return parseInt(ethers.utils.formatEther(balance));
+    }
+
+    /**
+     * @param {string} owner
+     * @param {string} spender
+     **/
+     async allowance(owner, spender) {
+        const contract = await this.getContract();
+        
+        const balance = await contract.allowance(
+            owner,
+            spender
         );
         
         return parseInt(ethers.utils.formatEther(balance));
