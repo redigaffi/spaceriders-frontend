@@ -325,18 +325,22 @@
             <q-card-section>
               <q-card-section class="q-pt-none text-center">
                 <div class="q-mb-lg">
-                  <q-badge class="q-pa-sm text-weight-bold text-overline" color="warning">
+                  <q-badge
+                    class="q-pa-sm text-weight-bold text-overline"
+                    color="warning"
+                  >
                     {{ energyCostBreakdown }}
                   </q-badge>
                 </div>
                 <q-slider
+                  id="depositEnergySlider"
                   v-model="depositAmount"
                   :min="0.5"
                   :max="maxEnergyDeposit"
                   :step="0.5"
                   label
                   label-always
-                  color="primary"
+                  color="positive"
                 />
               </q-card-section>
 
@@ -855,5 +859,14 @@ const maxEnergyDeposit = computed(() => {
 .planet-icons {
   width: 56px;
   height: 64px;
+}
+
+#depositEnergySlider .q-slider__track-container {
+  height: 12px;
+}
+
+#depositEnergySlider .q-slider__thumb {
+  height: 30px;
+  width: 30px;
 }
 </style>
