@@ -456,13 +456,13 @@ const metalMineEnergyUsage = computed(() => {
 
 const crystalMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.crystalMine === undefined) return;
-  const mine = $store.getters.resourceData.metalMine;
+  const mine = $store.getters.resourceData.crystalMine;
   return mine.upgrades[mine.level].energy_usage;
 });
 
 const petrolMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.petrolMine === undefined) return;
-  const mine = $store.getters.resourceData.metalMine;
+  const mine = $store.getters.resourceData.petrolMine;
   return mine.upgrades[mine.level].energy_usage;
 });
 
@@ -612,6 +612,7 @@ const calculateProduction = (mine) => {
 const calculateWarehouseCapacity = (warehouse) => {
   const data = $store.getters.resourceData;
   const warehouseInfo = data[warehouse];
+  if (warehouseInfo === undefined) return false;
   const currentCapacity = warehouseInfo["capacity"];
   const currentLevel = warehouseInfo["level"];
   const currentHealth = warehouseInfo["health"];
@@ -736,6 +737,7 @@ const isResourceAlert = (resourceType) => {
   const rD = $store.getters.resourceData;
 
   const mine = rD[mappings[resourceType]["mine"]];
+  if (mine === undefined) return false;
   const mineCurrentHealth = mine["health"];
   const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
   const mineFullHealth = mineCurrentHealth / mineMaxHealth < 1;
