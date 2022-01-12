@@ -411,9 +411,8 @@ function timeLeft(minLeft) {
 }
 
 const energyConsumption = computed(() => {
-  //@TODO: Count health in energy usage.
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy_usage;
+  return $store.getters.activePlanet.ressources.energy_usage.toFixed(4);
 });
 
 const energyTimeLeft = computed(() => {
@@ -635,6 +634,7 @@ const updateResources = (rD, resource, mine, warehouse) => {
   const current = $store.getters.activePlanet.ressources[resource];
 
   const level = mineData["level"];
+  //@TODO: count health also
   const energyUsage = mineData["upgrades"][level]["energy_usage"];
 
   if (energyUsage > energyAvailable.value) return;
