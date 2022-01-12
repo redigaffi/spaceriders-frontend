@@ -10,10 +10,10 @@ import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { ref, getCurrentInstance, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 
-import PlanetManagementContract, {
+import SpaceRidersGameContract, {
   PlanetAttributes,
   SignatureData,
-} from "../service/contract/PlanetManagementContract";
+} from "../service/contract/SpaceRidersGameContract";
 
 const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
@@ -59,7 +59,7 @@ async function claimPlanet() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await PlanetManagementContract.claimPlanet(
+    const tx = await SpaceRidersGameContract.claimPlanet(
       pA,
       data.tokenURI,
       sD

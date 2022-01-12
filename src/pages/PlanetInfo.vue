@@ -234,7 +234,7 @@
             <br />
             <br />
 
-            <IncreaseAllowance :address="ContractAddress.getBenefitStakingAddress()" :amount="selectedTierInfo.token_cost" />
+            <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="selectedTierInfo.token_cost" />
             <q-btn
               style="float: right"
               color="warning"
@@ -255,10 +255,10 @@ import tc from "thousands-counter";
 import { useStore } from "vuex";
 import GlassElementHeading from "components/GlassElementHeading";
 import ApiRequest from "../service/http/ApiRequests";
-import BenefitStakingContract, {
-  Attributes,
+import SpaceRidersGameContract, {
+  BenefitStakingAttributes,
   SignatureData,
-} from "../service/contract/BenefitStakingContract";
+} from "../service/contract/SpaceRidersGameContract";
 import ApiRequests from "../service/http/ApiRequests";
 import IncreaseAllowance from "../components/IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
@@ -412,7 +412,7 @@ async function stake() {
     return;
   }
 
-  const attributes = new Attributes(
+  const attributes = new BenefitStakingAttributes(
     stakingRequest.planetId,
     String(stakingRequest.amount),
     stakingRequest.tier,
@@ -428,7 +428,7 @@ async function stake() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await BenefitStakingContract.stakingRequest(sD, attributes);
+    const tx = await SpaceRidersGameContract.stakingRequest(sD, attributes);
     receipt = await tx.wait();
   } catch (e) {
     console.log(e);
@@ -479,7 +479,7 @@ async function unstake() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await BenefitStakingContract.unstakingRequest(
+    const tx = await SpaceRidersGameContract.unstakingRequest(
       $store.getters.activePlanet.id
     );
     receipt = await tx.wait();
