@@ -8,6 +8,7 @@
     <q-btn
       v-if="!this.error"
       :label="logInButtonText"
+      rounded
       color="primary"
       class="glossy btn-glow-element"
       icon="person"

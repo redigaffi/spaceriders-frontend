@@ -1,11 +1,11 @@
 <template>
-    <q-btn v-if="showTokenAmount" @click="toggleValue" class="glossy" color="white" text-color="black" >
+    <q-btn rounded v-if="showTokenAmount" @click="toggleValue" class="glossy" color="primary" text-color="white" >
         <img src="logo.png" style=" width: 22px; height: 22px" />
         <div class="q-ml-sm">
             {{ tokenBalance }}
         </div>
     </q-btn>
-    <q-btn v-else @click="toggleValue" class="glossy" color="white" text-color="black" >
+    <q-btn rounded v-else @click="toggleValue" class="glossy" color="primary" text-color="white" >
         <q-icon size="1.5em" name="fas fa-dollar-sign" />
         <div class="q-ml-xs">
             {{ totalUsd }}
