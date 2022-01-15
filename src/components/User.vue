@@ -8,8 +8,8 @@
     <q-btn
       v-if="!this.error"
       :label="logInButtonText"
-      color="warning"
-      class="btn-glow-element"
+      color="primary"
+      class="glossy btn-glow-element"
       icon="person"
       @click="login"
     />
@@ -17,7 +17,7 @@
       v-else
       label="Incorrect Network"
       color="negative"
-      class="btn-glow-element"
+      class="glossy btn-glow-element"
       icon="bolt"
       @click="login"
     />

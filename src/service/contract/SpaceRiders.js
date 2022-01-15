@@ -46,6 +46,19 @@ class SpaceRidersContract extends Contract {
         
         return parseInt(ethers.utils.formatEther(balance));
     }
+    
+    /**
+     * @param {string} address
+     **/
+     async totalBalanceOf(address) {
+        const contract = await this.getContract();
+        
+        const balance = await contract.totalBalanceOf(
+            address
+        );
+        
+        return parseInt(ethers.utils.formatEther(balance));
+    }
 
     /**
      * @param {string} owner
