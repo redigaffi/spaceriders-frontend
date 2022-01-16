@@ -65,7 +65,7 @@
                     'text-positive': isFullProduction('metalMine'),
                     'text-yellow-12': !isFullProduction('metalMine'),
                   }"
-                  >+{{ metalProductionDisplay }}</q-item-section
+                  >+{{ metalProductionDisplay }}/min</q-item-section
                 >
                 <q-item-section v-else class="col-8 text-right text-negative"
                   >-{{ metalProduction }}/min</q-item-section
@@ -345,7 +345,7 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance :address="ContractAddress.getEnergyDepositAddress()" :amount="sprCost"/>
+                <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="sprCost"/>
                 <q-btn
                   label="Deposit"
                   color="warning"
@@ -367,9 +367,9 @@ import ResourceType from "../constants/ResourceType";
 import { ref, computed, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
-import EnergyDeposit, {
+import SpaceRidersGameContract, {
   EnergyDepositAttributes,
-} from "../service/contract/EnergyDeposit";
+} from "../service/contract/SpaceRidersGameContract";
 import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
@@ -415,9 +415,8 @@ function timeLeft(minLeft) {
 }
 
 const energyConsumption = computed(() => {
-  //@TODO: Count health in energy usage.
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy_usage;
+  return $store.getters.activePlanet.ressources.energy_usage.toFixed(4);
 });
 
 const energyTimeLeft = computed(() => {
@@ -460,13 +459,13 @@ const metalMineEnergyUsage = computed(() => {
 
 const crystalMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.crystalMine === undefined) return;
-  const mine = $store.getters.resourceData.metalMine;
+  const mine = $store.getters.resourceData.crystalMine;
   return mine.upgrades[mine.level].energy_usage;
 });
 
 const petrolMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.petrolMine === undefined) return;
-  const mine = $store.getters.resourceData.metalMine;
+  const mine = $store.getters.resourceData.petrolMine;
   return mine.upgrades[mine.level].energy_usage;
 });
 
@@ -477,7 +476,7 @@ const metalProductionDisplay = computed(() => {
   if (info.production < info.maxProduction) {
     return `${info.production.toFixed(4)} (-${(
       info.maxProduction - info.production
-    ).toFixed(4)})/min`;
+    ).toFixed(4)})`;
   }
 
   return tc(info.production, { digits: 1 });
@@ -496,7 +495,7 @@ const petrolProductionDisplay = computed(() => {
   if (info.production < info.maxProduction) {
     return `${info.production.toFixed(4)} (-${(
       info.maxProduction - info.production
-    ).toFixed(4)})/min`;
+    ).toFixed(4)})`;
   }
 
   return tc(info.production, { digits: 1 });
@@ -515,7 +514,7 @@ const crystalProductionDisplay = computed(() => {
   if (info.production < info.maxProduction) {
     return `${info.production.toFixed(4)} (-${(
       info.maxProduction - info.production
-    ).toFixed(4)})/min`;
+    ).toFixed(4)})`;
   }
 
   return tc(info.production, { digits: 1 });
@@ -616,6 +615,7 @@ const calculateProduction = (mine) => {
 const calculateWarehouseCapacity = (warehouse) => {
   const data = $store.getters.resourceData;
   const warehouseInfo = data[warehouse];
+  if (warehouseInfo === undefined) return false;
   const currentCapacity = warehouseInfo["capacity"];
   const currentLevel = warehouseInfo["level"];
   const currentHealth = warehouseInfo["health"];
@@ -638,6 +638,7 @@ const updateResources = (rD, resource, mine, warehouse) => {
   const current = $store.getters.activePlanet.ressources[resource];
 
   const level = mineData["level"];
+  //@TODO: count health also
   const energyUsage = mineData["upgrades"][level]["energy_usage"];
 
   if (energyUsage > energyAvailable.value) return;
@@ -740,6 +741,7 @@ const isResourceAlert = (resourceType) => {
   const rD = $store.getters.resourceData;
 
   const mine = rD[mappings[resourceType]["mine"]];
+  if (mine === undefined) return false;
   const mineCurrentHealth = mine["health"];
   const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
   const mineFullHealth = mineCurrentHealth / mineMaxHealth < 1;
@@ -753,7 +755,7 @@ const isResourceAlert = (resourceType) => {
 };
 
 const energyDepositPopup = ref(false);
-const depositAmount = ref(0.0);
+const depositAmount = ref(1.0);
 
 const sprCost = computed(() => {
   const tokenPrice = $store.getters.tokenPrice;
@@ -783,7 +785,7 @@ async function depositEnergy(amount) {
   let receipt = { status: 1 };
 
   try {
-    const tx = await EnergyDeposit.energyDeposit(energyDeposit);
+    const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
     receipt = await tx.wait();
   } catch (e) {
     console.log("error");
