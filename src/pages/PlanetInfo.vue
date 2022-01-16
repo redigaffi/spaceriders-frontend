@@ -277,7 +277,7 @@
             </table>
 
             <IncreaseAllowance
-              :address="ContractAddress.getBenefitStakingAddress()"
+              :address="ContractAddress.getSpaceRidersGameAddress()"
               :amount="selectedTierInfo.token_cost"
             />
             <q-btn
