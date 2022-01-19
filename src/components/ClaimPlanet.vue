@@ -12,6 +12,7 @@ import { useStore } from "vuex";
 
 import SpaceRidersGameContract, {
   PlanetAttributes,
+  PlanetVariableAttributes,
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
@@ -44,68 +45,17 @@ async function claimPlanet() {
     return;
   }
 
-  const pA = new PlanetAttributes(
-    planetGuid,
-    data.diameter,
-    data.slots,
-    data.minTemperature,
-    data.maxTemperature,
-    data.galaxy,
-    data.solarSystem,
-    data.position
-  );
+  $notification("success", "Planet claimed successfully!", 6000);
 
-  const sD = new SignatureData(data.v, data.r, data.s);
-  let receipt = { status: 0 };
-
-  try {
-    const tx = await SpaceRidersGameContract.claimPlanet(
-      pA,
-      data.tokenURI,
-      sD
-    );
-
-    console.log(tx)
-
-    receipt = await tx.wait();
-  } catch (e) {
-    console.log("error");
-    console.log(e);
+  // First planet is set to default. (In case of first planet purchase)
+  if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
+    $store.commit("setActivePlanet", data.data);
   }
-
-  if (receipt.status === 1) {
-    const txHash = receipt.transactionHash;
-    // confirm claim api call
-    const confirmReq = await ApiRequest.confirmClaimPlanet(
-      txHash,
-      planetGuid
-    );
-
-    if (confirmReq.success === true) {
-      $notification("success", "Planet claimed successfully!", 6000);
-
-      // First planet is set to default. (In case of first planet purchase)
-      if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
-        $store.commit("setActivePlanet", confirmReq.data);
-      }
-      
-      $store.commit('updatePlanet', { planet: confirmReq.data, field: "claimed", value: true });
   
-      $eventBus.emit(ACTIVE_PLANET_CHANGED, confirmReq.data);
-      $eventBus.emit(PLANET_CLAIMED, { planet: confirmReq.data });
+  $store.commit('updatePlanet', { planet: data.data, field: "claimed", value: true });
 
-    } else {
-      $notification("failed", confirmReq.error, 6000);
-    }
-
-  } else {
-    $notification(
-      "failed",
-      "Transaction failed, please try again...",
-      6000
-    );
-  }
-
+  $eventBus.emit(ACTIVE_PLANET_CHANGED, data.data);
+  $eventBus.emit(PLANET_CLAIMED, { planet: data.data });
   closeNotification();
 }
 </script>

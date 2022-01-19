@@ -33,12 +33,7 @@ watch(async () => {
 
 async function approve() {
     const userBalance = await SpaceRiders.balanceOf($store.getters.address);
-
-    if (amount.value > userBalance) {
-        $notification("failed", "Not enough $SPR tokens", 6000);
-        return;
-    }
-
+    
     const closeNotification = $notification(
         "progress",
         "Waiting for transaction to complete...",

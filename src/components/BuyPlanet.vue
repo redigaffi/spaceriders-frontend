@@ -110,7 +110,7 @@ async function buyPlanet () {
   const sD = new SignatureData(planetCostData.v, planetCostData.r, planetCostData.s);
   
   try {
-    const tx = await SpaceRidersGameContract.buyPlanet(planetGuid, planetCostData.price, sD);
+    const tx = await SpaceRidersGameContract.buyPlanet(planetGuid, planetCostData.price, sD, planetCostData.tokenURI);
     receipt = await tx.wait();
     console.log(receipt);
   } catch (e) {

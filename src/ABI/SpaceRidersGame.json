@@ -50,31 +50,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "addressPlanetMap",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
     "inputs": [],
     "name": "backendAddress",
     "outputs": [
@@ -246,46 +221,6 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "requestedPlanets",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "guid",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeClaimable",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "claimed",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "exists",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [
@@ -568,65 +503,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "newTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "updatePlanetCreationTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "updatePlanetPurchases",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "transfer",
-        "type": "bool"
-      }
-    ],
-    "name": "enablePlanetTransfers",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "getAddressPlanetMapCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
         "internalType": "string",
         "name": "planetGuid",
         "type": "string"
@@ -657,92 +533,14 @@
         "internalType": "struct OnlyBackend.signatureData",
         "name": "sD",
         "type": "tuple"
-      }
-    ],
-    "name": "buyPlanet",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "id",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "diameter",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "slots",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "minTemperature",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "maxTemperature",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "galaxy",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "solarSystem",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "position",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct PlanetNftInterface.Planet",
-        "name": "planetAttributes",
-        "type": "tuple"
       },
       {
         "internalType": "string",
         "name": "tokenURI",
         "type": "string"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
       }
     ],
-    "name": "claimPlanet",
+    "name": "buyPlanet",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function",

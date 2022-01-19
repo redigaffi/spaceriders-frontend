@@ -35,6 +35,7 @@ const totalUsd = computed(() => {
 onBeforeMount(async () => {
     try { 
         tokenAmount.value = await SpaceRiders.totalBalanceOf($store.getters.address);
+        console.log(tokenAmount.value);
     }catch (e) {
         console.log(e);
     }
