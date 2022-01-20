@@ -17,11 +17,6 @@ const landingPage = () => import("src/pages/Landing1.vue");
 const routes = [
   //TODO: change this component
   {
-    path: "/",
-    component: mainLayout,
-    children: [{ path: "", component: resourcesPage }],
-  },
-  {
     path: "/resources",
     component: mainLayout,
     children: [{ path: "", component: resourcesPage }],
@@ -57,7 +52,7 @@ const routes = [
     children: [{ path: "", component: planetInfoPage }],
   },
   {
-    path: "/landing",
+    path: "/",
     component: landingLayout,
     children: [{ path: "", component: landingPage }],
   },
