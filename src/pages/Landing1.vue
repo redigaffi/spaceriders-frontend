@@ -5,25 +5,52 @@
         <div class="header__inner">
           <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
 
-          <router-link to="/" class="logo"> Spaceriders </router-link>
+          <a href="#" class="logo" v-on:click.prevent="scrollPageTo('landing')">
+            Spaceriders
+          </a>
 
           <div class="header__nav">
-            <router-link to="/" class="header__nav--link go">Home</router-link>
-            <router-link to="/" class="header__nav--link go"
-              >Overview</router-link
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('landing')"
+              >Home</a
             >
-            <router-link to="/" class="header__nav--link go"
-              >Game mechanics</router-link
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('overview')"
+              >Overview</a
             >
-            <router-link to="/" class="header__nav--link go"
-              >Roadmap</router-link
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('game')"
+              >Game mechanics</a
             >
-            <router-link to="/" class="header__nav--link go"
-              >Whitepaper</router-link
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('road')"
+              >Roadmap</a
             >
-            <router-link to="/" class="header__nav--link go">Team</router-link>
-            <router-link to="/" class="header__nav--link go"
-              >Social media</router-link
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('whitepaper')"
+              >Whitepaper</a
+            >
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('team')"
+              >Team</a
+            >
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('social')"
+              >Social media</a
             >
           </div>
 
@@ -217,15 +244,14 @@
       </div>
     </section>
 
-    <!-- OVERVIEW -->
-    <div id="game"></div>
+    <div id="overview"></div>
     <section class="game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">Overview</div>
-          <div>
+          <div class="q-gutter-xl q-pt-xl" style="color: #cbcbcb">
             <div>
-              <p class="game__item--text text-justify">
+              <p class="text-h4 text-justify">
                 Explore a limitless galaxy where the narrative is directed
                 entirely by you, the players. In Spaceriders, you are a leader
                 of your empire, The Destiny of your planets relies upon you! By
@@ -233,7 +259,9 @@
                 territory, crossing the deep corners of space to turn the tide
                 of the war.
               </p>
-              <p class="game__item--text text-justify">
+            </div>
+            <div>
+              <p class="text-h4 text-justify">
                 SpaceRiders ($SPR) is a play-to-earn real-time strategy NFT game
                 settled in space. $SPR enables players to purchase and acquire
                 virtual items within the Spaceriders game.
@@ -380,10 +408,9 @@
             </a>
 
             <a href="#" class="social__link">
-              <q-icon
-                size="77px"
-                color="white"
-                name="fab fa-discord"
+              <img
+                src="~assets/landing/img/discord.svg"
+                alt="Телеграм"
                 class="social__link--icon"
               />
             </a>
@@ -403,7 +430,10 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      <div class="up__arrow wow animate__animated animate__fadeIn">
+      <div
+        class="up__arrow wow animate__animated animate__fadeIn"
+        @click.prevent="scrollPageTo('landing')"
+      >
         <img
           src="~assets/landing/img/arrow.svg"
           alt="Стрелка"
@@ -416,13 +446,48 @@
           <h2 class="footer__title"><span class="blue">Space</span>riders</h2>
 
           <div class="footer__nav">
-            <a href="#" class="footer__nav--link go">Home</a>
-            <a href="#" class="footer__nav--link go">Overview</a>
-            <a href="#" class="footer__nav--link go">Game mechanics</a>
-            <a href="#" class="footer__nav--link go">Roadmap</a>
-            <a href="#" class="footer__nav--link go">Whitepaper</a>
-            <a href="#" class="footer__nav--link go">Team</a>
-            <a href="#" class="footer__nav--link go">Social media</a>
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('landing')"
+              class="footer__nav--link go"
+              >Home</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('overview')"
+              class="footer__nav--link go"
+              >Overview</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('game')"
+              class="footer__nav--link go"
+              >Game mechanics</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('road')"
+              class="footer__nav--link go"
+              >Roadmap</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('landing')"
+              class="footer__nav--link go"
+              >Whitepaper</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('landing')"
+              class="footer__nav--link go"
+              >Team</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('social')"
+              class="footer__nav--link go"
+              >Social media</a
+            >
           </div>
 
           <p class="footer__copy">Copyright &copy; Spaceriders 2021</p>
@@ -496,7 +561,7 @@ import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
 
 import { defineComponent, ref } from "vue";
-
+import { onMounted } from "vue";
 //   new WOW().init();
 export default defineComponent({
   name: "PageLanding",
@@ -504,6 +569,10 @@ export default defineComponent({
   //   window.addEventListener("scroll", this.updateScroll);
   // },
   setup() {
+    const scrollPageTo = (navEl) => {
+      let element = document.querySelector(`#${navEl}`);
+      element.scrollIntoView({ behavior: "smooth" });
+    };
     const d = ref(0);
     const h = ref(0);
     const m = ref(0);
@@ -555,6 +624,7 @@ export default defineComponent({
       s,
       // scrollPosition,
       // updateScroll,
+      scrollPageTo,
     };
   },
 });
