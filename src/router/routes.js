@@ -17,39 +17,28 @@ const landingPage = () => import("src/pages/Landing1.vue");
 const routes = [
   //TODO: change this component
   {
-    path: "/resources",
-    component: mainLayout,
-    children: [{ path: "", component: resourcesPage }],
-  },
-  {
-    path: "/installations",
-    component: mainLayout,
-    children: [{ path: "", component: installationsPage }],
-  },
-  {
-    path: "/research",
-    component: mainLayout,
-    children: [{ path: "", component: researchPage }],
-  },
-  {
-    path: "/planet",
-    component: mainLayout,
-    children: [{ path: "", component: planetPage }],
-  },
-  {
-    path: "/defense",
-    component: mainLayout,
-    children: [{ path: "", component: defensePage }],
-  },
-  {
-    path: "/convert",
-    component: mainLayout,
-    children: [{ path: "", component: convertPage }],
-  },
-  {
     path: "/overview",
     component: mainLayout,
-    children: [{ path: "", component: planetInfoPage }],
+    beforeEnter: (to, from, next) => {
+      const store = JSON.parse(localStorage.getItem("store"));
+      if (store) {
+        if (store.jwt) {
+          next();
+        } else {
+          next("/");
+        }
+      }
+    },
+    children: [
+      { path: "", component: planetInfoPage },
+      { path: "/resources", component: resourcesPage },
+      { path: "/installations", component: installationsPage },
+      { path: "/research", component: researchPage },
+      { path: "/planet", component: planetPage },
+      { path: "/defense", component: defensePage },
+      { path: "/convert", component: convertPage },
+      { path: "/convert", component: convertPage },
+    ],
   },
   {
     path: "/",
