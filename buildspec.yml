@@ -9,7 +9,7 @@ phases:
       - node_modules/.bin/quasar build
   post_build:
     commands:
-      - aws s3 sync ./dist/spa s3://spaceriders-api --acl 'public-read' --delete
-      - aws cloudfront create-invalidation --distribution-id ECTGTZVLT7V2E --paths "/*"
+      - aws s3 sync ./dist/spa s3://$BUCKET_NAME --acl 'public-read' --delete
+      - aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
 
 
