@@ -14,7 +14,7 @@ phases:
           if [ -n "$CF_DIST_ID" ] 
           then
             aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
-          fiif 
+          fi
       
 
 
