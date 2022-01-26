@@ -496,6 +496,13 @@ input::-webkit-inner-spin-button{
 	border-bottom: 1px solid #2253F4;
 }
 
+.custom-game{
+	padding: 12rem 0rem;
+	background: url("../img/game-bg2.jpg") center no-repeat;
+	background-size: cover;
+	border-bottom: 1px solid #2253F4;
+}
+
 .game__inner{
 	width: 100%;
 }
