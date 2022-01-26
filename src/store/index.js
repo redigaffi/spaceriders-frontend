@@ -88,6 +88,7 @@ export default function (/* { ssrContext } */) {
         state.timeoutIds = [];
         state.intervalIds = [];
         state.conversionRequests = [];
+        state.emails = [];
       },
 
       setConversionRequests(state, payload) {

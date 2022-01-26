@@ -35,39 +35,6 @@ class EnergyDepositAttributes {
   }
 }
 
-class PlanetAttributes {
-  /**
-   *
-   * @param {string} id
-   * @param {number} diameter
-   * @param {number} slots
-   * @param {number} minTemperature
-   * @param {number} maxTemperature
-   * @param {number} galaxy
-   * @param {number} solarSystem
-   * @param {number} position
-   */
-  constructor(
-    id,
-    diameter,
-    slots,
-    minTemperature,
-    maxTemperature,
-    galaxy,
-    solarSystem,
-    position
-  ) {
-    this.id = id;
-    this.diameter = diameter;
-    this.slots = slots;
-    this.minTemperature = minTemperature;
-    this.maxTemperature = maxTemperature;
-    this.galaxy = galaxy;
-    this.solarSystem = solarSystem;
-    this.position = position;
-  }
-}
-
 class TokenExchangeAttributes {
     /**
      * 
@@ -155,49 +122,31 @@ class SpaceRidersGameContract extends Contract {
     );
   }
 
-  /**
-     * @param {string} planetGuid Planet GUID.
-     * 
-  **/
-    async buyPlanet(planetGuid, price, sD) {
-        const contract = await this.getContract();
-        
-        const overrides = {
-            // To convert Ether to Wei:
-            //@todo: get price from smart contract
-            value: ethers.utils.parseEther("0.0025"),
-            gasLimit: 672197,
-        };
-
-        return await contract.buyPlanet(
-            planetGuid,
-            price,
-            sD,
-            overrides
-        );
-    }
-
     /**
      * 
-     * @param {PlanetAttributes} planetAttributes Planet's attributes
-     * @param {string} tokenURI NFT token url
-     * @param {SignatureData} signatureData Signature data received from the backend (message sign by backend with it's private key)
+     * @param {*} planetGuid 
+     * @param {*} price 
+     * @param {*} sD 
+     * @param {*} tokenURI 
+     * @returns 
      */
-    async claimPlanet(planetAttributes, tokenURI, signatureData) {
-        const contract = await this.getContract();
-        
-        const overrides = {
-            value: ethers.utils.parseEther("0.0025"),
-            gasLimit: 6721975,
-        };
+    async buyPlanet(planetGuid, price, sD, tokenURI) {
+      const contract = await this.getContract();
+      
+      const overrides = {
+          // To convert Ether to Wei:
+          //@todo: get price from smart contract
+          value: ethers.utils.parseEther("0.0025"),
+          gasLimit: 672197,
+      };
 
-        return await contract.claimPlanet(
-            planetAttributes,
-            tokenURI,
-            signatureData,
-            overrides
-        );
-        
+      return await contract.buyPlanet(
+          planetGuid,
+          price,
+          sD,
+          tokenURI,
+          overrides
+      );
     }
 
     /**
@@ -248,7 +197,6 @@ export default new SpaceRidersGameContract();
 export {
   BenefitStakingAttributes,
   EnergyDepositAttributes,
-  PlanetAttributes,
   TokenExchangeAttributes,
   SignatureData,
 };

@@ -177,11 +177,10 @@
           </div>
         </q-card-section>
       </q-card>
-      
     </div>
 
     <q-dialog v-model="layout">
-      <q-layout style="height: 450px" view="l l f" container class="bg-dark">
+      <q-layout style="height: 500px" view="l l f" container class="bg-dark">
         <q-header class="bg-primary">
           <q-toolbar>
             <q-toolbar-title>Upgrade Tier</q-toolbar-title>
@@ -192,49 +191,95 @@
 
         <q-page-container>
           <q-page padding v-if="!isStaking">
-            <q-select
-              color="info"
-              filled
-              v-model="selectedTier"
-              :options="tierOptions"
-              label="CHOOSE NEW TIER"
-              stack-label
-            >
-              <template v-slot:label>
-                <span style="color: #2253f4" class="text-weight-bold"
-                  >CHOOSE NEW TIER</span
-                >
-              </template>
-            </q-select>
-            <br />
-            Price: ${{ selectedTierInfo.usd_cost }} ({{
-              selectedTierInfo.token_cost
-            }}
-            <img
-              src="~assets/img/logo.png"
-              alt=""
-              style="height: 20px; width: 20px; vertical-align: middle"
-            />)
-            <br />
-            <br />
-            Benefits: <br />
-            <ul>
-              <li
-                v-for="benefit in selectedTierInfo.benefit_lines"
-                :key="benefit"
+            <div>
+              <q-select
+                color="info"
+                filled
+                v-model="selectedTier"
+                :options="tierOptions"
+                label="CHOOSE NEW TIER"
+                stack-label
               >
-                {{ benefit }}
-              </li>
-            </ul>
-            <br />
-            Staking locked: {{ stakingLockedDays }} days
-            <br />
-            <br />
-            Performance fee: 0.5%
-            <br />
-            <br />
+                <template v-slot:label>
+                  <span style="color: #2253f4" class="text-weight-bold"
+                    >CHOOSE NEW TIER</span
+                  >
+                </template>
+              </q-select>
+            </div>
+            <table class="q-py-md full-width">
+              <tr>
+                <td>
+                  <span>Price</span>
+                </td>
+                <td>
+                  <span
+                    class="text-weight-bold text-overline"
+                    style="font-size: 20px"
+                  >
+                    ${{ selectedTierInfo.usd_cost }} ({{
+                      selectedTierInfo.token_cost
+                    }}
+                    &nbsp;
+                    <img
+                      src="~assets/img/logo.png"
+                      alt=""
+                      style="height: 20px; width: 20px; vertical-align: middle"
+                    />)</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Benefits</span>
+                </td>
+                <td>
+                  <ul
+                    class="text-weight-bold text-overline q-ma-none q-pa-none"
+                    style="font-size: 14px; list-style-type: none"
+                  >
+                    <li
+                      v-for="benefit in selectedTierInfo.benefit_lines"
+                      :key="benefit"
+                    >
+                      {{ benefit }}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Staking locked</span>
+                </td>
+                <td>
+                  <span
+                    class="text-weight-bold text-overline"
+                    style="font-size: 16px"
+                    >{{ stakingLockedDays }}</span
+                  >
+                  days
+                </td>
+              </tr>
 
-            <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="selectedTierInfo.token_cost" />
+              <tr>
+                <td>
+                  <span>Performance fee</span>
+                </td>
+                <td>
+                  <span
+                    class="text-weight-bold text-overline"
+                    style="font-size: 16px"
+                  >
+                    0.5%</span
+                  >
+                </td>
+              </tr>
+            </table>
+
+            <IncreaseAllowance
+              :address="ContractAddress.getSpaceRidersGameAddress()"
+              :amount="selectedTierInfo.token_cost"
+            />
             <q-btn
               style="float: right"
               color="warning"
@@ -299,7 +344,7 @@ const rarity = computed(() => {
 });
 
 const level = computed(() => {
-  return `${$store.getters.activePlanet.level} (${$store.getters.activePlanet.experience} XP)`
+  return `${$store.getters.activePlanet.level} (${$store.getters.activePlanet.experience} XP)`;
 });
 
 const diameter = computed(() => {

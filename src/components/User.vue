@@ -86,7 +86,10 @@ export default {
     },
     checkChain: async function () {
       if (window.ethereum) {
-        const chainId = process.env.CHAIN_ID;
+        console.log("chain")
+        console.log(process.env.CHAIN_ID)
+        const c = parseInt(process.env.CHAIN_ID);
+        const chainId = `0x${c.toString(16)}`;
         const rpcUrl = process.env.RPC_URL;
         const chainName = process.env.CHAIN_NAME;
 
