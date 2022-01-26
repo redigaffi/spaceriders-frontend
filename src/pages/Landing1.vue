@@ -34,12 +34,7 @@
               v-on:click.prevent="scrollPageTo('road')"
               >Roadmap</a
             >
-            <a
-              href="#"
-              class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('whitepaper')"
-              >Whitepaper</a
-            >
+
             <a
               href="#"
               class="header__nav--link go"
@@ -52,6 +47,21 @@
               v-on:click.prevent="scrollPageTo('social')"
               >Social media</a
             >
+
+            <q-btn
+              outline
+              color="blue"
+              class="q-pa-md"
+              label="Whitepaper"
+              no-caps
+            />
+            <!-- 
+            <a
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('whitepaper')"
+              >Whitepaper</a
+            > -->
           </div>
 
           <!-- <div class="header__social--inner">
@@ -237,6 +247,13 @@
             is a strategy-game set in space...
           </p>
 
+          <button
+            class="button main__button3 popup__open"
+            @click="openPopup = true"
+          >
+            Buy $SPR
+          </button>
+
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>
           </div>
@@ -245,7 +262,7 @@
     </section>
 
     <div id="overview"></div>
-    <section class="game">
+    <section class="custom-game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">Overview</div>
@@ -549,6 +566,77 @@
 
       <button class="button header__button modal__button">White peper</button>
     </div>
+
+    <q-dialog v-model="openPopup" persistent>
+      <q-card style="width: 600px; max-width: 80vw; background: #0e101c">
+        <q-card-section class="row justify-between">
+          <div class="text-h4" style="letter-spacing: 3px">Swap</div>
+          <div>
+            <q-btn
+              dense
+              color="primary"
+              round
+              icon="close"
+              @click="openPopup = false"
+            />
+          </div>
+        </q-card-section>
+        <q-card-section>
+          <div class="row q-col-gutter-sm">
+            <div class="col-1 flex flex-center">
+              <q-icon name="print" size="30px" />
+            </div>
+            <div class="col-3 text-overline" style="font-size: 12px">
+              <div>Swap From:</div>
+              <div>
+                <q-select v-model="model" :options="options" dense />
+              </div>
+            </div>
+            <div class="col flex flex-center">
+              <q-input
+                dense
+                outlined
+                color="white"
+                v-model="text"
+                placeholder="0.0"
+                type="number"
+              />
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <div class="row q-col-gutter-sm">
+            <div class="col-1 flex flex-center">
+              <q-icon name="print" size="30px" />
+            </div>
+            <div class="col-3 text-overline" style="font-size: 12px">
+              <div>Swap To:</div>
+              <div class="text-h4 text-weight-bold">$SPR</div>
+            </div>
+            <div class="col flex flex-center">
+              <q-input
+                dense
+                outlined
+                color="white"
+                v-model="text"
+                placeholder="0.0"
+                type="number"
+              />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions>
+          <q-btn
+            class="full-width"
+            style="background: #18121e"
+            label="Connect to a wallet"
+            no-caps
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -625,6 +713,12 @@ export default defineComponent({
       // scrollPosition,
       // updateScroll,
       scrollPageTo,
+      openPopup: ref(false),
+      options: [
+        'GLMR', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ],
+      model: ref("GLMR"),
+      
     };
   },
 });
