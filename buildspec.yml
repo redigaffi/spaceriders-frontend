@@ -7,14 +7,8 @@ phases:
   build:
     commands:
       - node_modules/.bin/quasar build
-  post_build:
-    commands:
-      - aws s3 sync ./dist/spa s3://$BUCKET_NAME --delete
-      - |
-          if [ -n "$CF_DIST_ID" ] 
-          then
-            aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
-          fi
-      
-
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist'
 
