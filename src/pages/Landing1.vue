@@ -14,47 +14,59 @@
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('landing')"
-              >Home</a
+              >HOME</a
             >
             <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('overview')"
-              >Overview</a
+              >OVERVIEW</a
             >
             <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
-              >Game mechanics</a
+              >GAME MECHANINCS</a
             >
             <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('road')"
-              >Roadmap</a
+              >ROADMAP</a
             >
 
             <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('team')"
-              >Team</a
+              >TEAM</a
             >
             <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('social')"
-              >Social media</a
+              >SOCIAL MEDIA</a
             >
 
-            <q-btn
+            <!-- <q-btn
               outline
               color="blue"
               class="q-pa-md"
               label="Whitepaper"
-              no-caps
-            />
+            /> -->
+
+            <button
+              class="button q-pa-md"
+              style="
+                border: 3px solid #2253f4;
+                border-radius: 5px;
+                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                color: #fff;
+              "
+              v-on:click.prevent="scrollPageTo('landing')"
+            >
+              WHITEPAPER
+            </button>
             <!-- 
             <a
               href="#"
@@ -265,7 +277,7 @@
     <section class="custom-game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">Overview</div>
+          <div class="text-2 title game__title">OVERVIEW</div>
           <div class="q-gutter-xl q-pt-xl" style="color: #cbcbcb">
             <div>
               <p class="text-h4 text-justify">
@@ -294,11 +306,11 @@
     <section class="game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">Game mechanics</div>
+          <div class="text-2 title game__title">GAME MECHANICS</div>
 
           <div class="game__content">
             <div class="game__item">
-              <p class="game__item--title blue">Advanced Innovative System</p>
+              <p class="game__item--title">Advanced Innovative System</p>
               <p class="game__item--text">
                 At Space Riders, we strive towards innovation and being
                 futureproof. A range of new contemporary systems have systems
@@ -358,8 +370,16 @@
                 analysis can be found within the Game Manual
               </p>
             </div>
+            <div class="game__item">
+              <p class="game__item--title">In-Game Features</p>
 
-            <div class="game__item" style="border: none"></div>
+              <p class="game__item--text">
+                You will have all the tools needed to succeed within the game at
+                your disposal. This includes defensive weaponry, laser
+                technology and In-game Research Facilities which includes an
+                investigation laboratory.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -396,7 +416,7 @@
       <div class="container">
         <div class="social__inner">
           <h2 class="title social__title wow animate__animated animate__fadeIn">
-            Social media
+            SOCIAL MEDIA
           </h2>
 
           <div class="social__content wow animate__animated animate__fadeIn">
@@ -467,43 +487,43 @@
               href="#"
               v-on:click.prevent="scrollPageTo('landing')"
               class="footer__nav--link go"
-              >Home</a
+              >HOME</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('overview')"
               class="footer__nav--link go"
-              >Overview</a
+              >OVERVIEW</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('game')"
               class="footer__nav--link go"
-              >Game mechanics</a
+              >GAME MECHANICS</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('road')"
               class="footer__nav--link go"
-              >Roadmap</a
+              >ROADMAP</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('landing')"
               class="footer__nav--link go"
-              >Whitepaper</a
+              >WHITEPAPER</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('landing')"
               class="footer__nav--link go"
-              >Team</a
+              >TEAM</a
             >
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('social')"
               class="footer__nav--link go"
-              >Social media</a
+              >SOCIAL MEDIA</a
             >
           </div>
 
@@ -597,6 +617,7 @@
                 dense
                 outlined
                 color="white"
+                class="full-width"
                 v-model="text"
                 placeholder="0.0"
                 type="number"
@@ -607,7 +628,7 @@
         <q-card-section class="q-pt-none">
           <div class="row q-col-gutter-sm">
             <div class="col-1 flex flex-center">
-              <q-icon name="print" size="30px" />
+              <img src="~assets/landing/img/spr2.jpeg" style="height: 40px" />
             </div>
             <div class="col-3 text-overline" style="font-size: 12px">
               <div>Swap To:</div>
@@ -617,6 +638,7 @@
               <q-input
                 dense
                 outlined
+                class="full-width"
                 color="white"
                 v-model="text"
                 placeholder="0.0"
@@ -627,13 +649,27 @@
         </q-card-section>
 
         <q-card-actions>
-          <q-btn
+          <!-- <q-btn
             class="full-width"
             style="background: #18121e"
             label="Connect to a wallet"
             no-caps
             v-close-popup
-          />
+          /> -->
+
+          <button
+            class="button q-py-sm full-width"
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+              color: #fff;
+            "
+            v-on:click.prevent="scrollPageTo('landing')"
+          >
+            Connect to a Wallet
+          </button>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -714,11 +750,8 @@ export default defineComponent({
       // updateScroll,
       scrollPageTo,
       openPopup: ref(false),
-      options: [
-        'GLMR', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-      ],
+      options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
-      
     };
   },
 });

@@ -16,12 +16,13 @@ import { useStore } from "vuex";
 import { toRefs, getCurrentInstance, ref, onMounted, watch } from "vue";
 
 const $store = useStore();
-const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const props = defineProps({
-    address: String,
-    amount: Number
-})
+  address: String,
+  amount: Number,
+});
 
 const { address, amount } = toRefs(props);
 const approveDisabled = ref(false);
@@ -61,5 +62,5 @@ async function approve() {
 
     approveDisabled.value = true;
     closeNotification();
-}
+  }
 </script>

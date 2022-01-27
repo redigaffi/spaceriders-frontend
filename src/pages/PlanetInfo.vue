@@ -121,7 +121,7 @@
                           srcset=""
                         />
                         <q-card-section class="text-center">
-                          <div class="text-h6">UPDATE PLANET</div>
+                          <div class="text-h6">RENAME PLANET</div>
                           <div class="text-subtitle1">
                             Updating a planet costs 0.5BNB, also, you can choose
                             a planet name (which can be changed later).
@@ -139,7 +139,7 @@
 
                         <q-card-section class="q-pt-none text-center">
                           <q-btn
-                            label="Update Planet"
+                            label="Rename Planet"
                             color="warning"
                             no-caps
                             class="q-px-lg"
