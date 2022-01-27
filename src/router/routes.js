@@ -19,16 +19,16 @@ const routes = [
   {
     path: "/overview",
     component: mainLayout,
-    beforeEnter: (to, from, next) => {
-      const store = JSON.parse(localStorage.getItem("store"));
-      if (store) {
-        if (store.jwt) {
-          next();
-        } else {
-          next("/");
-        }
-      }
-    },
+    // beforeEnter: (to, from, next) => {
+    //   const store = JSON.parse(localStorage.getItem("store"));
+    //   if (store) {
+    //     if (store.jwt) {
+    //       next();
+    //     } else {
+    //       next("/");
+    //     }
+    //   }
+    // },
     children: [
       { path: "", component: planetInfoPage },
       { path: "/resources", component: resourcesPage },
