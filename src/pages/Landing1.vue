@@ -628,7 +628,7 @@
         <q-card-section class="q-pt-none">
           <div class="row q-col-gutter-sm">
             <div class="col-1 flex flex-center">
-              <img src="~assets/landing/img/spr2.jpeg" style="height: 40px" />
+              <img src="~assets/landing/img/Planet-GasGiant-Violet-transparent.png" style="height: 50px" />
             </div>
             <div class="col-3 text-overline" style="font-size: 12px">
               <div>Swap To:</div>
