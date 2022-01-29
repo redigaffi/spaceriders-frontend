@@ -352,15 +352,15 @@ const diameter = computed(() => {
 });
 
 const metalReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.metal, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_metal, { digits: 2 });
 });
 
 const crystalReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.crystal, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_crystal, { digits: 2 });
 });
 
 const petrolReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.petrol, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_petrol, { digits: 2 });
 });
 
 const slotsAvailable = computed(() => {

@@ -292,7 +292,7 @@ import { createStore } from "vuex";
 
       decrementReserve(state, payload) {
         const key = payload.ressource;
-        state.activePlanet.max_resources[key] -= payload.value;
+        state.activePlanet.reserves[key] -= payload.value;
       },
       
       incrementEnergy(state, payload) {
