@@ -69,7 +69,7 @@ export default class ApiRequests {
   /**
    * @param {string} planetGuid planetGuid
    */
-   static async fetchPlanetCostData(planetGuid) {
+  static async fetchPlanetCostData(planetGuid) {
     const path = `${process.env.BASE_API_PATH}/planet/fetch_cost_data`;
 
     const body = {
@@ -333,7 +333,7 @@ export default class ApiRequests {
 
   static async unstakeRequest(data) {
     const path = `${process.env.BASE_API_PATH}/staking/unstake`;
-    
+
     const body = {
       planetId: data.planetId,
     };
@@ -346,22 +346,22 @@ export default class ApiRequests {
    * @param {string} planetId
    * @returns
    */
-    static async getEmails(planetId) {
-      const path = `${process.env.BASE_API_PATH}/email/${planetId}`;
-      return (await axios.get(path)).data;
-    }
+  static async getEmails(planetId) {
+    const path = `${process.env.BASE_API_PATH}/email/${planetId}`;
+    return (await axios.get(path)).data;
+  }
 
   /**
    * Mark Email as read
    * @param {string} planetId
    * @returns
    */
-   static async markEmailRead(planetId, emailId) {
+  static async markEmailRead(planetId, emailId) {
     const path = `${process.env.BASE_API_PATH}/email/read`;
 
     const body = {
       planetId: planetId,
-      emailId:  emailId,
+      emailId: emailId,
     };
 
     return (await axios.post(path, body)).data;
@@ -377,23 +377,21 @@ export default class ApiRequests {
 
     const body = {
       planetId: planetId,
-      emailId:  emailId,
+      emailId: emailId,
     };
-    
+
     return (await axios.post(path, body)).data;
   }
 
-   /**
+  /**
    * Get All planet info
    * @param {string} planetId
    * @returns
    */
-    static async getAllInfoPlanet(planetId) {
-      const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
-      return (await axios.get(path)).data;
-    }
-
-
+  static async getAllInfoPlanet(planetId) {
+    const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
+    return (await axios.get(path)).data;
+  }
 
   /**
    * Repair Resource
@@ -407,7 +405,7 @@ export default class ApiRequests {
       label: data.label,
       planetId: data.planetGuid,
     };
-    
+
     return (await axios.post(path, body)).data;
   }
 
@@ -416,36 +414,33 @@ export default class ApiRequests {
    * @param {object} data
    * @returns
    */
-    static async depositEnergy(data) {
-      const path = `${process.env.BASE_API_PATH}/energy/deposit`;
-  
-      const body = {
-        planetId: data.planetId,
-        guid: data.guid,
-      };
-      
-      return (await axios.post(path, body)).data;
-    }
+  static async depositEnergy(data) {
+    const path = `${process.env.BASE_API_PATH}/energy/deposit`;
 
-    /**
-     * Token Price
-     * @param {object} data
-     * @returns
-    */
-    static async tokenPrice() { 
-      const smartContract = process.env.SPACERIDERS_TOKEN_CONTRACT_ADDRESS.replace(/['"]+/g, '');
-      const path = `${process.env.TOKEN_PRICE_API}/${smartContract}`;
-      
-      let price = 0;
-      
-      try {
-        price = parseFloat((await axios.get(path)).data.data.price);
-      } catch (err) {
-        //@TODO: Remove
-        price = 1
-        //@TODO: Throw exception and abort process.
-      }
-      
-      return price;
-    }
+    const body = {
+      planetId: data.planetId,
+      guid: data.guid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Token Price
+   * @param {object} data
+   * @returns
+   */
+  static async tokenPrice() {
+    const path = `${process.env.BASE_API_PATH}/chain/tokenprice`;
+    return (await axios.get(path)).data.price;
+  }
+
+  /**
+   * Get chain info
+   * @returns
+   */
+  static async getChainInfo() {
+    const path = `${process.env.BASE_API_PATH}/chain`;
+    return (await axios.get(path)).data;
+  }
 }

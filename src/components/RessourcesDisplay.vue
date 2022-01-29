@@ -15,7 +15,7 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
-            'btn-red-glass-element': isStorageFull('metalWarehouse'),
+            'btn-red-glass-element': isStorageFull('metalWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -58,8 +58,11 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
+                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                  >0/min</q-item-section
+                >
                 <q-item-section
-                  v-if="!isStorageFull('metalWarehouse')"
+                  v-else-if="!isStorageFull('metalWarehouse')"
                   class="col-8 text-right"
                   :class="{
                     'text-positive': isFullProduction('metalMine'),
@@ -75,7 +78,10 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right"
+                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                  >0/min</q-item-section
+                >
+                <q-item-section v-else class="col-6 text-right"
                   >{{ metalMineEnergyUsage }}/min</q-item-section
                 >
               </q-item>
@@ -92,7 +98,7 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
-            'btn-red-glass-element': isStorageFull('crystalWarehouse'),
+            'btn-red-glass-element': isStorageFull('crystalWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -135,8 +141,11 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
+                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                  >0/min</q-item-section
+                >
                 <q-item-section
-                  v-if="!isStorageFull('crystalWarehouse')"
+                  v-else-if="!isStorageFull('crystalWarehouse')"
                   class="col-8 text-right"
                   :class="{
                     'text-positive': isFullProduction('crystalMine'),
@@ -152,7 +161,10 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right"
+                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                  >0/min</q-item-section
+                >
+                <q-item-section v-else class="col-6 text-right"
                   >{{ crystalMineEnergyUsage }}/min</q-item-section
                 >
               </q-item>
@@ -169,7 +181,7 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
-            'btn-red-glass-element': isStorageFull('petrolWarehouse'),
+            'btn-red-glass-element': isStorageFull('petrolWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -212,8 +224,11 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
+                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                  >0/min</q-item-section
+                >
                 <q-item-section
-                  v-if="!isStorageFull('petrolWarehouse')"
+                  v-else-if="!isStorageFull('petrolWarehouse')"
                   class="col-8 text-right"
                   :class="{
                     'text-positive': isFullProduction('petrolMine'),
@@ -229,7 +244,10 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right"
+                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                  >0/min</q-item-section
+                >
+                <q-item-section v-else class="col-6 text-right"
                   >{{ petrolMineEnergyUsage }}/min</q-item-section
                 >
               </q-item>
@@ -244,7 +262,7 @@
           flat
           rounded
           class="btn-glass-element"
-          :class="{ 'btn-red-glass-element': 1 <= 0 }"
+          :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
         >
           <img
             src="~assets/img/resources/RES_ic_ENERGY.png"
