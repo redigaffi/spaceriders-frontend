@@ -56,28 +56,30 @@ export default {
     };
   },
   beforeMount: async function () {
-    window.ethereum.on("networkChanged", async (networkId) => {
+    if (this.chainData !== false) {
+      window.ethereum.on("networkChanged", async (networkId) => {
+        const chain = await this.checkChain();
+        if (!chain) {
+          this.error = true;
+          this.$store.commit("destroySession");
+        } else {
+          this.error = false;
+        }
+      });
+  
+      window.ethereum.on("accountsChanged", async (accounts) => {
+        this.$store.commit("destroySession");
+      });
+  
       const chain = await this.checkChain();
+  
       if (!chain) {
         this.error = true;
         this.$store.commit("destroySession");
       } else {
         this.error = false;
       }
-    });
 
-    window.ethereum.on("accountsChanged", async (accounts) => {
-      this.$store.commit("destroySession");
-      this.login();
-    });
-
-    const chain = await this.checkChain();
-
-    if (!chain) {
-      this.error = true;
-      this.$store.commit("destroySession");
-    } else {
-      this.error = false;
     }
   },
   methods: {
@@ -86,12 +88,10 @@ export default {
     },
     checkChain: async function () {
       if (window.ethereum) {
-        console.log("chain")
-        console.log(process.env.CHAIN_ID)
-        const c = parseInt(process.env.CHAIN_ID);
-        const chainId = `0x${c.toString(16)}`;
-        const rpcUrl = process.env.RPC_URL;
-        const chainName = process.env.CHAIN_NAME;
+        
+        const chainId = this.chainData.chainId;
+        const rpcUrl = this.chainData.rpc;
+        const chainName = this.chainData.chainName;
 
         try {
           // check if the chain to connect to is installed
@@ -164,6 +164,10 @@ export default {
   },
 
   computed: {
+    chainData: function() {
+      return this.$store.getters.chainInfo;
+    },
+
     tier: function () {
       if (this.$store.getters.activePlanet === false) return;
       return this.$store.getters.activePlanet.tier.tierName.toUpperCase();

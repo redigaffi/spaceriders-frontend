@@ -2,19 +2,11 @@ import { createStore } from "vuex";
 
 // import example from './module-example'
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Store instance.
- */
 
-export default function (/* { ssrContext } */) {
   const Store = createStore({
     state() {
       return {
+        chainInfo: false,
         tokenPrice: false,
         jwt: false,
         address: false,
@@ -38,6 +30,10 @@ export default function (/* { ssrContext } */) {
             Object.assign(state, JSON.parse(localStorage.getItem("store")))
           );
         }
+      },
+
+      setChainInfo(state, payload) {
+        state.chainInfo = payload.chainInfo;
       },
 
       setTokenPrice(state, payload) {
@@ -296,7 +292,7 @@ export default function (/* { ssrContext } */) {
 
       decrementReserve(state, payload) {
         const key = payload.ressource;
-        state.activePlanet.max_resources[key] -= payload.value;
+        state.activePlanet.reserves[key] -= payload.value;
       },
       
       incrementEnergy(state, payload) {
@@ -309,6 +305,10 @@ export default function (/* { ssrContext } */) {
     },
 
     getters: {
+      chainInfo: (state) => {
+        return state.chainInfo;
+      },
+      
       tokenPrice: (state) => {
         return state.tokenPrice;
       },
@@ -362,5 +362,4 @@ export default function (/* { ssrContext } */) {
     strict: process.env.DEBUGGING,
   });
 
-  return Store;
-}
+export default Store;

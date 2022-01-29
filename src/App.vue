@@ -1,70 +1,76 @@
 <template>
+  
+
   <router-view />
+  
 </template>
-<script>
+<script setup>
 import ApiRequest from "./service/http/ApiRequests";
-import { defineComponent } from "vue";
+import { defineComponent, getCurrentInstance } from "vue";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "./constants/Events";
+import { useStore } from "vuex";
 
-export default defineComponent({
-  name: "App",
-  async created() {
-    // On planet change reset all.
-    this.$eventBus.on(ACTIVE_PLANET_CHANGED, this.updateAll);
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $store = useStore();
 
-    // On login, request all data.
-    this.$eventBus.on(LOGGED_IN, this.updateAll);
+$eventBus.on(ACTIVE_PLANET_CHANGED, updateAll);
+$eventBus.on(LOGGED_IN, updateAll);
 
-    // On page refresh reset all.
-    this.updateAll();
-  },
-  methods: {
-    update: async function (activePlanet) {
-      
-      this.$store.commit("setActivePlanet", activePlanet);
-      
-      const tokenPrice = (await ApiRequest.tokenPrice());
-      const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
-        .data;
-      
-      this.$store.commit('setTokenPrice', {tokenPrice: tokenPrice});
-      this.$store.commit("setResourceData", allPlanetInfo.resources);      
-      this.$store.commit("setInstallationData", allPlanetInfo.installation);
-      this.$store.commit("setResearchData", allPlanetInfo.research);
-      this.$store.commit("setDefenseData", allPlanetInfo.defense);
-      this.$store.commit("setConversionRequests", allPlanetInfo.conversion);
-      this.$store.commit("addEmails", {emails: allPlanetInfo.email});      
-    },
-    updateAll: async function () {
-      //TODO: Delete all intervals ..
-      //this.$store.commit("clearAllIntervalTimeouts");
+async function getChainData() {
+  const data = await ApiRequest.getChainInfo();
+  $store.commit('setChainInfo', {chainInfo: data});
+}
 
-      if (!this.$store.getters.loggedIn) return;
+async function update(activePlanet) {
 
-      let activePlanetId = false;
-      if (this.$store.getters.activePlanet) {
-        activePlanetId = this.$store.getters.activePlanet.id;
-      }
+  $store.commit("setActivePlanet", activePlanet);
 
-      const planets = (await ApiRequest.getAllPlanets()).data;
-      this.$store.commit("setPlanets", planets);
+  const tokenPrice = (await ApiRequest.tokenPrice());
+  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
+    .data;
 
-      if (activePlanetId !== false) {
-        console.log("active planet")
-        let activePlanet = planets.filter((o) => o.id === activePlanetId);
-        await this.update(activePlanet[0]);
+  $store.commit('setTokenPrice', { tokenPrice: tokenPrice });
+  $store.commit("setResourceData", allPlanetInfo.resources);
+  $store.commit("setInstallationData", allPlanetInfo.installation);
+  $store.commit("setResearchData", allPlanetInfo.research);
+  $store.commit("setDefenseData", allPlanetInfo.defense);
+  $store.commit("setConversionRequests", allPlanetInfo.conversion);
+  $store.commit("addEmails", { emails: allPlanetInfo.email });
+}
 
-        // Set default planet
-      } else if (!activePlanetId && planets.length > 0) {
-        let activePlanets = planets.filter((o) => o.claimed);
-        if (activePlanets.length > 0) {
-          console.log("no active planet")
-          await this.update(activePlanets[0]);
-        }
-      }
-    },
-  },
-});
+async function updateAll() {
+  //TODO: Delete all intervals ..
+  //this.$store.commit("clearAllIntervalTimeouts");
+
+  if (!$store.getters.loggedIn) return;
+
+  let activePlanetId = false;
+  if ($store.getters.activePlanet) {
+    activePlanetId = $store.getters.activePlanet.id;
+  }
+
+  const planets = (await ApiRequest.getAllPlanets()).data;
+  $store.commit("setPlanets", planets);
+
+  if (activePlanetId !== false) {
+    console.log("active planet")
+    let activePlanet = planets.filter((o) => o.id === activePlanetId);
+    await update(activePlanet[0]);
+
+    // Set default planet
+  } else if (!activePlanetId && planets.length > 0) {
+    let activePlanets = planets.filter((o) => o.claimed);
+    if (activePlanets.length > 0) {
+      console.log("no active planet")
+      await update(activePlanets[0]);
+    }
+  }
+}
+
+getChainData();
+
+// On page refresh reset all.
+updateAll();
 </script>
 
 <style>
