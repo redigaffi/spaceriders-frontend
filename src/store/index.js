@@ -6,6 +6,7 @@ import { createStore } from "vuex";
   const Store = createStore({
     state() {
       return {
+        updateIntervalId: false,
         chainInfo: false,
         tokenPrice: false,
         jwt: false,
@@ -34,6 +35,10 @@ import { createStore } from "vuex";
 
       setChainInfo(state, payload) {
         state.chainInfo = payload.chainInfo;
+      },
+      
+      setUpdateIntervalId(state, payload) {
+        state.updateIntervalId = payload.updateIntervalId;
       },
 
       setTokenPrice(state, payload) {
@@ -73,6 +78,8 @@ import { createStore } from "vuex";
 
       destroySession(state) {
         localStorage.removeItem("store");
+        clearInterval(state.updateIntervalId);
+        state.updateIntervalId = false;
         state.jwt = false;
         state.address = false;
         state.planets = [];
@@ -305,6 +312,10 @@ import { createStore } from "vuex";
     },
 
     getters: {
+      updateIntervalId: (state) => {
+        return state.updateIntervalId;
+      },
+
       chainInfo: (state) => {
         return state.chainInfo;
       },

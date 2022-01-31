@@ -817,7 +817,7 @@ const updateResources = (rD, resource, mine, warehouse) => {
   }
 };
 
-setInterval(async () => {
+/* setInterval(async () => {
   if ($store.getters.activePlanet === false) return;
   if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
   let rD = $store.getters.resourceData;
@@ -852,7 +852,7 @@ setInterval(async () => {
         break;
     }
   }
-}, 60000);
+}, 60000); */
 
 const isResourceAlert = (resourceType) => {
   const mappings = {};

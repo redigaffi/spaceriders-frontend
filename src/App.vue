@@ -6,7 +6,7 @@
 </template>
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
-import { defineComponent, getCurrentInstance } from "vue";
+import { getCurrentInstance } from "vue";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "./constants/Events";
 import { useStore } from "vuex";
 
@@ -16,19 +16,20 @@ const $store = useStore();
 $eventBus.on(ACTIVE_PLANET_CHANGED, updateAll);
 $eventBus.on(LOGGED_IN, updateAll);
 
+$eventBus.on(ACTIVE_PLANET_CHANGED, updateInterval);
+$eventBus.on(LOGGED_IN, updateInterval);
+
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit('setChainInfo', {chainInfo: data});
 }
 
 async function update(activePlanet) {
-
-  $store.commit("setActivePlanet", activePlanet);
-
   const tokenPrice = (await ApiRequest.tokenPrice());
   const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
     .data;
 
+  $store.commit('setActivePlanet', allPlanetInfo.planet)
   $store.commit('setTokenPrice', { tokenPrice: tokenPrice });
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
@@ -39,9 +40,6 @@ async function update(activePlanet) {
 }
 
 async function updateAll() {
-  //TODO: Delete all intervals ..
-  //this.$store.commit("clearAllIntervalTimeouts");
-
   if (!$store.getters.loggedIn) return;
 
   let activePlanetId = false;
@@ -52,25 +50,47 @@ async function updateAll() {
   const planets = (await ApiRequest.getAllPlanets()).data;
   $store.commit("setPlanets", planets);
 
+  let activePlanet = false;
   if (activePlanetId !== false) {
-    console.log("active planet")
-    let activePlanet = planets.filter((o) => o.id === activePlanetId);
-    await update(activePlanet[0]);
-
-    // Set default planet
+    activePlanet = planets.filter((o) => o.id === activePlanetId)[0];
   } else if (!activePlanetId && planets.length > 0) {
     let activePlanets = planets.filter((o) => o.claimed);
     if (activePlanets.length > 0) {
-      console.log("no active planet")
-      await update(activePlanets[0]);
+      activePlanet = activePlanets[0];
     }
   }
+  
+  if (activePlanet !== false) {
+    $store.commit("setActivePlanet", activePlanet);
+    await update(activePlanet);
+  }
+}
+
+async function updateInterval() {
+  if (!$store.getters.loggedIn) return;
+
+  if($store.getters.updateIntervalId !== false) {
+    clearInterval($store.getters.updateIntervalId);
+  }
+
+  if ($store.getters.activePlanet) {
+    const timerId = setInterval(async () => {
+      update($store.getters.activePlanet);
+      console.log("update planet");
+    }, 60000);
+
+    $store.commit('setUpdateIntervalId', {updateIntervalId: timerId});
+  }
+
 }
 
 getChainData();
 
 // On page refresh reset all.
 updateAll();
+
+// Start timer
+updateInterval();
 </script>
 
 <style>
