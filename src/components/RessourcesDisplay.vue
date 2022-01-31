@@ -99,6 +99,13 @@
                   }">{{metalReserveDisplay}}</q-item-section
                 >
               </q-item>
+              <q-item v-if="metalReserve > 0">
+                <q-item-section class="text-white">
+                  <q-item-section caption>Time left</q-item-section>
+                </q-item-section>
+                <q-item-section class="col-6 text-right">{{metalReserveTimeLeft}}</q-item-section
+                >
+              </q-item>
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -194,6 +201,13 @@
                 <q-item-section class="col-6 text-right" :class="{
                     'text-yellow-12': crystalReserve <= 0,
                   }">{{crystalReserveDisplay}}</q-item-section
+                >
+              </q-item>
+              <q-item v-if="crystalReserve > 0">
+                <q-item-section class="text-white">
+                  <q-item-section caption>Time left</q-item-section>
+                </q-item-section>
+                <q-item-section class="col-6 text-right">{{crystalReserveTimeLeft}}</q-item-section
                 >
               </q-item>
             </q-list>
@@ -293,6 +307,13 @@
                   }">{{petrolReserveDisplay}}</q-item-section
                 >
               </q-item>
+              <q-item v-if="petrolReserve > 0">
+                <q-item-section class="text-white">
+                  <q-item-section caption>Time left</q-item-section>
+                </q-item-section>
+                <q-item-section class="col-6 text-right">{{petrolReserveTimeLeft}}</q-item-section
+                >
+              </q-item>
             </q-list>
           </q-tooltip>
         </q-btn>
@@ -345,7 +366,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item>
+              <q-item v-if="energyAvailable > 0">
                 <q-item-section class="text-white">
                   <q-item-section caption>Time left</q-item-section>
                 </q-item-section>
@@ -541,6 +562,13 @@ const metalProduction = computed(() => {
   return info.production;
 });
 
+const metalReserveTimeLeft = computed(() => {
+  if ($store.getters.resourceData.metalMine === undefined) return;
+  const production = metalProduction.value;
+  const reserve = metalReserve.value;
+  return timeLeft(reserve/production);
+});
+
 const metalMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.metalMine === undefined) return;
   const mine = $store.getters.resourceData.metalMine;
@@ -578,6 +606,13 @@ const petrolProduction = computed(() => {
   return info.production;
 });
 
+const petrolReserveTimeLeft = computed(() => {
+  if ($store.getters.resourceData.petrolMine === undefined) return;
+  const production = petrolProduction.value;
+  const reserve = petrolReserve.value;
+  return timeLeft(reserve/production);
+});
+
 const petrolProductionDisplay = computed(() => {
   if ($store.getters.resourceData.petrolMine === undefined) return;
   const info = calculateProduction(ResourceType.PETROL_MINE);
@@ -595,6 +630,13 @@ const crystalProduction = computed(() => {
   if ($store.getters.resourceData.crystalMine === undefined) return;
   const info = calculateProduction(ResourceType.CRYSTAL_MINE);
   return info.production;
+});
+
+const crystalReserveTimeLeft = computed(() => {
+  if ($store.getters.resourceData.crystalMine === undefined) return;
+  const production = crystalProduction.value;
+  const reserve = crystalReserve.value;
+  return timeLeft(reserve/production);
 });
 
 const crystalProductionDisplay = computed(() => {
