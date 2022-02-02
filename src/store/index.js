@@ -1,12 +1,16 @@
 import { createStore } from "vuex";
-
 // import example from './module-example'
-
 
   const Store = createStore({
     state() {
       return {
-        updateIntervalId: false,
+        intervals: {
+          updateIntervalId: false,
+          energyTimerId: false,
+          metalTimerId: false,
+          crystalTimerId: false,
+          petrolTimerId: false,
+        },
         chainInfo: false,
         tokenPrice: false,
         jwt: false,
@@ -17,8 +21,6 @@ import { createStore } from "vuex";
         installationData: false,
         researchData: false,
         defenseData: false,
-        timeoutIds: [],
-        intervalIds: [],
         conversionRequests: [],
         emails: [],
       };
@@ -36,9 +38,20 @@ import { createStore } from "vuex";
       setChainInfo(state, payload) {
         state.chainInfo = payload.chainInfo;
       },
-      
+      setEnergyTimerId(state, payload) {
+        state.intervals.energyTimerId = payload;
+      },
+      setMetalTimerId(state, payload) {
+        state.intervals.metalTimerId = payload;
+      },
+      setCrystalTimerId(state, payload) {
+        state.intervals.crystalTimerId = payload;
+      },
+      setPetrolTimerId(state, payload) {
+        state.intervals.petrolTimerId = payload;
+      },
       setUpdateIntervalId(state, payload) {
-        state.updateIntervalId = payload.updateIntervalId;
+        state.intervals.updateIntervalId = payload.updateIntervalId;
       },
 
       setTokenPrice(state, payload) {
@@ -78,8 +91,16 @@ import { createStore } from "vuex";
 
       destroySession(state) {
         localStorage.removeItem("store");
-        clearInterval(state.updateIntervalId);
-        state.updateIntervalId = false;
+        clearInterval(state.intervals.updateIntervalId);
+        state.intervals.updateIntervalId = false;
+        clearInterval(state.intervals.energyTimerId);
+        state.intervals.energyTimerId = false;
+        clearInterval(state.intervals.metalTimerId);
+        state.intervals.metalTimerId = false;
+        clearInterval(state.intervals.crystalTimerId);
+        state.intervals.crystalTimerId = false;
+        clearInterval(state.intervals.petrolTimerId);
+        state.intervals.petrolTimerId = false;
         state.jwt = false;
         state.address = false;
         state.planets = [];
@@ -88,8 +109,6 @@ import { createStore } from "vuex";
         state.installationData = false;
         state.researchData = false;
         state.defenseData = false;
-        state.timeoutIds = [];
-        state.intervalIds = [];
         state.conversionRequests = [];
         state.emails = [];
       },
@@ -148,23 +167,6 @@ import { createStore } from "vuex";
         state.activePlanet.ressources.petrol += payload.petrol;
         state.activePlanet.ressources.crystal += payload.crystal;
       },
-
-      addTimeoutId(state, payload) {
-        state.timeoutIds.push(payload.id);
-      },
-
-      addIntervalId(state, payload) {
-        state.intervalIds.push(payload.id);
-      },
-
-      clearAllIntervalTimeouts(state) {
-        state.intervalIds.forEach((id) => clearInterval(id));
-        state.intervalIds = [];
-
-        state.timeoutIds.forEach((id) => clearTimeout(id));
-        state.timeoutIds = [];
-      },
-
       /**
        * Update planet values by providing planet, field name, and value to update.
        * @param {*} state
@@ -312,8 +314,20 @@ import { createStore } from "vuex";
     },
 
     getters: {
+      energyTimerId: (state) => {
+        return state.intervals.energyTimerId;
+      },
+      metalTimerId: (state) => {
+        return state.intervals.metalTimerId;
+      },
+      crystalTimerId: (state) => {
+        return state.intervals.crystalTimerId;
+      },
+      petrolTimerId: (state) => {
+        return state.intervals.petrolTimerId;
+      },
       updateIntervalId: (state) => {
-        return state.updateIntervalId;
+        return state.intervals.updateIntervalId;
       },
 
       chainInfo: (state) => {

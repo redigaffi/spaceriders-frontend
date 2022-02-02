@@ -455,9 +455,13 @@ import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import { ACTIVE_PLANET_CHANGED,LOGGED_IN } from "../constants/Events";
+
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
+
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 const $store = useStore();
 
@@ -469,6 +473,7 @@ const activePlanet = computed(() => {
 });
 
 const energyAvailable = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
   return $store.getters.activePlanet.ressources.energy;
 });
 
@@ -478,7 +483,7 @@ const energyAvailableDisplay = computed(() => {
 
 function timeLeft(minLeft) {
   const now = new Date();
-  const end = new Date((now.getTime() / 1000 + minLeft * 60) * 1000);
+  const end = new Date((now.getTime() / 1000 + minLeft) * 1000);
 
   const diffSeconds = (end.getTime() - now.getTime()) / 1000;
   const s = Math.round(diffSeconds % 60);
@@ -500,17 +505,19 @@ const energyConsumption = computed(() => {
   return $store.getters.activePlanet.ressources.energy_usage.toFixed(4);
 });
 
+const metalReserve = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
+  return $store.getters.activePlanet.reserves.metal;
+});
+
 const energyTimeLeft = computed(() => {
   if ($store.getters.activePlanet === false) return false;
   const availableEnergy = $store.getters.activePlanet.ressources.energy;
-  const consumption = energyConsumption.value;
-  const minutesLeft = availableEnergy / consumption;
+  const consumption = energyConsumption.value/60;
+  const minutesLeft = (availableEnergy / consumption);
   return timeLeft(minutesLeft);
 });
 
-const metalReserve = computed(() => {
-  return $store.getters.activePlanet.reserves.metal;
-});
 
 const metalReserveDisplay = computed(() => {
   return tc($store.getters.activePlanet.reserves.metal.toFixed(1), {
@@ -564,7 +571,7 @@ const metalProduction = computed(() => {
 
 const metalReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.metalMine === undefined) return;
-  const production = metalProduction.value;
+  const production = metalProduction.value / 60;
   const reserve = metalReserve.value;
   return timeLeft(reserve/production);
 });
@@ -608,7 +615,7 @@ const petrolProduction = computed(() => {
 
 const petrolReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.petrolMine === undefined) return;
-  const production = petrolProduction.value;
+  const production = petrolProduction.value / 60;
   const reserve = petrolReserve.value;
   return timeLeft(reserve/production);
 });
@@ -634,7 +641,7 @@ const crystalProduction = computed(() => {
 
 const crystalReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.crystalMine === undefined) return;
-  const production = crystalProduction.value;
+  const production = crystalProduction.value / 60;
   const reserve = crystalReserve.value;
   return timeLeft(reserve/production);
 });
@@ -760,100 +767,6 @@ const calculateWarehouseCapacity = (warehouse) => {
   };
 };
 
-const updateResources = (rD, resource, mine, warehouse) => {
-  const mineData = rD[mine];
-
-  const upgrading = mineData["upgrading"];
-  const repairing = mineData["repairing"];
-  const maxCapacity = calculateWarehouseCapacity(warehouse);
-
-  const current = $store.getters.activePlanet.ressources[resource];
-  const reserve = $store.getters.activePlanet.reserves[resource];
-
-  const level = mineData["level"];
-  //@TODO: count health also
-  const energyUsage = mineData["upgrades"][level]["energy_usage"];
-
-  if (energyUsage > energyAvailable.value) return;
-
-  let production = false;
-  switch (mine) {
-    case ResourceType.METAL_MINE:
-      production = metalProduction.value;
-      break;
-
-    case ResourceType.PETROL_MINE:
-      production = petrolProduction.value;
-      break;
-
-    case ResourceType.CRYSTAL_MINE:
-      production = crystalProduction.value;
-      break;
-  }
-
-  if (current < maxCapacity.capacity && reserve > 0 && !upgrading && !repairing) {
-    $store.commit("incrementResources", {
-      ressource: resource,
-      value: production,
-    });
-
-    $store.commit("decrementReserve", {
-      ressource: resource,
-      value: production,
-    });
-
-    $store.commit("decrementEnergy", {
-      energy: energyUsage,
-    });
-  } else if (current >= maxCapacity.capacity && reserve > 0 && !upgrading && !repairing) {
-    $store.commit("decrementReserve", {
-      ressource: resource,
-      value: production,
-    });
-
-    $store.commit("decrementEnergy", {
-      energy: energyUsage,
-    });
-  }
-};
-
-/* setInterval(async () => {
-  if ($store.getters.activePlanet === false) return;
-  if ($store.getters.planets.filter((p) => p.claimed).length === 0) return;
-  let rD = $store.getters.resourceData;
-
-  for (let resourceTypeIndex in ResourceType.RESOURCE_TYPES) {
-    const resourceType = ResourceType.RESOURCE_TYPES[resourceTypeIndex];
-
-    switch (resourceType) {
-      case ResourceType.METAL_MINE:
-        updateResources(
-          rD,
-          ResourceType.METAL,
-          ResourceType.METAL_MINE,
-          ResourceType.METAL_WAREHOUSE
-        );
-        break;
-      case ResourceType.PETROL_MINE:
-        updateResources(
-          rD,
-          ResourceType.PETROL,
-          ResourceType.PETROL_MINE,
-          ResourceType.PETROL_WAREHOUSE
-        );
-        break;
-      case ResourceType.CRYSTAL_MINE:
-        updateResources(
-          rD,
-          ResourceType.CRYSTAL,
-          ResourceType.CRYSTAL_MINE,
-          ResourceType.CRYSTAL_WAREHOUSE
-        );
-        break;
-    }
-  }
-}, 60000); */
-
 const isResourceAlert = (resourceType) => {
   const mappings = {};
   mappings[ResourceType.METAL] = {
@@ -955,6 +868,120 @@ const maxEnergyDeposit = computed(() => {
   return planet.ressources.energy_max_deposit;
 });
 
+function startEnergyTimer() {
+  if ($store.getters.activePlanet === false) return false;
+
+  if ($store.getters.energyTimerId !== false) {
+    clearInterval($store.getters.energyTimerId);
+    $store.commit('setEnergyTimerId', false);
+  }
+  
+  const intId = setInterval(() => {
+    if (energyAvailable.value <= 0) {
+      
+      clearInterval($store.getters.energyTimerId);
+      $store.commit('setEnergyTimerId', false);
+      return;
+    }
+    
+    const eC = $store.getters.activePlanet.ressources.energy_usage;
+    $store.commit('decrementEnergy', {energy: eC/60})
+  }, 1000);
+
+  $store.commit('setEnergyTimerId', intId);
+}
+
+function startMetalTimer() {
+  if ($store.getters.activePlanet === false) return false;
+
+  if ($store.getters.metalTimerId !== false) {
+    clearInterval($store.getters.metalTimerId);
+    $store.commit('setMetalTimerId', false);
+  }
+  
+  const intId = setInterval(() => {
+    if (metalReserve.value <= 0 || energyAvailable.value <= 0) {
+      clearInterval($store.getters.metalTimerId);
+      $store.commit('setMetalTimerId', false);
+      return;
+    }
+    
+    const mP = metalProduction.value;
+    $store.commit('decrementReserve', {
+      ressource: "metal",
+      value: mP/60});
+  }, 1000);
+
+  $store.commit('setMetalTimerId', intId);
+}
+
+function startCrystalTimer() {
+  if ($store.getters.activePlanet === false) return false;
+
+  if ($store.getters.crystalTimerId !== false) {
+    clearInterval($store.getters.crystalTimerId);
+    $store.commit('setCrystalTimerId', false);
+  }
+  
+  const intId = setInterval(() => {
+    if (crystalReserve.value <= 0 || energyAvailable.value <= 0) {
+      clearInterval($store.getters.crystalTimerId);
+      $store.commit('setCrystalTimerId', false);
+      return;
+    }
+    
+    const cP = crystalProduction.value;
+    $store.commit('decrementReserve', {
+      ressource: "crystal",
+      value: cP/60});
+  }, 1000);
+
+  $store.commit('setCrystalTimerId', intId);
+}
+
+function startPetrolTimer() {
+  if ($store.getters.activePlanet === false) return false;
+
+  if ($store.getters.petrolTimerId !== false) {
+    clearInterval($store.getters.petrolTimerId);
+    $store.commit('setPetrolTimerId', false);
+  }
+  
+  const intId = setInterval(() => {
+    if (petrolReserve.value <= 0 || energyAvailable.value <= 0) {
+      clearInterval($store.getters.petrolTimerId);
+      $store.commit('setPetrolTimerId', false);
+      return;
+    }
+      console.log("petrol1")
+    
+    const pP = petrolProduction.value;
+    $store.commit('decrementReserve', {
+      ressource: "petrol",
+      value: pP/60});
+  }, 1000);
+
+  $store.commit('setPetrolTimerId', intId);
+}
+
+startEnergyTimer();
+startMetalTimer();
+startCrystalTimer();
+startPetrolTimer();
+
+$eventBus.on(ACTIVE_PLANET_CHANGED, () => {
+  startEnergyTimer();
+  startMetalTimer();
+  startCrystalTimer();
+  startPetrolTimer();
+});
+
+$eventBus.on(LOGGED_IN, () => {
+  startEnergyTimer();
+  startMetalTimer();
+  startCrystalTimer();
+  startPetrolTimer();
+});
 </script>
 <style>
 #equal-width {

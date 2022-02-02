@@ -13,11 +13,15 @@ import { useStore } from "vuex";
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
 
-$eventBus.on(ACTIVE_PLANET_CHANGED, updateAll);
-$eventBus.on(LOGGED_IN, updateAll);
 
-$eventBus.on(ACTIVE_PLANET_CHANGED, updateInterval);
-$eventBus.on(LOGGED_IN, updateInterval);
+$eventBus.on(ACTIVE_PLANET_CHANGED, () => {
+  updateAll();
+  updateInterval();
+});
+$eventBus.on(LOGGED_IN, () => {
+  updateAll();
+  updateInterval();
+});
 
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
@@ -56,7 +60,7 @@ async function updateAll() {
   } else if (!activePlanetId && planets.length > 0) {
     let activePlanets = planets.filter((o) => o.claimed);
     if (activePlanets.length > 0) {
-      activePlanet = activePlanets[0];
+      activePlanet = activePlanets[1];
     }
   }
   
@@ -76,7 +80,6 @@ async function updateInterval() {
   if ($store.getters.activePlanet) {
     const timerId = setInterval(async () => {
       update($store.getters.activePlanet);
-      console.log("update planet");
     }, 60000);
 
     $store.commit('setUpdateIntervalId', {updateIntervalId: timerId});
