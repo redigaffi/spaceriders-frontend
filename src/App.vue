@@ -7,7 +7,7 @@
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
 import { getCurrentInstance } from "vue";
-import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "./constants/Events";
+import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
 import { useStore } from "vuex";
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
@@ -68,6 +68,8 @@ async function updateAll() {
     $store.commit("setActivePlanet", activePlanet);
     await update(activePlanet);
   }
+  
+  $eventBus.emit(UPDATED_ALL);
 }
 
 async function updateInterval() {
@@ -84,7 +86,6 @@ async function updateInterval() {
 
     $store.commit('setUpdateIntervalId', {updateIntervalId: timerId});
   }
-
 }
 
 getChainData();

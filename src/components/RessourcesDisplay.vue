@@ -445,7 +445,7 @@
 
 <script setup>
 import ResourceType from "../constants/ResourceType";
-import { ref, computed, watchEffect, getCurrentInstance } from "vue";
+import { ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
 import SpaceRidersGameContract, {
@@ -455,7 +455,7 @@ import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
-import { ACTIVE_PLANET_CHANGED,LOGGED_IN } from "../constants/Events";
+import { ACTIVE_PLANET_CHANGED, UPDATED_ALL } from "../constants/Events";
 
 
 const $notification =
@@ -953,7 +953,6 @@ function startPetrolTimer() {
       $store.commit('setPetrolTimerId', false);
       return;
     }
-      console.log("petrol1")
     
     const pP = petrolProduction.value;
     $store.commit('decrementReserve', {
@@ -964,23 +963,19 @@ function startPetrolTimer() {
   $store.commit('setPetrolTimerId', intId);
 }
 
-startEnergyTimer();
-startMetalTimer();
-startCrystalTimer();
-startPetrolTimer();
+const startTimers = () => {
+  startEnergyTimer();
+  startMetalTimer();
+  startCrystalTimer();
+  startPetrolTimer();
+}
 
 $eventBus.on(ACTIVE_PLANET_CHANGED, () => {
-  startEnergyTimer();
-  startMetalTimer();
-  startCrystalTimer();
-  startPetrolTimer();
+  startTimers();
 });
 
-$eventBus.on(LOGGED_IN, () => {
-  startEnergyTimer();
-  startMetalTimer();
-  startCrystalTimer();
-  startPetrolTimer();
+$eventBus.on(UPDATED_ALL, () => {
+  startTimers();
 });
 </script>
 <style>
