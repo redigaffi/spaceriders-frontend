@@ -2,12 +2,17 @@
 
 // CUSTOM FONT
 @font-face {
-  font-family: OrbitronFont;
-  src: url("../assets/font/Orbitron-Regular.ttf");
+  font-family: bodyFont;
+  src: url("../assets/font/pirulen-rg.otf");
+}
+
+@font-face {
+  font-family: headingFont;
+  src: url("../assets/font/TrueBlue-PhiloLogicXP-ExpandedRegular.otf");
 }
 
 body {
-  font-family: OrbitronFont;
+  font-family: bodyFont;
   border: 1px solid black;
 }
 

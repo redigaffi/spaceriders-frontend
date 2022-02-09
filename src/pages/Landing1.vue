@@ -6,7 +6,7 @@
           <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
 
           <a href="#" class="logo" v-on:click.prevent="scrollPageTo('landing')">
-            Spaceriders
+            SPACERIDERS
           </a>
 
           <div class="header__nav">
@@ -252,19 +252,27 @@
       <div class="container">
         <div class="main__inner">
           <h2 class="footer__title wow animate__animated animate__fadeIn">
-            <span class="blue">Space</span>riders
+            <span class="blue">SPACE</span>RIDERS
           </h2>
 
           <p class="main__subtitle wow animate__animated animate__fadeIn">
             is a strategy-game set in space...
           </p>
-
-          <button
-            class="button main__button3 popup__open"
-            @click="openPopup = true"
-          >
-            Buy $SPR
-          </button>
+          <div class="fit row wrap justify-start items-start content-start">
+            <div class="q-mr-md">
+              <button
+                class="button main__button3 popup__open"
+                @click="openPopup = true"
+              >
+                Buy $SPR
+              </button>
+            </div>
+            <div>
+              <button class="button main__button3 popup__open">
+                Enter Space Riders
+              </button>
+            </div>
+          </div>
 
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>
@@ -278,7 +286,7 @@
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">OVERVIEW</div>
-          <div class="q-gutter-xl q-pt-xl" style="color: #cbcbcb">
+          <div class="q-gutter-xl q-pt-xl custom-font" style="color: #cbcbcb">
             <div>
               <p class="text-h4 text-justify">
                 Explore a limitless galaxy where the narrative is directed
@@ -311,7 +319,7 @@
           <div class="game__content">
             <div class="game__item">
               <p class="game__item--title">Advanced Innovative System</p>
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 At Space Riders, we strive towards innovation and being
                 futureproof. A range of new contemporary systems have systems
                 have been born in the development of this project which will
@@ -322,7 +330,7 @@
 
             <div class="game__item">
               <p class="game__item--title">Fixed Entry Price</p>
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 To enter Space Riders, you will need to mint a planet first. Our
                 innovative systems ensures that users will always pay the same
                 price in $ USD when minting a planet, regardless of the token
@@ -332,7 +340,7 @@
 
             <div class="game__item">
               <p class="game__item--title">Fixed Rewards Price</p>
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 Once users decide to take rewards by changing resources to the
                 native $SPR Token, they will get the rewards in the resources
                 current value in $ USD regardless of what the value of $SPR is.
@@ -341,7 +349,7 @@
 
             <div class="game__item">
               <p class="game__item--title">50/50 Mark Token System</p>
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 We have pioneered a new system which has been implemented in
                 Space Riders. This system is a prevention measure which be used
                 to prevent Pump & Dump traders from exploiting this project.
@@ -355,15 +363,15 @@
                 Smart and Controlled Distribution (50/50 System)
               </p>
 
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 Each time a user invests, they will be distributed tokens in the
                 following way:
               </p>
-              <ul class="game__item--text">
+              <ul class="game__item--text custom-font">
                 <li>⦁ 50% Tradeable Tokens (TT)</li>
                 <li>⦁ 50% Gaming Token (GT)</li>
               </ul>
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 This Method will prevent the token being exploited and has been
                 pioneered to achieve long term and short-term token health to
                 encourage users to play and enjoy the game. A more detailed
@@ -373,7 +381,7 @@
             <div class="game__item">
               <p class="game__item--title">In-Game Features</p>
 
-              <p class="game__item--text">
+              <p class="game__item--text custom-font">
                 You will have all the tools needed to succeed within the game at
                 your disposal. This includes defensive weaponry, laser
                 technology and In-game Research Facilities which includes an
@@ -480,7 +488,7 @@
 
       <div class="container wow animate__animated animate__fadeIn">
         <div class="footer__inner">
-          <h2 class="footer__title"><span class="blue">Space</span>riders</h2>
+          <h2 class="footer__title"><span class="blue">SPACE</span>RIDERS</h2>
 
           <div class="footer__nav">
             <a
@@ -628,7 +636,10 @@
         <q-card-section class="q-pt-none">
           <div class="row q-col-gutter-sm">
             <div class="col-1 flex flex-center">
-              <img src="~assets/landing/img/Planet-GasGiant-Violet-transparent.png" style="height: 50px" />
+              <img
+                src="~assets/landing/img/Planet-GasGiant-Violet-transparent.png"
+                style="height: 50px"
+              />
             </div>
             <div class="col-3 text-overline" style="font-size: 12px">
               <div>Swap To:</div>
@@ -757,7 +768,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap";
+/* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
 </style>
