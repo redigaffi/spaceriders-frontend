@@ -1,26 +1,34 @@
 <template>
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
-    <div :class="tier != 'TIER 0' ? 'glitch' : 'boring'" :data-text="tier">
-      {{ tier }}
-    </div>
+    <div class="row">
+      <div
+        class="col q-pt-sm"
+        :class="tier != 'TIER 0' ? 'glitch' : 'boring'"
+        :data-text="tier"
+      >
+        {{ tier }}
+      </div>
 
-    <q-btn
-      v-if="!this.error"
-      :label="logInButtonText"
-      color="warning"
-      class="btn-glow-element"
-      icon="person"
-      @click="login"
-    />
-    <q-btn
-      v-else
-      label="Incorrect Network"
-      color="negative"
-      class="btn-glow-element"
-      icon="bolt"
-      @click="login"
-    />
+      <div class="col-19">
+        <q-btn
+          v-if="!this.error"
+          :label="logInButtonText"
+          color="warning"
+          class="btn-glow-element"
+          icon="person"
+          @click="login"
+        />
+        <q-btn
+          v-else
+          label="Incorrect Network"
+          color="negative"
+          class="btn-glow-element"
+          icon="bolt"
+          @click="login"
+        />
+      </div>
+    </div>
 
     <q-dialog v-model="userInfoPopup">
       <q-card>
