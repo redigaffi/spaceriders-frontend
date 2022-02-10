@@ -138,6 +138,7 @@
       </q-dialog>
 
       <User />
+      <Balance />
     </q-toolbar>
     <q-drawer v-model="leftDrawerOpen" bordered overlay>
       <q-list>
@@ -155,6 +156,7 @@
 
 <script>
 import User from "./User.vue";
+import Balance from "./Balance.vue";
 import { defineComponent, ref } from "vue";
 import NavLinks from "components/NavLinks.vue";
 
@@ -199,6 +201,7 @@ export default {
   name: "HeaderBar",
   components: {
     User,
+    Balance,
     NavLinks,
   },
   setup() {

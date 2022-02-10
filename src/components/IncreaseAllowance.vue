@@ -1,16 +1,19 @@
 <template>
-  <q-btn
-    label="Approve"
-    color="green"
-    @click="approve"
-    no-caps
-    class="q-px-lg q-mr-md"
-  />
+  <div v-if="!approveDisabled">
+    <q-btn
+      label="Approve"
+      color="yellow"
+      @click="approve"
+      no-caps
+      class="q-px-lg q-mr-sm"
+    />
+  </div>
 </template>
 <script setup>
 import SpaceRiders from "../service/contract/SpaceRiders";
+import { useCheckAllowance } from "../service/util/useCheckAllowance";
 import { useStore } from "vuex";
-import { toRefs, getCurrentInstance } from "vue";
+import { toRefs, getCurrentInstance, ref, onMounted, watch } from "vue";
 
 const $store = useStore();
 const $notification =
@@ -22,20 +25,36 @@ const props = defineProps({
 });
 
 const { address, amount } = toRefs(props);
+const approveDisabled = ref(false);
+watch(async () => {
+  if (!amount.value) return;
+  let allow = await useCheckAllowance(
+    $store.getters.address,
+    address.value,
+    amount.value.toString()
+  );
+  approveDisabled.value = allow;
+});
 
 async function approve() {
   const userBalance = await SpaceRiders.balanceOf($store.getters.address);
-
-  if (amount.value > userBalance) {
-    $notification("failed", "Not enough $SPR tokens", 6000);
-    return;
-  }
 
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
     0
   );
+
+  let receipt = { status: 0 };
+
+  try {
+    const tx = await SpaceRiders.increaseAllowance(address.value);
+    receipt = await tx.wait();
+  } catch (e) {
+    console.log("error");
+    console.log(e);
+    closeNotification();
+  }
 
   let receipt = { status: 0 };
 
@@ -51,13 +70,7 @@ async function approve() {
     closeNotification();
   }
 
-  if (receipt.status === 1) {
-    $notification("success", "Increased allowance successfuly!", 6000);
-  } else {
-    $notification("failed", "Failed increasing allowance...", 6000);
-    closeNotification();
-  }
-
+  approveDisabled.value = true;
   closeNotification();
 }
 </script>

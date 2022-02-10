@@ -588,10 +588,10 @@ import ConversionTypes from "../constants/ConversionTypes";
 import { useStore } from "vuex";
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
-import TokenManagementContract, {
-  Attributes,
+import SpaceRidersGameContract, {
+  TokenExchangeAttributes,
   SignatureData,
-} from "../service/contract/TokenManagementContract";
+} from "../service/contract/SpaceRidersGameContract";
 
 export default defineComponent({
   name: "Convert",
@@ -764,7 +764,7 @@ export default defineComponent({
       const data = claimReq.data;
       if (data.action === "CALL_SMART_CONTRACT") {
         const sD = new SignatureData(data.v, data.r, data.s);
-        let params = new Attributes(
+        let params = new TokenExchangeAttributes(
           data.id,
           data.tokens.toString(),
           data.valid,
@@ -776,12 +776,12 @@ export default defineComponent({
           let tx;
 
           if (data.type === ConversionTypes.RECEIVE_TOKENS) {
-            tx = await TokenManagementContract.convertFromPrimaryResources(
+            tx = await SpaceRidersGameContract.convertFromPrimaryResources(
               sD,
               params
             );
           } else if (data.type === ConversionTypes.RECEIVE_RESOURCES) {
-            tx = await TokenManagementContract.convertFromToken(sD, params);
+            tx = await SpaceRidersGameContract.convertFromToken(sD, params);
           }
           console.log(tx);
           receipt = await tx.wait();

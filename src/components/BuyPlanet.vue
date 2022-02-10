@@ -46,7 +46,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
-          <IncreaseAllowance :address="ContractAddress.getPlanetManagementAddress()" :amount="planetCost.token_cost" />
+          <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="planetCost.token_cost" />
           <q-btn
             label="Buy Planet"
             color="warning"
@@ -67,9 +67,9 @@ import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 
-import PlanetManagementContract, {
+import SpaceRidersGameContract, {
   SignatureData,
-} from "../service/contract/PlanetManagementContract";
+} from "../service/contract/SpaceRidersGameContract";
 
 import {useCheckAllowance} from "../service/util/useCheckAllowance.js";
 import { NEW_PLANET_PURCHASED } from "../constants/Events";
@@ -110,7 +110,7 @@ async function buyPlanet () {
   const sD = new SignatureData(planetCostData.v, planetCostData.r, planetCostData.s);
   
   try {
-    const tx = await PlanetManagementContract.buyPlanet(planetGuid, planetCostData.price, sD);
+    const tx = await SpaceRidersGameContract.buyPlanet(planetGuid, planetCostData.price, sD, planetCostData.tokenURI);
     receipt = await tx.wait();
     console.log(receipt);
   } catch (e) {

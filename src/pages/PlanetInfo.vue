@@ -277,7 +277,7 @@
             </table>
 
             <IncreaseAllowance
-              :address="ContractAddress.getBenefitStakingAddress()"
+              :address="ContractAddress.getSpaceRidersGameAddress()"
               :amount="selectedTierInfo.token_cost"
             />
             <q-btn
@@ -300,10 +300,10 @@ import tc from "thousands-counter";
 import { useStore } from "vuex";
 import GlassElementHeading from "components/GlassElementHeading";
 import ApiRequest from "../service/http/ApiRequests";
-import BenefitStakingContract, {
-  Attributes,
+import SpaceRidersGameContract, {
+  BenefitStakingAttributes,
   SignatureData,
-} from "../service/contract/BenefitStakingContract";
+} from "../service/contract/SpaceRidersGameContract";
 import ApiRequests from "../service/http/ApiRequests";
 import IncreaseAllowance from "../components/IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
@@ -352,15 +352,15 @@ const diameter = computed(() => {
 });
 
 const metalReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.metal, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_metal, { digits: 2 });
 });
 
 const crystalReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.crystal, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_crystal, { digits: 2 });
 });
 
 const petrolReserve = computed(() => {
-  return tc($store.getters.activePlanet.max_resources.petrol, { digits: 2 });
+  return tc($store.getters.activePlanet.reserves.total_petrol, { digits: 2 });
 });
 
 const slotsAvailable = computed(() => {
@@ -457,7 +457,7 @@ async function stake() {
     return;
   }
 
-  const attributes = new Attributes(
+  const attributes = new BenefitStakingAttributes(
     stakingRequest.planetId,
     String(stakingRequest.amount),
     stakingRequest.tier,
@@ -473,7 +473,7 @@ async function stake() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await BenefitStakingContract.stakingRequest(sD, attributes);
+    const tx = await SpaceRidersGameContract.stakingRequest(sD, attributes);
     receipt = await tx.wait();
   } catch (e) {
     console.log(e);
@@ -524,7 +524,7 @@ async function unstake() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await BenefitStakingContract.unstakingRequest(
+    const tx = await SpaceRidersGameContract.unstakingRequest(
       $store.getters.activePlanet.id
     );
     receipt = await tx.wait();

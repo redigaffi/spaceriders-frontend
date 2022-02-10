@@ -37,7 +37,7 @@ export default boot(({ app, router, store }) => {
       color: color,
       timeout: timeout,
       icon: icon,
-      group: 'group', //force to delete previous msg
+      //group: 'group', //force to delete previous msg
       actions: [{ label: "Close", color: "white", handler: () => {} }],
     });
   };

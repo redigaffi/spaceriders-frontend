@@ -1,20 +1,17 @@
 import { createStore } from "vuex";
-
 // import example from './module-example'
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Store instance.
- */
-
-export default function (/* { ssrContext } */) {
   const Store = createStore({
     state() {
       return {
+        intervals: {
+          updateIntervalId: false,
+          energyTimerId: false,
+          metalTimerId: false,
+          crystalTimerId: false,
+          petrolTimerId: false,
+        },
+        chainInfo: false,
         tokenPrice: false,
         jwt: false,
         address: false,
@@ -24,8 +21,6 @@ export default function (/* { ssrContext } */) {
         installationData: false,
         researchData: false,
         defenseData: false,
-        timeoutIds: [],
-        intervalIds: [],
         conversionRequests: [],
         emails: [],
       };
@@ -38,6 +33,25 @@ export default function (/* { ssrContext } */) {
             Object.assign(state, JSON.parse(localStorage.getItem("store")))
           );
         }
+      },
+
+      setChainInfo(state, payload) {
+        state.chainInfo = payload.chainInfo;
+      },
+      setEnergyTimerId(state, payload) {
+        state.intervals.energyTimerId = payload;
+      },
+      setMetalTimerId(state, payload) {
+        state.intervals.metalTimerId = payload;
+      },
+      setCrystalTimerId(state, payload) {
+        state.intervals.crystalTimerId = payload;
+      },
+      setPetrolTimerId(state, payload) {
+        state.intervals.petrolTimerId = payload;
+      },
+      setUpdateIntervalId(state, payload) {
+        state.intervals.updateIntervalId = payload.updateIntervalId;
       },
 
       setTokenPrice(state, payload) {
@@ -77,6 +91,16 @@ export default function (/* { ssrContext } */) {
 
       destroySession(state) {
         localStorage.removeItem("store");
+        clearInterval(state.intervals.updateIntervalId);
+        state.intervals.updateIntervalId = false;
+        clearInterval(state.intervals.energyTimerId);
+        state.intervals.energyTimerId = false;
+        clearInterval(state.intervals.metalTimerId);
+        state.intervals.metalTimerId = false;
+        clearInterval(state.intervals.crystalTimerId);
+        state.intervals.crystalTimerId = false;
+        clearInterval(state.intervals.petrolTimerId);
+        state.intervals.petrolTimerId = false;
         state.jwt = false;
         state.address = false;
         state.planets = [];
@@ -85,9 +109,8 @@ export default function (/* { ssrContext } */) {
         state.installationData = false;
         state.researchData = false;
         state.defenseData = false;
-        state.timeoutIds = [];
-        state.intervalIds = [];
         state.conversionRequests = [];
+        state.emails = [];
       },
 
       setConversionRequests(state, payload) {
@@ -144,23 +167,6 @@ export default function (/* { ssrContext } */) {
         state.activePlanet.ressources.petrol += payload.petrol;
         state.activePlanet.ressources.crystal += payload.crystal;
       },
-
-      addTimeoutId(state, payload) {
-        state.timeoutIds.push(payload.id);
-      },
-
-      addIntervalId(state, payload) {
-        state.intervalIds.push(payload.id);
-      },
-
-      clearAllIntervalTimeouts(state) {
-        state.intervalIds.forEach((id) => clearInterval(id));
-        state.intervalIds = [];
-
-        state.timeoutIds.forEach((id) => clearTimeout(id));
-        state.timeoutIds = [];
-      },
-
       /**
        * Update planet values by providing planet, field name, and value to update.
        * @param {*} state
@@ -295,7 +301,7 @@ export default function (/* { ssrContext } */) {
 
       decrementReserve(state, payload) {
         const key = payload.ressource;
-        state.activePlanet.max_resources[key] -= payload.value;
+        state.activePlanet.reserves[key] -= payload.value;
       },
       
       incrementEnergy(state, payload) {
@@ -308,6 +314,26 @@ export default function (/* { ssrContext } */) {
     },
 
     getters: {
+      energyTimerId: (state) => {
+        return state.intervals.energyTimerId;
+      },
+      metalTimerId: (state) => {
+        return state.intervals.metalTimerId;
+      },
+      crystalTimerId: (state) => {
+        return state.intervals.crystalTimerId;
+      },
+      petrolTimerId: (state) => {
+        return state.intervals.petrolTimerId;
+      },
+      updateIntervalId: (state) => {
+        return state.intervals.updateIntervalId;
+      },
+
+      chainInfo: (state) => {
+        return state.chainInfo;
+      },
+      
       tokenPrice: (state) => {
         return state.tokenPrice;
       },
@@ -361,5 +387,4 @@ export default function (/* { ssrContext } */) {
     strict: process.env.DEBUGGING,
   });
 
-  return Store;
-}
+export default Store;

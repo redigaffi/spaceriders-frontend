@@ -203,9 +203,9 @@ export default defineComponent({
       obj.position = `${position}:${solarSystem}:${galaxy}`;
       obj.diameter = tc(this.newPlanetStats.diameter, { digits: 2 });
 
-      obj.metalReserve = tc(this.newPlanetStats.max_resources.metal, { digits: 2 });
-      obj.crystalReserve = tc(this.newPlanetStats.max_resources.crystal, { digits: 2 });
-      obj.petrolReserve = tc(this.newPlanetStats.max_resources.petrol, { digits: 2 });
+      obj.metalReserve = tc(this.newPlanetStats.reserves.total_metal, { digits: 2 });
+      obj.crystalReserve = tc(this.newPlanetStats.reserves.total_crystal, { digits: 2 });
+      obj.petrolReserve = tc(this.newPlanetStats.reserves.total_petrol, { digits: 2 });
       obj.rarity = this.newPlanetStats.rarity;
 
       const colorMapping = {

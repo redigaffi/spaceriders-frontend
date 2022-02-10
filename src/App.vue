@@ -1,69 +1,100 @@
 <template>
+  
+
   <router-view />
+  
 </template>
-<script>
+<script setup>
 import ApiRequest from "./service/http/ApiRequests";
-import { defineComponent } from "vue";
-import { ACTIVE_PLANET_CHANGED, LOGGED_IN } from "./constants/Events";
+import { getCurrentInstance } from "vue";
+import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
+import { useStore } from "vuex";
 
-export default defineComponent({
-  name: "App",
-  async created() {
-    // On planet change reset all.
-    this.$eventBus.on(ACTIVE_PLANET_CHANGED, this.updateAll);
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $store = useStore();
 
-    // On login, request all data.
-    this.$eventBus.on(LOGGED_IN, this.updateAll);
 
-    // On page refresh reset all.
-    this.updateAll();
-  },
-  methods: {
-    update: async function (activePlanet) {
-      this.$store.commit("setActivePlanet", activePlanet);
-
-      const tokenPrice = await ApiRequest.tokenPrice();
-      const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
-        .data;
-
-      this.$store.commit("setTokenPrice", { tokenPrice: tokenPrice });
-      this.$store.commit("setResourceData", allPlanetInfo.resources);
-      this.$store.commit("setInstallationData", allPlanetInfo.installation);
-      this.$store.commit("setResearchData", allPlanetInfo.research);
-      this.$store.commit("setDefenseData", allPlanetInfo.defense);
-      this.$store.commit("setConversionRequests", allPlanetInfo.conversion);
-      this.$store.commit("addEmails", { emails: allPlanetInfo.email });
-    },
-    updateAll: async function () {
-      //TODO: Delete all intervals ..
-      //this.$store.commit("clearAllIntervalTimeouts");
-
-      if (!this.$store.getters.loggedIn) return;
-
-      let activePlanetId = false;
-      if (this.$store.getters.activePlanet) {
-        activePlanetId = this.$store.getters.activePlanet.id;
-      }
-
-      const planets = (await ApiRequest.getAllPlanets()).data;
-      this.$store.commit("setPlanets", planets);
-
-      if (activePlanetId !== false) {
-        console.log("active planet");
-        let activePlanet = planets.filter((o) => o.id === activePlanetId);
-        await this.update(activePlanet[0]);
-
-        // Set default planet
-      } else if (!activePlanetId && planets.length > 0) {
-        let activePlanets = planets.filter((o) => o.claimed);
-        if (activePlanets.length > 0) {
-          console.log("no active planet");
-          await this.update(activePlanets[0]);
-        }
-      }
-    },
-  },
+$eventBus.on(ACTIVE_PLANET_CHANGED, () => {
+  updateAll();
+  updateInterval();
 });
+$eventBus.on(LOGGED_IN, () => {
+  updateAll();
+  updateInterval();
+});
+
+async function getChainData() {
+  const data = await ApiRequest.getChainInfo();
+  $store.commit('setChainInfo', {chainInfo: data});
+}
+
+async function update(activePlanet) {
+  const tokenPrice = (await ApiRequest.tokenPrice());
+  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
+    .data;
+
+  $store.commit('setActivePlanet', allPlanetInfo.planet)
+  $store.commit('setTokenPrice', { tokenPrice: tokenPrice });
+  $store.commit("setResourceData", allPlanetInfo.resources);
+  $store.commit("setInstallationData", allPlanetInfo.installation);
+  $store.commit("setResearchData", allPlanetInfo.research);
+  $store.commit("setDefenseData", allPlanetInfo.defense);
+  $store.commit("setConversionRequests", allPlanetInfo.conversion);
+  $store.commit("addEmails", { emails: allPlanetInfo.email });
+}
+
+async function updateAll() {
+  if (!$store.getters.loggedIn) return;
+
+  let activePlanetId = false;
+  if ($store.getters.activePlanet) {
+    activePlanetId = $store.getters.activePlanet.id;
+  }
+
+  const planets = (await ApiRequest.getAllPlanets()).data;
+  $store.commit("setPlanets", planets);
+
+  let activePlanet = false;
+  if (activePlanetId !== false) {
+    activePlanet = planets.filter((o) => o.id === activePlanetId)[0];
+  } else if (!activePlanetId && planets.length > 0) {
+    let activePlanets = planets.filter((o) => o.claimed);
+    if (activePlanets.length > 0) {
+      activePlanet = activePlanets[1];
+    }
+  }
+  
+  if (activePlanet !== false) {
+    $store.commit("setActivePlanet", activePlanet);
+    await update(activePlanet);
+  }
+  
+  $eventBus.emit(UPDATED_ALL);
+}
+
+async function updateInterval() {
+  if (!$store.getters.loggedIn) return;
+
+  if($store.getters.updateIntervalId !== false) {
+    clearInterval($store.getters.updateIntervalId);
+  }
+
+  if ($store.getters.activePlanet) {
+    const timerId = setInterval(async () => {
+      update($store.getters.activePlanet);
+    }, 60000);
+
+    $store.commit('setUpdateIntervalId', {updateIntervalId: timerId});
+  }
+}
+
+getChainData();
+
+// On page refresh reset all.
+updateAll();
+
+// Start timer
+updateInterval();
 </script>
 
 <style>
