@@ -32,8 +32,11 @@
         <q-card-section class="text-center">
           <div class="text-h6">BUY A PLANET</div>
           <div class="text-subtitle1">
-            Buying a planet costs ${{ planetCost.usd_cost }} ({{planetCost.token_cost}} $SPR) + 0.0025 BNB, also, you can choose a planet name
-            (which can be changed later).
+            Buying a planet costs ${{ planetCost.usd_cost }} ({{
+              planetCost.token_cost
+            }}
+            $SPR) + 0.0025 BNB, also, you can choose a planet name (which can be
+            changed later).
           </div>
         </q-card-section>
         <q-card-section class="q-pt-none">
@@ -46,7 +49,10 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
-          <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="planetCost.token_cost" />
+          <IncreaseAllowance
+            :address="ContractAddress.getSpaceRidersGameAddress()"
+            :amount="planetCost.token_cost"
+          />
           <q-btn
             label="Buy Planet"
             color="warning"
@@ -71,7 +77,7 @@ import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
-import {useCheckAllowance} from "../service/util/useCheckAllowance.js";
+import { useCheckAllowance } from "../service/util/useCheckAllowance.js";
 import { NEW_PLANET_PURCHASED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
@@ -88,14 +94,13 @@ const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const planetCost = ref({});
 
-
 watchEffect(async () => {
   if (buyPlanetPopup.value) {
-    planetCost.value = (await ApiRequest.fetchPlanetCost());
+    planetCost.value = await ApiRequest.fetchPlanetCost();
   }
-})
+});
 
-async function buyPlanet () {
+async function buyPlanet() {
   const planetGuid = uuidv4();
 
   const closeNotification = $notification(
@@ -107,10 +112,19 @@ async function buyPlanet () {
   let receipt = { status: 0 };
 
   const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
-  const sD = new SignatureData(planetCostData.v, planetCostData.r, planetCostData.s);
-  
+  const sD = new SignatureData(
+    planetCostData.v,
+    planetCostData.r,
+    planetCostData.s
+  );
+
   try {
-    const tx = await SpaceRidersGameContract.buyPlanet(planetGuid, planetCostData.price, sD, planetCostData.tokenURI);
+    const tx = await SpaceRidersGameContract.buyPlanet(
+      planetGuid,
+      planetCostData.price,
+      sD,
+      planetCostData.tokenURI
+    );
     receipt = await tx.wait();
     console.log(receipt);
   } catch (e) {
@@ -120,11 +134,7 @@ async function buyPlanet () {
 
   if (receipt.status === 1) {
     const txHash = receipt.transactionHash;
-    const re = await ApiRequest.buyPlanet(
-      txHash,
-      planetGuid,
-      planetName.value
-    );
+    const re = await ApiRequest.buyPlanet(txHash, planetGuid, planetName.value);
 
     if (re.success) {
       $notification("success", "Planet purchases successfully!", 6000);
@@ -136,14 +146,9 @@ async function buyPlanet () {
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
     $store.commit("addPlanet", re.data);
   } else {
-    $notification(
-      "failed",
-      "Something failed, please try again!",
-      1500
-    );
+    $notification("failed", "Something failed, please try again!", 1500);
   }
 
   closeNotification();
 }
-
 </script>
