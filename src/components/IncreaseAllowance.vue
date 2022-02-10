@@ -56,17 +56,10 @@ async function approve() {
     closeNotification();
   }
 
-  let receipt = { status: 0 };
-
-  try {
-    const tx = await SpaceRiders.increaseAllowance(
-      address.value,
-      amount.value.toString()
-    );
-    receipt = await tx.wait();
-  } catch (e) {
-    console.log("error");
-    console.log(e);
+  if (receipt.status === 1) {
+    $notification("success", "Increased allowance successfuly!", 6000);
+  } else {
+    $notification("failed", "Failed increasing allowance...", 6000);
     closeNotification();
   }
 
