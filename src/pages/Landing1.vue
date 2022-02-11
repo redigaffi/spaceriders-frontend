@@ -626,7 +626,7 @@
                 outlined
                 color="white"
                 class="full-width"
-                v-model="text"
+                v-model="bnbBuyAmount"
                 placeholder="0.0"
                 type="number"
               />
@@ -637,7 +637,7 @@
           <div class="row q-col-gutter-sm">
             <div class="col-1 flex flex-center">
               <img
-                src="~assets/landing/img/Planet-GasGiant-Violet-transparent.png"
+                src="~assets/img/logo.png"
                 style="height: 50px"
               />
             </div>
@@ -651,8 +651,9 @@
                 outlined
                 class="full-width"
                 color="white"
-                v-model="text"
+                v-model="sprAmount"
                 placeholder="0.0"
+                readonly
                 type="number"
               />
             </div>
@@ -667,7 +668,9 @@
             no-caps
             v-close-popup
           /> -->
-
+          Purchasing powah: {{ purchasingPower }} $SPR <br/>
+          $SPR = {{price}}$<br/>
+          1BNB = {{bnbUsdPrice}}$
           <button
             class="button q-py-sm full-width"
             style="
@@ -677,9 +680,9 @@
               box-shadow: 0 0 20px rgb(34 83 244 / 76%);
               color: #fff;
             "
-            v-on:click.prevent="scrollPageTo('landing')"
+            v-on:click.prevent="buySpr"
           >
-            Connect to a Wallet
+            Exchange
           </button>
         </q-card-actions>
       </q-card>
@@ -694,9 +697,12 @@
 // import '../assets/landing/js/jquery.countdown.js';
 import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
-
+import RouterContract from "../service/contract/RouterContract";
+import SpaceRiders from "../service/contract/SpaceRiders";
+import { useStore } from "vuex";
+import ApiRequests from "../service/http/ApiRequests";
 import { defineComponent, ref } from "vue";
-import { onMounted } from "vue";
+import { onMounted, computed, watch } from "vue";
 //   new WOW().init();
 export default defineComponent({
   name: "PageLanding",
@@ -704,6 +710,35 @@ export default defineComponent({
   //   window.addEventListener("scroll", this.updateScroll);
   // },
   setup() {
+    const openPopup = ref(false);
+
+    const $store = useStore();
+    const myAddr = $store.getters.address;
+
+    const purchasingPower = ref(0);
+    const price = ref(0.0);
+    const bnbUsdPrice = ref(0.0);
+
+    watch(async () => {
+      if (openPopup.value) {
+        purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
+        price.value = (await ApiRequests.tokenPrice()).toFixed(2);
+        bnbUsdPrice.value = (await ApiRequests.bnbPrice()).toFixed(2)
+      }
+    });
+
+    const bnbBuyAmount = ref(0.2);
+    const sprAmount = ref(0);
+
+    watch(async () => {
+      const bnbAmount = bnbBuyAmount.value;
+      sprAmount.value = (bnbAmount*bnbUsdPrice.value/price.value).toFixed(2);
+    });
+
+    const buySpr = async () => {
+      await RouterContract.buySpr(myAddr, bnbBuyAmount.value);
+    };
+
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -760,9 +795,15 @@ export default defineComponent({
       // scrollPosition,
       // updateScroll,
       scrollPageTo,
-      openPopup: ref(false),
-      options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
-      model: ref("GLMR"),
+      openPopup: openPopup,
+      options: ["BNB"],
+      model: ref("BNB"),
+      buySpr: buySpr,
+      price: price,
+      purchasingPower:purchasingPower,
+      bnbBuyAmount:bnbBuyAmount,
+      sprAmount: sprAmount,
+      bnbUsdPrice: bnbUsdPrice,
     };
   },
 });
