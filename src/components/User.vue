@@ -12,10 +12,11 @@
 
       <div class="col-19">
         <q-btn
+          rounded
           v-if="!this.error"
           :label="logInButtonText"
-          color="warning"
-          class="btn-glow-element"
+          class="glossy"
+          color="primary"
           icon="person"
           @click="login"
         />

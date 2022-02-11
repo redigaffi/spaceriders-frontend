@@ -60,10 +60,9 @@ async function updateAll() {
   } else if (!activePlanetId && planets.length > 0) {
     let activePlanets = planets.filter((o) => o.claimed);
     if (activePlanets.length > 0) {
-      activePlanet = activePlanets[1];
+      activePlanet = activePlanets[0];
     }
   }
-  
   if (activePlanet !== false) {
     $store.commit("setActivePlanet", activePlanet);
     await update(activePlanet);
