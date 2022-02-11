@@ -14,7 +14,40 @@
         <span class="blue">SPACE</span>RIDERS
       </div>
       <q-space />
-      <q-tabs
+      <q-btn icon="menu" class="q-mr-md" color="primary" label="Menu">
+        <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item v-for="nav in essentialLinks" :key="nav" :to="nav.link" exact>
+              <q-item-section top avatar>
+                <q-avatar color="primary" text-color="white" :icon="nav.icon" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ nav.title }}</q-item-label>
+              </q-item-section>
+            </q-item>
+            <!-- <q-route-tab
+              v-for="nav in essentialLinks"
+              :key="nav"
+              class="q-py-sm showIconOnly"
+              :icon="nav.icon"
+              :label="nav.title"
+              :to="nav.link"
+              no-caps
+              exact
+              exact-active-class="showNameWithIcon"
+            >
+              <q-tooltip
+                class="bg-primary"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                {{ nav.title }}
+              </q-tooltip>
+            </q-route-tab> -->
+          </q-list>
+        </q-menu>
+      </q-btn>
+      <!-- <q-tabs
         active-color="warning"
         inline-label
         dense
@@ -39,7 +72,7 @@
             {{ nav.title }}
           </q-tooltip>
         </q-route-tab>
-      </q-tabs>
+      </q-tabs> -->
 
       <button
         class="q-mr-md button main__button3 popup__open"
@@ -345,6 +378,4 @@ export default {
   color: #2253f4;
   box-shadow: none;
 }
-
-
 </style>
