@@ -74,101 +74,12 @@
         </q-route-tab>
       </q-tabs> -->
 
-      <button
-        class="q-mr-md button main__button3 popup__open"
-        @click="openPopup = true"
-      >
-        Buy $SPR
-      </button>
 
-      <q-dialog v-model="openPopup" persistent>
-        <q-card style="width: 600px; max-width: 80vw; background: #0e101c">
-          <q-card-section class="row justify-between">
-            <div class="text-h4" style="letter-spacing: 3px">Swap</div>
-            <div>
-              <q-btn
-                dense
-                color="primary"
-                round
-                icon="close"
-                @click="openPopup = false"
-              />
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row q-col-gutter-sm">
-              <div class="col-1 flex flex-center">
-                <q-icon name="print" size="30px" />
-              </div>
-              <div class="col-3 text-overline" style="font-size: 12px">
-                <div>Swap From:</div>
-                <div>
-                  <q-select v-model="model" :options="options" dense />
-                </div>
-              </div>
-              <div class="col flex flex-center">
-                <q-input
-                  dense
-                  outlined
-                  color="white"
-                  class="full-width"
-                  v-model="text"
-                  placeholder="0.0"
-                  type="number"
-                />
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section class="q-pt-none">
-            <div class="row q-col-gutter-sm">
-              <div class="col-1 flex flex-center">
-                <img
-                  src="~assets/landing/img/Planet-GasGiant-Violet-transparent.png"
-                  style="height: 50px"
-                />
-              </div>
-              <div class="col-3 text-overline" style="font-size: 12px">
-                <div>Swap To:</div>
-                <div class="text-h4 text-weight-bold">$SPR</div>
-              </div>
-              <div class="col flex flex-center">
-                <q-input
-                  dense
-                  outlined
-                  class="full-width"
-                  color="white"
-                  v-model="text"
-                  placeholder="0.0"
-                  type="number"
-                />
-              </div>
-            </div>
-          </q-card-section>
-
-          <q-card-actions>
-            <!-- <q-btn
-            class="full-width"
-            style="background: #18121e"
-            label="Connect to a wallet"
-            no-caps
-            v-close-popup
-          /> -->
-
-            <button
-              class="button bg-dark q-py-sm full-width"
-              style="
-                border: 2px solid #2253f4;
-                border-radius: 5px;
-                font-size: 14px;
-                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-                color: #fff;
-              "
-            >
-              Connect to a Wallet
-            </button>
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+      <Swap>
+        <button class="q-mr-md button main__button3 popup__open">
+          Buy $SPR
+        </button>
+      </Swap>
 
       <User />
       <Balance />
@@ -192,6 +103,7 @@ import User from "./User.vue";
 import Balance from "./Balance.vue";
 import { defineComponent, ref } from "vue";
 import NavLinks from "components/NavLinks.vue";
+import Swap from "components/Swap.vue";
 
 const linksList = [
   {
@@ -236,6 +148,7 @@ export default {
     User,
     Balance,
     NavLinks,
+    Swap,
   },
   setup() {
     const leftDrawerOpen = ref(false);

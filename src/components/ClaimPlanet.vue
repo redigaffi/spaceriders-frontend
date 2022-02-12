@@ -5,16 +5,9 @@
 
 <script setup>
 import ApiRequest from "../service/http/ApiRequests";
-import tc from "thousands-counter";
 import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
-import { ref, getCurrentInstance, toRefs, computed } from "vue";
+import { getCurrentInstance, toRefs } from "vue";
 import { useStore } from "vuex";
-
-import SpaceRidersGameContract, {
-  PlanetAttributes,
-  PlanetVariableAttributes,
-  SignatureData,
-} from "../service/contract/SpaceRidersGameContract";
 
 const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
@@ -25,9 +18,6 @@ const props = defineProps({
 })
 
 const { planet } = toRefs(props);
-
-const planetCongratulationsPopup = ref(false);
-const planetNewStats = ref(false);
 
 async function claimPlanet() {
   const closeNotification = $notification(

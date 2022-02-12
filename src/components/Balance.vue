@@ -28,12 +28,13 @@
 import SpaceRiders from "../service/contract/SpaceRiders";
 import { useStore } from "vuex";
 import { ref, onBeforeMount, computed, getCurrentInstance } from "vue";
-import { LOGGED_IN } from "../constants/Events";
+import { LOGGED_IN, SWAP_COMPLETED} from "../constants/Events";
 import tc from "thousands-counter";
 import ApiRequest from "../service/http/ApiRequests";
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 $eventBus.on(LOGGED_IN, upateBalance);
+$eventBus.on(SWAP_COMPLETED, upateBalance);
 
 const $store = useStore();
 const showTokenAmount = ref(true)

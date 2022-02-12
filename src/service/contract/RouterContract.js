@@ -37,7 +37,7 @@ class RouterContract extends Contract {
             gasLimit: 6721975,
         };
 
-        await contract.swapExactETHForTokens(
+        return await contract.swapExactETHForTokens(
             0,
             path,
             to,
