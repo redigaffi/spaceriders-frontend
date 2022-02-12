@@ -12,7 +12,9 @@ import routes from './routes'
  */
 
 export default route(function (/* { store, ssrContext } */) {
-  const createHistory = createWebHashHistory
+  const createHistory = process.env.SERVER
+    ? createMemoryHistory
+    : (process.env.ENV === 'testnet' ? createWebHashHistory : createWebHistory)
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
