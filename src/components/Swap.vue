@@ -2,14 +2,16 @@
     <div @click="openPopup = true">
         <slot ></slot>
     </div>
-    <q-dialog v-model="openPopup" persistent>
+    <q-dialog v-model="openPopup">
         <q-card style="width: 600px; max-width: 80vw; background: #0e101c">
+            
             <q-card-section class="row justify-between">
                 <div class="text-h4" style="letter-spacing: 3px">Swap</div>
                 <div>
                     <q-btn dense color="primary" round icon="close" @click="openPopup = false" />
                 </div>
             </q-card-section>
+            
             <q-card-section>
                 <div class="row q-col-gutter-sm">
                     <div class="col-1 flex flex-center">
@@ -77,6 +79,10 @@
                 v-on:click.prevent="buySpr"
                 >Swap</button>
             </q-card-actions>
+            
+            <q-inner-loading :showing="visible">
+                <q-spinner size="70px" color="warning" />
+            </q-inner-loading>
         </q-card>
     </q-dialog>
 </template>
@@ -95,6 +101,7 @@ const $notification =
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
+const visible = ref(true);
 const options = ["BNB"];
 const model = ref("BNB");
 const openPopup = ref(false);
@@ -109,9 +116,11 @@ const bnbUsdPrice = ref(0.0);
 const pancakePurchaseUrl = ref(`${process.env.PANCAKE_URL}#/swap?outputCurrency=${ContractAddress.getSpaceRidersAddress()}`);
 watch(async () => {
     if (openPopup.value) {
+        visible.value = true;
         purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
-        price.value = (await ApiRequests.tokenPrice()).toFixed(2);
+        price.value = (await ApiRequests.tokenPrice()).toFixed(6);
         bnbUsdPrice.value = (await ApiRequests.bnbPrice()).toFixed(2);
+        visible.value = false;
     }
 });
 
