@@ -29,12 +29,14 @@ async function getChainData() {
 }
 
 async function update(activePlanet) {
-  const tokenPrice = (await ApiRequest.tokenPrice());
+  ApiRequest.tokenPrice().then(tokenPrice => {
+    $store.commit('setTokenPrice', { tokenPrice: tokenPrice })
+  });
+
   const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
     .data;
 
-  $store.commit('setActivePlanet', allPlanetInfo.planet)
-  $store.commit('setTokenPrice', { tokenPrice: tokenPrice });
+  $store.commit('setActivePlanet', allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
   $store.commit("setResearchData", allPlanetInfo.research);
