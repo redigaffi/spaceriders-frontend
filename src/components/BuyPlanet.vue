@@ -62,6 +62,9 @@
             v-close-popup
           />
         </q-card-section>
+        <q-inner-loading :showing="visible">
+          <q-spinner size="70px" color="warning" />
+        </q-inner-loading>
       </q-card>
     </q-dialog>
   </div>
@@ -94,9 +97,12 @@ const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const planetCost = ref({});
 
+const visible = ref(true);
 watchEffect(async () => {
   if (buyPlanetPopup.value) {
+    visible.value = true;
     planetCost.value = await ApiRequest.fetchPlanetCost();
+    visible.value = false;
   }
 });
 
