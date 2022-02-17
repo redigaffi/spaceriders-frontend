@@ -118,8 +118,8 @@ watch(async () => {
     if (openPopup.value) {
         visible.value = true;
         purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
-        price.value = (await ApiRequests.tokenPrice()).toFixed(6);
-        bnbUsdPrice.value = (await ApiRequests.bnbPrice()).toFixed(2);
+        price.value = parseFloat((await ApiRequests.tokenPrice())).toFixed(6);
+        bnbUsdPrice.value = parseFloat((await ApiRequests.bnbPrice())).toFixed(2);
         visible.value = false;
     }
 });
