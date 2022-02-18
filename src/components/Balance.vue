@@ -18,8 +18,8 @@
             class="glossy"
             color="primary"
             text-color="white"
-        >
-            <q-icon size="1.5em" name="fas fa-dollar-sign" />
+        >   
+            <q-avatar class="q-mr-xs" size="1.5rem"  color="warning" text-color="white" icon="fas fa-dollar-sign" />
             <div class="q-ml-xs">{{ totalUsd }}</div>
         </q-btn>
     </div>

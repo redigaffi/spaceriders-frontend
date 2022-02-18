@@ -177,6 +177,7 @@
   </q-layout>
 </template>
 <script setup>
+// window.location.reload();
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
@@ -266,10 +267,23 @@ const openInboxModel = ref(false);
 /*
 https://codepen.io/mattmarble/pen/qBdamQz
 */
+:root {
+  font-size: 14px;
+}
 #main {
   height: 100%;
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-size: 14px;
+  /* font-family: 'Orbitron', sans-serif; */
+  font-family: bodyFont;
 }
 
 #stars {

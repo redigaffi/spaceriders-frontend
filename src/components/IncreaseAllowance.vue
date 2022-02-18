@@ -1,12 +1,18 @@
 <template>
   <div v-if="!approveDisabled">
-    <q-btn
-      label="Approve"
-      color="yellow"
+    <button
+      class="button q-py-sm full-width"
+      style="
+        border: 2px solid #21ba45;
+        border-radius: 5px;
+        font-size: 14px;
+        box-shadow: 0 0 20px #21ba45;
+        color: #fff;
+      "
       @click="approve"
-      no-caps
-      class="q-px-lg q-mr-sm"
-    />
+    >
+      Approve
+    </button>
   </div>
 </template>
 <script setup>

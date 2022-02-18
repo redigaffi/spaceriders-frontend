@@ -35,7 +35,7 @@ body {
 a,
 button,
 input {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   /* font-family: 'Orbitron', sans-serif; */
   transition: 0.2s linear;
 }
@@ -242,7 +242,7 @@ input::-webkit-inner-spin-button {
 .ico__button {
   margin-top: 6rem;
   font-weight: 900;
-  padding: 2.7rem 5.7rem;
+  padding: 1.7rem 2.7rem;
   color: #fff;
   background: #2253f4;
   box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
