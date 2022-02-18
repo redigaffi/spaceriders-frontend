@@ -56,7 +56,7 @@
             /> -->
 
             <button
-              class="button q-pa-md"
+              class="button q-pa-md q-mr-xs"
               style="
                 border: 3px solid #2253f4;
                 border-radius: 5px;
@@ -66,6 +66,19 @@
               v-on:click.prevent="scrollPageTo('landing')"
             >
               WHITEPAPER
+            </button>
+
+            <button
+              class="button q-pa-md"
+              style="
+                border: 3px solid #2253f4;
+                border-radius: 5px;
+                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                color: #fff;
+              "
+              v-on:click.prevent="scrollPageTo('landing')"
+            >
+              Game manual
             </button>
             <!-- 
             <a
@@ -267,7 +280,10 @@
               </Swap>
             </div>
             <div>
-              <button class="button main__button3 popup__open">
+              <button
+                class="button main__button3 popup__open"
+                @click.prevent="$router.push('/research')"
+              >
                 Enter Space Riders
               </button>
             </div>
@@ -411,6 +427,262 @@
                 alt=""
                 style="width: 100%"
               />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">FAQ</div>
+
+          <div class="game__content">
+            <div class="q-pb-xl container">
+              <q-list bordered style="border-color: #2f2f91">
+                <q-expansion-item
+                  group="somegroup"
+                  label="What are UK current VAT rates?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        VAT rates are different for different categories it is
+                        totally dependent on what you are supplying mainly there
+                        are four categories:
+                      </div>
+                      <ol>
+                        <li>Standard rate</li>
+                        <li>Reduce rate</li>
+                        <li>Zero-rated</li>
+                        <li>Exempt supplies</li>
+                      </ol>
+                      <div>
+                        Rates are not fixed and change; therefore, you must
+                        check those changes and apply them from the date they
+                        update.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="How to check the validity of my company’s VAT number?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        You can use the official VAT services to verify the
+                        validity of your company’s VAT number. There is a UK VAT
+                        number checker designed for UK based companies. If your
+                        company is located in Europe, then in order to check the
+                        VAT number, you can try VIES VAT number validation.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="What is a flat rate VAT scheme?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        A flat rate scheme is designed to simplify the VAT
+                        process for smaller businesses, freelancers and
+                        contractors. It is applied to your business if you have
+                        a turnover of less than £ 150 000, make sure you have
+                        applied to HMRC to sign up and get more info about it.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="Is it Compulsory to register for VAT?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        It may be, or maybe not, some particular circumstances
+                        decide whether your business is subject to VAT or not.
+                        If your company's turnover reaches the £85,000 threshold
+                        in 12 months, then your VAT registration is compulsory,
+                        and if you do not register your business, you will have
+                        to pay a fine as a penalty. However, if your company
+                        does not reach the figure mentioned earlier, VAT
+                        registration is not compulsory.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+              </q-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAINTENANCE -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">MAINTENANCE</div>
+
+          <div class="game__content">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
+            veniam, quod natus expedita numquam est nisi ea recusandae error
+            veritatis porro, nesciunt ipsum excepturi animi consequatur ab
+            ipsam! Explicabo, ad!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">TEAM</div>
+
+          <div class="game__content">
+            <div class="row q-col-gutter-sm">
+              <div class="col">
+                <q-card
+                  class="bg-transparent text-center"
+                  style="
+                    border: 2px solid #2253f4;
+                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  "
+                >
+                  <q-avatar class="q-mt-md">
+                    <img src="https://cdn.quasar.dev/img/avatar.png" />
+                  </q-avatar>
+
+                  <q-card-section>
+                    <div class="text-h5">Linda Wilis</div>
+                    <div class="text-subtitle1">UI Designer</div>
+                  </q-card-section>
+
+                  <hr class="bg-white" style="width: 100px; height: 3px" />
+                  <q-card-section class="text-subtitle2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </q-card-section>
+                  <q-card-section class="text-subtitle2 q-gutter-md">
+                    <q-btn round color="warning" icon="fab fa-facebook-f" />
+                    <q-btn round color="warning" icon="fab fa-twitter" />
+                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  </q-card-section>
+                </q-card>
+              </div>
+              <div class="col">
+                <q-card
+                  class="bg-transparent text-center"
+                  style="
+                    border: 2px solid #2253f4;
+                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  "
+                >
+                  <q-avatar class="q-mt-md">
+                    <img src="https://cdn.quasar.dev/img/avatar.png" />
+                  </q-avatar>
+
+                  <q-card-section>
+                    <div class="text-h5">Linda Wilis</div>
+                    <div class="text-subtitle1">UI Designer</div>
+                  </q-card-section>
+
+                  <hr class="bg-white" style="width: 100px; height: 3px" />
+                  <q-card-section class="text-subtitle2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </q-card-section>
+                  <q-card-section class="text-subtitle2 q-gutter-md">
+                    <q-btn round color="warning" icon="fab fa-facebook-f" />
+                    <q-btn round color="warning" icon="fab fa-twitter" />
+                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  </q-card-section>
+                </q-card>
+              </div>
+              <div class="col">
+                <q-card
+                  class="bg-transparent text-center"
+                  style="
+                    border: 2px solid #2253f4;
+                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  "
+                >
+                  <q-avatar class="q-mt-md">
+                    <img src="https://cdn.quasar.dev/img/avatar.png" />
+                  </q-avatar>
+
+                  <q-card-section>
+                    <div class="text-h5">Linda Wilis</div>
+                    <div class="text-subtitle1">UI Designer</div>
+                  </q-card-section>
+
+                  <hr class="bg-white" style="width: 100px; height: 3px" />
+                  <q-card-section class="text-subtitle2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </q-card-section>
+                  <q-card-section class="text-subtitle2 q-gutter-md">
+                    <q-btn round color="warning" icon="fab fa-facebook-f" />
+                    <q-btn round color="warning" icon="fab fa-twitter" />
+                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  </q-card-section>
+                </q-card>
+              </div>
+              <div class="col">
+                <q-card
+                  class="bg-transparent text-center"
+                  style="
+                    border: 2px solid #2253f4;
+                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  "
+                >
+                  <q-avatar class="q-mt-md">
+                    <img src="https://cdn.quasar.dev/img/avatar.png" />
+                  </q-avatar>
+
+                  <q-card-section>
+                    <div class="text-h5">Linda Wilis</div>
+                    <div class="text-subtitle1">UI Designer</div>
+                  </q-card-section>
+
+                  <hr class="bg-white" style="width: 100px; height: 3px" />
+                  <q-card-section class="text-subtitle2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </q-card-section>
+                  <q-card-section class="text-subtitle2 q-gutter-md">
+                    <q-btn round color="warning" icon="fab fa-facebook-f" />
+                    <q-btn round color="warning" icon="fab fa-twitter" />
+                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  </q-card-section>
+                </q-card>
+              </div>
             </div>
           </div>
         </div>
@@ -618,38 +890,9 @@ export default defineComponent({
   //   window.addEventListener("scroll", this.updateScroll);
   // },
   components: {
-    Swap
+    Swap,
   },
   setup() {
-    const openPopup = ref(false);
-
-    const $store = useStore();
-    const myAddr = $store.getters.address;
-
-    const purchasingPower = ref(0);
-    const price = ref(0.0);
-    const bnbUsdPrice = ref(0.0);
-
-    watch(async () => {
-      if (openPopup.value) {
-        purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
-        price.value = (await ApiRequests.tokenPrice()).toFixed(2);
-        bnbUsdPrice.value = (await ApiRequests.bnbPrice()).toFixed(2)
-      }
-    });
-
-    const bnbBuyAmount = ref(0.2);
-    const sprAmount = ref(0);
-
-    watch(async () => {
-      const bnbAmount = bnbBuyAmount.value;
-      sprAmount.value = (bnbAmount*bnbUsdPrice.value/price.value).toFixed(2);
-    });
-
-    const buySpr = async () => {
-      await RouterContract.buySpr(myAddr, bnbBuyAmount.value);
-    };
-
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -706,15 +949,8 @@ export default defineComponent({
       // scrollPosition,
       // updateScroll,
       scrollPageTo,
-      openPopup: openPopup,
-      options: ["BNB"],
-      model: ref("BNB"),
-      buySpr: buySpr,
-      price: price,
-      purchasingPower:purchasingPower,
-      bnbBuyAmount:bnbBuyAmount,
-      sprAmount: sprAmount,
-      bnbUsdPrice: bnbUsdPrice,
+      options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
+      model: ref("GLMR"),
     };
   },
 });

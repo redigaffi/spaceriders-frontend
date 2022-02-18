@@ -14,12 +14,18 @@
         <span class="blue">SPACE</span>RIDERS
       </div>
       <q-space />
-      <q-btn icon="menu" class="q-mr-md" color="primary" label="Menu">
+      <q-btn icon="menu" class="q-mr-sm" color="primary" label="Menu">
         <q-menu>
           <q-list style="min-width: 100px">
-            <q-item v-for="nav in essentialLinks" :key="nav" :to="nav.link" exact>
+            <q-item
+              v-for="nav in essentialLinks"
+              :key="nav"
+              :to="nav.link"
+              exact
+              exact-active-class="text-positive"
+            >
               <q-item-section top avatar>
-                <q-avatar color="primary" text-color="white" :icon="nav.icon" />
+                <q-avatar color="warning" text-color="white" :icon="nav.icon" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ nav.title }}</q-item-label>
@@ -74,12 +80,25 @@
         </q-route-tab>
       </q-tabs> -->
 
-
       <Swap>
-        <button class="q-mr-md button main__button3 popup__open">
+        <button class="q-mr-sm button main__button3 popup__open">
           Buy $SPR
         </button>
       </Swap>
+
+      <button
+        class="button q-pa-md q-mr-xs"
+        style="
+          border: 3px solid #2253f4;
+          border-radius: 5px;
+          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+          color: #fff;
+          font-size: 12px;
+          padding: 7px 15px;
+        "
+      >
+        GAME MANUAL
+      </button>
 
       <User />
       <Balance />
@@ -159,7 +178,6 @@ export default {
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      openPopup: ref(false),
     };
   },
   methods: {
@@ -265,6 +283,8 @@ export default {
 .main__button2,
 .main__button3,
 .ico__button {
+  margin-top: 0rem;
+  font-size: 14px;
   font-weight: 900;
   padding: 0.5rem 2rem;
   color: #fff;

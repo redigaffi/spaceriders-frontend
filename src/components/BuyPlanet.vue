@@ -31,40 +31,85 @@
         <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
         <q-card-section class="text-center">
           <div class="text-h6">BUY A PLANET</div>
-          <div class="text-subtitle1">
-            Buying a planet costs ${{ planetCost.usd_cost }} ({{
-              planetCost.token_cost
-            }}
-            $SPR) + 0.0025 BNB, also, you can choose a planet name (which can be
-            changed later).
-          </div>
         </q-card-section>
-        <q-card-section class="q-pt-none">
+        <q-card-section class="q-gutter-sm q-pt-none">
           <q-input
-            label-color="info"
+            label-color="white"
+            v-model="planetName"
+            label="Planet Cost"
+            standout="bg-secondary"
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px #2253f4;
+              color: #fff;
+            "
+          />
+          <q-input
+            label-color="white"
+            v-model="planetName"
+            label="FEES"
+            standout="bg-secondary"
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px #2253f4;
+              color: #fff;
+            "
+          />
+          <q-input
+            label-color="white"
+            standout="bg-secondary"
             v-model="planetName"
             label="Planet Name"
-            standout="bg-secondary"
+            style="
+              border: 2px solid white;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px white;
+              color: #fff;
+            "
           />
         </q-card-section>
 
-        <q-card-section class="q-pt-none text-center">
-          <IncreaseAllowance
-            :address="ContractAddress.getSpaceRidersGameAddress()"
-            :amount="planetCost.token_cost"
-          />
-          <q-btn
-            label="Buy Planet"
-            color="warning"
-            @click="buyPlanet"
+        <q-card-actions class="row q-col-gutter-md q-px-md">
+          <!-- <q-btn
+            class="full-width"
+            style="background: #18121e"
+            label="Connect to a wallet"
             no-caps
-            class="q-px-lg"
             v-close-popup
           />
         </q-card-section>
         <q-inner-loading :showing="visible">
           <q-spinner size="70px" color="warning" />
         </q-inner-loading>
+          /> -->
+          <div class="col">
+            <IncreaseAllowance
+              :address="ContractAddress.getSpaceRidersGameAddress()"
+              :amount="planetCost.token_cost"
+            />
+          </div>
+          <div class="col">
+            <button
+              class="button q-py-sm full-width"
+              style="
+                border: 2px solid #2253f4;
+                border-radius: 5px;
+                font-size: 14px;
+                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                color: #fff;
+              "
+              @click="buyPlanet"
+              v-close-popup
+            >
+              Buy Planet
+            </button>
+          </div>
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>

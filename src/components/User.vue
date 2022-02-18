@@ -15,7 +15,7 @@
           rounded
           v-if="!this.error"
           :label="logInButtonText"
-          class="glossy"
+          class="glossy q-mr-sm"
           color="primary"
           icon="person"
           @click="login"
@@ -74,20 +74,19 @@ export default {
           this.error = false;
         }
       });
-  
+
       window.ethereum.on("accountsChanged", async (accounts) => {
         this.$store.commit("destroySession");
       });
-  
+
       const chain = await this.checkChain();
-  
+
       if (!chain) {
         this.error = true;
         this.$store.commit("destroySession");
       } else {
         this.error = false;
       }
-
     }
   },
   methods: {
@@ -96,7 +95,6 @@ export default {
     },
     checkChain: async function () {
       if (window.ethereum) {
-        
         const chainId = this.chainData.chainId;
         const rpcUrl = this.chainData.rpc;
         const chainName = this.chainData.chainName;
@@ -144,11 +142,7 @@ export default {
     login: async function (e) {
       let closeLoading = () => {};
       if (!this.loggedIn) {
-        closeLoading = this.$notification(
-          "progress",
-          "Signing in...",
-          0
-        );
+        closeLoading = this.$notification("progress", "Signing in...", 0);
       }
 
       if (this.loggedIn) {
@@ -180,7 +174,7 @@ export default {
   },
 
   computed: {
-    chainData: function() {
+    chainData: function () {
       return this.$store.getters.chainInfo;
     },
 
