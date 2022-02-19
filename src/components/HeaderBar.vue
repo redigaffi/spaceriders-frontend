@@ -80,6 +80,12 @@
         </q-route-tab>
       </q-tabs> -->
 
+      <WithdrawResources>
+        <q-btn class="q-mr-md button main__button3 popup__open">
+          Convert
+        </q-btn>
+      </WithdrawResources>
+
       <Swap>
         <button class="q-mr-sm button main__button3 popup__open">
           Buy $SPR
@@ -123,6 +129,7 @@ import Balance from "./Balance.vue";
 import { defineComponent, ref } from "vue";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
+import WithdrawResources from "components/WithdrawResources.vue";
 
 const linksList = [
   {
@@ -168,6 +175,7 @@ export default {
     Balance,
     NavLinks,
     Swap,
+    WithdrawResources,
   },
   setup() {
     const leftDrawerOpen = ref(false);

@@ -2,7 +2,7 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "_spaceRiderTokenAddress",
         "type": "address"
       },
@@ -98,11 +98,6 @@
         "type": "address"
       },
       {
-        "internalType": "enum ConversionType",
-        "name": "conversionType",
-        "type": "uint8"
-      },
-      {
         "internalType": "uint256",
         "name": "tokenAmount",
         "type": "uint256"
@@ -119,7 +114,35 @@
   },
   {
     "inputs": [],
+    "name": "enablePlanetFusion",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "enablePlanetPurchases",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "enablePlanetTrading",
     "outputs": [
       {
         "internalType": "bool",
@@ -221,6 +244,26 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "togglePlanetTradingRequests",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -503,6 +546,32 @@
   {
     "inputs": [
       {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetPurchases",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetFusion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "planetGuid",
         "type": "string"
@@ -572,26 +641,91 @@
       },
       {
         "internalType": "string",
-        "name": "id",
+        "name": "burnPlanetGuid1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "burnPlanetGuid2",
         "type": "string"
       },
       {
         "internalType": "uint256",
-        "name": "tokens",
+        "name": "tokenPrice",
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "validTimeWindow",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "newPlanetGuid",
+        "type": "string"
       },
       {
-        "internalType": "address",
-        "name": "forAddress",
-        "type": "address"
+        "internalType": "string",
+        "name": "newTokenURI",
+        "type": "string"
       }
     ],
-    "name": "convertFromPrimaryResources",
+    "name": "fusionPlanet",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "requestId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "planetGuid",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "trading",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetTrading",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetTrading",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -631,17 +765,12 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "validTimeWindow",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "forAddress",
         "type": "address"
       }
     ],
-    "name": "convertFromToken",
+    "name": "convertFromPrimaryResources",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

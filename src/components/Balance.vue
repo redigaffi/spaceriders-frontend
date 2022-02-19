@@ -28,7 +28,7 @@
 import SpaceRiders from "../service/contract/SpaceRiders";
 import { useStore } from "vuex";
 import { ref, onBeforeMount, computed, getCurrentInstance } from "vue";
-import { LOGGED_IN, SWAP_COMPLETED, NEW_PLANET_PURCHASED } from "../constants/Events";
+import { LOGGED_IN, SWAP_COMPLETED, NEW_PLANET_PURCHASED, CONVERT_COMPLETED } from "../constants/Events";
 import tc from "thousands-counter";
 import ApiRequest from "../service/http/ApiRequests";
 
@@ -36,6 +36,7 @@ const $eventBus = getCurrentInstance().appContext.config.globalProperties.$event
 $eventBus.on(LOGGED_IN, upateBalance);
 $eventBus.on(SWAP_COMPLETED, upateBalance);
 $eventBus.on(NEW_PLANET_PURCHASED, upateBalance);
+$eventBus.on(CONVERT_COMPLETED, upateBalance);
 
 const $store = useStore();
 const showTokenAmount = ref(true)
@@ -63,7 +64,6 @@ onBeforeMount(() => {
 async function upateBalance() {
     try {
         tokenAmount.value = await SpaceRiders.totalBalanceOf($store.getters.address);
-        console.log(tokenAmount.value);
     } catch (e) {
         console.log(e);
     }

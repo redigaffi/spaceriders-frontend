@@ -223,16 +223,6 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
-  /**
-   * Get pending conversion request
-   *
-   * @param {string} planetId
-   * @returns
-   */
-  static async getPendingConversions(planetId) {
-    const path = `${process.env.BASE_API_PATH}/conversion/${planetId}`;
-    return (await axios.get(path)).data;
-  }
 
   /**
    * Conversion Request.
@@ -244,44 +234,10 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/conversion/convert`;
 
     const body = {
-      type: data.type,
-      planetId: data.planetGuid,
+      planetId: data.planetId,
       metal: data.metal,
       crystal: data.crystal,
       petrol: data.petrol,
-      tokenAmount: data.tokenAmount,
-    };
-
-    return (await axios.post(path, body)).data;
-  }
-
-  /**
-   * Claim Conversion Request.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async claimConversionRequest(data) {
-    const path = `${process.env.BASE_API_PATH}/conversion/claim`;
-
-    const body = {
-      conversionId: data.conversionId,
-    };
-
-    return (await axios.post(path, body)).data;
-  }
-
-  /**
-   * Claim Conversion Request.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async confirmConversionRequest(data) {
-    const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
-
-    const body = {
-      conversionId: data.conversionId,
     };
 
     return (await axios.post(path, body)).data;
@@ -453,4 +409,55 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/chain`;
     return (await axios.get(path)).data;
   }
+
+  /**
+   * Conversion preview
+   * @returns
+   */
+  static async getPreviewConversion(planetId) {
+    const path = `${process.env.BASE_API_PATH}/conversion/preview/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+
+
+  /**
+   * Confirm conversion
+   * @param {object} data
+   * @returns
+   */
+  static async confirmConversion(data) {
+    const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
+
+    const body = {
+      planetId: data.planetId,
+      tokenConversionId: data.guid,
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
+   * Conversion preview
+   * @returns
+   */
+  static async getPendingConversions(planetId) {
+    const path = `${process.env.BASE_API_PATH}/conversion/pending/${planetId}`;
+    return (await axios.get(path)).data;
+  }
+
+    /**
+   * Confirm conversion
+   * @param {object} data
+   * @returns
+   */
+    static async retryConversion(data) {
+      const path = `${process.env.BASE_API_PATH}/conversion/retry`;
+  
+      const body = {
+        planetId: data.planetId,
+        tokenConversionId: data.guid,
+      };
+  
+      return (await axios.post(path, body)).data;
+    }
 }

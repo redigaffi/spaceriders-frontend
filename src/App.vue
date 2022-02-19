@@ -41,7 +41,6 @@ async function update(activePlanet) {
   $store.commit("setInstallationData", allPlanetInfo.installation);
   $store.commit("setResearchData", allPlanetInfo.research);
   $store.commit("setDefenseData", allPlanetInfo.defense);
-  $store.commit("setConversionRequests", allPlanetInfo.conversion);
   $store.commit("addEmails", { emails: allPlanetInfo.email });
 }
 

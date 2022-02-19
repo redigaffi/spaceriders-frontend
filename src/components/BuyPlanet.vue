@@ -188,8 +188,10 @@ async function buyPlanet() {
     const re = await ApiRequest.buyPlanet(txHash, planetGuid, planetName.value);
 
     if (re.success) {
+      closeNotification();
       $notification("success", "Planet purchases successfully!", 6000);
     } else {
+      closeNotification();
       $notification("failed", re.error, 6000);
       console.error(`${planetGuid}`);
     }
@@ -197,6 +199,7 @@ async function buyPlanet() {
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
     $store.commit("addPlanet", re.data);
   } else {
+    closeNotification();
     $notification("failed", "Something failed, please try again!", 1500);
   }
 

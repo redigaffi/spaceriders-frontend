@@ -43,13 +43,13 @@ class TokenExchangeAttributes {
      * @param {*} validTimeWindow 
      * @param {*} forAddress 
      */
-    constructor(id, tokens, validTimeWindow, forAddress) {
+    constructor(id, tokens, forAddress) {
         this.id = id;
         this.tokens = tokens;
-        this.validTimeWindow = validTimeWindow;
         this.forAddress = forAddress;
     }
 }
+
 class SpaceRidersGameContract extends Contract {
   constructor() {
     super();
@@ -164,29 +164,6 @@ class SpaceRidersGameContract extends Contract {
             signatureData,
             attributes.id,
             attributes.tokens,
-            attributes.validTimeWindow,
-            attributes.forAddress,
-            overrides
-        );
-    }
-
-
-    /**
-     * @param {string} planetGuid Planet GUID.
-     * 
-     **/
-    async convertFromToken(signatureData, attributes) {
-        const contract = await this.getContract();
-        
-        const overrides = {
-            gasLimit: 6721975,
-        };
-
-        return await contract.convertFromToken(
-            signatureData,
-            attributes.id,
-            attributes.tokens,
-            attributes.validTimeWindow,
             attributes.forAddress,
             overrides
         );

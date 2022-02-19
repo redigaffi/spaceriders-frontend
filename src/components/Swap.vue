@@ -347,19 +347,22 @@ const purchasingPower = ref(0);
 const price = ref(0.0);
 const bnbUsdPrice = ref(0.0);
 
-const pancakePurchaseUrl = ref(
-  `${
-    process.env.PANCAKE_URL
-  }#/swap?outputCurrency=${ContractAddress.getSpaceRidersAddress()}`
-);
-watch(async () => {
-  if (openPopup.value) {
+const pancakePurchaseUrl = ref(`${process.env.PANCAKE_URL}#/swap?outputCurrency=${ContractAddress.getSpaceRidersAddress()}`);
+
+const reloadPriceData = async () => {
     visible.value = true;
     purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
-    price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
-    bnbUsdPrice.value = parseFloat(await ApiRequests.bnbPrice()).toFixed(2);
+    price.value = parseFloat((await ApiRequests.tokenPrice())).toFixed(6);
+    bnbUsdPrice.value = parseFloat((await ApiRequests.bnbPrice())).toFixed(2);
     visible.value = false;
-  }
+};
+
+$eventBus.on(SWAP_COMPLETED, reloadPriceData);
+
+watch(async () => {
+    if (openPopup.value) {
+        reloadPriceData();
+    }
 });
 
 const bnbBuyAmount = ref(0.2);
