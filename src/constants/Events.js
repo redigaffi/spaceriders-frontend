@@ -5,3 +5,4 @@ export const LOGGED_IN = 'user-logged-in';
 export const BUILDING_UPGRADED = 'upgraded-building';
 export const UPDATED_ALL = 'updated-all';
 export const SWAP_COMPLETED = 'completed-swap';
+export const CONVERT_COMPLETED = 'completed-convert';

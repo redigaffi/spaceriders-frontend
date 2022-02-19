@@ -8,7 +8,6 @@ const installationsPage = () => import("src/pages/Installations.vue");
 const researchPage = () => import("src/pages/Research.vue");
 const planetPage = () => import("pages/Planet.vue");
 const defensePage = () => import("pages/Defense.vue");
-const convertPage = () => import("pages/Convert.vue");
 const planetInfoPage = () => import("pages/PlanetInfo.vue");
 
 const landingPage = () => import("src/pages/Landing1.vue");
@@ -36,8 +35,6 @@ const routes = [
       { path: "/research", component: researchPage },
       { path: "/planet", component: planetPage },
       { path: "/defense", component: defensePage },
-      { path: "/convert", component: convertPage },
-      { path: "/convert", component: convertPage },
     ],
   },
   {

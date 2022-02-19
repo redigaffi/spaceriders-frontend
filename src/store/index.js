@@ -21,7 +21,6 @@ import { createStore } from "vuex";
         installationData: false,
         researchData: false,
         defenseData: false,
-        conversionRequests: [],
         emails: [],
       };
     },
@@ -74,16 +73,6 @@ import { createStore } from "vuex";
         state.emails.splice(eI, 1);
       },
 
-      removeConversionRequest(state, payload) {
-        const conversionRequest = payload.conversionRequest;
-        let index = state.conversionRequests.findIndex(cR => cR.id == conversionRequest.id);
-        state.conversionRequests.splice(index, 1);
-      },
-
-      addConversionRequest(state, payload) {
-        state.conversionRequests.push(payload.conversionRequest);
-      },
-
       login(state, payload) {
         state.jwt = payload.jwt;
         state.address = payload.address;
@@ -109,12 +98,7 @@ import { createStore } from "vuex";
         state.installationData = false;
         state.researchData = false;
         state.defenseData = false;
-        state.conversionRequests = [];
         state.emails = [];
-      },
-
-      setConversionRequests(state, payload) {
-        state.conversionRequests = payload;
       },
 
       setActivePlanet(state, payload) {
@@ -340,9 +324,6 @@ import { createStore } from "vuex";
 
       emails: (state) => {
         return state.emails;
-      },
-      conversionRequests: (state) => {
-        return state.conversionRequests;
       },
 
       planets: (state) => {
