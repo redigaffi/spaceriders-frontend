@@ -65,10 +65,10 @@
             v-model="planetName"
             label="Planet Name"
             style="
-              border: 2px solid white;
+              border: 2px solid #2253f4;
               border-radius: 5px;
               font-size: 14px;
-              box-shadow: 0 0 20px white;
+              box-shadow: 0 0 20px #2253f4;
               color: #fff;
             "
           />
