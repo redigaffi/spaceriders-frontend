@@ -44,7 +44,7 @@ class SpaceRidersContract extends Contract {
             address
         );
         
-        return parseInt(ethers.utils.formatEther(balance));
+        return parseFloat(ethers.utils.formatEther(balance)).toFixed(2);
     }
     
     /**

@@ -35,9 +35,10 @@
         <q-card-section class="q-gutter-sm q-pt-none">
           <q-input
             label-color="white"
-            v-model="planetName"
+            v-model="planetCostDisplay"
             label="Planet Cost"
             standout="bg-secondary"
+            readonly
             style="
               border: 2px solid #2253f4;
               border-radius: 5px;
@@ -48,8 +49,9 @@
           />
           <q-input
             label-color="white"
-            v-model="planetName"
+            v-model="bnbFeeDisplay"
             label="FEES"
+            readonly
             standout="bg-secondary"
             style="
               border: 2px solid #2253f4;
@@ -83,9 +85,7 @@
             v-close-popup
           />
         </q-card-section>
-        <q-inner-loading :showing="visible">
-          <q-spinner size="70px" color="warning" />
-        </q-inner-loading>
+        
           /> -->
           <div class="col">
             <IncreaseAllowance
@@ -109,6 +109,9 @@
               Buy Planet
             </button>
           </div>
+          <q-inner-loading :showing="visible">
+            <q-spinner size="70px" color="warning" />
+          </q-inner-loading>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -125,7 +128,6 @@ import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
-import { useCheckAllowance } from "../service/util/useCheckAllowance.js";
 import { NEW_PLANET_PURCHASED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
@@ -142,11 +144,18 @@ const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const planetCost = ref({});
 
+const planetCostDisplay = ref();
+const bnbFeeDisplay = ref();
+
 const visible = ref(true);
 watchEffect(async () => {
   if (buyPlanetPopup.value) {
+    planetCost.value = "";
+    bnbFeeDisplay.value = "";
     visible.value = true;
     planetCost.value = await ApiRequest.fetchPlanetCost();
+    planetCostDisplay.value = `${planetCost.value.token_cost} $SPR ($${planetCost.value.usd_cost})`;
+    bnbFeeDisplay.value = "0.0025 BNB"
     visible.value = false;
   }
 });

@@ -88,7 +88,7 @@
 
       <Swap>
         <button class="q-mr-sm button main__button3 popup__open">
-          Buy $SPR
+          Swap
         </button>
       </Swap>
 

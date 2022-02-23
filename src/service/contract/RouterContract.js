@@ -9,7 +9,7 @@ class RouterContract extends Contract {
     constructor() {
         super();
     }
-    
+
     getContract() {
         const contractAddress = ContractAddress.getRouterAddress();
         return super.buildContract(contractAddress, ABI);
@@ -21,14 +21,14 @@ class RouterContract extends Contract {
      **/
     async buySpr(to, bnbAmount) {
         const contract = await this.getContract();
-        
+
         const wBnbAddress = await contract.WETH();
         const sprAddress = ContractAddress.getSpaceRidersAddress();
-        
+
         const path = [
             wBnbAddress,
             sprAddress
-        ]
+        ];
 
         const overrides = {
             // To convert Ether to Wei:
@@ -38,6 +38,35 @@ class RouterContract extends Contract {
         };
 
         return await contract.swapExactETHForTokens(
+            0,
+            path,
+            to,
+            Date.now()+10,
+            overrides
+        );
+    }
+
+    async sellSpr(to, sprAmount) {
+        console.log(ethers.utils.parseEther(sprAmount).toString());
+        const contract = await this.getContract();
+
+        const wBnbAddress = await contract.WETH();
+        const sprAddress = ContractAddress.getSpaceRidersAddress();
+
+        const path = [
+            sprAddress,
+            wBnbAddress
+        ];
+
+        const overrides = {
+            // To convert Ether to Wei:
+            //@todo: get price from smart contract
+            //value: ethers.utils.parseEther(bnbAmount),
+            gasLimit: 6721975,
+        };
+
+        return await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
+            ethers.utils.parseEther(sprAmount),
             0,
             path,
             to,

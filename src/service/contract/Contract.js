@@ -9,6 +9,11 @@ export default class Contract {
     async getTransactionReceipt(hash) {
         return await this.provider.getTransactionReceipt(hash);
     }
+    
+    getProvider() {
+        return this.provider;
+    }
+
     buildContract(address, abi) {
         return new ethers.Contract(
             address,

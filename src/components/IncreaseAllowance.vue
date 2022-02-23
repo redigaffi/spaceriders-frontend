@@ -43,8 +43,6 @@ watch(async () => {
 });
 
 async function approve() {
-  const userBalance = await SpaceRiders.balanceOf($store.getters.address);
-
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
