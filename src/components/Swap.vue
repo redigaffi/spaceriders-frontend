@@ -195,8 +195,8 @@ watch(async () => {
   }
 });
 
-const buyFromAmount = ref(0);
-const buyToAmount = ref(0);
+const buyFromAmount = ref(1);
+const buyToAmount = ref(1);
 
 const buyFromChange = () => {
   if (pathNames.value[0] === "bnb") {
