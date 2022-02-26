@@ -445,28 +445,13 @@
               <q-list bordered style="border-color: #2f2f91">
                 <q-expansion-item
                   group="somegroup"
-                  label="What are UK current VAT rates?"
+                  label="What is Spaceriders?"
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>
-                        VAT rates are different for different categories it is
-                        totally dependent on what you are supplying mainly there
-                        are four categories:
-                      </div>
-                      <ol>
-                        <li>Standard rate</li>
-                        <li>Reduce rate</li>
-                        <li>Zero-rated</li>
-                        <li>Exempt supplies</li>
-                      </ol>
-                      <div>
-                        Rates are not fixed and change; therefore, you must
-                        check those changes and apply them from the date they
-                        update.
-                      </div>
+                      Answer
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -475,19 +460,13 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="How to check the validity of my company’s VAT number?"
+                  label="When will users be able to play Spaceriders?"
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>
-                        You can use the official VAT services to verify the
-                        validity of your company’s VAT number. There is a UK VAT
-                        number checker designed for UK based companies. If your
-                        company is located in Europe, then in order to check the
-                        VAT number, you can try VIES VAT number validation.
-                      </div>
+                      Answer
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -496,19 +475,13 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="What is a flat rate VAT scheme?"
+                  label="Will Spaceriders be free to play? "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>
-                        A flat rate scheme is designed to simplify the VAT
-                        process for smaller businesses, freelancers and
-                        contractors. It is applied to your business if you have
-                        a turnover of less than £ 150 000, make sure you have
-                        applied to HMRC to sign up and get more info about it.
-                      </div>
+                      <div>Answer</div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -517,22 +490,88 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="Is it Compulsory to register for VAT?"
+                  label="How do I expect to make passive income?"
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>
-                        It may be, or maybe not, some particular circumstances
-                        decide whether your business is subject to VAT or not.
-                        If your company's turnover reaches the £85,000 threshold
-                        in 12 months, then your VAT registration is compulsory,
-                        and if you do not register your business, you will have
-                        to pay a fine as a penalty. However, if your company
-                        does not reach the figure mentioned earlier, VAT
-                        registration is not compulsory.
-                      </div>
+                      <div>Answer</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="How do I try the alpha version?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>Answer</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="Is there early an early access route? "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>Answer</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="How does Spaceriders utilise blockchain? "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>Answer</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="Does Spaceriders have its own cryptocurrency or NFTs?  "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>Answer</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="How do you plan to launch ?  "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>Answer</div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
