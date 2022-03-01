@@ -3,7 +3,7 @@
   <div>
     <div class="row">
       <div
-        class="col q-pt-sm"
+        class="col q-ml-md"
         :class="tier != 'TIER 0' ? 'glitch' : 'boring'"
         :data-text="tier"
       >

@@ -221,7 +221,7 @@ const $notification =
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-const convertResourcesDialog = ref(true);
+const convertResourcesDialog = ref(false);
 const visible = ref(true);
 
 const maxMetalConversion = computed(() => {
