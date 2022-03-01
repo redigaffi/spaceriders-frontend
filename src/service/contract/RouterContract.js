@@ -47,7 +47,8 @@ class RouterContract extends Contract {
     }
 
     async sellSpr(to, sprAmount) {
-        console.log(ethers.utils.parseEther(sprAmount).toString());
+        console.log(sprAmount);
+        console.log(ethers.utils.parseEther(sprAmount));
         const contract = await this.getContract();
 
         const wBnbAddress = await contract.WETH();
@@ -64,8 +65,12 @@ class RouterContract extends Contract {
             //value: ethers.utils.parseEther(bnbAmount),
             gasLimit: 6721975,
         };
+        
+        
+        const amountOut = await contract.getAmountsOut(ethers.utils.parseEther(sprAmount), [sprAddress, wBnbAddress]);
+        const amountOutMin = amountOut[1].sub(amountOut[1].mul(30).div(100));
 
-        return await contract.swapExactTokensForETH(
+        return await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
             ethers.utils.parseEther(sprAmount),
             0,
             path,
