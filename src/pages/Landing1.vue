@@ -640,16 +640,13 @@
           <div class="q-pt-xl row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-6 col-md-3">
               <q-card
+                flat
                 class="bg-transparent text-center"
-                style="
-                  border: 2px solid #2253f4;
-                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  height: 100%;
-                "
+                style="height: 100%"
               >
-                <q-avatar class="q-mt-md">
-                  <img src="https://cdn.quasar.dev/img/avatar.png" />
-                </q-avatar>
+                <div class="text-center">
+                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                </div>
 
                 <q-card-section>
                   <div class="text-h5">Jordi</div>
@@ -663,24 +660,26 @@
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
-                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  <q-btn round color="warning" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
                 </q-card-section>
               </q-card>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
               <q-card
+                flat
                 class="bg-transparent text-center"
-                style="
-                  border: 2px solid #2253f4;
-                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  height: 100%;
-                "
+                style="height: 100%"
               >
-                <q-avatar class="q-mt-md">
-                  <img src="https://cdn.quasar.dev/img/avatar.png" />
-                </q-avatar>
+                <div class="text-center">
+                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                </div>
 
                 <q-card-section>
                   <div class="text-h5">Iniaki</div>
@@ -696,25 +695,27 @@
                   <div>NFT Games Player</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
-                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  <q-btn round color="warning" icon="fab fa-discord" />
-                  <q-btn round color="warning" icon="fab fa-youtube" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-youtube" />
                 </q-card-section>
               </q-card>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3">
               <q-card
+                flat
                 class="bg-transparent text-center"
-                style="
-                  border: 2px solid #2253f4;
-                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  height: 100%;
-                "
+                style="height: 100%"
               >
-                <q-avatar class="q-mt-md">
-                  <img src="https://cdn.quasar.dev/img/avatar.png" />
-                </q-avatar>
+                <div class="text-center">
+                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                </div>
 
                 <q-card-section>
                   <div class="text-h5">Max</div>
@@ -730,25 +731,27 @@
                   <div>Crypto Specialist</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
-                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  <q-btn round color="warning" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
                 </q-card-section>
               </q-card>
             </div>
 
             <div class="col-xs-12 col-sm-6 col-md-3">
               <q-card
+                flat
                 class="bg-transparent text-center"
-                style="
-                  border: 2px solid #2253f4;
-                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  height: 100%;
-                "
+                style="height: 100%"
               >
-                <q-avatar class="q-mt-md">
-                  <img src="https://cdn.quasar.dev/img/avatar.png" />
-                </q-avatar>
+                <div class="text-center">
+                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                </div>
 
                 <q-card-section>
                   <div class="text-h5">Mack</div>
@@ -764,9 +767,9 @@
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
-                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  <q-btn round color="warning" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn flat color="white" icon="fab fa-telegram-plane" />
+                  <q-btn flat color="white" icon="fab fa-discord" />
                 </q-card-section>
               </q-card>
             </div>

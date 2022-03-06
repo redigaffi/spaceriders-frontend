@@ -182,18 +182,17 @@
         <div class="q-py-md col flex flex-center">
           <q-card
             style="
-              border: 2px solid #2253F4;
+              border: 2px solid #2253f4;
               border-radius: 5px;
-              box-shadow: 0 0 20px #2253F4;
+              box-shadow: 0 0 20px #2253f4;
               color: #fff;
             "
           >
-           
             <q-card-section class="q-pa-none">
               <div class="text-subtitle2">
                 <q-card-section>
                   <div
-                    class="text-center q-pa-sm "
+                    class="text-center q-pa-sm"
                     style="
                       border: 2px solid #21ba45;
                       border-radius: 5px;
@@ -206,14 +205,6 @@
                   <div class="q-mt-md">
                     <div class="text-secondary">
                       <q-list dense class="text-left">
-                        <!-- <q-item class="congratulationsDialogItem">
-                        <q-item-label
-                          class="text-subtitle2 text-weight-bold"
-                          lines="1"
-                          >Diameter : <span class="text-warning">153.34K</span>
-                        </q-item-label>
-                        <q-item-section avatar>153.34K </q-item-section>
-                      </q-item> -->
                         <q-item class="congratulationsDialogItem">
                           <q-item-section
                             class="text-subtitle2 text-weight-bold"
@@ -221,9 +212,7 @@
                             >Diameter :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.diameter
-                        }}
+                            >{{ this.newPlanetInfo.diameter }}
                           </q-item-section>
                         </q-item>
 
@@ -234,9 +223,7 @@
                             >Temperature :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.temperature
-                        }}
+                            >{{ this.newPlanetInfo.temperature }}
                           </q-item-section>
                         </q-item>
                         <q-item class="congratulationsDialogItem">
@@ -246,9 +233,7 @@
                             >Position :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.position
-                        }}
+                            >{{ this.newPlanetInfo.position }}
                           </q-item-section>
                         </q-item>
 
@@ -259,9 +244,7 @@
                             >Metal Reserve :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.metalReserve
-                        }}
+                            >{{ this.newPlanetInfo.metalReserve }}
                           </q-item-section>
                         </q-item>
 
@@ -272,9 +255,7 @@
                             >Crystal Reserve :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.crystalReserve
-                        }}
+                            >{{ this.newPlanetInfo.crystalReserve }}
                           </q-item-section>
                         </q-item>
                         <q-item class="congratulationsDialogItem">
@@ -284,9 +265,7 @@
                             >Petrol Reserve :
                           </q-item-section>
                           <q-item-section avatar class="text-white"
-                            >{{
-                          this.newPlanetInfo.petrolReserve
-                        }}
+                            >{{ this.newPlanetInfo.petrolReserve }}
                           </q-item-section>
                         </q-item>
 
@@ -298,7 +277,9 @@
                           </q-item-section>
                           <q-item-section avatar
                             ><button class="epic-button">
-                              <span>{{ this.newPlanetInfo.rarity.toUpperCase() }}</span>
+                              <span>{{
+                                this.newPlanetInfo.rarity.toUpperCase()
+                              }}</span>
                             </button>
                           </q-item-section>
                         </q-item>
