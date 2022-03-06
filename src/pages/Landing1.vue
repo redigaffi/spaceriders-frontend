@@ -451,7 +451,10 @@
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      Answer
+                      SpaceRiders ($SPR) is a play-to-earn real-time strategy
+                      NFT game settled in space. $SPR enables players to
+                      purchase and acquire virtual items within the Spaceriders
+                      game.
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -460,13 +463,59 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="When will users be able to play Spaceriders?"
+                  label="Where do I buy $SPR token? "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      Answer
+                      For convenience of our users , We have pioneered our very
+                      own exchange tool which can be easily accessible on the
+                      landing page of our website and also on the game itself.
+                      Our exchange tool is directly linked to pancake swap thus
+                      saving you time and effort. If you prefer , you can also
+                      purchase $SPR Token on pancake swap itself.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="What do I need to play Spaceriders?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        You need a compatible wallet such as Metamask and enough
+                        $SPR previously purchased in order to mint a planet and
+                        fill your energy
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="When will users be able to play Spaceriders?  "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        The MVP (Minimum Viable Product ) is completed and is
+                        currently undergoing rigorous testing by the development
+                        team prior to rolling it out, to ensure that your first
+                        experience within the game is exceptional. As stated in
+                        our roadmap, we anticipate launch of this version in Q2
+                        2022
+                      </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -481,7 +530,13 @@
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
+                      <div>
+                        To enter Space Riders, you will need to mint a planet
+                        first. Our innovative systems ensures that users will
+                        always pay the same price in $ USD when minting a
+                        planet, regardless of our token price. This ensures
+                        fairness to our users.
+                      </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -490,13 +545,17 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="How do I expect to make passive income?"
+                  label="How does Spaceriders utilise blockchain?  "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
+                      <div>
+                        $SPR or $SpaceRiders is the in-game currency of
+                        SpaceRiders game, it is used for any purchase and for
+                        rewards.
+                      </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -505,13 +564,18 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="How do I try the alpha version?"
+                  label="How do I expect to make passive income? "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
+                      <div>
+                        Passive income will generate from your earnings when
+                        converting resources to $SPR . This will come from the
+                        mines you're upgrading. To maximise your ROI you'll need
+                        to focus and follow your own strategy.
+                      </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -520,58 +584,18 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="Is there early an early access route? "
+                  label="Will there be an ALPHA version? "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="How does Spaceriders utilise blockchain? "
-                  header-class="text-white bg-transparent text-h6"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="Does Spaceriders have its own cryptocurrency or NFTs?  "
-                  header-class="text-white bg-transparent text-h6"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="How do you plan to launch ?  "
-                  header-class="text-white bg-transparent text-h6"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-subtitle1">
-                      <div>Answer</div>
+                      <div>
+                        Yes the ALPHA version will be released via a testnet.
+                        This is so our community will be able to have an
+                        opportunity to get use to the game to understand the
+                        strategical approach.
+                      </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -591,11 +615,16 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">MAINTENANCE</div>
 
-          <div class="game__content">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
-            veniam, quod natus expedita numquam est nisi ea recusandae error
-            veritatis porro, nesciunt ipsum excepturi animi consequatur ab
-            ipsam! Explicabo, ad!
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            This page will be used to give users information regarding software
+            updates which may have an impact on the performance of the game.
           </div>
         </div>
       </div>
@@ -608,120 +637,138 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">TEAM</div>
 
-          <div class="game__content">
-            <div class="row q-col-gutter-sm">
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+          <div class="q-pt-xl row q-col-gutter-sm">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                class="bg-transparent text-center"
+                style="
+                  border: 2px solid #2253f4;
+                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  height: 100%;
+                "
+              >
+                <q-avatar class="q-mt-md">
+                  <img src="https://cdn.quasar.dev/img/avatar.png" />
+                </q-avatar>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Jordi</div>
+                  <div class="text-subtitle1">Founder</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>CEO & CIO</div>
+                  <div>Principle Software Engineer</div>
+                  <div>Blockchain Enthusiast</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
+                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  <q-btn round color="warning" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                class="bg-transparent text-center"
+                style="
+                  border: 2px solid #2253f4;
+                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  height: 100%;
+                "
+              >
+                <q-avatar class="q-mt-md">
+                  <img src="https://cdn.quasar.dev/img/avatar.png" />
+                </q-avatar>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Iniaki</div>
+                  <div class="text-subtitle1">Co-Founder</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>CFO</div>
+                  <div>Financial Operations Lead</div>
+                  <div>Content Creator</div>
+                  <div>Blockchain Enthusiast</div>
+                  <div>NFT Games Player</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
+                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  <q-btn round color="warning" icon="fab fa-discord" />
+                  <q-btn round color="warning" icon="fab fa-youtube" />
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                class="bg-transparent text-center"
+                style="
+                  border: 2px solid #2253f4;
+                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  height: 100%;
+                "
+              >
+                <q-avatar class="q-mt-md">
+                  <img src="https://cdn.quasar.dev/img/avatar.png" />
+                </q-avatar>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Max</div>
+                  <div class="text-subtitle1">CPO</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Product Lead</div>
+                  <div>Business Analysis</div>
+                  <div>Marketing Operations</div>
+                  <div>Social Media Lead</div>
+                  <div>Crypto Specialist</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
+                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  <q-btn round color="warning" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
+            </div>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                class="bg-transparent text-center"
+                style="
+                  border: 2px solid #2253f4;
+                  box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+                  height: 100%;
+                "
+              >
+                <q-avatar class="q-mt-md">
+                  <img src="https://cdn.quasar.dev/img/avatar.png" />
+                </q-avatar>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
+                <q-card-section>
+                  <div class="text-h5">Mack</div>
+                  <div class="text-subtitle1">CTO</div>
+                </q-card-section>
+
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Front end Support</div>
+                  <div>Strategy Analyst</div>
+                  <div>Systems Analyst</div>
+                  <div>Data Analysis</div>
+                  <div>Blockchain Enthusiast</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn round color="warning" icon="fab fa-linkedin-in" />
+                  <q-btn round color="warning" icon="fab fa-telegram-plane" />
+                  <q-btn round color="warning" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
             </div>
           </div>
         </div>
