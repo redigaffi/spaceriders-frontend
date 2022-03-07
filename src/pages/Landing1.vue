@@ -645,17 +645,16 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                  <img src="~assets/img/JORDI.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
                   <div class="text-h5">Jordi</div>
-                  <div class="text-subtitle1">Founder</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-subtitle2">
-                  <div>CEO & CIO</div>
+                  <div>CEO</div>
                   <div>Principle Software Engineer</div>
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
@@ -678,12 +677,11 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                  <img src="~assets/img/INIAKI.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
-                  <div class="text-h5">Iniaki</div>
-                  <div class="text-subtitle1">Co-Founder</div>
+                  <div class="text-h5">Iñaki</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
@@ -714,12 +712,11 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                  <img src="~assets/img/MAX.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
                   <div class="text-h5">Max</div>
-                  <div class="text-subtitle1">CPO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
@@ -755,7 +752,6 @@
 
                 <q-card-section>
                   <div class="text-h5">Mack</div>
-                  <div class="text-subtitle1">CTO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
