@@ -137,7 +137,7 @@ class SpaceRidersGameContract extends Contract {
           // To convert Ether to Wei:
           //@todo: get price from smart contract
           value: ethers.utils.parseEther("0.0025"),
-          gasLimit: 672197,
+          gasLimit: 1972197,
       };
 
       return await contract.buyPlanet(
