@@ -162,11 +162,19 @@
 
   <q-dialog v-model="planetCongratulationsPopup" persistent>
     <q-card
-      class="glass-element-dialog"
+      class=""
       flat
       style="width: 700px; max-width: 80vw; border-radius: 20px"
     >
       <q-card-section class="q-pa-none row q-col-gutter-sm">
+        <div
+          class="col"
+          style="background-size: cover"
+          :style="{
+            background: `url(https://spaceriders-planets.s3.us-east-2.amazonaws.com/${this.newPlanetInfo.image}-${this.newPlanetInfo.rarity}.png)`,
+          }"
+        ></div>
+        <!--         
         <div class="col flex flex-center">
           <q-card flat class="bg-transparent text-center">
             <q-img
@@ -177,7 +185,7 @@
               <div class="text-h6 neonText">PLANET NAME</div>
             </q-card-section>
           </q-card>
-        </div>
+        </div> -->
 
         <div class="q-py-md col flex flex-center">
           <q-card
@@ -190,7 +198,7 @@
           >
             <q-card-section class="q-pa-none">
               <div class="text-subtitle2">
-                <q-card-section>
+                <q-card-section class="q-pa-none">
                   <div
                     class="text-center q-pa-sm"
                     style="
@@ -269,7 +277,17 @@
                           </q-item-section>
                         </q-item>
 
-                        <q-item class="congratulationsDialogItem q-my-md">
+                        <div
+                          class="congratulationsDialogItem text-center q-pt-md"
+                        >
+                          <button class="epic-button">
+                            <span>{{
+                              this.newPlanetInfo.rarity.toUpperCase()
+                            }}</span>
+                          </button>
+                        </div>
+
+                        <!-- <q-item class="congratulationsDialogItem q-my-md">
                           <q-item-section
                             class="text-subtitle2 text-weight-bold"
                             lines="1"
@@ -282,7 +300,128 @@
                               }}</span>
                             </button>
                           </q-item-section>
+                        </q-item> -->
+                      </q-list>
+                    </div>
+                  </div>
+                  <!-- <div class="text-center q-mr-sm q-pt-md">
+                    <q-btn flat label="Close" color="secondary" v-close-popup />
+                  </div> -->
+                </q-card-section>
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+  <!-- 
+  <q-dialog v-model="testPlanel" persistent>
+    <q-card
+      class=""
+      flat
+      style="width: 700px; max-width: 80vw; border-radius: 20px"
+    >
+      <q-card-section class="q-pa-none row q-col-gutter-sm">
+        <div
+          class="col"
+          style="
+            background: url('https://images.ctfassets.net/cnu0m8re1exe/2ouYn9qcrQN0o9ooB8CuRM/4b8d6c07d53d34742cf930445656fa61/out1.jpg')
+              no-repeat;
+            background-size: cover;
+          "
+        ></div>
+
+        <div class="q-py-md col flex flex-center">
+          <q-card flat class="">
+            <q-card-section class="q-pa-none">
+              <div class="text-subtitle2">
+                <q-card-section class="q-pa-none">
+                  <div
+                    class="text-center q-pa-sm"
+                    style="
+                      border: 2px solid #21ba45;
+                      border-radius: 5px;
+                      box-shadow: 0 0 20px #21ba45;
+                      color: #fff;
+                    "
+                  >
+                    New Planet has been claimed
+                  </div>
+                  <div class="q-mt-md">
+                    <div class="text-secondary">
+                      <q-list dense class="text-left">
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Diameter :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
                         </q-item>
+
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Temperature :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
+                        </q-item>
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Position :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
+                        </q-item>
+
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Metal Reserve :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
+                        </q-item>
+
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Crystal Reserve :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
+                        </q-item>
+                        <q-item class="congratulationsDialogItem">
+                          <q-item-section
+                            class="text-subtitle2 text-weight-bold"
+                            lines="1"
+                            >Petrol Reserve :
+                          </q-item-section>
+                          <q-item-section avatar class="text-white"
+                            >1
+                          </q-item-section>
+                        </q-item>
+
+                        <div
+                          class="congratulationsDialogItem text-center q-pt-md"
+                        >
+                          <button class="epic-button">
+                            <span>EPIC</span>
+                          </button>
+                        </div>
                       </q-list>
                     </div>
                   </div>
@@ -296,7 +435,7 @@
         </div>
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script>
@@ -311,6 +450,11 @@ export default defineComponent({
   components: {
     ClaimPlanetList,
     BuyPlanet,
+  },
+  setup() {
+    return {
+      // testPlanel: ref(true),
+    };
   },
   data: function () {
     return {
@@ -522,5 +666,18 @@ export default defineComponent({
     #ffffff 80%,
     rgba(255, 255, 255, 0) 100%
   );
+}
+
+.about-us-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+}
+
+.about-us-image img {
+  object-fit: contain;
+  min-width: 100%;
+  min-height: 100%;
 }
 </style>

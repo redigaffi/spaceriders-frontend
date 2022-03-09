@@ -650,11 +650,11 @@
 
                 <q-card-section>
                   <div class="text-h5">Jordi</div>
+                  <div class="text-h6">CEO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-subtitle2">
-                  <div>CEO</div>
                   <div>Principle Software Engineer</div>
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
@@ -682,11 +682,11 @@
 
                 <q-card-section>
                   <div class="text-h5">Iñaki</div>
+                  <div class="text-h6">CFO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-subtitle2">
-                  <div>CFO</div>
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
                   <div>Blockchain Enthusiast</div>
@@ -717,6 +717,7 @@
 
                 <q-card-section>
                   <div class="text-h5">Max</div>
+                  <div class="text-h6">CPO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
@@ -752,6 +753,7 @@
 
                 <q-card-section>
                   <div class="text-h5">Mack</div>
+                  <div class="text-h6">CTO</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
@@ -769,6 +771,50 @@
                 </q-card-section>
               </q-card>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAINTENANCE -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">DISCLAIMER</div>
+
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            <p class="text-h5">
+              The information provided on this website does not constitute
+              investment advice, financial advice, trading advice, or any other
+              sort of advice and you should not treat any of the website's
+              content as such. Spaceriders team does not recommend and is not
+              responsible for any cryptocurrency that is bought, sold, or held
+              by you. do conduct your own due diligence and consult your
+              financial advisor before making any investment decisions.
+            </p>
+            <p class="q-pt-md text-h5">
+              Spaceriders team expressly disclaims any and all responsibility
+              for any direct or consequential loss or damage of any kind
+              whatsoever arising directly or indirectly from
+            </p>
+            <p class="q-pt-md text-h5">
+              <ul>
+                <li>(i) reliance on any information produced by Spaceriders</li>
+                <li>(ii) any error, omission or inaccuracy in any such information</li>
+                <li>(iii) any action resulting therefrom, </li>
+                <li>
+                  (iv) usage or acquisition of products, available through the website.
+                </li>
+              </ul>
+            </p>
           </div>
         </div>
       </div>
