@@ -416,14 +416,14 @@
           <div class="row fit wrap">
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GameRoadmap.png"
+                src="~assets/img/GameRoadmap.jpeg"
                 alt=""
                 style="width: 100%"
               />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GeneralRoadmap.png"
+                src="~assets/img/GeneralRoadmap.jpeg"
                 alt=""
                 style="width: 100%"
               />

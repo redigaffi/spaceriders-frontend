@@ -24,6 +24,11 @@
                   class="resource-icon-small"
                 />
                 <div class="text-white">-{{ metalAmount }} Metal</div>
+                <q-badge color="" class="text-subtitle2">
+                  <span class="text-weight-bold"
+                    >Metal Price: {{ metalCostUsd }}$</span
+                  ></q-badge
+                >
               </div>
             </div>
           </div>
@@ -53,6 +58,11 @@
                   class="resource-icon-small"
                 />
                 <div class="text-white">-{{ petrolAmount }} Petrol</div>
+                <q-badge color="" class="text-subtitle2">
+                  <span class="text-weight-bold"
+                    >Crystal Price: {{ crystalCostUsd }}$</span
+                  ></q-badge
+                >
               </div>
             </div>
           </div>
@@ -82,6 +92,11 @@
                   srcset
                 />
                 <div class="text-white">-{{ crystalAmount }} Crystal</div>
+                <q-badge color="" class="text-subtitle2">
+                  <span class="text-weight-bold"
+                    >Petrol Price: {{ petrolCostUsd }}$</span
+                  >
+                </q-badge>
               </div>
             </div>
           </div>
@@ -221,7 +236,7 @@ const $notification =
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-const convertResourcesDialog = ref(false);
+const convertResourcesDialog = ref(true);
 const visible = ref(true);
 
 const maxMetalConversion = computed(() => {
