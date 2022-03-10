@@ -23,12 +23,10 @@
                   srcset
                   class="resource-icon-small"
                 />
-                <div class="text-white">-{{ metalAmount }} Metal</div>
-                <q-badge color="" class="text-subtitle2">
-                  <span class="text-weight-bold"
-                    >Metal Price: {{ metalCostUsd }}$</span
-                  ></q-badge
-                >
+                <!-- <div class="text-white">-{{ metalAmount }} Metal</div> -->
+                <div class="text-weight-bold">
+                  Metal Price: {{ metalCostUsd }}$
+                </div>
               </div>
             </div>
           </div>
@@ -42,6 +40,9 @@
                   color="warning"
                   class="custom-slider-track"
                 />
+                <div class="text-white text-center">
+                  -{{ metalAmount }} Metal
+                </div>
               </div>
             </q-slide-transition>
           </div>
@@ -57,12 +58,10 @@
                   srcset
                   class="resource-icon-small"
                 />
-                <div class="text-white">-{{ petrolAmount }} Petrol</div>
-                <q-badge color="" class="text-subtitle2">
-                  <span class="text-weight-bold"
-                    >Crystal Price: {{ crystalCostUsd }}$</span
-                  ></q-badge
-                >
+
+                <div class="text-weight-bold">
+                  Petrol Price: {{ petrolCostUsd }}$
+                </div>
               </div>
             </div>
           </div>
@@ -76,6 +75,9 @@
                   color="warning"
                   class="custom-slider-track"
                 />
+                <div class="text-white text-center">
+                  -{{ petrolAmount }} PETROL
+                </div>
               </div>
             </q-slide-transition>
           </div>
@@ -91,12 +93,10 @@
                   class="resource-icon-small"
                   srcset
                 />
-                <div class="text-white">-{{ crystalAmount }} Crystal</div>
-                <q-badge color="" class="text-subtitle2">
-                  <span class="text-weight-bold"
-                    >Petrol Price: {{ petrolCostUsd }}$</span
-                  >
-                </q-badge>
+                <!-- <div class="text-white">-{{ crystalAmount }} Crystal</div> -->
+                <div class="text-weight-bold">
+                  Crystal Price: {{ crystalCostUsd }}$
+                </div>
               </div>
             </div>
           </div>
@@ -110,6 +110,9 @@
                   color="warning"
                   class="custom-slider-track"
                 />
+                <div class="text-white text-center">
+                  -{{ crystalAmount }} CRYSTAL
+                </div>
               </div>
             </q-slide-transition>
           </div>
@@ -236,7 +239,7 @@ const $notification =
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-const convertResourcesDialog = ref(true);
+const convertResourcesDialog = ref(false);
 const visible = ref(true);
 
 const maxMetalConversion = computed(() => {
