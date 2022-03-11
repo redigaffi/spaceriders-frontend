@@ -852,36 +852,16 @@
           <div class="token__inner q-mt-xl">
             <div class="token__img--inner wow animate__animated animate__fadeIn">
               <img
-                src="~assets/landing/img/anal.svg"
+                src="~assets/img/token-allocation.png"
                 alt="Диаграмма"
                 class="token__img"
               />
             </div>
 
             <div class="token__text--inner wow animate__animated animate__fadeIn">
-              <h2 class="text-h4">Token Allocation</h2>
-
-              <p class="text-h5 text-justify q-pt-md">
-                We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the Spaceriders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.</p>
-              
-              <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
-              <div class="text-h5 q-pt-md">
-                
-
-
-                <p>
-2% LP
-                </p>
-                <p>
-2% Burn
-                </p>
-                <p>
-2% Reward Pool
-                </p>
-              </div>
-              
-
-              <div class="token__wrapper">
+              <div class="token__wrapper" style="border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;">
                 <p class="token__wrapper--title">Total supply 100M</p>
 
                 <div class="token__colors text-h6">
@@ -906,24 +886,55 @@
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    PreSale : 
+                    PreSale
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Private Sale: 
+                    Private Sale
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Liquidity :
+                    Liquidity
                   </div>
                 </div>
               </div>
+              
+              
+              
+
+              
             </div>
+
+            
           </div>
+          <div class="q-pt-md">
+
+          <h2 class="text-h4">Token Allocation</h2>
+
+              <p class="text-h5 text-justify q-pt-md">
+                We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the Spaceriders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.</p>
+              
+              <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
+              <div class="text-h5 q-pt-md">
+                
+
+
+                <p>
+2% LP
+                </p>
+                <p>
+2% Burn
+                </p>
+                <p>
+2% Reward Pool
+                </p>
+              </div>
+          </div>
+
         </div>
       </div>
     </section>

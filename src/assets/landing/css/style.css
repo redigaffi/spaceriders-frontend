@@ -496,14 +496,14 @@ input::-webkit-inner-spin-button {
   color: #fff;
   font-weight: 700;
   /* font-family: 'Montserrat', sans-serif; */
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 .token__color--wrapper {
   width: 51px;
   height: 42px;
   border-radius: 5px;
-  background: #102157;
+  background: #46bbc4;
   margin-right: 2rem;
 }
 
@@ -513,7 +513,7 @@ input::-webkit-inner-spin-button {
 }
 
 .token__color:nth-child(2) .token__color--wrapper {
-  background: #ececec;
+  background: #073763;
 }
 
 .token__color:nth-child(3) .token__color--wrapper {
@@ -521,7 +521,15 @@ input::-webkit-inner-spin-button {
 }
 
 .token__color:nth-child(4) .token__color--wrapper {
-  background: #2253f4;
+  background: #0b5393;
+}
+
+.token__color:nth-child(5) .token__color--wrapper {
+  background: #0000fd;
+}
+
+.token__color:nth-child(6) .token__color--wrapper {
+  background: #3d84c4;
 }
 
 /* Game */
