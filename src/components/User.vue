@@ -2,15 +2,7 @@
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
     <div class="row">
-      <div
-        class="col q-ml-md"
-        :class="tier != 'TIER 0' ? 'glitch' : 'boring'"
-        :data-text="tier"
-      >
-        {{ tier }}
-      </div>
-
-      <div class="col-19">
+      <div class="">
         <q-btn
           rounded
           v-if="!this.error"
@@ -28,6 +20,10 @@
           icon="bolt"
           @click="login"
         />
+      </div>
+
+      <div :class="tier != 'TIER 0' ? 'glitch' : 'boring'" :data-text="tier">
+        {{ tier }}
       </div>
     </div>
 

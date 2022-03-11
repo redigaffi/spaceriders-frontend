@@ -41,7 +41,7 @@ input {
 }
 
 .custom-font {
-	font-family: 'Orbitron';
+  font-family: "Orbitron";
 }
 
 a {
@@ -468,7 +468,7 @@ input::-webkit-inner-spin-button {
 
 .token__wrapper {
   margin-top: 4rem;
-  padding: 4rem 5rem;
+  padding: 2rem 2.5rem;
   width: 100%;
   background: rgba(34, 83, 244, 0.05);
   border: 1px solid #a0a0a0;

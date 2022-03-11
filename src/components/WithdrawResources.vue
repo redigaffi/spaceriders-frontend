@@ -8,7 +8,9 @@
       style="width: 600px; max-width: 70vw; border-radius: 20px"
     >
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2">Convert</q-toolbar-title>
+        <q-toolbar-title class="text-body2 absolute-center"
+          >RESOURCE CONVERSION</q-toolbar-title
+        >
         <q-btn round flat icon="close" v-close-popup />
       </q-toolbar>
 
@@ -24,7 +26,7 @@
                   class="resource-icon-small"
                 />
                 <!-- <div class="text-white">-{{ metalAmount }} Metal</div> -->
-                <div class="text-weight-bold">
+                <div class="text-weight-bold neonText">
                   Metal Price: {{ metalCostUsd }}$
                 </div>
               </div>
@@ -59,7 +61,7 @@
                   class="resource-icon-small"
                 />
 
-                <div class="text-weight-bold">
+                <div class="text-weight-bold neonText">
                   Petrol Price: {{ petrolCostUsd }}$
                 </div>
               </div>
@@ -94,7 +96,7 @@
                   srcset
                 />
                 <!-- <div class="text-white">-{{ crystalAmount }} Crystal</div> -->
-                <div class="text-weight-bold">
+                <div class="text-weight-bold neonText">
                   Crystal Price: {{ crystalCostUsd }}$
                 </div>
               </div>
@@ -481,7 +483,7 @@ async function retryConversion(pendingConversion) {
 <style lang="scss">
 .neonText {
   color: white;
-  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff;
+  text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 2px #fff;
 }
 
 .custom-slider-track {

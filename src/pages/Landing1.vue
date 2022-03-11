@@ -416,14 +416,14 @@
           <div class="row fit wrap">
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GameRoadmap.jpeg"
+                src="~assets/img/GameRoadmap.png"
                 alt=""
                 style="width: 100%"
               />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GeneralRoadmap.jpeg"
+                src="~assets/img/GeneralRoadmap.png"
                 alt=""
                 style="width: 100%"
               />
@@ -776,7 +776,7 @@
       </div>
     </section>
 
-    <!-- MAINTENANCE -->
+    <!-- DISCLAIMER -->
     <div id="game"></div>
     <section class="game">
       <div class="container">
@@ -815,6 +815,114 @@
                 </li>
               </ul>
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">TROUBLESHOOTING</div>
+
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            <p class="text-h5">
+              In this section you will find the most common and/or current issues people are having when trying to do an action. In this page we will trouble shoot all user-issues and provide a tested solution for our users.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">Tokenomics</div>
+          <div class="token__inner q-mt-xl">
+            <div class="token__img--inner wow animate__animated animate__fadeIn">
+              <img
+                src="~assets/landing/img/anal.svg"
+                alt="Диаграмма"
+                class="token__img"
+              />
+            </div>
+
+            <div class="token__text--inner wow animate__animated animate__fadeIn">
+              <h2 class="text-h4">Token Allocation</h2>
+
+              <p class="text-h5 text-justify q-pt-md">
+                We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the Spaceriders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.</p>
+              
+              <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
+              <div class="text-h5 q-pt-md">
+                
+
+
+                <p>
+2% LP
+                </p>
+                <p>
+2% Burn
+                </p>
+                <p>
+2% Reward Pool
+                </p>
+              </div>
+              
+
+              <div class="token__wrapper">
+                <p class="token__wrapper--title">Total supply 100M</p>
+
+                <div class="token__colors text-h6">
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Team
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Future In Game
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                   Play 2 Earn & Reward Pool
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    PreSale : 
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Private Sale: 
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Liquidity :
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

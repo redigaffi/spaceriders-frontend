@@ -14,7 +14,20 @@
         <span class="blue">SPACE</span>RIDERS
       </div>
       <q-space />
-      <q-btn icon="menu" class="q-mr-sm" color="primary" label="Menu">
+
+      <button
+        class="button q-pa-md q-mr-xs"
+        style="
+          border: 3px solid #2253f4;
+          border-radius: 5px;
+          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+          color: #fff;
+          font-size: 12px;
+          padding: 7px 15px;
+        "
+      >
+        <q-icon name="menu" />
+        MENU
         <q-menu>
           <q-list style="min-width: 100px">
             <q-item
@@ -31,64 +44,39 @@
                 <q-item-label>{{ nav.title }}</q-item-label>
               </q-item-section>
             </q-item>
-            <!-- <q-route-tab
-              v-for="nav in essentialLinks"
-              :key="nav"
-              class="q-py-sm showIconOnly"
-              :icon="nav.icon"
-              :label="nav.title"
-              :to="nav.link"
-              no-caps
-              exact
-              exact-active-class="showNameWithIcon"
-            >
-              <q-tooltip
-                class="bg-primary"
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                {{ nav.title }}
-              </q-tooltip>
-            </q-route-tab> -->
           </q-list>
         </q-menu>
-      </q-btn>
-      <!-- <q-tabs
-        active-color="warning"
-        inline-label
-        dense
-        class="text-secondary absolute-center gt-sm header-tabs"
-      >
-        <q-route-tab
-          v-for="nav in essentialLinks"
-          :key="nav"
-          class="q-py-sm showIconOnly"
-          :icon="nav.icon"
-          :label="nav.title"
-          :to="nav.link"
-          no-caps
-          exact
-          exact-active-class="showNameWithIcon"
-        >
-          <q-tooltip
-            class="bg-primary"
-            transition-show="scale"
-            transition-hide="scale"
-          >
-            {{ nav.title }}
-          </q-tooltip>
-        </q-route-tab>
-      </q-tabs> -->
+      </button>
 
       <WithdrawResources>
-        <q-btn class="q-mr-md button main__button3 popup__open">
-          Convert
-        </q-btn>
+        <button
+          class="button q-pa-md q-mr-xs"
+          style="
+            border: 3px solid #2253f4;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+            color: #fff;
+            font-size: 12px;
+            padding: 7px 15px;
+          "
+        >
+          CONVERT
+        </button>
       </WithdrawResources>
 
       <Swap>
-        <button class="q-mr-sm button main__button3 popup__open">
-          Swap
+        <button
+          class="button q-pa-md q-mr-xs"
+          style="
+            border: 3px solid #2253f4;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+            color: #fff;
+            font-size: 12px;
+            padding: 7px 15px;
+          "
+        >
+          SWAP
         </button>
       </Swap>
 
@@ -106,8 +94,8 @@
         GAME MANUAL
       </button>
 
-      <User />
       <Balance />
+      <User />
     </q-toolbar>
     <q-drawer v-model="leftDrawerOpen" bordered overlay>
       <q-list>
