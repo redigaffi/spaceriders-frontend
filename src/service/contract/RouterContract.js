@@ -46,9 +46,39 @@ class RouterContract extends Contract {
         );
     }
 
+    async getAmountsOut(amount, pathName) {
+        const contract = await this.getContract();
+
+        const wBnbAddress = await contract.WETH();
+        const sprAddress = ContractAddress.getSpaceRidersAddress();
+        
+        const contractMapping = {
+            "bnb": wBnbAddress,
+            "spr": sprAddress 
+        }
+
+        const path = [
+            contractMapping[pathName[0]],
+            contractMapping[pathName[1]],
+        ];
+
+        const overrides = {
+            // To convert Ether to Wei:
+            //@todo: get price from smart contract
+            //value: ethers.utils.parseEther(bnbAmount),
+            gasLimit: 6721975,
+        };
+        
+        const amounts = await contract.getAmountsOut(
+            ethers.utils.parseEther(amount),
+            path,
+            overrides
+        );
+        
+        return parseFloat(ethers.utils.formatEther(amounts[1])).toFixed(2);
+    }
+
     async sellSpr(to, sprAmount) {
-        console.log(sprAmount);
-        console.log(ethers.utils.parseEther(sprAmount));
         const contract = await this.getContract();
 
         const wBnbAddress = await contract.WETH();

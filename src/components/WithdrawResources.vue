@@ -88,7 +88,13 @@
                                 </div>
                             </q-card>
                         </q-card-section>
-
+                        <q-card-section class="text-center">
+                            <q-badge color="" class="text-subtitle2 q-px-lg">
+                                <span class="q-pl-md text-weight-bold">Metal Price: {{metalCostUsd}}$</span>
+                                <span class="q-pl-md text-weight-bold">Crystal Price: {{crystalCostUsd}}$</span>
+                                <span class="q-pl-md text-weight-bold">Petrol Price: {{petrolCostUsd}}$</span>
+                            </q-badge>
+                        </q-card-section>
                         <q-card-section class="text-center">
                             <q-badge color="green" class="text-subtitle2 q-px-lg">
                                 <span class="q-pl-md text-weight-bold">${{ totalUsdWithdraw }} - ({{totalTokenWithdraw}} $SPR)</span>
@@ -295,7 +301,7 @@ async function convertRequest() {
             closeNotification();
             $notification("success", "Tokens converted successfully!", 6000);
         } catch(e) {
-            // let api know request failed
+            //@TODO: let api know request failed
             console.log("error");
             console.log(e);
             

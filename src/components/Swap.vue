@@ -72,7 +72,7 @@
               v-model="buyToAmount"
               placeholder="0.0"
               type="number"
-              @change="buyToChange"
+              readonly
             />
           </div>
         </div>
@@ -198,20 +198,9 @@ watch(async () => {
 const buyFromAmount = ref(1);
 const buyToAmount = ref(1);
 
-const buyFromChange = () => {
-  if (pathNames.value[0] === "bnb") {
-    buyToAmount.value = ((buyFromAmount.value * bnbUsdPrice.value) / price.value).toFixed(2)
-  } else {
-    buyToAmount.value = ((buyFromAmount.value * price.value)/bnbUsdPrice.value).toFixed(2)
-  }
-};
-
-const buyToChange = () => {
-  if (pathNames.value[0] === "bnb") { 
-    buyFromAmount.value = (buyToAmount.value*(1/bnbUsdPrice.value*price.value)).toFixed(2);
-  } else {
-    buyFromAmount.value =( buyToAmount.value*bnbUsdPrice.value / price.value).toFixed(2)
-  }
+const buyFromChange = async () => {
+  let amount = await RouterContract.getAmountsOut(buyFromAmount.value, pathNames.value);
+  buyToAmount.value = amount
 };
 
 const maxBalance = async () => {

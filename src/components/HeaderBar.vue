@@ -162,11 +162,6 @@ const linksList = [
     link: "/defense",
     icon: "security",
   },
-  {
-    title: "Convert",
-    link: "/convert",
-    icon: "sync_alt",
-  },
 ];
 export default {
   name: "HeaderBar",
