@@ -34,7 +34,7 @@ class RouterContract extends Contract {
             // To convert Ether to Wei:
             //@todo: get price from smart contract
             value: ethers.utils.parseEther(bnbAmount),
-            gasLimit: 6721975,
+            gasLimit: 721975,
         };
 
         return await contract.swapExactETHForTokens(

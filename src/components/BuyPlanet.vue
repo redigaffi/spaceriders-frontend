@@ -66,6 +66,7 @@
             standout="bg-secondary"
             v-model="planetName"
             label="Planet Name"
+            :rules="[ val => val.length <= 14 || 'Please use maximum 14 characters']"
             style="
               border: 2px solid #2253f4;
               border-radius: 5px;
@@ -104,6 +105,7 @@
                 color: #fff;
               "
               @click="buyPlanet"
+              :disabled="planetName.length > 14"
               v-close-popup
             >
               Buy Planet

@@ -23,22 +23,6 @@
               class="bg-transparent text-dark cursor-pointer"
               @click="$emit('change', value)"
             >
-              <q-btn
-                dense
-                size="md"
-                class="absolute-top"
-                color="warning"
-                icon="expand_less"
-                style="z-index: 1"
-              >
-                <q-tooltip
-                  anchor="top middle"
-                  self="center middle"
-                  class="bg-primary text-subtitle2"
-                >
-                  Upgrade {{ value.name }} to level {{ value.level + 1 }}
-                </q-tooltip>
-              </q-btn>
               <q-card-section class="q-pa-none">
                 <q-card flat class="bg-transparent text-dark cursor-pointer">
                   <img :src="`data_img/${value.label}.png`" style="height: 110px" />
@@ -86,7 +70,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ItemList",

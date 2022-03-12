@@ -157,7 +157,7 @@ class SpaceRidersGameContract extends Contract {
         const contract = await this.getContract();
         
         const overrides = {
-            gasLimit: 6721975,
+            gasLimit: 721975,
         };
 
         return await contract.convertFromPrimaryResources(

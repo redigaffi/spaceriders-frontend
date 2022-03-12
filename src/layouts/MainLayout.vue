@@ -140,7 +140,7 @@
               <div class="row justify-between">
                 <div>
                   <span class="text-subtitle1 text-weight-bold"
-                    >azhar_786 |
+                    >{{ activeEmail.sender }} |
                   </span>
                   {{ activeEmail.title }}
                 </div>
