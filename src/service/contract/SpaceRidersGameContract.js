@@ -108,7 +108,7 @@ class SpaceRidersGameContract extends Contract {
       //@todo: get price from smart contract
       //value: ethers.utils.parseEther("0.05"),
       value: ethers.utils.parseEther("0.0025"),
-      gasLimit: 672197,
+      gasLimit: 1972197,
     };
 
     const amountInWei = ethers.utils
