@@ -8,7 +8,7 @@
           style="height: 300px; width: 100%"
         />
         <q-card-section class="text-secondary absolute-top tag-glass-element">
-          {{ name }}
+         {{ name }}
         </q-card-section>
         <!-- <q-card-section class="bg-dark">
           <q-btn color="warning" class="q-px-lg" label="Resource Settings" />

@@ -426,13 +426,104 @@ async function retryConversion(pendingConversion) {
           retryApi.data.forAddress
         );
 
-        const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
-          sD,
-          tokenRequestExchange
-        );
-        const receipt = await tx.wait();
-        console.log(receipt);
+        let receipt = { status: 0 };
+        try {
+            const tx = await SpaceRidersGameContract.convertFromPrimaryResources(sD, tokenRequestExchange);
+            receipt = await tx.wait();
+            console.log(receipt);
 
+            const confirm = await await ApiRequests.confirmConversion({
+                planetId: $store.getters.activePlanet.id,
+                guid: re.data.id,
+            });
+
+            if (!confirm.success) {
+                closeNotification();
+                $notification("failed", "Something failed...", 6000);
+                return;
+            }
+
+            $eventBus.emit(CONVERT_COMPLETED);
+            closeNotification();
+            $notification("success", "Tokens converted successfully!", 6000);
+        } catch(e) {
+            //@TODO: let api know request failed
+            console.log("error");
+            console.log(e);
+            
+            closeNotification();
+            $notification("failed", "Something failed...", 6000);
+        }
+        
+    } else {
+        closeNotification()
+        $notification("failed", re.error, 6000);
+        console.error(`error`);
+    }
+
+    closeNotification();
+}
+
+async function retryConversion(pendingConversion) {
+    const closeNotification = $notification(
+        "progress",
+        "Waiting for transaction to complete...",
+        0
+    );
+
+    const action = pendingConversion.action;
+
+    if (action === 'CALL_SMART_CONTRACT') {
+        const retryApi = await ApiRequests.retryConversion({
+            planetId: $store.getters.activePlanet.id,
+            guid: pendingConversion.id,
+        });
+
+        if (retryApi.success) {
+            try {
+                const sD = new SignatureData(
+                    retryApi.data.v,
+                    retryApi.data.r,
+                    retryApi.data.s
+                );
+
+                const tokenRequestExchange = new TokenExchangeAttributes(
+                    retryApi.data.id,
+                    retryApi.data.tokens,
+                    retryApi.data.forAddress
+                );
+                
+                const tx = await SpaceRidersGameContract.convertFromPrimaryResources(sD, tokenRequestExchange);
+                const receipt = await tx.wait();
+                console.log(receipt);
+
+                const confirm = await await ApiRequests.confirmConversion({
+                    planetId: $store.getters.activePlanet.id,
+                    guid: retryApi.data.id,
+                });
+
+                if (!confirm.success) {
+                    closeNotification();
+                    $notification("failed", "Something failed...", 6000);
+                    return;
+                }
+
+                await reloadDialog();
+                closeNotification();
+                $notification("success", "Confirmation completed!", 6000);
+            } catch(e) {
+                // let api know request failed
+                console.log("error");
+                console.log(e);
+                
+                closeNotification();
+                $notification("failed", "Something failed...", 6000);
+            }
+        } else {
+            closeNotification();
+            $notification("failed", retryApi.error, 6000);
+            return;
+        }
         const confirm = await await ApiRequests.confirmConversion({
           planetId: $store.getters.activePlanet.id,
           guid: retryApi.data.id,

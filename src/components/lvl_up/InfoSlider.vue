@@ -708,7 +708,7 @@ export default defineComponent({
         };
 
         $store.commit("repairRessourceData", saveStore);
-        $notification("success", "Repairing biatch");
+        $notification("success", "Repairing in progress...");
       } else {
         $notification("failed", re.error);
       }

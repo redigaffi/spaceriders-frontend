@@ -92,7 +92,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Metal reserve</q-item-section>
+                  <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-6 text-right" :class="{
                     'text-yellow-12': metalReserve <= 0,
@@ -196,7 +196,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Crystal reserve</q-item-section>
+                  <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-6 text-right" :class="{
                     'text-yellow-12': crystalReserve <= 0,
@@ -300,7 +300,7 @@
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
-                  <q-item-section caption>Petrol reserve</q-item-section>
+                  <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-6 text-right" :class="{
                     'text-yellow-12': petrolReserve <= 0,

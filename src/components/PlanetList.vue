@@ -44,7 +44,7 @@
                   </q-badge>  
                 </div>
                 <br />
-                <span> {{ props.row.name }} </span>
+                <div style="width: 120px;text-overflow: ellipsis; overflow: hidden;"> {{ props.row.name }} </div>
                 <br />
                 <span style="font-size: 12px">{{ props.row.position }}</span>
               </q-card-section>

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <q-card-section v-if="!claimeable" class="row q-col-gutter-sm text-center">
+    <q-card-section v-if="!claimeable" class="row q-col-gutter-sm text-center text-lowercase">
       <div class="col-xs-6 col-sm-4 col-md-3 q-pa-sm" v-for="p in planets" :key="p.id">
         <q-card
           flat
-          class="bg-transparent text-dark image"
+          class="bg-transparent text-dark image "
           :data-content="calculateClaimDate(p)"
         >
           <img src="~assets/img/planet_queue.jpg" style="height: 250px; width: 100%" />
-          <q-card-section class="text-center text-secondary bg-dark">{{ p.name }}</q-card-section>
+          <q-card-section style="overflow: hidden; text-overflow: ellipsis;" class="text-center text-secondary bg-dark">{{ p.name }}</q-card-section>
         </q-card>
       </div>
     </q-card-section>
@@ -17,7 +17,7 @@
       <div class="col-xs-6 col-sm-4 col-md-3 q-pa-sm" v-for="p in planets" :key="p.id">
         <q-card flat class="bg-transparent text-dark claimable-cards">
           <img src="~assets/img/planet_claimable.jpg" style="height: 250px; width: 100%" />
-          <q-card-section class="text-secondary absolute-top tag-glass-element">{{ p.name }}</q-card-section>
+          <q-card-section style="overflow: hidden; text-overflow: ellipsis;" class="text-secondary absolute-top tag-glass-element">{{ p.name }}</q-card-section>
           <q-card-section class="bg-dark">
             <ClaimPlanet :planet="p" />
           </q-card-section>
