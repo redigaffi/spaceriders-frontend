@@ -445,27 +445,54 @@
               <q-list bordered style="border-color: #2f2f91">
                 <q-expansion-item
                   group="somegroup"
-                  label="What are UK current VAT rates?"
+                  label="What is Spaceriders?"
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      SpaceRiders ($SPR) is a play-to-earn real-time strategy
+                      NFT game settled in space. $SPR enables players to
+                      purchase and acquire virtual items within the Spaceriders
+                      game.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="Where do I buy $SPR token? "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      For convenience of our users , We have pioneered our very
+                      own exchange tool which can be easily accessible on the
+                      landing page of our website and also on the game itself.
+                      Our exchange tool is directly linked to pancake swap thus
+                      saving you time and effort. If you prefer , you can also
+                      purchase $SPR Token on pancake swap itself.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="What do I need to play Spaceriders?"
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
                       <div>
-                        VAT rates are different for different categories it is
-                        totally dependent on what you are supplying mainly there
-                        are four categories:
-                      </div>
-                      <ol>
-                        <li>Standard rate</li>
-                        <li>Reduce rate</li>
-                        <li>Zero-rated</li>
-                        <li>Exempt supplies</li>
-                      </ol>
-                      <div>
-                        Rates are not fixed and change; therefore, you must
-                        check those changes and apply them from the date they
-                        update.
+                        You need a compatible wallet such as Metamask and enough
+                        $SPR previously purchased in order to mint a planet and
+                        fill your energy
                       </div>
                     </q-card-section>
                   </q-card>
@@ -475,18 +502,19 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="How to check the validity of my company’s VAT number?"
+                  label="When will users be able to play Spaceriders?  "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
                       <div>
-                        You can use the official VAT services to verify the
-                        validity of your company’s VAT number. There is a UK VAT
-                        number checker designed for UK based companies. If your
-                        company is located in Europe, then in order to check the
-                        VAT number, you can try VIES VAT number validation.
+                        The MVP (Minimum Viable Product ) is completed and is
+                        currently undergoing rigorous testing by the development
+                        team prior to rolling it out, to ensure that your first
+                        experience within the game is exceptional. As stated in
+                        our roadmap, we anticipate launch of this version in Q2
+                        2022
                       </div>
                     </q-card-section>
                   </q-card>
@@ -496,18 +524,18 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="What is a flat rate VAT scheme?"
+                  label="Will Spaceriders be free to play? "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
                       <div>
-                        A flat rate scheme is designed to simplify the VAT
-                        process for smaller businesses, freelancers and
-                        contractors. It is applied to your business if you have
-                        a turnover of less than £ 150 000, make sure you have
-                        applied to HMRC to sign up and get more info about it.
+                        To enter Space Riders, you will need to mint a planet
+                        first. Our innovative systems ensures that users will
+                        always pay the same price in $ USD when minting a
+                        planet, regardless of our token price. This ensures
+                        fairness to our users.
                       </div>
                     </q-card-section>
                   </q-card>
@@ -517,21 +545,56 @@
 
                 <q-expansion-item
                   group="somegroup"
-                  label="Is it Compulsory to register for VAT?"
+                  label="How does Spaceriders utilise blockchain?  "
                   header-class="text-white bg-transparent text-h6"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
                     <q-card-section class="text-subtitle1">
                       <div>
-                        It may be, or maybe not, some particular circumstances
-                        decide whether your business is subject to VAT or not.
-                        If your company's turnover reaches the £85,000 threshold
-                        in 12 months, then your VAT registration is compulsory,
-                        and if you do not register your business, you will have
-                        to pay a fine as a penalty. However, if your company
-                        does not reach the figure mentioned earlier, VAT
-                        registration is not compulsory.
+                        $SPR or $SpaceRiders is the in-game currency of
+                        SpaceRiders game, it is used for any purchase and for
+                        rewards.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="How do I expect to make passive income? "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        Passive income will generate from your earnings when
+                        converting resources to $SPR . This will come from the
+                        mines you're upgrading. To maximise your ROI you'll need
+                        to focus and follow your own strategy.
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  label="Will there be an ALPHA version? "
+                  header-class="text-white bg-transparent text-h6"
+                  active-class="bg-transparent text-white"
+                >
+                  <q-card>
+                    <q-card-section class="text-subtitle1">
+                      <div>
+                        Yes the ALPHA version will be released via a testnet.
+                        This is so our community will be able to have an
+                        opportunity to get use to the game to understand the
+                        strategical approach.
                       </div>
                     </q-card-section>
                   </q-card>
@@ -552,11 +615,16 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">MAINTENANCE</div>
 
-          <div class="game__content">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
-            veniam, quod natus expedita numquam est nisi ea recusandae error
-            veritatis porro, nesciunt ipsum excepturi animi consequatur ab
-            ipsam! Explicabo, ad!
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            This page will be used to give users information regarding software
+            updates which may have an impact on the performance of the game.
           </div>
         </div>
       </div>
@@ -569,122 +637,304 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">TEAM</div>
 
-          <div class="game__content">
-            <div class="row q-col-gutter-sm">
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+          <div class="q-pt-xl row q-col-gutter-sm">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                flat
+                class="bg-transparent text-center"
+                style="height: 100%"
+              >
+                <div class="text-center">
+                  <img src="~assets/img/JORDI.png" style="width: 100px" />
+                </div>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Jordi</div>
+                  <div class="text-h6">CEO</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Principle Software Engineer</div>
+                  <div>Blockchain Enthusiast</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                flat
+                class="bg-transparent text-center"
+                style="height: 100%"
+              >
+                <div class="text-center">
+                  <img src="~assets/img/INIAKI.png" style="width: 100px" />
+                </div>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Iñaki</div>
+                  <div class="text-h6">CFO</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Financial Operations Lead</div>
+                  <div>Content Creator</div>
+                  <div>Blockchain Enthusiast</div>
+                  <div>NFT Games Player</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-youtube" />
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                flat
+                class="bg-transparent text-center"
+                style="height: 100%"
+              >
+                <div class="text-center">
+                  <img src="~assets/img/MAX.png" style="width: 100px" />
+                </div>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+                <q-card-section>
+                  <div class="text-h5">Max</div>
+                  <div class="text-h6">CPO</div>
+                </q-card-section>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col">
-                <q-card
-                  class="bg-transparent text-center"
-                  style="
-                    border: 2px solid #2253f4;
-                    box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-                  "
-                >
-                  <q-avatar class="q-mt-md">
-                    <img src="https://cdn.quasar.dev/img/avatar.png" />
-                  </q-avatar>
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Product Lead</div>
+                  <div>Business Analysis</div>
+                  <div>Marketing Operations</div>
+                  <div>Social Media Lead</div>
+                  <div>Crypto Specialist</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-telegram-plane"
+                  />
+                  <q-btn flat round color="white" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
+            </div>
 
-                  <q-card-section>
-                    <div class="text-h5">Linda Wilis</div>
-                    <div class="text-subtitle1">UI Designer</div>
-                  </q-card-section>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <q-card
+                flat
+                class="bg-transparent text-center"
+                style="height: 100%"
+              >
+                <div class="text-center">
+                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                </div>
 
-                  <hr class="bg-white" style="width: 100px; height: 3px" />
-                  <q-card-section class="text-subtitle2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </q-card-section>
-                  <q-card-section class="text-subtitle2 q-gutter-md">
-                    <q-btn round color="warning" icon="fab fa-facebook-f" />
-                    <q-btn round color="warning" icon="fab fa-twitter" />
-                    <q-btn round color="warning" icon="fab fa-telegram-plane" />
-                  </q-card-section>
-                </q-card>
-              </div>
+                <q-card-section>
+                  <div class="text-h5">Mack</div>
+                  <div class="text-h6">CTO</div>
+                </q-card-section>
+
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-subtitle2">
+                  <div>Front end Support</div>
+                  <div>Strategy Analyst</div>
+                  <div>Systems Analyst</div>
+                  <div>Data Analysis</div>
+                  <div>Blockchain Enthusiast</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn flat color="white" icon="fab fa-telegram-plane" />
+                  <q-btn flat color="white" icon="fab fa-discord" />
+                </q-card-section>
+              </q-card>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCLAIMER -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">DISCLAIMER</div>
+
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            <p class="text-h5">
+              The information provided on this website does not constitute
+              investment advice, financial advice, trading advice, or any other
+              sort of advice and you should not treat any of the website's
+              content as such. Spaceriders team does not recommend and is not
+              responsible for any cryptocurrency that is bought, sold, or held
+              by you. do conduct your own due diligence and consult your
+              financial advisor before making any investment decisions.
+            </p>
+            <p class="q-pt-md text-h5">
+              Spaceriders team expressly disclaims any and all responsibility
+              for any direct or consequential loss or damage of any kind
+              whatsoever arising directly or indirectly from
+            </p>
+            <p class="q-pt-md text-h5">
+              <ul>
+                <li>(i) reliance on any information produced by Spaceriders</li>
+                <li>(ii) any error, omission or inaccuracy in any such information</li>
+                <li>(iii) any action resulting therefrom, </li>
+                <li>
+                  (iv) usage or acquisition of products, available through the website.
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">TROUBLESHOOTING</div>
+
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            <p class="text-h5">
+              In this section you will find the most common and/or current issues people are having when trying to do an action. In this page we will trouble shoot all user-issues and provide a tested solution for our users.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">Tokenomics</div>
+          <div class="token__inner q-mt-xl">
+            <div class="token__img--inner wow animate__animated animate__fadeIn">
+              <img
+                src="~assets/img/token-allocation.png"
+                alt="Диаграмма"
+                class="token__img"
+              />
+            </div>
+
+            <div class="token__text--inner wow animate__animated animate__fadeIn">
+              <div class="token__wrapper" style="border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;">
+                <p class="token__wrapper--title">Total supply 100M</p>
+
+                <div class="token__colors text-h6">
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Team
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Future In Game
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                   Play 2 Earn & Reward Pool
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    PreSale
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Private Sale
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Liquidity
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+
+              
+            </div>
+
+            
+          </div>
+          <div class="q-pt-md">
+
+          <h2 class="text-h4">Token Allocation</h2>
+
+              <p class="text-h5 text-justify q-pt-md">
+                We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the Spaceriders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.</p>
+              
+              <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
+              <div class="text-h5 q-pt-md">
+                
+
+
+                <p>
+2% LP
+                </p>
+                <p>
+2% Burn
+                </p>
+                <p>
+1% Reward Pool
+                </p>
+              </div>
+          </div>
+
         </div>
       </div>
     </section>

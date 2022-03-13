@@ -19,12 +19,12 @@
       <q-card-section>
         <div class="row q-col-gutter-sm">
           <div class="col-1 flex flex-center">
-              <img :src="buyMetadata[pathNames[0]].image" style="height: 40px" />
+            <img :src="buyMetadata[pathNames[0]].image" style="height: 40px" />
           </div>
           <div class="col-3 text-overline" style="font-size: 12px">
             <div>Swap From:</div>
             <div>
-              <div class="text-h4 text-weight-bold">{{pathNames[0]}}</div>
+              <div class="text-h4 text-weight-bold">{{ pathNames[0] }}</div>
             </div>
           </div>
           <div class="col flex flex-center">
@@ -39,7 +39,13 @@
               @change="buyFromChange"
             >
               <div class="q-mt-sm">
-                <q-btn color="positive" size="sm" label="Max" no-caps @click="maxBalance"/>
+                <q-btn
+                  color="positive"
+                  size="sm"
+                  label="Max"
+                  no-caps
+                  @click="maxBalance"
+                />
               </div>
             </q-input>
           </div>
@@ -61,7 +67,7 @@
 
           <div class="col-3 text-overline" style="font-size: 12px">
             <div>Swap To:</div>
-            <div class="text-h4 text-weight-bold">{{pathNames[1]}}</div>
+            <div class="text-h4 text-weight-bold">{{ pathNames[1] }}</div>
           </div>
           <div class="col flex flex-center">
             <q-input
@@ -76,7 +82,6 @@
             />
           </div>
         </div>
-
       </q-card-section>
 
       <q-card-section style="color: #fff">
@@ -112,8 +117,8 @@
       <q-card-actions class="row q-col-gutter-md">
         <div v-if="pathNames[0] === 'spr'" class="col">
           <IncreaseAllowance
-              :address="ContractAddress.getRouterAddress()"
-              :amount="buyFromAmount"
+            :address="ContractAddress.getRouterAddress()"
+            :amount="buyFromAmount"
           />
         </div>
         <div class="col">
@@ -152,15 +157,15 @@ import { ethers } from "ethers";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 
-
 const pathNames = ref(["bnb", "spr"]);
 const buyMetadata = ref({
   bnb: {
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png"
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png",
   },
   spr: {
-    image: "logo.png"
-  }
+    image: "logo.png",
+  },
 });
 
 const $notification =
@@ -180,11 +185,11 @@ const price = ref(0.0);
 const bnbUsdPrice = ref(0.0);
 
 const reloadPriceData = async () => {
-    visible.value = true;
-    purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
-    price.value = parseFloat((await ApiRequests.tokenPrice())).toFixed(6);
-    bnbUsdPrice.value = parseFloat((await ApiRequests.bnbPrice())).toFixed(2);
-    visible.value = false;
+  visible.value = true;
+  purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
+  price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
+  bnbUsdPrice.value = parseFloat(await ApiRequests.bnbPrice()).toFixed(2);
+  visible.value = false;
 };
 
 $eventBus.on(SWAP_COMPLETED, reloadPriceData);
@@ -206,10 +211,12 @@ const buyFromChange = async () => {
 const maxBalance = async () => {
   if (pathNames.value[0] === "bnb") {
     const contract = new Contract();
-    let provider = contract.getProvider()
-    
+    let provider = contract.getProvider();
+
     const balance = await provider.getBalance($store.getters.address);
-    buyFromAmount.value = parseFloat(ethers.utils.formatEther(balance)).toFixed(2);
+    buyFromAmount.value = parseFloat(ethers.utils.formatEther(balance)).toFixed(
+      2
+    );
     buyFromChange();
   } else if (pathNames.value[0] === "spr") {
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
@@ -226,7 +233,7 @@ const swapComponents = () => {
 
   pathNames.value[0] = path1;
   pathNames.value[1] = path0;
-}
+};
 
 const buySpr = async () => {
   const closeNotification = $notification(
@@ -239,18 +246,12 @@ const buySpr = async () => {
   try {
     let tx = false;
     if (pathNames.value[0] === "bnb") {
-      tx = await RouterContract.buySpr(
-        myAddr,
-        buyFromAmount.value.toString()
-      );
-      
+      tx = await RouterContract.buySpr(myAddr, buyFromAmount.value.toString());
+
       receipt = await tx.wait();
     } else if (pathNames.value[0] === "spr") {
-      tx = await RouterContract.sellSpr(
-        myAddr,
-        buyFromAmount.value.toString()
-      );
-      
+      tx = await RouterContract.sellSpr(myAddr, buyFromAmount.value.toString());
+
       receipt = await tx.wait();
     }
   } catch (e) {
