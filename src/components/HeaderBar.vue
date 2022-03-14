@@ -13,10 +13,9 @@
       <div class="footer__title_logo">
         <span class="blue">SPACE</span>RIDERS
       </div>
-      <q-space />
 
       <button
-        class="button q-pa-md q-mr-xs"
+        class="q-ml-md button q-pa-md q-mr-xs"
         style="
           border: 3px solid #2253f4;
           border-radius: 5px;
@@ -47,6 +46,21 @@
           </q-list>
         </q-menu>
       </button>
+
+      <button
+        class="button q-pa-md q-mr-xs"
+        style="
+          border: 3px solid #2253f4;
+          border-radius: 5px;
+          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+          color: #fff;
+          font-size: 12px;
+          padding: 7px 15px;
+        "
+      >
+        GAME MANUAL
+      </button>
+      <q-space />
 
       <WithdrawResources>
         <button
@@ -79,20 +93,6 @@
           SWAP
         </button>
       </Swap>
-
-      <button
-        class="button q-pa-md q-mr-xs"
-        style="
-          border: 3px solid #2253f4;
-          border-radius: 5px;
-          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-          color: #fff;
-          font-size: 12px;
-          padding: 7px 15px;
-        "
-      >
-        GAME MANUAL
-      </button>
 
       <Balance />
       <User />

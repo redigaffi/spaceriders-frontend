@@ -930,7 +930,7 @@
 2% Burn
                 </p>
                 <p>
-2% Reward Pool
+1% Reward Pool
                 </p>
               </div>
           </div>
