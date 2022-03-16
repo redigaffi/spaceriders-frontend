@@ -222,6 +222,51 @@
       </q-inner-loading>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="testDialog">
+    <q-card
+      class="bg-dark text-white"
+      style="width: 600px; max-width: 70vw; border-radius: 20px"
+    >
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title class="text-body2 absolute-center"
+          >RARITY MULTIPLIER</q-toolbar-title
+        >
+      </q-toolbar>
+      <q-card-section>
+        <q-list dense>
+          <q-item>
+            <q-item-section class="col-4"> METAL </q-item-section>
+            <q-item-section> 1.0 </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section class="col-4"> PETROL </q-item-section>
+            <q-item-section> 1.0 </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section class="col-4"> CRYSTAL </q-item-section>
+            <q-item-section> 1.0 </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title class="text-body2 absolute-center"
+          >BONUS MULTIPLIER</q-toolbar-title
+        >
+      </q-toolbar>
+      <q-card-section>
+        <q-list dense>
+          <q-item>
+            <q-item-section class="col-6">
+              Level Bonus MULTIPLIER
+            </q-item-section>
+            <q-item-section> 1.0 </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -233,6 +278,8 @@ import SpaceRidersGameContract, {
   SignatureData,
   TokenExchangeAttributes,
 } from "../service/contract/SpaceRidersGameContract";
+
+const testDialog = ref(true);
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -435,10 +482,6 @@ async function retryConversion(pendingConversion) {
 }
 </script>
 <style lang="scss">
-.neonText {
-  color: white;
-  text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 2px #fff;
-}
 .custom-slider-track {
   .q-slider__track-container {
     border: 1px solid white;

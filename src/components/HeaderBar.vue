@@ -47,7 +47,7 @@
         </q-menu>
       </button>
 
-      <button
+      <!-- <button
         class="button q-pa-md q-mr-xs"
         style="
           border: 3px solid #2253f4;
@@ -59,7 +59,7 @@
         "
       >
         GAME MANUAL
-      </button>
+      </button> -->
       <q-space />
 
       <WithdrawResources>
@@ -149,6 +149,11 @@ const linksList = [
     title: "Defense",
     link: "/defense",
     icon: "security",
+  },
+  {
+    title: "Game Manual",
+    link: "/",
+    icon: "auto_stories",
   },
 ];
 export default {

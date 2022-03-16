@@ -1,7 +1,16 @@
 <template>
   <div>
-    <q-list dense class="text-subtitle2" style="width: 480px">
-      <q-item>
+    <q-list dense class="text-subtitle2">
+      <q-item
+        style="
+          border: 3px solid red;
+          border-radius: 5px;
+          box-shadow: 0 0 20px red;
+          color: #fff;
+          font-size: 12px;
+          padding: 7px 15px;
+        "
+      >
         <q-item-section class="">
           <q-item-label style="word-break: break-all" class="text-body1"
             >Bad news Rider... An asteroid just arrived, take a look at the
@@ -11,7 +20,7 @@
       </q-item>
     </q-list>
 
-    <q-list dense class="text-subtitle2 q-mt-lg" style="width: 480px">
+    <q-list dense class="text-subtitle2 q-mt-lg">
       <q-item>
         <q-item-section class="text-white">
           <q-table
@@ -36,7 +45,7 @@
     >
       <q-card>
         <q-card-section>
-          <q-list dense class="text-subtitle2 q-mb-md" style="width: 480px">
+          <q-list dense class="text-subtitle2 q-mb-md">
             <q-item>
               <q-item-section class="">
                 <q-item-label class="text-h6">Asteroid stats</q-item-label>
@@ -85,7 +94,7 @@
           </q-list>
           <q-separator />
           <br />
-          <q-list dense class="text-subtitle2" style="width: 480px">
+          <q-list dense class="text-subtitle2">
             <q-item>
               <q-item-section class="">
                 <q-item-label class="text-h5">Defense overview</q-item-label>

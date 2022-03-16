@@ -5,11 +5,9 @@
         <img
           :src="`data_img/${keyName}.png`"
           width="100%"
-          style="height: 300px; width: 100%"
+          style="height: 400px; width: 100%"
         />
-        <q-card-section class="text-secondary absolute-top tag-glass-element">
-         {{ name }}
-        </q-card-section>
+
         <!-- <q-card-section class="bg-dark">
           <q-btn color="warning" class="q-px-lg" label="Resource Settings" />
         </q-card-section> -->
