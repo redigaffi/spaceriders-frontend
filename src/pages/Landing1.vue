@@ -852,7 +852,7 @@
           <div class="token__inner q-mt-xl">
             <div class="token__img--inner wow animate__animated animate__fadeIn">
               <img
-                src="~assets/img/tkn.png"
+                src="~assets/landing/img/tkn.png"
                 alt="Диаграмма"
                 class="token__img"
               />
@@ -868,25 +868,37 @@
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
+                    Liquidity
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                    Reward Pool
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
+                   Future IG
+                  </div>
+
+                  <div class="token__color">
+                    <div class="token__color--wrapper"></div>
+
                     Team
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Future In Game
+                    Partenerships
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                   Play 2 Earn & Reward Pool
-                  </div>
-
-                  <div class="token__color">
-                    <div class="token__color--wrapper"></div>
-
-                    PreSale
+                    Seed Funding
                   </div>
 
                   <div class="token__color">
@@ -894,11 +906,10 @@
 
                     Private Sale
                   </div>
-
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Liquidity
+                    IDO
                   </div>
                 </div>
               </div>
