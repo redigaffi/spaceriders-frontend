@@ -226,32 +226,49 @@
   <q-dialog v-model="testDialog">
     <q-card
       class="bg-dark text-white"
-      style="width: 600px; max-width: 70vw; border-radius: 20px"
+      style="
+        width: 600px;
+        max-width: 70vw;
+        border-radius: 20px;
+        border: 3px solid gold;
+        box-shadow: 0 0 20px gold;
+      "
     >
-      <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2 absolute-center"
+      <q-toolbar class="bg-primary">
+        <q-toolbar-title class="text-body2 text-center" style="color: gold"
           >RARITY MULTIPLIER</q-toolbar-title
         >
       </q-toolbar>
       <q-card-section>
         <q-list dense>
           <q-item>
-            <q-item-section class="col-4"> METAL </q-item-section>
-            <q-item-section> 1.0 </q-item-section>
+            <q-item-section class="col-6"> METAL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
           </q-item>
           <q-item>
-            <q-item-section class="col-4"> PETROL </q-item-section>
-            <q-item-section> 1.0 </q-item-section>
+            <q-item-section class="col-6"> PETROL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
           </q-item>
-
           <q-item>
-            <q-item-section class="col-4"> CRYSTAL </q-item-section>
-            <q-item-section> 1.0 </q-item-section>
+            <q-item-section class="col-6"> CRYSTAL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
           </q-item>
         </q-list>
       </q-card-section>
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2 absolute-center"
+        <q-toolbar-title class="text-body2 text-center" style="color: gold"
           >BONUS MULTIPLIER</q-toolbar-title
         >
       </q-toolbar>
@@ -261,7 +278,11 @@
             <q-item-section class="col-6">
               Level Bonus MULTIPLIER
             </q-item-section>
-            <q-item-section> 1.0 </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
           </q-item>
         </q-list>
       </q-card-section>

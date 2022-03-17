@@ -852,7 +852,7 @@
           <div class="token__inner q-mt-xl">
             <div class="token__img--inner wow animate__animated animate__fadeIn">
               <img
-                src="~assets/img/token-allocation.png"
+                src="~assets/img/tkn.png"
                 alt="Диаграмма"
                 class="token__img"
               />
