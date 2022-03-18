@@ -222,6 +222,72 @@
       </q-inner-loading>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="testDialog">
+    <q-card
+      class="bg-dark text-white"
+      style="
+        width: 600px;
+        max-width: 70vw;
+        border-radius: 20px;
+        border: 3px solid gold;
+        box-shadow: 0 0 20px gold;
+      "
+    >
+      <q-toolbar class="bg-primary">
+        <q-toolbar-title class="text-body2 text-center" style="color: gold"
+          >RARITY MULTIPLIER</q-toolbar-title
+        >
+      </q-toolbar>
+      <q-card-section>
+        <q-list dense>
+          <q-item>
+            <q-item-section class="col-6"> METAL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section class="col-6"> PETROL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section class="col-6"> CRYSTAL </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title class="text-body2 text-center" style="color: gold"
+          >BONUS MULTIPLIER</q-toolbar-title
+        >
+      </q-toolbar>
+      <q-card-section>
+        <q-list dense>
+          <q-item>
+            <q-item-section class="col-6">
+              Level Bonus MULTIPLIER
+            </q-item-section>
+            <q-item-section
+              style="border-left: 3px solid white; padding-left: 10px"
+            >
+              1.0
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -234,48 +300,38 @@ import SpaceRidersGameContract, {
   TokenExchangeAttributes,
 } from "../service/contract/SpaceRidersGameContract";
 
+const testDialog = ref(true);
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
-
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
-
 const convertResourcesDialog = ref(false);
 const visible = ref(true);
-
 const maxMetalConversion = computed(() => {
   return $store.getters.activePlanet.ressources.metal;
 });
-
 const maxCrystalConversion = computed(() => {
   return $store.getters.activePlanet.ressources.crystal;
 });
-
 const maxPetrolConversion = computed(() => {
   return $store.getters.activePlanet.ressources.petrol;
 });
-
 const activePlanet = computed(() => {
   return $store.getters.activePlanet;
 });
-
 const metalAmount = ref(0);
 const crystalAmount = ref(0);
 const petrolAmount = ref(0);
-
 const metalCostUsd = ref(0);
 const petrolCostUsd = ref(0);
 const crystalCostUsd = ref(0);
 const fee = ref(false);
-
 const pendingConversions = ref(false);
-
 const updatePreviewData = async () => {
   metalAmount.value = 0;
   crystalAmount.value = 0;
   petrolAmount.value = 0;
-
   const data = (await ApiRequests.getPreviewConversion(activePlanet.value.id))
     .data;
   metalCostUsd.value = data.metalCost;
@@ -283,7 +339,6 @@ const updatePreviewData = async () => {
   crystalCostUsd.value = data.crystalCost;
   fee.value = data.fee;
 };
-
 const totalUsdWithdraw = computed(() => {
   return (
     metalAmount.value * metalCostUsd.value +
@@ -291,32 +346,24 @@ const totalUsdWithdraw = computed(() => {
     crystalAmount.value * crystalCostUsd.value
   ).toFixed(2);
 });
-
 const totalUsdWithdrawFee = computed(() => {
   const usd = totalUsdWithdraw.value;
   const feeMultiplier = (100 - fee.value) / 100;
-
   return (usd * feeMultiplier).toFixed(2);
 });
-
 const totalTokenWithdraw = computed(() => {
   const totalUsd = totalUsdWithdraw.value;
   const sprPrice = $store.getters.tokenPrice;
-
   return ((1 / sprPrice) * totalUsd).toFixed(2);
 });
-
 const totalTokenWithdrawFee = computed(() => {
   const tokens = totalTokenWithdraw.value;
   const feeMultiplier = (100 - fee.value) / 100;
-
   return (tokens * feeMultiplier).toFixed(2);
 });
-
 const getPendingConversions = async () => {
   return (await ApiRequests.getPendingConversions(activePlanet.value.id)).data;
 };
-
 const reloadDialog = async () => {
   visible.value = true;
   pendingConversions.value = await getPendingConversions();
@@ -325,38 +372,31 @@ const reloadDialog = async () => {
   }
   visible.value = false;
 };
-
 watch(async () => {
   if (convertResourcesDialog.value) {
     await reloadDialog();
   }
 });
-
 async function convertRequest() {
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
     0
   );
-
   const body = {
     planetId: $store.getters.activePlanet.id,
     metal: metalAmount.value,
     crystal: crystalAmount.value,
     petrol: petrolAmount.value,
   };
-
   const re = await ApiRequests.conversionRequest(body);
-
   if (re.success) {
     const sD = new SignatureData(re.data.v, re.data.r, re.data.s);
-
     const tokenRequestExchange = new TokenExchangeAttributes(
       re.data.id,
       re.data.tokens,
       re.data.forAddress
     );
-
     let receipt = { status: 0 };
     try {
       const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
@@ -365,18 +405,15 @@ async function convertRequest() {
       );
       receipt = await tx.wait();
       console.log(receipt);
-
       const confirm = await await ApiRequests.confirmConversion({
         planetId: $store.getters.activePlanet.id,
         guid: re.data.id,
       });
-
       if (!confirm.success) {
         closeNotification();
         $notification("failed", "Something failed...", 6000);
         return;
       }
-
       $eventBus.emit(CONVERT_COMPLETED);
       closeNotification();
       $notification("success", "Tokens converted successfully!", 6000);
@@ -384,7 +421,6 @@ async function convertRequest() {
       // let api know request failed
       console.log("error");
       console.log(e);
-
       closeNotification();
       $notification("failed", "Something failed...", 6000);
     }
@@ -393,25 +429,20 @@ async function convertRequest() {
     $notification("failed", re.error, 6000);
     console.error(`error`);
   }
-
   closeNotification();
 }
-
 async function retryConversion(pendingConversion) {
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
     0
   );
-
   const action = pendingConversion.action;
-
   if (action === "CALL_SMART_CONTRACT") {
     const retryApi = await ApiRequests.retryConversion({
       planetId: $store.getters.activePlanet.id,
       guid: pendingConversion.id,
     });
-
     if (retryApi.success) {
       try {
         const sD = new SignatureData(
@@ -419,122 +450,26 @@ async function retryConversion(pendingConversion) {
           retryApi.data.r,
           retryApi.data.s
         );
-
         const tokenRequestExchange = new TokenExchangeAttributes(
           retryApi.data.id,
           retryApi.data.tokens,
           retryApi.data.forAddress
         );
-
-        let receipt = { status: 0 };
-        try {
-            const tx = await SpaceRidersGameContract.convertFromPrimaryResources(sD, tokenRequestExchange);
-            receipt = await tx.wait();
-            console.log(receipt);
-
-            const confirm = await await ApiRequests.confirmConversion({
-                planetId: $store.getters.activePlanet.id,
-                guid: re.data.id,
-            });
-
-            if (!confirm.success) {
-                closeNotification();
-                $notification("failed", "Something failed...", 6000);
-                return;
-            }
-
-            $eventBus.emit(CONVERT_COMPLETED);
-            closeNotification();
-            $notification("success", "Tokens converted successfully!", 6000);
-        } catch(e) {
-            //@TODO: let api know request failed
-            console.log("error");
-            console.log(e);
-            
-            closeNotification();
-            $notification("failed", "Something failed...", 6000);
-        }
-        
-    } else {
-        closeNotification()
-        $notification("failed", re.error, 6000);
-        console.error(`error`);
-    }
-
-    closeNotification();
-}
-
-async function retryConversion(pendingConversion) {
-    const closeNotification = $notification(
-        "progress",
-        "Waiting for transaction to complete...",
-        0
-    );
-
-    const action = pendingConversion.action;
-
-    if (action === 'CALL_SMART_CONTRACT') {
-        const retryApi = await ApiRequests.retryConversion({
-            planetId: $store.getters.activePlanet.id,
-            guid: pendingConversion.id,
-        });
-
-        if (retryApi.success) {
-            try {
-                const sD = new SignatureData(
-                    retryApi.data.v,
-                    retryApi.data.r,
-                    retryApi.data.s
-                );
-
-                const tokenRequestExchange = new TokenExchangeAttributes(
-                    retryApi.data.id,
-                    retryApi.data.tokens,
-                    retryApi.data.forAddress
-                );
-                
-                const tx = await SpaceRidersGameContract.convertFromPrimaryResources(sD, tokenRequestExchange);
-                const receipt = await tx.wait();
-                console.log(receipt);
-
-                const confirm = await await ApiRequests.confirmConversion({
-                    planetId: $store.getters.activePlanet.id,
-                    guid: retryApi.data.id,
-                });
-
-                if (!confirm.success) {
-                    closeNotification();
-                    $notification("failed", "Something failed...", 6000);
-                    return;
-                }
-
-                await reloadDialog();
-                closeNotification();
-                $notification("success", "Confirmation completed!", 6000);
-            } catch(e) {
-                // let api know request failed
-                console.log("error");
-                console.log(e);
-                
-                closeNotification();
-                $notification("failed", "Something failed...", 6000);
-            }
-        } else {
-            closeNotification();
-            $notification("failed", retryApi.error, 6000);
-            return;
-        }
+        const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
+          sD,
+          tokenRequestExchange
+        );
+        const receipt = await tx.wait();
+        console.log(receipt);
         const confirm = await await ApiRequests.confirmConversion({
           planetId: $store.getters.activePlanet.id,
           guid: retryApi.data.id,
         });
-
         if (!confirm.success) {
           closeNotification();
           $notification("failed", "Something failed...", 6000);
           return;
         }
-
         await reloadDialog();
         closeNotification();
         $notification("success", "Confirmation completed!", 6000);
@@ -542,7 +477,6 @@ async function retryConversion(pendingConversion) {
         // let api know request failed
         console.log("error");
         console.log(e);
-
         closeNotification();
         $notification("failed", "Something failed...", 6000);
       }
@@ -556,27 +490,19 @@ async function retryConversion(pendingConversion) {
       planetId: $store.getters.activePlanet.id,
       guid: pendingConversion.id,
     });
-
     if (!confirm.success) {
       closeNotification();
       $notification("failed", "Something failed...", 6000);
       return;
     }
-
     await reloadDialog();
     closeNotification();
     $notification("success", "Confirmation completed!", 6000);
   }
-
   closeNotification();
 }
 </script>
 <style lang="scss">
-.neonText {
-  color: white;
-  text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 2px #fff;
-}
-
 .custom-slider-track {
   .q-slider__track-container {
     border: 1px solid white;

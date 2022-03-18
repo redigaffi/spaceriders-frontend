@@ -66,7 +66,10 @@
             standout="bg-secondary"
             v-model="planetName"
             label="Planet Name"
-            :rules="[ val => val.length <= 14 || 'Please use maximum 14 characters']"
+            hide-bottom-space
+            :rules="[
+              (val) => val.length <= 14 || 'Please use maximum 14 characters',
+            ]"
             style="
               border: 2px solid #2253f4;
               border-radius: 5px;
@@ -157,7 +160,7 @@ watchEffect(async () => {
     visible.value = true;
     planetCost.value = await ApiRequest.fetchPlanetCost();
     planetCostDisplay.value = `${planetCost.value.token_cost} $SPR ($${planetCost.value.usd_cost})`;
-    bnbFeeDisplay.value = "0.0025 BNB"
+    bnbFeeDisplay.value = "0.0025 BNB";
     visible.value = false;
   }
 });

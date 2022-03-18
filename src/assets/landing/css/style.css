@@ -467,7 +467,7 @@ input::-webkit-inner-spin-button {
 }
 
 .token__wrapper {
-  margin-top: 4rem;
+  margin-top: 1rem;
   padding: 2rem 2.5rem;
   width: 100%;
   background: rgba(34, 83, 244, 0.05);
@@ -485,7 +485,7 @@ input::-webkit-inner-spin-button {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 6rem;
+  margin-top: 3rem;
   justify-content: space-between;
 }
 
@@ -503,7 +503,7 @@ input::-webkit-inner-spin-button {
   width: 51px;
   height: 42px;
   border-radius: 5px;
-  background: #46bbc4;
+  background: #D68989;
   margin-right: 2rem;
 }
 
@@ -513,23 +513,31 @@ input::-webkit-inner-spin-button {
 }
 
 .token__color:nth-child(2) .token__color--wrapper {
-  background: #073763;
+  background: #674FA7;
 }
 
 .token__color:nth-child(3) .token__color--wrapper {
-  background: #304898;
+  background: #608DB5;
 }
 
 .token__color:nth-child(4) .token__color--wrapper {
-  background: #0b5393;
+  background: #E7C19C;
 }
 
 .token__color:nth-child(5) .token__color--wrapper {
-  background: #0000fd;
+  background: #E29AC0;
 }
 
 .token__color:nth-child(6) .token__color--wrapper {
-  background: #3d84c4;
+  background: #9CDD7F;
+}
+
+.token__color:nth-child(7) .token__color--wrapper {
+  background: #CCCCCC;
+}
+
+.token__color:nth-child(8) .token__color--wrapper {
+  background: #434343;
 }
 
 /* Game */
