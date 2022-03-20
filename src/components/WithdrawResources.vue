@@ -223,6 +223,228 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog v-model="testDialog2">
+    <q-card
+      class="bg-dark text-white"
+      style="width: 700px; max-width: 70vw; border-radius: 20px"
+    >
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title class="text-body2 absolute-center"
+          >RESOURCE CONVERSION</q-toolbar-title
+        >
+        <q-btn round flat icon="close" v-close-popup />
+      </q-toolbar>
+
+      <div>
+        <q-card-section class="row q-col-gutter-sm">
+          <div class="col-3">
+            <div class="text-center text-subtitle2">
+              <div>
+                <img
+                  src="~assets/img/resources/RES_ic_Metal.png"
+                  alt
+                  srcset
+                  class="resource-icon-small"
+                />
+                <!-- <div class="text-white">-{{ metalAmount }} Metal</div> -->
+                <div class="text-weight-bold neonText">Metal Price: 1$</div>
+              </div>
+            </div>
+          </div>
+          <div class="col full-height q-pt-lg">
+            <q-slide-transition>
+              <div>
+                <q-slider
+                  :min="0"
+                  color="warning"
+                  class="custom-slider-track"
+                />
+                <div class="text-white text-center">-1 Metal</div>
+              </div>
+            </q-slide-transition>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="row q-col-gutter-sm">
+          <div class="col-3">
+            <div class="text-center text-subtitle2">
+              <div>
+                <img
+                  src="~assets/img/resources/RES_ic_FUEL5.png"
+                  alt
+                  srcset
+                  class="resource-icon-small"
+                />
+
+                <div class="text-weight-bold neonText">Petrol Price: 1$</div>
+              </div>
+            </div>
+          </div>
+          <div class="col full-height q-pt-lg">
+            <q-slide-transition>
+              <div>
+                <q-slider
+                  :min="0"
+                  color="warning"
+                  class="custom-slider-track"
+                />
+                <div class="text-white text-center">-1 PETROL</div>
+              </div>
+            </q-slide-transition>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="row q-col-gutter-sm">
+          <div class="col-3">
+            <div class="text-center text-subtitle2">
+              <div>
+                <img
+                  src="~assets/img/resources/RES_ic_CRYSTAL.png"
+                  alt
+                  class="resource-icon-small"
+                  srcset
+                />
+                <!-- <div class="text-white">-{{ crystalAmount }} Crystal</div> -->
+                <div class="text-weight-bold neonText">Crystal Price: 1$</div>
+              </div>
+            </div>
+          </div>
+          <div class="col full-height q-pt-lg">
+            <q-slide-transition>
+              <div>
+                <q-slider
+                  :min="0"
+                  color="warning"
+                  class="custom-slider-track"
+                />
+                <div class="text-white text-center">-1 CRYSTAL</div>
+              </div>
+            </q-slide-transition>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="row q-col-gutter-md">
+          <div class="col">
+            <q-badge
+              style="
+                border: 2px solid #21ba45;
+                border-radius: 5px;
+                font-size: 14px;
+                box-shadow: 0 0 20px #21ba45;
+                color: #fff;
+              "
+              class="text-subtitle2 q-px-lg q-mb-md full-width"
+            >
+              <span class="text-left text-weight-bold">$1 - 1 $SPR</span>
+            </q-badge>
+            <br />
+            <q-badge
+              style="
+                border: 2px solid red;
+                border-radius: 5px;
+                font-size: 14px;
+                box-shadow: 0 0 20px red;
+                color: #fff;
+              "
+              class="q-mt-xs text-subtitle2 q-px-lg full-width"
+            >
+              <span class="text-weight-bold">Fee: 1 $SPR</span>
+            </q-badge>
+
+            <div class="q-pt-md">
+              <button
+                class="button q-pa-md q-mr-xs"
+                style="
+                  border: 3px solid #2253f4;
+                  border-radius: 5px;
+                  box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                  color: #fff;
+                  font-size: 12px;
+                  padding: 7px 15px;
+                "
+                v-close-popup
+              >
+                CONVERT
+              </button>
+            </div>
+          </div>
+          <div class="col">
+            <q-card
+              class="bg-dark text-white"
+              style="
+                max-width: 70vw;
+                border-radius: 20px;
+                border: 3px solid gold;
+                box-shadow: 0 0 20px gold;
+              "
+            >
+              <q-toolbar class="bg-primary">
+                <q-toolbar-title
+                  class="text-body2 text-center"
+                  style="color: gold"
+                  >RARITY MULTIPLIER</q-toolbar-title
+                >
+              </q-toolbar>
+              <q-card-section>
+                <q-list dense>
+                  <q-item>
+                    <q-item-section class="col-6"> METAL </q-item-section>
+                    <q-item-section
+                      class="text-right"
+                      style="border-left: 3px solid white; padding-left: 10px"
+                    >
+                      1.0
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section class="col-6"> PETROL </q-item-section>
+                    <q-item-section
+                      class="text-right"
+                      style="border-left: 3px solid white; padding-left: 10px"
+                    >
+                      1.0
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section class="col-6"> CRYSTAL </q-item-section>
+                    <q-item-section
+                      class="text-right"
+                      style="border-left: 3px solid white; padding-left: 10px"
+                    >
+                      1.0
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card-section>
+              <q-toolbar class="bg-primary text-white">
+                <q-toolbar-title
+                  class="text-body2 text-center"
+                  style="color: gold"
+                  >BONUS MULTIPLIER</q-toolbar-title
+                >
+              </q-toolbar>
+              <q-card-section>
+                <q-list dense>
+                  <q-item>
+                    <q-item-section class="col-6">
+                      Level Bonus MULTIPLIER
+                    </q-item-section>
+                    <q-item-section
+                      class="text-right"
+                      style="border-left: 3px solid white; padding-left: 10px"
+                    >
+                      1.0
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card-section>
+            </q-card>
+          </div>
+        </q-card-section>
+      </div>
+    </q-card>
+  </q-dialog>
+
   <q-dialog v-model="testDialog">
     <q-card
       class="bg-dark text-white"
@@ -300,7 +522,8 @@ import SpaceRidersGameContract, {
   TokenExchangeAttributes,
 } from "../service/contract/SpaceRidersGameContract";
 
-const testDialog = ref(true);
+const testDialog = ref(false);
+const testDialog2 = ref(true);
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;

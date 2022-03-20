@@ -63,12 +63,12 @@
                 box-shadow: 0 0 20px rgb(34 83 244 / 76%);
                 color: #fff;
               "
-              v-on:click.prevent="scrollPageTo('landing')"
+              @click="openWhitepaper = true"
             >
               WHITEPAPER
             </button>
 
-            <button
+            <!-- <button
               class="button q-pa-md"
               style="
                 border: 3px solid #2253f4;
@@ -76,10 +76,9 @@
                 box-shadow: 0 0 20px rgb(34 83 244 / 76%);
                 color: #fff;
               "
-              v-on:click.prevent="scrollPageTo('landing')"
             >
               Game manual
-            </button>
+            </button> -->
             <!-- 
             <a
               href="#"
@@ -269,9 +268,9 @@
           </h2>
 
           <p class="main__subtitle wow animate__animated animate__fadeIn">
-            is a strategy-game set in space...
+            Success in space is defined by your Strategy...
           </p>
-          <div class="fit row wrap justify-start items-start content-start">
+          <!-- <div class="fit row wrap justify-start items-start content-start">
             <div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
@@ -287,7 +286,7 @@
                 Enter Space Riders
               </button>
             </div>
-          </div>
+          </div> -->
 
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>
@@ -446,11 +445,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="What is Spaceriders?"
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       SpaceRiders ($SPR) is a play-to-earn real-time strategy
                       NFT game settled in space. $SPR enables players to
                       purchase and acquire virtual items within the Spaceriders
@@ -464,11 +463,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Where do I buy $SPR token? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       For convenience of our users , We have pioneered our very
                       own exchange tool which can be easily accessible on the
                       landing page of our website and also on the game itself.
@@ -484,11 +483,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="What do I need to play Spaceriders?"
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         You need a compatible wallet such as Metamask and enough
                         $SPR previously purchased in order to mint a planet and
@@ -503,11 +502,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="When will users be able to play Spaceriders?  "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         The MVP (Minimum Viable Product ) is completed and is
                         currently undergoing rigorous testing by the development
@@ -525,11 +524,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Will Spaceriders be free to play? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         To enter Space Riders, you will need to mint a planet
                         first. Our innovative systems ensures that users will
@@ -546,11 +545,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="How does Spaceriders utilise blockchain?  "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         $SPR or $SpaceRiders is the in-game currency of
                         SpaceRiders game, it is used for any purchase and for
@@ -565,11 +564,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="How do I expect to make passive income? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         Passive income will generate from your earnings when
                         converting resources to $SPR . This will come from the
@@ -585,11 +584,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Will there be an ALPHA version? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         Yes the ALPHA version will be released via a testnet.
                         This is so our community will be able to have an
@@ -603,28 +602,6 @@
                 <q-separator />
               </q-list>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MAINTENANCE -->
-    <div id="game"></div>
-    <section class="game">
-      <div class="container">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">MAINTENANCE</div>
-
-          <div
-            class="game__content q-pa-lg"
-            style="
-              border: 2px solid #2253f4;
-              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-              height: 100%;
-            "
-          >
-            This page will be used to give users information regarding software
-            updates which may have an impact on the performance of the game.
           </div>
         </div>
       </div>
@@ -654,19 +631,20 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Principle Software Engineer</div>
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/in/jordi-walter-hoock-castro-10105696/" />
                   <q-btn
                     flat
                     round
                     color="white"
                     icon="fab fa-telegram-plane"
+                    type="a" target="_blank" href="https://t.me/SpaceRidersENChat"
                   />
-                  <q-btn flat round color="white" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn"/>
                 </q-card-section>
               </q-card>
             </div>
@@ -686,22 +664,23 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
                   <div>Blockchain Enthusiast</div>
                   <div>NFT Games Player</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/in/inaki-marzo-d%C3%ADaz/" />
                   <q-btn
                     flat
                     round
                     color="white"
                     icon="fab fa-telegram-plane"
+                    type="a" target="_blank" href="https://t.me/SpaceRidersENChat"
                   />
-                  <q-btn flat round color="white" icon="fab fa-discord" />
-                  <q-btn flat round color="white" icon="fab fa-youtube" />
+                  <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" />
+                  <q-btn flat round color="white" icon="fab fa-youtube" type="a" target="_blank" href="https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA" />
                 </q-card-section>
               </q-card>
             </div>
@@ -721,7 +700,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Product Lead</div>
                   <div>Business Analysis</div>
                   <div>Marketing Operations</div>
@@ -729,14 +708,14 @@
                   <div>Crypto Specialist</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/in/max-pamies-i-del-campo-b2591921a" />
                   <q-btn
                     flat
                     round
                     color="white"
-                    icon="fab fa-telegram-plane"
+                    icon="fab fa-telegram-plane" type="a" target="_blank" href="https://t.me/atopikoin"
                   />
-                  <q-btn flat round color="white" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="#AtopiKoin2676" />
                 </q-card-section>
               </q-card>
             </div>
@@ -757,7 +736,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Front end Support</div>
                   <div>Strategy Analyst</div>
                   <div>Systems Analyst</div>
@@ -765,9 +744,9 @@
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn flat round color="white" icon="fab fa-linkedin-in" />
-                  <q-btn flat color="white" icon="fab fa-telegram-plane" />
-                  <q-btn flat color="white" icon="fab fa-discord" />
+                  <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/company/spaceridersio" />
+                  <q-btn flat color="white" icon="fab fa-telegram-plane" type="a" target="_blank" href="https://t.me/SpaceRidersENChat" />
+                  <q-btn flat color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" />
                 </q-card-section>
               </q-card>
             </div>
@@ -960,7 +939,7 @@
           </h2>
 
           <div class="social__content wow animate__animated animate__fadeIn">
-            <a href="#" class="social__link">
+            <a href="https://medium.com/@spaceriders.io" target="_blank" class="social__link">
               <img
                 src="~assets/landing/img/m-white.svg"
                 alt="М"
@@ -968,7 +947,7 @@
               />
             </a>
 
-            <a href="#" class="social__link">
+            <a href="https://twitter.com/spaceriders_io" target="_blank" class="social__link">
               <img
                 src="~assets/landing/img/twitter-white.svg"
                 alt="Твитер"
@@ -976,7 +955,7 @@
               />
             </a>
 
-            <a href="#" class="social__link">
+            <a href="https://t.me/SpaceRidersENChat" target="_blank" class="social__link">
               <img
                 src="~assets/landing/img/telegram-white.svg"
                 alt="Телеграм"
@@ -984,7 +963,7 @@
               />
             </a>
 
-            <a href="#" class="social__link">
+            <a href="https://discord.gg/h733Kh6XTn" target="_blank" class="social__link">
               <img
                 src="~assets/landing/img/discord.svg"
                 alt="Телеграм"
@@ -992,11 +971,18 @@
               />
             </a>
 
-            <a href="#" class="social__link">
+            <a href="https://www.instagram.com/spaceriders.io/" target="_blank" class="social__link">
+              <q-icon name="fab fa-instagram" size="80px" color="white" />
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A" class="social__link" target="_blank">
+              <q-icon name="fab fa-youtube" size="80px" color="white" />
+            </a>
+
+            <a href="https://linktr.ee/SpaceRiders.io" target="_blank" class="social__link">
               <img
-                src="~assets/img/gitbooks.svg"
+                src="~assets/landing/img/linktreee.svg"
                 alt="Телеграм"
-                style="height: 70px"
                 class="social__link--icon"
               />
             </a>
@@ -1126,6 +1112,21 @@
 
       <button class="button header__button modal__button">White peper</button>
     </div>
+
+    <q-dialog v-model="openWhitepaper" full-height>
+      <q-card class="full-height" style="border-radius:30px;width: 700px; max-width: 80vw;">
+        <q-carousel
+          animated
+          v-model="slide"
+          arrows
+          infinite
+          swipeable
+          class="full-height"
+        >
+          <q-carousel-slide v-for="item in 28" :name="item" :key="item" :img-src="require('src/assets/landing/img/whitepaper/-5344069242340120154whitepaper_sr_v1_english_'+item+'.png')" />
+        </q-carousel>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -1142,7 +1143,7 @@ import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import { defineComponent, ref } from "vue";
 import { watch } from "vue";
-import Swap from "components/Swap.vue";
+// import Swap from "components/Swap.vue";
 
 //   new WOW().init();
 export default defineComponent({
@@ -1151,7 +1152,7 @@ export default defineComponent({
   //   window.addEventListener("scroll", this.updateScroll);
   // },
   components: {
-    Swap,
+    // Swap,
   },
   setup() {
     const scrollPageTo = (navEl) => {
@@ -1212,6 +1213,8 @@ export default defineComponent({
       scrollPageTo,
       options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
+      openWhitepaper: ref(false),
+      slide: ref(1)
     };
   },
 });
