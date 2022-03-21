@@ -38,6 +38,13 @@
             <a
               href="#"
               class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('faq')"
+              >FAQs</a
+            >
+
+            <a
+              href="#"
+              class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('team')"
               >TEAM</a
             >
@@ -433,7 +440,7 @@
     </section>
 
     <!-- FAQ -->
-    <div id="game"></div>
+    <div id="faq"></div>
     <section class="game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
@@ -608,7 +615,7 @@
     </section>
 
     <!-- TEAM -->
-    <div id="game"></div>
+    <div id="team"></div>
     <section class="game">
       <div class="container">
         <div class="game__inner wow animate__animated animate__fadeIn">
@@ -755,51 +762,9 @@
       </div>
     </section>
 
-    <!-- DISCLAIMER -->
-    <div id="game"></div>
-    <section class="game">
-      <div class="container">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">DISCLAIMER</div>
+   
 
-          <div
-            class="game__content q-pa-lg"
-            style="
-              border: 2px solid #2253f4;
-              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-              height: 100%;
-            "
-          >
-            <p class="text-h5">
-              The information provided on this website does not constitute
-              investment advice, financial advice, trading advice, or any other
-              sort of advice and you should not treat any of the website's
-              content as such. Spaceriders team does not recommend and is not
-              responsible for any cryptocurrency that is bought, sold, or held
-              by you. do conduct your own due diligence and consult your
-              financial advisor before making any investment decisions.
-            </p>
-            <p class="q-pt-md text-h5">
-              Spaceriders team expressly disclaims any and all responsibility
-              for any direct or consequential loss or damage of any kind
-              whatsoever arising directly or indirectly from
-            </p>
-            <p class="q-pt-md text-h5">
-              <ul>
-                <li>(i) reliance on any information produced by Spaceriders</li>
-                <li>(ii) any error, omission or inaccuracy in any such information</li>
-                <li>(iii) any action resulting therefrom, </li>
-                <li>
-                  (iv) usage or acquisition of products, available through the website.
-                </li>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TROUBLESHOOTING -->
+    <!-- TROUBLESHOOTING
     <div id="game"></div>
     <section class="game">
       <div class="container">
@@ -820,7 +785,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- TOKENOMICS -->
     <div id="game"></div>
@@ -991,6 +956,50 @@
       </div>
     </section>
 
+     <!-- DISCLAIMER -->
+    <div id="game"></div>
+    <section class="game">
+      <div class="container">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">DISCLAIMER</div>
+
+          <div
+            class="game__content q-pa-lg"
+            style="
+              border: 2px solid #2253f4;
+              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
+              height: 100%;
+            "
+          >
+            <p class="text-h5">
+              The information provided on this website does not constitute
+              investment advice, financial advice, trading advice, or any other
+              sort of advice and you should not treat any of the website's
+              content as such. Spaceriders team does not recommend and is not
+              responsible for any cryptocurrency that is bought, sold, or held
+              by you. do conduct your own due diligence and consult your
+              financial advisor before making any investment decisions.
+            </p>
+            <p class="q-pt-md text-h5">
+              Spaceriders team expressly disclaims any and all responsibility
+              for any direct or consequential loss or damage of any kind
+              whatsoever arising directly or indirectly from
+            </p>
+            <p class="q-pt-md text-h5">
+              <ul>
+                <li>(i) reliance on any information produced by Spaceriders</li>
+                <li>(ii) any error, omission or inaccuracy in any such information</li>
+                <li>(iii) any action resulting therefrom, </li>
+                <li>
+                  (iv) usage or acquisition of products, available through the website.
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="footer">
       <div
@@ -1113,8 +1122,28 @@
       <button class="button header__button modal__button">White peper</button>
     </div>
 
-    <q-dialog v-model="openWhitepaper" full-height>
-      <q-card class="full-height" style="border-radius:30px;width: 700px; max-width: 80vw;">
+    <q-dialog v-model="openWhitepaper">
+      <q-card style="border-radius:30px; max-width: 80vw;">
+        <q-card-section class="row">
+            <q-item>
+              <q-item-section  >
+                <img
+                @click="openPdf('/pdf/english.pdf')"
+                  src="~assets/landing/img/englishflag.png"
+                  style="height:300px;cursor:pointer"
+                />
+              </q-item-section>
+              <q-item-section >
+                <img
+                  @click="openPdf('/pdf/spain.pdf')"
+                  src="~assets/landing/img/spainflag.png"
+                  style="height:300px;cursor:pointer"
+                />
+              </q-item-section>
+            </q-item>
+        </q-card-section>
+      </q-card>
+      <!-- <q-card class="full-height" style="border-radius:30px;width: 700px; max-width: 80vw;">
         <q-carousel
           animated
           v-model="slide"
@@ -1125,35 +1154,33 @@
         >
           <q-carousel-slide v-for="item in 28" :name="item" :key="item" :img-src="require('src/assets/landing/img/whitepaper/-5344069242340120154whitepaper_sr_v1_english_'+item+'.png')" />
         </q-carousel>
+      </q-card> -->
+    </q-dialog>
+
+
+    <q-dialog v-model="openPdfModel">
+      <q-card  style="border-radius:30px; max-width: 80vw;">
+        <q-card-section class="q-pa-none">
+          <q-pdfviewer
+            type="html5"
+            :src="pdfSrc"
+            style="width:700px;height:80vh"
+            hide-scrollbar
+          />
+        </q-card-section>
       </q-card>
     </q-dialog>
+
   </div>
 </template>
 
 <script>
-// import 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js';
-// import '../assets/landing/js/particles.js';
-// import '../assets/landing/js/app.js';
-// import '../assets/landing/js/jquery.countdown.js';
 import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
-import RouterContract from "../service/contract/RouterContract";
-import SpaceRiders from "../service/contract/SpaceRiders";
-import { useStore } from "vuex";
-import ApiRequests from "../service/http/ApiRequests";
 import { defineComponent, ref } from "vue";
-import { watch } from "vue";
-// import Swap from "components/Swap.vue";
 
-//   new WOW().init();
 export default defineComponent({
   name: "PageLanding",
-  // mounted() {
-  //   window.addEventListener("scroll", this.updateScroll);
-  // },
-  components: {
-    // Swap,
-  },
   setup() {
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
@@ -1203,6 +1230,16 @@ export default defineComponent({
     const updateScroll = () => {
       scrollPosition.value = window.scrollY;
     };
+
+    const pdfSrc = ref("")
+    const openWhitepaper = ref(false)
+    const openPdfModel = ref(false)
+    function openPdf(params) {
+      pdfSrc.value = params
+      openWhitepaper.value = false
+      openPdfModel.value = true
+
+    }
     return {
       d,
       h,
@@ -1213,8 +1250,11 @@ export default defineComponent({
       scrollPageTo,
       options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
-      openWhitepaper: ref(false),
-      slide: ref(1)
+      openWhitepaper,
+      slide: ref(1),
+      openPdf,
+      pdfSrc,
+      openPdfModel
     };
   },
 });
