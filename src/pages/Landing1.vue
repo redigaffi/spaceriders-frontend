@@ -445,11 +445,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="What is Spaceriders?"
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       SpaceRiders ($SPR) is a play-to-earn real-time strategy
                       NFT game settled in space. $SPR enables players to
                       purchase and acquire virtual items within the Spaceriders
@@ -463,11 +463,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Where do I buy $SPR token? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       For convenience of our users , We have pioneered our very
                       own exchange tool which can be easily accessible on the
                       landing page of our website and also on the game itself.
@@ -483,11 +483,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="What do I need to play Spaceriders?"
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         You need a compatible wallet such as Metamask and enough
                         $SPR previously purchased in order to mint a planet and
@@ -502,11 +502,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="When will users be able to play Spaceriders?  "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         The MVP (Minimum Viable Product ) is completed and is
                         currently undergoing rigorous testing by the development
@@ -524,11 +524,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Will Spaceriders be free to play? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         To enter Space Riders, you will need to mint a planet
                         first. Our innovative systems ensures that users will
@@ -545,11 +545,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="How does Spaceriders utilise blockchain?  "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         $SPR or $SpaceRiders is the in-game currency of
                         SpaceRiders game, it is used for any purchase and for
@@ -564,11 +564,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="How do I expect to make passive income? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         Passive income will generate from your earnings when
                         converting resources to $SPR . This will come from the
@@ -584,11 +584,11 @@
                 <q-expansion-item
                   group="somegroup"
                   label="Will there be an ALPHA version? "
-                  header-class="text-white bg-transparent text-h6"
+                  header-class="text-white bg-transparent text-h4"
                   active-class="bg-transparent text-white"
                 >
                   <q-card>
-                    <q-card-section class="text-subtitle1">
+                    <q-card-section class="text-h5">
                       <div>
                         Yes the ALPHA version will be released via a testnet.
                         This is so our community will be able to have an
@@ -631,7 +631,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Principle Software Engineer</div>
                   <div>Blockchain Enthusiast</div>
                 </q-card-section>
@@ -664,7 +664,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
                   <div>Blockchain Enthusiast</div>
@@ -700,7 +700,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Product Lead</div>
                   <div>Business Analysis</div>
                   <div>Marketing Operations</div>
@@ -736,7 +736,7 @@
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-subtitle2">
+                <q-card-section class="text-h5">
                   <div>Front end Support</div>
                   <div>Strategy Analyst</div>
                   <div>Systems Analyst</div>
@@ -981,7 +981,7 @@
 
             <a href="https://linktr.ee/SpaceRiders.io" target="_blank" class="social__link">
               <img
-                src="~assets/landing/img/linktree.png"
+                src="~assets/landing/img/linktreee.svg"
                 alt="Телеграм"
                 class="social__link--icon"
               />
