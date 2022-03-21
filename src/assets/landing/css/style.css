@@ -22,8 +22,8 @@ body {
   padding: 0;
   overflow-x: hidden;
   font-size: 1.8rem;
-  /* font-family: 'Orbitron', sans-serif; */
-  font-family: bodyFont;
+  font-family: 'Orbitron', sans-serif;
+  /* font-family: bodyFont; */
 }
 
 *,
