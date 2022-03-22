@@ -1488,6 +1488,11 @@
     dotenv-parse-variables "^2.0.0"
     fs "^0.0.2"
 
+"@quasar/quasar-app-extension-qpdfviewer@^2.0.0-alpha.5":
+  version "2.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qpdfviewer/-/quasar-app-extension-qpdfviewer-2.0.0-alpha.5.tgz#e1107f29f414b8778079889c9bfafeaf8430b269"
+  integrity sha512-jayLi8QVMsHOT2muveKQMVhTk9FKRLms0/8Sjp2sz8pML2BAHQIIJnzeDMmi1p3W+6nYVDo9i/SO/UsVLoqZjw==
+
 "@quasar/ssr-helpers@2.1.1":
   version "2.1.1"
   resolved "https://registry.npmjs.org/@quasar/ssr-helpers/-/ssr-helpers-2.1.1.tgz"
