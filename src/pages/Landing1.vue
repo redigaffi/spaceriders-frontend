@@ -399,6 +399,7 @@
                 analysis can be found within the Game Manual
               </p>
             </div>
+
             <div class="game__item">
               <p class="game__item--title">In-Game Features</p>
 
@@ -407,6 +408,30 @@
                 your disposal. This includes defensive weaponry, laser
                 technology and In-game Research Facilities which includes an
                 investigation laboratory.
+              </p>
+            </div>
+
+            <div class="game__item">
+              <p class="game__item--title">Purchasing power</p>
+              <p class="game__item--text custom-font">
+                When you first buy $SPR you are able to buy a
+                maximum of X$ worth of them. What happens when
+                you reach that amount? You are unable to buy more
+                tokens. But this has an easy solution, you simply have
+                to mint a planet to increase your buying power to the
+                next amount of X.
+              </p>
+              <p class="game__item--text custom-font">
+                Why we do this? We want to make sure that $SPR is
+                bought and sold by gamers, not especulators who
+                can potentially ruin the chart as it has been
+                demonstrated in other famous games.
+
+              </p>
+              <p class="game__item--text custom-font">
+                LATER ON YOUR BUYING POWER WILL INCREASE
+                THANKS TO THE XP, THIS IS YET UNDER
+                DEVELOPMENT.
               </p>
             </div>
           </div>
@@ -449,164 +474,23 @@
           <div class="game__content">
             <div class="q-pb-xl container">
               <q-list bordered style="border-color: #2f2f91">
-                <q-expansion-item
-                  group="somegroup"
-                  label="What is Spaceriders?"
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      SpaceRiders ($SPR) is a play-to-earn real-time strategy
-                      NFT game settled in space. $SPR enables players to
-                      purchase and acquire virtual items within the Spaceriders
-                      game.
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="Where do I buy $SPR token? "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      For convenience of our users , We have pioneered our very
-                      own exchange tool which can be easily accessible on the
-                      landing page of our website and also on the game itself.
-                      Our exchange tool is directly linked to pancake swap thus
-                      saving you time and effort. If you prefer , you can also
-                      purchase $SPR Token on pancake swap itself.
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="What do I need to play Spaceriders?"
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        You need a compatible wallet such as Metamask and enough
-                        $SPR previously purchased in order to mint a planet and
-                        fill your energy
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="When will users be able to play Spaceriders?  "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        The MVP (Minimum Viable Product ) is completed and is
-                        currently undergoing rigorous testing by the development
-                        team prior to rolling it out, to ensure that your first
-                        experience within the game is exceptional. As stated in
-                        our roadmap, we anticipate launch of this version in Q2
-                        2022
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="Will Spaceriders be free to play? "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        To enter Space Riders, you will need to mint a planet
-                        first. Our innovative systems ensures that users will
-                        always pay the same price in $ USD when minting a
-                        planet, regardless of our token price. This ensures
-                        fairness to our users.
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="How does Spaceriders utilise blockchain?  "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        $SPR or $SpaceRiders is the in-game currency of
-                        SpaceRiders game, it is used for any purchase and for
-                        rewards.
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="How do I expect to make passive income? "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        Passive income will generate from your earnings when
-                        converting resources to $SPR . This will come from the
-                        mines you're upgrading. To maximise your ROI you'll need
-                        to focus and follow your own strategy.
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
-
-                <q-expansion-item
-                  group="somegroup"
-                  label="Will there be an ALPHA version? "
-                  header-class="text-white bg-transparent text-h4"
-                  active-class="bg-transparent text-white"
-                >
-                  <q-card>
-                    <q-card-section class="text-h5">
-                      <div>
-                        Yes the ALPHA version will be released via a testnet.
-                        This is so our community will be able to have an
-                        opportunity to get use to the game to understand the
-                        strategical approach.
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-expansion-item>
-
-                <q-separator />
+                <div v-for="(item,index) in faq_section" :key="index">
+                  <q-expansion-item
+                    group="somegroup"
+                    :label="item.label"
+                    header-class="text-white bg-transparent text-h4"
+                    active-class="bg-transparent text-white"
+                  >
+                    <q-card>
+                      <q-card-section class="text-h5">
+                        <p v-for="description in item.description" :key="description">
+                          {{ description }}
+                        </p>
+                      </q-card-section>
+                    </q-card>
+                  </q-expansion-item>
+                  <q-separator />
+                </div>
               </q-list>
             </div>
           </div>
@@ -629,7 +513,7 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/JORDI.png" style="width: 100px" />
+                  <img src="~assets/landing/img/ast/jordi_ast.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
@@ -662,7 +546,7 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/INIAKI.png" style="width: 100px" />
+                  <img src="~assets/landing/img/ast/iniaki_ast.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
@@ -674,7 +558,8 @@
                 <q-card-section class="text-h5">
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
-                  <div>Blockchain Enthusiast</div>
+                  <div>Blockchain & Crypto Enthusiast</div>
+                  <div>System Design Support</div>
                   <div>NFT Games Player</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
@@ -688,6 +573,14 @@
                   />
                   <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" />
                   <q-btn flat round color="white" icon="fab fa-youtube" type="a" target="_blank" href="https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA" />
+                  <q-btn flat round color="white" type="a" target="_blank" href="https://linktr.ee/MundoLast" >
+                    <img
+                      src="~assets/landing/img/linktreee.svg"
+                      alt="Телеграм"
+                      style="height:30px"
+                    />
+                  </q-btn>
+                  <q-btn flat round color="white" icon="fab fa-twitch" type="a" target="_blank" href="https://www.twitch.tv/cryptolast" />
                 </q-card-section>
               </q-card>
             </div>
@@ -698,7 +591,7 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/MAX.png" style="width: 100px" />
+                  <img src="~assets/landing/img/ast/max_ast.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
@@ -712,7 +605,7 @@
                   <div>Business Analysis</div>
                   <div>Marketing Operations</div>
                   <div>Social Media Lead</div>
-                  <div>Crypto Specialist</div>
+                  <div>Blockchain & Crypto Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/in/max-pamies-i-del-campo-b2591921a" />
@@ -726,7 +619,6 @@
                 </q-card-section>
               </q-card>
             </div>
-
             <div class="col-xs-12 col-sm-6 col-md-3">
               <q-card
                 flat
@@ -734,7 +626,7 @@
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img src="~assets/img/avatar-icon.png" style="width: 100px" />
+                  <img src="~assets/landing/img/ast/mac_ast_2.png" style="width: 100px" />
                 </div>
 
                 <q-card-section>
@@ -744,7 +636,7 @@
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-h5">
-                  <div>Front end Support</div>
+                  <div>Front End Design & OP Support</div>
                   <div>Strategy Analyst</div>
                   <div>Systems Analyst</div>
                   <div>Data Analysis</div>
@@ -761,8 +653,6 @@
         </div>
       </div>
     </section>
-
-   
 
     <!-- TROUBLESHOOTING
     <div id="game"></div>
@@ -1240,6 +1130,67 @@ export default defineComponent({
       openPdfModel.value = true
 
     }
+
+    const faq_section = ref([
+      {
+        label: "What is SpaceRiders?",
+        description: [
+          "SpaceRiders ($SPR) is a Play-To-Earn real-time strategy NFT game settled in space.",
+          "$SPR enables players to purchase and acquire virtual items within the SpaceRiders game."
+        ]
+      },
+      {
+        label: "Where do I buy $SPR token?",
+        description: [
+          "For convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
+          "Our exchange tool is directly linked to PancakeSwap thus saving you time and effort.",
+          "If you prefer, you can also purchase $SPR Token on PancakeSwap itself."
+        ]
+      },
+      {
+        label: "What do I need to play SpaceRiders?",
+        description: [
+          "You need a compatible wallet such as MetaMask and enough $SPR previously purchased in order to mint a planet and fill your energy.",
+        ]
+      },
+      {
+        label: "When will users be able to play SpaceRiders?",
+        description: [
+          "The MVP (Minimum Viable Product) is completed and is currently undergoing rigorous testing by the development team prior to rolling it out, to ensure that your first experience within the game is exceptional.",
+          "As stated in our roadmap, we anticipate launch of this version in Q2 2022."
+        ]
+      },
+      {
+        label: "Will SpaceRiders be a Free To Play?",
+        description: [
+          "To enter SpaceRiders, you will need to mint a planet first.",
+          "Our innovative systems ensures that users will always pay the same price in $USD when minting a planet, regardless of our token price.",
+          "This ensures fairness to our users."
+        ]
+      },
+      {
+        label: "How does SpaceRiders use the blockchain?",
+        description: [
+          "$SPR is the in-game currency of SpaceRiders game, it is used for any purchase and for rewards.",
+        ]
+      },
+      {
+        label: "How do I expect to make passive income?",
+        description: [
+          "Passive income will generate from your earnings when converting resources to $SPR.",
+          "This will come from the mines you're upgrading.",
+          "To maximize your ROI you'll need to focus and follow your own strategy.",
+        ]
+      },
+      {
+        label: "Will there be an ALPHA version?",
+        description: [
+          "Yes, the ALPHA version will be released via a testnet.",
+          "This is so our community will be able to have an opportunity to get use to the game to understand the strategical approach.",
+        ]
+      },
+    ])
+
     return {
       d,
       h,
@@ -1254,7 +1205,8 @@ export default defineComponent({
       slide: ref(1),
       openPdf,
       pdfSrc,
-      openPdfModel
+      openPdfModel,
+      faq_section
     };
   },
 });
