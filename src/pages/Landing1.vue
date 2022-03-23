@@ -342,8 +342,7 @@
               <p class="game__item--title">Advanced Innovative System</p>
               <p class="game__item--text custom-font">
                 At Space Riders, we strive towards innovation and being
-                futureproof. A range of new contemporary systems have systems
-                have been born in the development of this project which will
+                futureproof. A range of new contemporary systems have been born in the development of this project which will
                 benefit both the health and longevity of the game, Long term and
                 short term.
               </p>
@@ -412,7 +411,7 @@
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Purchasing power</p>
+              <p class="game__item--title">Purchasing Power</p>
               <p class="game__item--text custom-font">
                 When you first buy $SPR you are able to buy a
                 maximum of X$ worth of them. What happens when
@@ -423,15 +422,9 @@
               </p>
               <p class="game__item--text custom-font">
                 Why we do this? We want to make sure that $SPR is
-                bought and sold by gamers, not especulators who
-                can potentially ruin the chart as it has been
-                demonstrated in other famous games.
-
-              </p>
-              <p class="game__item--text custom-font">
-                LATER ON YOUR BUYING POWER WILL INCREASE
-                THANKS TO THE XP, THIS IS YET UNDER
-                DEVELOPMENT.
+                bought and sold by gamers. Later on your buying power will increase
+                thanks to the xp, this is yet under
+                development.
               </p>
             </div>
           </div>
@@ -1180,13 +1173,6 @@ export default defineComponent({
           "Passive income will generate from your earnings when converting resources to $SPR.",
           "This will come from the mines you're upgrading.",
           "To maximize your ROI you'll need to focus and follow your own strategy.",
-        ]
-      },
-      {
-        label: "Will there be an ALPHA version?",
-        description: [
-          "Yes, the ALPHA version will be released via a testnet.",
-          "This is so our community will be able to have an opportunity to get use to the game to understand the strategical approach.",
         ]
       },
     ])
