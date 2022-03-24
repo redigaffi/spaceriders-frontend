@@ -541,14 +541,14 @@
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn flat round color="white" icon="fab fa-linkedin-in" type="a" target="_blank" href="https://www.linkedin.com/in/inaki-marzo-d%C3%ADaz/" />
-                  <q-btn
+                  <!-- <q-btn
                     flat
                     round
                     color="white"
                     icon="fab fa-telegram-plane"
                     type="a" target="_blank" href="https://t.me/SpaceRidersENChat"
-                  />
-                  <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" />
+                  /> -->
+                  <!-- <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" /> -->
                   <q-btn flat round color="white" icon="fab fa-youtube" type="a" target="_blank" href="https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA" />
                   <q-btn flat round color="white" type="a" target="_blank" href="https://linktr.ee/MundoLast" >
                     <img
