@@ -169,7 +169,7 @@ input::-webkit-inner-spin-button {
 /* Главный блок */
 .main {
   padding: 26rem 0rem 15rem 0;
-  background: url("../img/main-bg.jpg") center no-repeat;
+  background: url("../img/header_bg.jpeg") center no-repeat;
   background-size: cover;
   position: relative;
 }

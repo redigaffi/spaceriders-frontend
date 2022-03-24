@@ -26,7 +26,7 @@
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
-              >GAME MECHANINCS</a
+              >GAME MECHANICS</a
             >
             <a
               href="#"
@@ -290,7 +290,7 @@
                 class="button main__button3 popup__open"
                 @click.prevent="$router.push('/research')"
               >
-                Enter Space Riders
+                Enter SpaceRiders
               </button>
             </div>
           </div> -->
@@ -311,8 +311,8 @@
             <div>
               <p class="text-h4 text-justify">
                 Explore a limitless galaxy where the narrative is directed
-                entirely by you, the players. In Spaceriders, you are a leader
-                of your empire, The Destiny of your planets relies upon you! By
+                entirely by you, the players. In SpaceRiders, you are the leader
+                of your empire, <b> the destiny </b>of your planets relies upon you! By
                 building and customizing your planets, you will be securing
                 territory, crossing the deep corners of space to turn the tide
                 of the war.
@@ -320,9 +320,7 @@
             </div>
             <div>
               <p class="text-h4 text-justify">
-                SpaceRiders ($SPR) is a play-to-earn real-time strategy NFT game
-                settled in space. $SPR enables players to purchase and acquire
-                virtual items within the Spaceriders game.
+                SpaceRiders <b> ($SPR) </b> is a Play-To-Earn <b> real-time </b> strategy NFT game set in space. $SPR enables players to purchase and acquire virtual items within the SpaceRiders game.
               </p>
             </div>
           </div>
@@ -341,7 +339,7 @@
             <div class="game__item">
               <p class="game__item--title">Advanced Innovative System</p>
               <p class="game__item--text custom-font">
-                At Space Riders, we strive towards innovation and being
+                At SpaceRiders, we strive towards innovation and being
                 futureproof. A range of new contemporary systems have been born in the development of this project which will
                 benefit both the health and longevity of the game, Long term and
                 short term.
@@ -349,17 +347,13 @@
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Fixed Entry Price</p>
+              <p class="game__item--title">Fixed Entry & Rewards Price</p>
               <p class="game__item--text custom-font">
-                To enter Space Riders, you will need to mint a planet first. Our
+                To enter SpaceRiders, you will need to mint a planet first. Our
                 innovative systems ensures that users will always pay the same
                 price in $ USD when minting a planet, regardless of the token
                 price. This ensures fairness to our users.
               </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Fixed Rewards Price</p>
               <p class="game__item--text custom-font">
                 Once users decide to take rewards by changing resources to the
                 native $SPR Token, they will get the rewards in the resources
@@ -368,23 +362,19 @@
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">50/50 Mark Token System</p>
+              <p class="game__item--title">Stake to Benefit</p>
               <p class="game__item--text custom-font">
-                We have pioneered a new system which has been implemented in
-                Space Riders. This system is a prevention measure which be used
-                to prevent Pump & Dump traders from exploiting this project.
-                Instead, this measure will encourage traders to play the game as
-                this is primary way in which they will get incentivised.
+               Unlike common blockchain games, we have introduced a unique concept into SpaceRiders called Stake to Benefit (STB). This is unique for a variety of reasons, one of them being that the user receives in-game benefits for staking, reduced time on upgrades/builds and discounts on upgrade and building costs. Tiers need to be unlocked one by one. There are the following tiers:
               </p>
             </div>
 
             <div class="game__item">
               <p class="game__item--title">
-                Smart and Controlled Distribution (50/50 System)
+                Smart and Controlled Distribution
               </p>
 
               <p class="game__item--text custom-font">
-                Each time a user invests, they will be distributed tokens in the
+                A 50/50 system, where each user inversts, they will be distributed tokens in the
                 following way:
               </p>
               <ul class="game__item--text custom-font">
@@ -392,10 +382,10 @@
                 <li>⦁ 50% Gaming Token (GT)</li>
               </ul>
               <p class="game__item--text custom-font">
-                This Method will prevent the token being exploited and has been
+                This method will prevent the token being exploited and has been
                 pioneered to achieve long term and short-term token health to
                 encourage users to play and enjoy the game. A more detailed
-                analysis can be found within the Game Manual
+                analysis can be found within the Game Manual.
               </p>
             </div>
 
@@ -408,23 +398,17 @@
                 technology and In-game Research Facilities which includes an
                 investigation laboratory.
               </p>
+
+              <p class="q-pt-md" style="font-size:24px;font-weight: 900;">XP (Experience Points)</p>
+              <p class="game__item--text custom-font">
+               There are an abundance of opportunities for players to gain XP within the game. For example, constructing defense systems, successful defense from asteroid attacks, repairs and any upgrades.
+              </p>
             </div>
 
             <div class="game__item">
               <p class="game__item--title">Purchasing Power</p>
               <p class="game__item--text custom-font">
-                When you first buy $SPR you are able to buy a
-                maximum of X$ worth of them. What happens when
-                you reach that amount? You are unable to buy more
-                tokens. But this has an easy solution, you simply have
-                to mint a planet to increase your buying power to the
-                next amount of X.
-              </p>
-              <p class="game__item--text custom-font">
-                Why we do this? We want to make sure that $SPR is
-                bought and sold by gamers. Later on your buying power will increase
-                thanks to the xp, this is yet under
-                development.
+                When you first buy $SPR you are able to buy a maximum amount of X$ worth. If you reach that amount, you are unable to buy more tokens unless you mint a new planet to increase your buying power. We do this because we want to make sure that $SPR is bought and sold by GAMERS. Later on your buying power will increase thanks to the xp, but this is yet under development.
               </p>
             </div>
           </div>
@@ -440,14 +424,14 @@
           <div class="row fit wrap">
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GameRoadmap.png"
+                src="~assets/landing/img/gr_1.png"
                 alt=""
                 style="width: 100%"
               />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/img/GeneralRoadmap.png"
+                src="~assets/landing/img/gr_2.png"
                 alt=""
                 style="width: 100%"
               />
@@ -552,7 +536,7 @@
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
                   <div>Blockchain & Crypto Enthusiast</div>
-                  <div>System Design Support</div>
+                  <div>System & Graphics Analyst</div>
                   <div>NFT Games Player</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
@@ -629,7 +613,7 @@
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-h5">
-                  <div>Front End Design & OP Support</div>
+                  <div>Front End Analytics</div>
                   <div>Strategy Analyst</div>
                   <div>Systems Analyst</div>
                   <div>Data Analysis</div>
@@ -679,7 +663,7 @@
           <div class="token__inner q-mt-xl">
             <div class="token__img--inner wow animate__animated animate__fadeIn">
               <img
-                src="~assets/landing/img/tkn.png"
+                src="~assets/landing/img/Token_Allocation_new.png"
                 alt="Диаграмма"
                 class="token__img"
               />
@@ -750,29 +734,23 @@
             
           </div>
           <div class="q-pt-md">
-
-          <h2 class="text-h4">Token Allocation</h2>
-
-              <p class="text-h5 text-justify q-pt-md">
-                We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the Spaceriders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.</p>
-              
-              <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
-              <div class="text-h5 q-pt-md">
-                
-
-
-                <p>
-2% LP
-                </p>
-                <p>
-2% Burn
-                </p>
-                <p>
-1% Reward Pool
-                </p>
-              </div>
+            <h2 class="text-h4">Token Allocation</h2>
+            <p class="text-h5 text-justify q-pt-md">
+              We use a dual token system with $SPR which is split into Gaming Tokens and Trading Tokens to ensure the sustainability & scalability of the SpaceRiders ecosystem. We have implemented economic incentives to encourage users to participate in the Space ecosystem, thereby creating a self-sufficient internal and external economy with healthy demands and supplies.
+            </p>
+            <h2 class="text-h4 q-pt-lg">Buying And Selling Tax:</h2>
+            <div class="text-h5 q-pt-md">
+              <p>
+                2% Liquidity Pool
+              </p>
+              <p>
+                2% Reward Pool
+              </p>
+              <p>
+                1% Burn
+              </p>
+            </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -858,19 +836,19 @@
               The information provided on this website does not constitute
               investment advice, financial advice, trading advice, or any other
               sort of advice and you should not treat any of the website's
-              content as such. Spaceriders team does not recommend and is not
+              content as such. SpaceRiders team does not recommend and is not
               responsible for any cryptocurrency that is bought, sold, or held
-              by you. do conduct your own due diligence and consult your
+              by you. Do conduct your own due diligence and consult your
               financial advisor before making any investment decisions.
             </p>
             <p class="q-pt-md text-h5">
-              Spaceriders team expressly disclaims any and all responsibility
+              SpaceRiders team expressly disclaims any and all responsibility
               for any direct or consequential loss or damage of any kind
               whatsoever arising directly or indirectly from
             </p>
             <p class="q-pt-md text-h5">
               <ul>
-                <li>(i) reliance on any information produced by Spaceriders</li>
+                <li>(i) reliance on any information produced by SpaceRiders</li>
                 <li>(ii) any error, omission or inaccuracy in any such information</li>
                 <li>(iii) any action resulting therefrom, </li>
                 <li>
@@ -945,7 +923,7 @@
             >
           </div>
 
-          <p class="footer__copy">Copyright &copy; Spaceriders 2021</p>
+          <p class="footer__copy">Copyright &copy; SpaceRiders 2022</p>
         </div>
       </div>
     </footer>

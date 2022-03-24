@@ -5,7 +5,7 @@
         <div class="header__inner">
           <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
 
-          <a href="/" class="logo"> Spaceriders </a>
+          <a href="/" class="logo"> SpaceRiders </a>
 
           <div class="header__nav">
             <a href="#" class="header__nav--link go" data-point="ico"
@@ -588,7 +588,7 @@
           <button
             class="button road__button wow animate__animated animate__fadeIn"
           >
-            Buy Spaceriders
+            Buy SpaceRiders
           </button>
         </div>
       </div>
@@ -659,7 +659,7 @@
             >
           </div>
 
-          <p class="footer__copy">Copyright &copy; Spaceriders 2021</p>
+          <p class="footer__copy">Copyright &copy; SpaceRiders 2022</p>
         </div>
       </div>
     </footer>

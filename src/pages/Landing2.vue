@@ -175,7 +175,7 @@
           </p>
 
           <button class="button main__button2 go" data-point="ico">
-            Buy Spaceriders
+            Buy SpaceRiders
           </button>
         </div>
       </div>
@@ -656,7 +656,7 @@
           <button
             class="button road__button wow animate__animated animate__fadeIn"
           >
-            Buy Spaceriders
+            Buy SpaceRiders
           </button>
         </div>
       </div>
