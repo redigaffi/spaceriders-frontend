@@ -341,7 +341,7 @@
               <p class="game__item--text custom-font">
                 At SpaceRiders, we strive towards innovation and being
                 futureproof. A range of new contemporary systems have been born in the development of this project which will
-                benefit both the health and longevity of the game, Long term and
+                benefit both the health and longevity of the game, long term and
                 short term.
               </p>
             </div>
@@ -364,7 +364,7 @@
             <div class="game__item">
               <p class="game__item--title">Stake to Benefit</p>
               <p class="game__item--text custom-font">
-               Unlike common blockchain games, we have introduced a unique concept into SpaceRiders called Stake to Benefit (STB). This is unique for a variety of reasons, one of them being that the user receives in-game benefits for staking, reduced time on upgrades/builds and discounts on upgrade and building costs. Tiers need to be unlocked one by one. There are the following tiers:
+               Unlike common blockchain games, we have introduced a unique concept into SpaceRiders called Stake to Benefit (STB). This is unique for a variety of reasons, one of them being that the user receives in-game benefits for staking, reduced time on upgrades/builds and discounts on upgrade and building costs. Tiers need to be unlocked one by one.
               </p>
             </div>
 
@@ -408,7 +408,10 @@
             <div class="game__item">
               <p class="game__item--title">Purchasing Power</p>
               <p class="game__item--text custom-font">
-                When you first buy $SPR you are able to buy a maximum amount of X$ worth. If you reach that amount, you are unable to buy more tokens unless you mint a new planet to increase your buying power. We do this because we want to make sure that $SPR is bought and sold by GAMERS. Later on your buying power will increase thanks to the xp, but this is yet under development.
+                When you first buy $SPR you are able to buy a maximum amount of X$ worth. If you reach that amount, you are unable to buy more tokens unless you mint a new planet to increase your buying power.
+              </p>
+              <p class="game__item--text custom-font">
+                We do this because we want to make sure that $SPR is bought and sold by GAMERS. Later on your buying power will increase thanks to the xp, but this is yet under development.
               </p>
             </div>
           </div>
