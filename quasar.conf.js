@@ -149,8 +149,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `Spaceriders`,
-        short_name: `Spaceriders`,
+        name: `SpaceRiders`,
+        short_name: `SpaceRiders`,
         description: `a Space game app`,
         display: 'standalone',
         orientation: 'portrait',
