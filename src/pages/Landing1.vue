@@ -374,7 +374,7 @@
               </p>
 
               <p class="game__item--text custom-font">
-                A 50/50 system, where each user inversts, they will be distributed tokens in the
+                A 50/50 system, where each user invests, they will be distributed tokens in the
                 following way:
               </p>
               <ul class="game__item--text custom-font">
