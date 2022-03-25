@@ -370,11 +370,11 @@
 
             <div class="game__item">
               <p class="game__item--title">
-                Smart and Controlled Distribution (50/50 System)
+                Smart and Controlled Distribution
               </p>
 
               <p class="game__item--text custom-font">
-                Each time a user invests, they will be distributed tokens in the
+                A 50/50 system, where each user inversts, they will be distributed tokens in the
                 following way:
               </p>
               <ul class="game__item--text custom-font">
