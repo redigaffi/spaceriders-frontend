@@ -1270,7 +1270,7 @@ export default defineComponent({
     };
 
     const pdfSrc = ref("");
-    const openWhitepaper = ref(true);
+    const openWhitepaper = ref(false);
     const openPdfModel = ref(false);
     function openPdf(params) {
       pdfSrc.value = params;
