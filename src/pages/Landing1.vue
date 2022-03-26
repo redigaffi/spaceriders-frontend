@@ -730,12 +730,12 @@
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">Tokenomics</div>
-          <div class="token__inner q-mt-xl">
+          <div class="token__inner q-mt-xl text-center">
             <div
               class="token__img--inner wow animate__animated animate__fadeIn"
             >
               <img
-                src="~assets/landing/img/Token_Allocation_new.png"
+                src="~assets/landing/img/tkr_2.png"
                 alt="Диаграмма"
                 class="token__img"
               />
@@ -782,7 +782,7 @@
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Partenerships
+                    Partnerships
                   </div>
 
                   <div class="token__color">
@@ -1191,11 +1191,19 @@
 
     <q-dialog v-model="openPdfModel">
       <q-card style="border-radius: 30px; max-width: 80vw">
-        <q-card-section class="q-pa-none">
+        <q-card-section class="q-pa-none" v-if="$q.screen.gt.sm">
           <q-pdfviewer
             type="html5"
             :src="pdfSrc"
             style="width: 700px; height: 80vh"
+            hide-scrollbar
+          />
+        </q-card-section>
+        <q-card-section class="q-pa-none" v-else>
+          <q-pdfviewer
+            type="html5"
+            :src="pdfSrc"
+            style="width: 100%; height: 80vh"
             hide-scrollbar
           />
         </q-card-section>
@@ -1262,7 +1270,7 @@ export default defineComponent({
     };
 
     const pdfSrc = ref("");
-    const openWhitepaper = ref(false);
+    const openWhitepaper = ref(true);
     const openPdfModel = ref(false);
     function openPdf(params) {
       pdfSrc.value = params;
