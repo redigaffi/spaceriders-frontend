@@ -136,11 +136,6 @@ export default {
     },
 
     login: async function (e) {
-      let closeLoading = () => {};
-      if (!this.loggedIn) {
-        closeLoading = this.$notification("progress", "Signing in...", 0);
-      }
-
       if (this.loggedIn) {
         this.userInfoPopup = true;
         return;
@@ -164,9 +159,7 @@ export default {
 
       this.$store.commit("login", { jwt: re.data.jwt, address: address });
       this.$eventBus.emit(LOGGED_IN);
-      closeLoading();
-      this.$notification("success", "Successfully started session!", 6000);
-    },
+      },
   },
 
   computed: {

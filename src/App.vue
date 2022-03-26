@@ -1,26 +1,49 @@
 <template>
-  
-
-  <router-view />
-  
+  <router-view/>
 </template>
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
 import { getCurrentInstance } from "vue";
+import { useQuasar } from "quasar";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
 import { useStore } from "vuex";
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
 
+const $quasar = useQuasar();
 
-$eventBus.on(ACTIVE_PLANET_CHANGED, () => {
-  updateAll();
-  updateInterval();
+$eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
+  await $quasar.loading.show(
+  {
+      spinnerSize: 70,
+      backgroundColor: 'blue-10',
+      message: '1, 2, 3, Lift off...',
+      messageColor: 'black',
+      customClass: 'text',
+  });
+
+  await updateAll();
+  await updateInterval();
+  
+  await $quasar.loading.hide();
 });
-$eventBus.on(LOGGED_IN, () => {
-  updateAll();
-  updateInterval();
+
+$eventBus.on(LOGGED_IN, async () => {
+  await $quasar.loading.show(
+  {
+      spinnerSize: 70,
+      backgroundColor: 'blue-10',
+      message: '1, 2, 3, Lift off...',
+      messageColor: 'black',
+      customClass: 'text',
+  });
+
+  await updateAll();
+  await updateInterval();
+
+  await $quasar.loading.hide();
+
 });
 
 async function getChainData() {
@@ -88,17 +111,34 @@ async function updateInterval() {
   }
 }
 
-getChainData();
+async function init() {
+  $quasar.loading.show(
+    {
+        spinnerSize: 70,
+        backgroundColor: 'blue-10',
+        message: '1, 2, 3, Lift off...',
+        messageColor: 'black',
+        customClass: 'text',
+    });
+  // On page refresh reset all.
+  await getChainData();
+  await updateAll();
+  // Start timer
+  await updateInterval();
+  $quasar.loading.hide();
 
-// On page refresh reset all.
-updateAll();
+}
 
-// Start timer
-updateInterval();
+init();
 </script>
 
 <style>
 .notify {
   margin-top: 80px;
+}
+
+.text {
+  font-size: 25px;
+  font-weight: bold;
 }
 </style>

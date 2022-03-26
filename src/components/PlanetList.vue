@@ -38,7 +38,7 @@
               </div>
 
               <q-card-section class="q-pt-none" style="line-height: 1">
-                <div class="q-mb-xs"> 
+                <div class=""> 
                   <q-badge :color="props.row.color">
                     {{ props.row.rarity }} 
                   </q-badge>  
@@ -46,7 +46,7 @@
                 <br />
                 <div style="width: 120px;text-overflow: ellipsis; overflow: hidden;"> {{ props.row.name }} </div>
                 <br />
-                <span style="font-size: 12px">{{ props.row.position }}</span>
+                <span style="font-size: 12px">[{{ props.row.position }}]</span>
               </q-card-section>
             </q-btn>
           </q-card>
