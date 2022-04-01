@@ -734,11 +734,12 @@
             <div
               class="token__img--inner wow animate__animated animate__fadeIn"
             >
-              <img
+              <!-- <img
                 src="~assets/landing/img/tkr_2.png"
                 alt="Диаграмма"
                 class="token__img"
-              />
+              /> -->
+             <PieChart  />
             </div>
 
             <div
@@ -1216,9 +1217,11 @@
 import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
 import { defineComponent, ref } from "vue";
+import PieChart from '../components/pieChart'
 
 export default defineComponent({
   name: "PageLanding",
+  components: { PieChart },
   setup() {
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);

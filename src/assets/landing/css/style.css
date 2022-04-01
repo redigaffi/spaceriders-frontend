@@ -443,7 +443,7 @@ input::-webkit-inner-spin-button {
 }
 
 .token__img--inner {
-  width: 585px;
+  width: 405px;
   flex-shrink: 0;
   margin-right: 5rem;
 }
