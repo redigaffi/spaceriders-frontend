@@ -1,6 +1,6 @@
 <template>
-  <q-card class="q-mb-sm">
-    <q-card-section class="q-pa-xs text-center">
+  <q-card>
+    <q-card-section class="q-pa-sm text-center">
       <div class="text-weight-bold"><slot></slot></div>
     </q-card-section>
   </q-card>
