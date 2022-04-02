@@ -1,6 +1,6 @@
 <template>
-  <q-card-section class="row q-col-gutter-sm text-center">
-    <div class="col-12 q-pa-sm">
+  <q-card-section class="q-pa-none row text-center">
+    <div class="col-12">
       <q-card flat class="bg-transparent text-dark">
         <img
           :src="`data_img/${keyName}.png`"
