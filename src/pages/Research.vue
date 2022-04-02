@@ -47,6 +47,7 @@ import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
 import GlassElementHeading from "components/GlassElementHeading";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "Research",
@@ -59,6 +60,12 @@ export default defineComponent({
   setup() {
     const currentTab = ref("DefaultSlider");
     const researchInfo = ref();
+
+    // const $q = useQuasar();
+
+    // $q.loading.show({
+    //   delay: 400, // ms
+    // });
 
     function slideDiv(data) {
       currentTab.value = "ResearchSlider";
