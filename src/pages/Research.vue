@@ -61,11 +61,11 @@ export default defineComponent({
     const currentTab = ref("DefaultSlider");
     const researchInfo = ref();
 
-    const $q = useQuasar();
+    // const $q = useQuasar();
 
-    $q.loading.show({
-      delay: 400, // ms
-    });
+    // $q.loading.show({
+    //   delay: 400, // ms
+    // });
 
     function slideDiv(data) {
       currentTab.value = "ResearchSlider";

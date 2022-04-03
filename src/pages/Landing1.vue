@@ -759,48 +759,48 @@
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Liquidity
+                    Liquidity 15%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Reward Pool
+                    Reward Pool 50%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Future IG
+                    Future IG 10%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Team
+                    Team 2.5%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Partnerships
+                    Partnerships 7.5%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Seed Funding
+                    Seed Funding 3%
                   </div>
 
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    Private Sale
+                    Private Sale 5%
                   </div>
                   <div class="token__color">
                     <div class="token__color--wrapper"></div>
 
-                    IDO
+                    IDO 7%
                   </div>
                 </div>
               </div>
