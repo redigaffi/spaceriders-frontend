@@ -515,7 +515,9 @@ const energyTimeLeft = computed(() => {
   const availableEnergy = $store.getters.activePlanet.ressources.energy;
   const consumption = energyConsumption.value/60;
   const minutesLeft = (availableEnergy / consumption);
-  return timeLeft(minutesLeft);
+  const tl = timeLeft(minutesLeft);
+  if (tl === "") return "N/A";
+  return tl;
 });
 
 

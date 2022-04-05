@@ -65,7 +65,7 @@
               "
               @click="openWhitepaper = true"
             >
-              WHITEPAPER
+              DARKPAPER
             </button>
           </div>
         </div>

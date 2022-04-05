@@ -31,20 +31,17 @@
               @click="changeActivatePlanet(props.row.planet)"
             >
               <div>
-                <img
-                  :src="props.row.image_url"
-                  style="height: 100px; width: 100px"
-                />
+                <img :src="props.row.image_url" style="height: 100px; width: 100px" />
               </div>
 
               <q-card-section class="q-pt-none" style="line-height: 1">
-                <div class=""> 
-                  <q-badge :color="props.row.color">
-                    {{ props.row.rarity }} 
-                  </q-badge>  
+                <div class>
+                  <q-badge :color="props.row.color">{{ props.row.rarity }}</q-badge>
                 </div>
                 <br />
-                <div style="width: 120px;text-overflow: ellipsis; overflow: hidden;"> {{ props.row.name }} </div>
+                <div
+                  style="width: 120px;text-overflow: ellipsis; overflow: hidden;"
+                >{{ props.row.name }}</div>
                 <br />
                 <span style="font-size: 12px">[{{ props.row.position }}]</span>
               </q-card-section>
@@ -54,17 +51,12 @@
       </template>
     </q-table>
     <div class="row justify-center q-my-md">
-      <q-pagination
-        v-model="pagination.page"
-        color="info"
-        :max="pagesNumber"
-        size="sm"
-      />
+      <q-pagination v-model="pagination.page" color="info" :max="pagesNumber" size="sm" />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, computed, watch, ref, getCurrentInstance } from "vue";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
@@ -72,127 +64,116 @@ import { useStore } from "vuex";
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
 //https://quasar.dev/layout/routing-with-layouts-and-pages
-export default defineComponent({
-  name: "PlanetList",
 
-  setup() {
-    const $q = useQuasar();
-    const $eventBus =
-      getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $q = useQuasar();
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-    const $store = useStore();
+const $store = useStore();
 
-    const colorMapping = {
-      common: "blue-grey-6",
-      epic: "info",
-      legendary: "purple-9"
-    };
+const colorMapping = {
+  common: "blue-grey-6",
+  epic: "info",
+  legendary: "purple-9"
+};
 
-    let rows = computed(() => {
-      const activePlanet = $store.getters.activePlanet;
-      if (!activePlanet) return [];
+let rows = computed(() => {
+  const activePlanet = $store.getters.activePlanet;
+  if (!activePlanet) return [];
 
-      let re = [];
+  let re = [];
 
-      re.push({
-        id: activePlanet.id,
-        name: activePlanet.name,
-        image_url: activePlanet.image_url,
-        rarity: activePlanet.rarity,
-        color: colorMapping[activePlanet.rarity],
-        position: `${activePlanet.position}:${activePlanet.solar_system}:${activePlanet.galaxy}`,
-        active: true,
-        planet: activePlanet,
-      });
+  re.push({
+    id: activePlanet.id,
+    name: activePlanet.name,
+    image_url: activePlanet.image_url,
+    rarity: activePlanet.rarity,
+    color: colorMapping[activePlanet.rarity],
+    position: `${activePlanet.position}:${activePlanet.solar_system}:${activePlanet.galaxy}`,
+    active: true,
+    planet: activePlanet,
+  });
 
-      const planets = $store.getters.planets.filter(
-        (p) => p.id != activePlanet.id && p.claimed
-      );
+  const planets = $store.getters.planets.filter(
+    (p) => p.id != activePlanet.id && p.claimed
+  );
 
-      for (let pId in planets) {
-        const planet = planets[pId];
-        re.push({
-          id: planet.id,
-          image_url: planet.image_url,
-          rarity: planet.rarity,
-          color: colorMapping[planet.rarity],
-          name: planet.name,
-          position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
-          active: false,
-          planet: planet,
-        });
-      }
-
-      return re;
+  for (let pId in planets) {
+    const planet = planets[pId];
+    re.push({
+      id: planet.id,
+      image_url: planet.image_url,
+      rarity: planet.rarity,
+      color: colorMapping[planet.rarity],
+      name: planet.name,
+      position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
+      active: false,
+      planet: planet,
     });
+  }
 
-    function getItemsPerPage() {
-      if ($q.screen.lt.sm) {
-        return 4;
-      }
-      if ($q.screen.lt.md) {
-        return 4;
-      }
-      return 4;
-    }
-
-    const pagination = ref({
-      page: 1,
-      rowsPerPage: getItemsPerPage(),
-    });
-
-    watch(
-      () => $q.screen.name,
-      () => {
-        pagination.value.rowsPerPage = getItemsPerPage();
-      }
-    );
-
-    function changeActivatePlanet(planet) {
-      $store.commit("setActivePlanet", planet);
-      $eventBus.emit(ACTIVE_PLANET_CHANGED, planet);
-      pagination.value.page = 1;
-    }
-
-    return {
-      slide: ref("style"),
-      rows,
-      filter: ref(""),
-      pagination,
-
-      columns: [
-        { name: "name", label: "Name", field: "name" },
-        { name: "position", label: "Position", field: "position" },
-      ],
-
-      cardContainerClass: computed(() => {
-        return $q.screen.gt.xs
-          ? "grid-masonry grid-masonry--" + ($q.screen.gt.sm ? "3" : "2")
-          : null;
-      }),
-
-      rowsPerPageOptions: computed(() => {
-        return $q.screen.gt.xs ? ($q.screen.gt.sm ? [3, 6, 9] : [3, 6]) : [3];
-      }),
-
-      changeActivatePlanet,
-
-      pagesNumber: computed(() =>
-        Math.ceil(rows.value.length / pagination.value.rowsPerPage)
-      ),
-    };
-  },
-  methods: {
-    myTweak(offset) {
-      // "offset" is a Number (pixels) that refers to the total
-      // height of header + footer that occupies on screen,
-      // based on the QLayout "view" prop configuration
-
-      // this is actually what the default style-fn does in Quasar
-      return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
-    },
-  },
+  return re;
 });
+
+function getItemsPerPage() {
+  if ($q.screen.lt.sm) {
+    return 4;
+  }
+  if ($q.screen.lt.md) {
+    return 4;
+  }
+  return 4;
+}
+
+const pagination = ref({
+  page: 1,
+  rowsPerPage: getItemsPerPage(),
+});
+
+watch(
+  () => $q.screen.name,
+  () => {
+    pagination.value.rowsPerPage = getItemsPerPage();
+  }
+);
+
+function changeActivatePlanet(planet) {
+  $store.commit("setActivePlanet", planet);
+  $eventBus.emit(ACTIVE_PLANET_CHANGED, planet);
+  pagination.value.page = 1;
+}
+
+const slide = ref("style")
+const filter = ref("")
+
+let columns = [
+  { name: "name", label: "Name", field: "name" },
+  { name: "position", label: "Position", field: "position" },
+]
+
+const cardContainerClass = computed(() => {
+  return $q.screen.gt.xs
+    ? "grid-masonry grid-masonry--" + ($q.screen.gt.sm ? "3" : "2")
+    : null;
+});
+
+const rowsPerPageOptions = computed(() => {
+  return $q.screen.gt.xs ? ($q.screen.gt.sm ? [3, 6, 9] : [3, 6]) : [3];
+});
+
+
+const pagesNumber = computed(() =>
+  Math.ceil(rows.value.length / pagination.value.rowsPerPage)
+);
+
+const myTweak = (offset) => {
+  // "offset" is a Number (pixels) that refers to the total
+  // height of header + footer that occupies on screen,
+  // based on the QLayout "view" prop configuration
+
+  // this is actually what the default style-fn does in Quasar
+  return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
+}
 </script>
 
 <style lang="scss">

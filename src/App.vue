@@ -3,51 +3,26 @@
 </template>
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
-import { getCurrentInstance } from "vue";
-import {
-  ACTIVE_PLANET_CHANGED,
-  LOGGED_IN,
-  UPDATED_ALL,
-} from "./constants/Events";
+import { getCurrentInstance, computed } from "vue";
+import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 
-const $eventBus =
-  getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
 
 const $quasar = useQuasar();
 
 $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
-  await $quasar.loading.show(
-  {
-      spinnerSize: 70,
-      backgroundColor: 'blue-10',
-      message: '1, 2, 3, Lift off...',
-      messageColor: 'black',
-      customClass: 'text',
-  });
-
+  $quasar.loading.show();
   await updateAll();
   await updateInterval();
-  
-  await $quasar.loading.hide();
+  $quasar.loading.hide();
 });
 
 $eventBus.on(LOGGED_IN, async () => {
-  await $quasar.loading.show(
-  {
-      spinnerSize: 70,
-      backgroundColor: 'blue-10',
-      message: '1, 2, 3, Lift off...',
-      messageColor: 'black',
-      customClass: 'text',
-  });
-
   await updateAll();
   await updateInterval();
-
-  await $quasar.loading.hide();
-
 });
 
 async function getChainData() {
@@ -60,8 +35,7 @@ async function update(activePlanet) {
     $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
   });
 
-  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id))
-    .data;
+  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id)).data;
 
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
@@ -116,24 +90,20 @@ async function updateInterval() {
 }
 
 async function init() {
-  $quasar.loading.show(
-    {
-        spinnerSize: 70,
-        backgroundColor: 'blue-10',
-        message: '1, 2, 3, Lift off...',
-        messageColor: 'black',
-        customClass: 'text',
-    });
-  // On page refresh reset all.
-  await getChainData();
-  await updateAll();
-  // Start timer
-  await updateInterval();
-  $quasar.loading.hide();
-
+  if ($store.getters.loggedIn) {
+    $quasar.loading.show();
+    // On page refresh reset all.
+    await updateAll();
+    // Start timer
+    await updateInterval();
+    $quasar.loading.hide();
+  }
 }
 
+
+getChainData();
 init();
+
 </script>
 
 <style lang="scss">
@@ -159,7 +129,7 @@ init();
 
 // Variables
 $debug: 0;
-$animationTime: 3s;
+$animationTime: 2.5s;
 $pufSize: 7px;
 $pufCount: 45;
 $intervalDegree: 360 / $pufCount;
@@ -199,11 +169,17 @@ div:not(.pufs, .particles) {
   display: block;
   margin: 0 auto;
   transition: all 2s ease-out;
-  transform: scale(1);
+  transform: scale(2.5);
   &:hover {
     transition: all 1s ease-in;
-    transform: scale(1.5);
+    transform: scale(3);
   }
+}
+
+.loader-text {
+  margin-top: 100px !important;
+  font-family: headingFont;
+  font-size: 25px;
 }
 
 // Modifier (on Black)
@@ -244,6 +220,8 @@ div:not(.pufs, .particles) {
 
 // Loader icon styles
 .loader--icon {
+  font-size: 100px;
+
   text-align: center;
   width: 25px;
   height: 25px;

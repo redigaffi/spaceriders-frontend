@@ -14,10 +14,16 @@ const landingPage = () => import("src/pages/Landing1.vue");
 
 // ROUTES
 const routes = [
+  {
+    path: "/",
+    component: landingLayout,
+    children: [{ path: "/", component: landingPage, name: "landing" }],
+  },
   //TODO: change this component
   {
     path: "/overview",
     component: mainLayout,
+    name: "overview",
     // beforeEnter: (to, from, next) => {
     //   const store = JSON.parse(localStorage.getItem("store"));
     //   if (store) {
@@ -30,18 +36,14 @@ const routes = [
     // },
     children: [
       { path: "", component: planetInfoPage },
-      { path: "/resources", component: resourcesPage },
-      { path: "/installations", component: installationsPage },
-      { path: "/research", component: researchPage },
-      { path: "/planet", component: planetPage },
-      { path: "/defense", component: defensePage },
+      { path: "/resources", component: resourcesPage, name: "resources" },
+      { path: "/installations", component: installationsPage, name: "installations" },
+      { path: "/research", component: researchPage, name: "research" },
+      { path: "/planet", component: planetPage, name: "planet" },
+      { path: "/defense", component: defensePage, name: "defense" },
     ],
   },
-  {
-    path: "/",
-    component: landingLayout,
-    children: [{ path: "", component: landingPage }],
-  },
+  
 
   // Always leave this as last one,
   // but you can also remove it
