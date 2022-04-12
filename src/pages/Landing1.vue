@@ -739,7 +739,7 @@
                 alt="Диаграмма"
                 class="token__img"
               /> -->
-             <PieChart  />
+              <PieChart />
             </div>
 
             <div
@@ -1217,12 +1217,16 @@
 import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
 import { defineComponent, ref } from "vue";
-import PieChart from '../components/pieChart'
+import PieChart from "../components/pieChart";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "PageLanding",
   components: { PieChart },
   setup() {
+    // const $q = useQuasar();
+    // $q.loading.show();
+
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -1358,4 +1362,14 @@ export default defineComponent({
 /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
+</style>
+<style lang="scss">
+
+.q-loading__backdrop {
+  outline: 0;
+  pointer-events: all;
+  z-index: -1;
+  opacity: 0.8
+}
+
 </style>
