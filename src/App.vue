@@ -406,4 +406,11 @@ div:not(.pufs, .particles) {
 .q-loading__spinner {
   display: none;
 }
+
+.q-loading__backdrop {
+  outline: 0;
+  pointer-events: all;
+  z-index: -1;
+  opacity: 0.8
+}
 </style>
