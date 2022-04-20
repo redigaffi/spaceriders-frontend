@@ -10,18 +10,14 @@
         </glass-element-heading>
 
         <q-card-section class="row q-col-gutter-sm text-center">
-          <div class="col-12 q-pa-sm">
+          <div class="col-12">
             <q-card flat class="bg-transparent text-dark">
               <img
-                src="~assets/img/planet-info-header.jpg"
+                src="~assets/img/overview.png"
                 width="100%"
-                style="height: 390px; width: 100%"
+                style="height: 400px; width: 100%"
               />
-              <q-card-section
-                class="text-secondary absolute-top tag-glass-element"
-              >
-                {{ this.$store.getters.activePlanet.name }}
-              </q-card-section>
+              
               <q-card-section
                 class="text-secondary absolute-bottom-right tag-glass-element"
               >

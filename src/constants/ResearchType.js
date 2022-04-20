@@ -1,8 +1,14 @@
 class ResearchType {
-    INTERGALACTIC_ECONOMY = "intergalacticEconomy";
     TYPE = "research";
+    
+    LASER_RESEARCH = "laserResearch";
+    ASTEROID_PRECISION = "asteroidPrecision"
+    TERRAFORMING = "terraforming"
+    
     RESOURCE_TYPES = [
-        this.INTERGALACTIC_ECONOMY
+        this.LASER_RESEARCH,
+        this.ASTEROID_PRECISION,
+        this.TERRAFORMING,
     ];
 }
 
