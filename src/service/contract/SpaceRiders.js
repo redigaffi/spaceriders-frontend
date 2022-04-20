@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import ContractAddress from "./ContractAddress";
 import Contract from "./Contract";
 
-const ABI = require("../../ABI/SpaceRiders.json");
+const ABI = require("../../ABI/Spaceriders.json");
 
 class SpaceRidersContract extends Contract {
     constructor() {
