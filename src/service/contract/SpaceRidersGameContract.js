@@ -68,11 +68,11 @@ class SpaceRidersGameContract extends Contract {
     const contract = await this.getContract();
 
     const overrides = {
-      value: ethers.utils.parseEther("0.0025"),
+      //value: ethers.utils.parseEther("0.0025"),
       gasLimit: 672197,
     };
 
-    return await contract.stakingRequest(
+    return await contract.stakingRequestV2(
       signatureData,
       attributes.planetId,
       attributes.amount,

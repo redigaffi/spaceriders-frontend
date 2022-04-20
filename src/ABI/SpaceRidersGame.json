@@ -60,8 +60,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -74,8 +73,65 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "planetGuid",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "planetPrice",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "tokenURI",
+        "type": "string"
+      }
+    ],
+    "name": "buyPlanet",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newBnbFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "changeBnbFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -109,8 +165,52 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokens",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "forAddress",
+        "type": "address"
+      }
+    ],
+    "name": "convertFromPrimaryResources",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -123,8 +223,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -137,8 +236,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -151,8 +249,30 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "guid",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "planetId",
+        "type": "string"
+      }
+    ],
+    "name": "energyDeposit",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -196,8 +316,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [
@@ -221,8 +340,81 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "burnPlanetGuid1",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "burnPlanetGuid2",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "newPlanetGuid",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "newTokenURI",
+        "type": "string"
+      }
+    ],
+    "name": "fusionPlanet",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "guid",
+        "type": "string"
+      }
+    ],
+    "name": "getEnergyDepositsMapCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -235,12 +427,288 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
     "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "backendSignerAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setBackendAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "setBenefitStakingEnabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBenefitStakingPerformanceFeeBP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
+        "name": "newFeeWallet",
+        "type": "address"
+      }
+    ],
+    "name": "setFeeWallet",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newLp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newRp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newT",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newB",
+        "type": "uint256"
+      }
+    ],
+    "name": "setIndirectTax",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "planetId",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "tier",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeRelease",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakingRequest",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "planetId",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "tier",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeRelease",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakingRequestV2",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "toggleEnergyDeposits",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetFusion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetPurchases",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct OnlyBackend.signatureData",
+        "name": "sD",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "requestId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "planetGuid",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "trading",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetTrading",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "togglePlanetTrading",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -262,8 +730,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [
@@ -325,152 +792,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newBnbFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "changeBnbFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "backendSignerAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setBackendAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address payable",
-        "name": "newFeeWallet",
-        "type": "address"
-      }
-    ],
-    "name": "setFeeWallet",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newLp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newRp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newT",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newB",
-        "type": "uint256"
-      }
-    ],
-    "name": "setIndirectTax",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setBenefitStakingPerformanceFeeBP",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enabled",
-        "type": "bool"
-      }
-    ],
-    "name": "setBenefitStakingEnabled",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
-      },
-      {
-        "internalType": "string",
-        "name": "planetId",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "tier",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeRelease",
-        "type": "uint256"
-      }
-    ],
-    "name": "stakingRequest",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
   },
   {
     "inputs": [
@@ -483,296 +805,6 @@
     "name": "withdrawStaking",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "guid",
-        "type": "string"
-      }
-    ],
-    "name": "getEnergyDepositsMapCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "toggleEnergyDeposits",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "guid",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "planetId",
-        "type": "string"
-      }
-    ],
-    "name": "energyDeposit",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "togglePlanetPurchases",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "togglePlanetFusion",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "planetGuid",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "planetPrice",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
-      },
-      {
-        "internalType": "string",
-        "name": "tokenURI",
-        "type": "string"
-      }
-    ],
-    "name": "buyPlanet",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
-      },
-      {
-        "internalType": "string",
-        "name": "burnPlanetGuid1",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "burnPlanetGuid2",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "newPlanetGuid",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "newTokenURI",
-        "type": "string"
-      }
-    ],
-    "name": "fusionPlanet",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
-      },
-      {
-        "internalType": "string",
-        "name": "requestId",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "planetGuid",
-        "type": "string"
-      },
-      {
-        "internalType": "bool",
-        "name": "trading",
-        "type": "bool"
-      }
-    ],
-    "name": "togglePlanetTrading",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "togglePlanetTrading",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          }
-        ],
-        "internalType": "struct OnlyBackend.signatureData",
-        "name": "sD",
-        "type": "tuple"
-      },
-      {
-        "internalType": "string",
-        "name": "id",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "forAddress",
-        "type": "address"
-      }
-    ],
-    "name": "convertFromPrimaryResources",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

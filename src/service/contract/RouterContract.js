@@ -3,6 +3,7 @@ import ContractAddress from "./ContractAddress";
 import Contract from "./Contract";
 
 const ABI = require("../../ABI/PancakeRouter.json");
+const ABISPR = require("../../ABI/SpaceRiders.json");
 const ERC20 = require("../../ABI/IERC20.json");
 
 class RouterContract extends Contract {
@@ -15,29 +16,35 @@ class RouterContract extends Contract {
         return super.buildContract(contractAddress, ABI);
     }
 
+    getSprContract() {
+        const contractAddress = ContractAddress.getSpaceRidersAddress();
+        return super.buildContract(contractAddress, ABISPR);
+    }
+
     /**
      * @param {string} contractAddress
      * function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
      **/
-    async buySpr(to, bnbAmount) {
-        const contract = await this.getContract();
+    async buySpr(to, amountIn) {
+        const routerContract = await this.getContract();
+        const sprContract = await this.getSprContract();
 
-        const wBnbAddress = await contract.WETH();
+        const busdAddress = await sprContract.busdAddress();
         const sprAddress = ContractAddress.getSpaceRidersAddress();
 
         const path = [
-            wBnbAddress,
+            busdAddress,
             sprAddress
         ];
 
         const overrides = {
             // To convert Ether to Wei:
             //@todo: get price from smart contract
-            value: ethers.utils.parseEther(bnbAmount),
             gasLimit: 721975,
         };
 
-        return await contract.swapExactETHForTokens(
+        return await routerContract.swapExactTokensForTokensSupportingFeeOnTransferTokens(
+            ethers.utils.parseEther(amountIn),
             0,
             path,
             to,
@@ -49,11 +56,13 @@ class RouterContract extends Contract {
     async getAmountsOut(amount, pathName) {
         const contract = await this.getContract();
 
-        const wBnbAddress = await contract.WETH();
-        const sprAddress = ContractAddress.getSpaceRidersAddress();
         
+        const sprAddress = ContractAddress.getSpaceRidersAddress();
+        const sprContract = await this.getSprContract();
+        const busdAddress = await sprContract.busdAddress();
+
         const contractMapping = {
-            "bnb": wBnbAddress,
+            "busd": busdAddress,
             "spr": sprAddress 
         }
 
@@ -78,30 +87,26 @@ class RouterContract extends Contract {
         return parseFloat(ethers.utils.formatEther(amounts[1])).toFixed(2);
     }
 
-    async sellSpr(to, sprAmount) {
-        const contract = await this.getContract();
+    async sellSpr(to, amountIn) {
+        const routerContract = await this.getContract();
+        const sprContract = await this.getSprContract();
 
-        const wBnbAddress = await contract.WETH();
+        const busdAddress = await sprContract.busdAddress();
         const sprAddress = ContractAddress.getSpaceRidersAddress();
 
         const path = [
             sprAddress,
-            wBnbAddress
+            busdAddress
         ];
 
         const overrides = {
             // To convert Ether to Wei:
             //@todo: get price from smart contract
-            //value: ethers.utils.parseEther(bnbAmount),
-            gasLimit: 6721975,
+            gasLimit: 721975,
         };
-        
-        
-        const amountOut = await contract.getAmountsOut(ethers.utils.parseEther(sprAmount), [sprAddress, wBnbAddress]);
-        const amountOutMin = amountOut[1].sub(amountOut[1].mul(30).div(100));
 
-        return await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            ethers.utils.parseEther(sprAmount),
+        return await routerContract.swapExactTokensForTokensSupportingFeeOnTransferTokens(
+            ethers.utils.parseEther(amountIn),
             0,
             path,
             to,
@@ -109,6 +114,8 @@ class RouterContract extends Contract {
             overrides
         );
     }
+
+    
 }
 
 export default new RouterContract();

@@ -79,14 +79,22 @@ class SpaceRidersContract extends Contract {
      * @param {string} owner
      * @param {string} spender
      **/
-    async purchasingPower(owner) {
+    async purchasingPower(router, owner) {
         const contract = await this.getContract();
         
         const purchasingPower = await contract.purchasingPower(
+            router,
             owner
         );
         
         return parseInt(ethers.utils.formatEther(purchasingPower.toString(), 18));
+    }
+
+    /**
+     **/
+    async busdAddress() {
+        const contract = await this.getContract();
+        return await contract.busdAddress();
     }
 }
 

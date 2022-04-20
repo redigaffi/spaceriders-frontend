@@ -392,16 +392,6 @@ export default class ApiRequests {
   }
 
   /**
-   * Token Price
-   * @param {object} data
-   * @returns
-   */
-  static async bnbPrice() {
-    const path = `${process.env.BASE_API_PATH}/chain/tokenprice`;
-    return (await axios.get(path)).data.bnb_price;
-  }
-
-  /**
    * Get chain info
    * @returns
    */

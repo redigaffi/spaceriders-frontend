@@ -3,11 +3,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_pancakeRouterAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_sprNftAddress",
         "type": "address"
       },
@@ -17,9 +12,8 @@
         "type": "address"
       }
     ],
-    "stateMutability": "payable",
-    "type": "constructor",
-    "payable": true
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
     "anonymous": false,
@@ -147,6 +141,46 @@
     "constant": true
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "dexAddress",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "dexPairAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [],
     "name": "inSwapAndLiquify",
     "outputs": [
@@ -259,8 +293,34 @@
     "constant": true
   },
   {
-    "inputs": [],
-    "name": "pancakePairAddress",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "pairAddress",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "pairDexAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -391,9 +451,47 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "whitelistedAddresses",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "stateMutability": "payable",
     "type": "receive",
     "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_exclude",
+        "type": "bool"
+      }
+    ],
+    "name": "setWhitelistedAddresses",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -515,6 +613,24 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "routerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pairAddr",
+        "type": "address"
+      }
+    ],
+    "name": "addDex",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_minAmountToLiquify",
         "type": "uint256"
@@ -528,8 +644,18 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "routerAddr",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "tokenAmount",
+        "name": "sprAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "busdAmount",
         "type": "uint256"
       }
     ],
@@ -751,6 +877,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "address",
+        "name": "routerAddr",
+        "type": "address"
+      },
       {
         "internalType": "address",
         "name": "buyer",

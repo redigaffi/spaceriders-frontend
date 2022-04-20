@@ -103,15 +103,7 @@
           "
         ></div>
         <div>$SPR = {{ price }}$</div>
-        <div
-          class="q-my-md"
-          style="
-            border-top: 2px solid #2253f4;
-            border-radius: 5px;
-            box-shadow: 0 0 20px #2253f4;
-          "
-        ></div>
-        <div>BNB = {{ bnbUsdPrice }}$</div>
+        
       </q-card-section>
 
       <q-card-actions class="row q-col-gutter-md">
@@ -151,17 +143,16 @@ import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import RouterContract from "../service/contract/RouterContract";
 import SpaceRiders from "../service/contract/SpaceRiders";
-import Contract from "../service/contract/Contract";
+import ERC20 from "../service/contract/ERC20";
 import { SWAP_COMPLETED } from "../constants/Events";
-import { ethers } from "ethers";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 
-const pathNames = ref(["bnb", "spr"]);
+const pathNames = ref(["busd", "spr"]);
 const buyMetadata = ref({
-  bnb: {
+  busd: {
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png",
+      "https://cryptologos.cc/logos/binance-usd-busd-logo.svg?v=022",
   },
   spr: {
     image: "logo.png",
@@ -182,13 +173,11 @@ const myAddr = $store.getters.address;
 
 const purchasingPower = ref(0);
 const price = ref(0.0);
-const bnbUsdPrice = ref(0.0);
 
 const reloadPriceData = async () => {
   visible.value = true;
-  purchasingPower.value = await SpaceRiders.purchasingPower(myAddr);
+  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.routerContract, myAddr);
   price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
-  bnbUsdPrice.value = parseFloat(await ApiRequests.bnbPrice()).toFixed(2);
   visible.value = false;
 };
 
@@ -209,14 +198,12 @@ const buyFromChange = async () => {
 };
 
 const maxBalance = async () => {
-  if (pathNames.value[0] === "bnb") {
-    const contract = new Contract();
-    let provider = contract.getProvider();
+  if (pathNames.value[0] === "busd") {
+    
+    const busdAddress = await SpaceRiders.busdAddress();
+    const busdContract = new ERC20(busdAddress);
+    buyFromAmount.value = await busdContract.balanceOf($store.getters.address);
 
-    const balance = await provider.getBalance($store.getters.address);
-    buyFromAmount.value = parseFloat(ethers.utils.formatEther(balance)).toFixed(
-      2
-    );
     buyFromChange();
   } else if (pathNames.value[0] === "spr") {
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
@@ -245,7 +232,7 @@ const buySpr = async () => {
   let receipt = { status: 0 };
   try {
     let tx = false;
-    if (pathNames.value[0] === "bnb") {
+    if (pathNames.value[0] === "busd") {
       tx = await RouterContract.buySpr(myAddr, buyFromAmount.value.toString());
 
       receipt = await tx.wait();

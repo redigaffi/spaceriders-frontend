@@ -56,11 +56,11 @@ const tokenAmount = ref(0);
 const dollarValue = ref(0);
 
 const tokenBalance = computed(() => {
-  return tc(tokenAmount.value, { digits: 2 });
+  return tc(tokenAmount.value, { digits: 3 });
 });
 
 const totalUsd = computed(() => {
-  return tc(dollarValue.value, { digits: 2 });
+  return tc(dollarValue.value, { digits: 3 });
 });
 
 const loggedIn = computed(() => {
@@ -78,6 +78,7 @@ async function upateBalance() {
     tokenAmount.value = await SpaceRiders.totalBalanceOf(
       $store.getters.address
     );
+
   } catch (e) {
     console.log(e);
   }
@@ -86,16 +87,12 @@ async function upateBalance() {
 async function toggleValue() {
   if (showTokenAmount.value) {
     showTokenAmount.value = false;
-    tokenAmount.value = await SpaceRiders.totalBalanceOf(
-      $store.getters.address
-    );
+    await upateBalance();
     const price = await ApiRequest.tokenPrice();
     dollarValue.value = tokenAmount.value * price;
   } else {
     showTokenAmount.value = true;
-    tokenAmount.value = await SpaceRiders.totalBalanceOf(
-      $store.getters.address
-    );
+    await upateBalance();
   }
 }
 </script>
