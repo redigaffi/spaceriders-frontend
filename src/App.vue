@@ -427,6 +427,6 @@ div:not(.pufs, .particles) {
   outline: 0;
   pointer-events: all;
   z-index: -1;
-  opacity: 0.8
+  opacity: 0.85
 }
 </style>

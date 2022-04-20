@@ -536,7 +536,7 @@ import SpaceRidersGameContract, {
 } from "../service/contract/SpaceRidersGameContract";
 
 const testDialog = ref(false);
-const testDialog2 = ref(true);
+const testDialog2 = ref(false);
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
