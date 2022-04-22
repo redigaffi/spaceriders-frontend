@@ -426,7 +426,11 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="sprCost"/>
+                <IncreaseAllowance 
+                  :address="ContractAddress.getSpaceRidersGameAddress()" 
+                  :amount="sprCost"
+                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                />
                 <q-btn
                   label="Deposit"
                   color="warning"

@@ -3,7 +3,7 @@ import ContractAddress from "./ContractAddress";
 import Contract from "./Contract";
 
 const ABI = require("../../ABI/PancakeRouter.json");
-const ABISPR = require("../../ABI/SpaceRiders.json");
+const ABISPR = require("../../ABI/Spaceriders.json");
 const ERC20 = require("../../ABI/IERC20.json");
 
 class RouterContract extends Contract {
@@ -12,13 +12,11 @@ class RouterContract extends Contract {
     }
 
     getContract() {
-        const contractAddress = ContractAddress.getRouterAddress();
-        return super.buildContract(contractAddress, ABI);
+        return super.buildContract(ContractAddress.getRouterAddress(), ABI);
     }
 
     getSprContract() {
-        const contractAddress = ContractAddress.getSpaceRidersAddress();
-        return super.buildContract(contractAddress, ABISPR);
+        return super.buildContract(ContractAddress.getSpaceRidersAddress(), ABISPR);
     }
 
     /**
@@ -28,7 +26,7 @@ class RouterContract extends Contract {
     async buySpr(to, amountIn) {
         const routerContract = await this.getContract();
         const sprContract = await this.getSprContract();
-
+        
         const busdAddress = await sprContract.busdAddress();
         const sprAddress = ContractAddress.getSpaceRidersAddress();
 
@@ -36,6 +34,8 @@ class RouterContract extends Contract {
             busdAddress,
             sprAddress
         ];
+        console.log(path);
+
 
         const overrides = {
             // To convert Ether to Wei:

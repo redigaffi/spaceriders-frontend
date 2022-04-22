@@ -107,10 +107,11 @@
       </q-card-section>
 
       <q-card-actions class="row q-col-gutter-md">
-        <div v-if="pathNames[0] === 'spr'" class="col">
+        <div class="col">
           <IncreaseAllowance
             :address="ContractAddress.getRouterAddress()"
             :amount="buyFromAmount"
+            :tokenAddress="pathNames[0] == 'busd' ? busdAddress : ContractAddress.getSpaceRidersAddress()"
           />
         </div>
         <div class="col">
@@ -138,7 +139,7 @@
 </template>
 
 <script setup>
-import { ref, watch, getCurrentInstance } from "vue";
+import { ref, watch, getCurrentInstance, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import RouterContract from "../service/contract/RouterContract";
@@ -176,12 +177,17 @@ const price = ref(0.0);
 
 const reloadPriceData = async () => {
   visible.value = true;
-  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.routerContract, myAddr);
+  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.routerContract, $store.getters.address);
   price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
   visible.value = false;
 };
 
 $eventBus.on(SWAP_COMPLETED, reloadPriceData);
+
+const busdAddress = ref("");
+onBeforeMount(async () => {
+  busdAddress.value = await SpaceRiders.busdAddress();
+})
 
 watch(async () => {
   if (openPopup.value) {
@@ -258,4 +264,25 @@ const buySpr = async () => {
 
   closeNotification();
 };
+
+async function addToken() {
+
+  try {
+    // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+    await window.ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20', // Initially only supports ERC20, but eventually more!
+        options: {
+          address: ContractAddress.getSpaceRidersAddress(), // The address that the token is at.
+          symbol: "SPR", // A ticker symbol or shorthand, up to 5 chars.
+          decimals: 18, // The number of decimals in the token
+          //image: tokenImage, // A string url of the token logo
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>

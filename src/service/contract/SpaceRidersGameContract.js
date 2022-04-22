@@ -69,7 +69,7 @@ class SpaceRidersGameContract extends Contract {
 
     const overrides = {
       //value: ethers.utils.parseEther("0.0025"),
-      gasLimit: 672197,
+      gasLimit: 1972197,
     };
 
     return await contract.stakingRequestV2(
@@ -94,7 +94,7 @@ class SpaceRidersGameContract extends Contract {
       gasLimit: 6721975,
     };
 
-    return await contract.withdrawStaking(planetId, overrides);
+    return await contract.unstakingRequestV2(planetId, overrides);
   }
 
   /**
@@ -167,6 +167,12 @@ class SpaceRidersGameContract extends Contract {
             attributes.forAddress,
             overrides
         );
+    }
+
+    async stakedLpAmount(planetId) {
+      const contract = await this.getContract();
+      const stakedLpAmount = (await contract.userStakingLpInfo(planetId))[1];
+      return parseFloat(ethers.utils.formatEther(stakedLpAmount));
     }
 }
 

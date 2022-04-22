@@ -39,6 +39,8 @@ import {
   SWAP_COMPLETED,
   NEW_PLANET_PURCHASED,
   CONVERT_COMPLETED,
+  STAKE,
+  UNSTAKE
 } from "../constants/Events";
 import tc from "thousands-counter";
 import ApiRequest from "../service/http/ApiRequests";
@@ -49,6 +51,8 @@ $eventBus.on(LOGGED_IN, upateBalance);
 $eventBus.on(SWAP_COMPLETED, upateBalance);
 $eventBus.on(NEW_PLANET_PURCHASED, upateBalance);
 $eventBus.on(CONVERT_COMPLETED, upateBalance);
+$eventBus.on(STAKE, upateBalance);
+$eventBus.on(UNSTAKE, upateBalance);
 
 const $store = useStore();
 const showTokenAmount = ref(true);

@@ -16,30 +16,43 @@
   </div>
 </template>
 <script setup>
-import SpaceRiders from "../service/contract/SpaceRiders";
-import { useCheckAllowance } from "../service/util/useCheckAllowance";
+import ERC20 from "../service/contract/ERC20";
 import { useStore } from "vuex";
 import { toRefs, getCurrentInstance, ref, onMounted, watch } from "vue";
+import { ethers } from "ethers";
 
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const props = defineProps({
+  tokenAddress: String,
   address: String,
   amount: Number,
 });
 
-const { address, amount } = toRefs(props);
+const { tokenAddress, address, amount } = toRefs(props);
+
+const useCheckAllowance = async (owner, spender, amount, tokenAddr) => {
+    const amountInWei = ethers.utils
+        .parseEther(amount)
+        .toString();
+
+    let token = new ERC20(tokenAddr);
+    let allowance = await token.allowance(owner, spender);
+    return amountInWei <= allowance;
+};
+
+
 const approveDisabled = ref(false);
 watch(async () => {
   if (!amount.value) return;
-  let allow = await useCheckAllowance(
+  approveDisabled.value = await useCheckAllowance(
     $store.getters.address,
     address.value,
-    amount.value.toString()
+    amount.value.toString(),
+    tokenAddress.value
   );
-  approveDisabled.value = allow;
 });
 
 async function approve() {
@@ -52,7 +65,8 @@ async function approve() {
   let receipt = { status: 0 };
 
   try {
-    const tx = await SpaceRiders.increaseAllowance(address.value);
+    let  token = new ERC20(tokenAddress.value);
+    const tx = await token.increaseAllowance(address.value);
     receipt = await tx.wait();
   } catch (e) {
     console.log("error");
