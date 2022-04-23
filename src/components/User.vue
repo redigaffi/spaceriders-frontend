@@ -53,6 +53,8 @@ import { LOGGED_IN } from "../constants/Events";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
+import { useRouter } from 'vue-router'
+
 
 const $store = useStore();
 const $quasar = useQuasar();
@@ -62,6 +64,7 @@ const $notification =
 
 const userInfoPopup = ref(false);
 const error = ref(false);
+const router = useRouter();
 
 onBeforeMount(async () => {
   if (chainData.value !== false) {
@@ -92,6 +95,9 @@ onBeforeMount(async () => {
 
 const logout = () => {
   $store.commit("destroySession");
+  router.push({
+    name: 'nouser'
+  });
 };
 
 const checkChain = async () => {
@@ -179,6 +185,10 @@ const login = async (e) => {
   if (re.data.success) {
     $store.commit("login", { jwt: re.data.data.jwt, address: address });
     $eventBus.emit(LOGGED_IN);
+    
+    router.push({
+      name: 'planet'
+    });
 
   } else if (!re.data.success){
     $quasar.loading.hide();

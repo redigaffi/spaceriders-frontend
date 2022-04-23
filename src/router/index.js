@@ -1,6 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import Store from "../store/index";
 
 /*
  * If not building with SSR mode, you can
@@ -12,6 +13,7 @@ import routes from './routes'
  */
 
 export default route(function (/* { store, ssrContext } */) {
+
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : (process.env.ENV === 'testnet' ? createWebHashHistory : createWebHistory)
@@ -24,6 +26,28 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
+  });
+  
+  Router.beforeEach(async (to, from, next) => {
+      const loggedIn = Store.getters.loggedIn;
+      const requieresAuth = to.meta.requiresAuth;
+      const requiresPlanet = to.meta.requiresPlanet;
+      
+      const hasPlanets = Store.getters.activePlanet;
+
+      if (loggedIn && to.name == "nouser") {
+        next({name: "planet"});
+
+      } else if (!loggedIn && requieresAuth && to.name != "nouser") {
+        next({name: "nouser"});
+
+      }else if ( (requiresPlanet && loggedIn && !hasPlanets && to.name != "planet")) {
+        next({name: "planet"});
+        
+      } else {
+        next();
+      }
+  
   })
 
   return Router

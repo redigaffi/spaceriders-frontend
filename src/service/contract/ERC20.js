@@ -9,8 +9,8 @@ class ERC20 extends Contract {
         this.address = address;
     }
     
-    getContract() {
-        return super.buildContract(this.address, ABI);
+    async getContract() {
+        return await super.buildContract(this.address, ABI);
     }
 
     /**

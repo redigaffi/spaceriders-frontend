@@ -111,7 +111,7 @@
           <IncreaseAllowance
             :address="ContractAddress.getRouterAddress()"
             :amount="buyFromAmount"
-            :tokenAddress="pathNames[0] == 'busd' ? busdAddress : ContractAddress.getSpaceRidersAddress()"
+            :tokenAddress="pathNames[0] == 'busd' ? ContractAddress.getBusdAddress() : ContractAddress.getSpaceRidersAddress()"
           />
         </div>
         <div class="col">
@@ -170,7 +170,6 @@ const visible = ref(true);
 const openPopup = ref(false);
 
 const $store = useStore();
-const myAddr = $store.getters.address;
 
 const purchasingPower = ref(0);
 const price = ref(0.0);
@@ -183,11 +182,6 @@ const reloadPriceData = async () => {
 };
 
 $eventBus.on(SWAP_COMPLETED, reloadPriceData);
-
-const busdAddress = ref("");
-onBeforeMount(async () => {
-  busdAddress.value = await SpaceRiders.busdAddress();
-})
 
 watch(async () => {
   if (openPopup.value) {
@@ -206,12 +200,11 @@ const buyFromChange = async () => {
 const maxBalance = async () => {
   if (pathNames.value[0] === "busd") {
     
-    const busdAddress = await SpaceRiders.busdAddress();
-    const busdContract = new ERC20(busdAddress);
+    const busdContract = new ERC20(ContractAddress.getBusdAddress());
     buyFromAmount.value = await busdContract.balanceOf($store.getters.address);
-
     buyFromChange();
   } else if (pathNames.value[0] === "spr") {
+    
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
     buyFromChange();
   }
@@ -239,11 +232,11 @@ const buySpr = async () => {
   try {
     let tx = false;
     if (pathNames.value[0] === "busd") {
-      tx = await RouterContract.buySpr(myAddr, buyFromAmount.value.toString());
+      tx = await RouterContract.buySpr($store.getters.address, buyFromAmount.value.toString());
 
       receipt = await tx.wait();
     } else if (pathNames.value[0] === "spr") {
-      tx = await RouterContract.sellSpr(myAddr, buyFromAmount.value.toString());
+      tx = await RouterContract.sellSpr($store.getters.address, buyFromAmount.value.toString());
 
       receipt = await tx.wait();
     }

@@ -11,31 +11,22 @@ class RouterContract extends Contract {
         super();
     }
 
-    getContract() {
-        return super.buildContract(ContractAddress.getRouterAddress(), ABI);
+    async getContract() {
+        return await super.buildContract(ContractAddress.getRouterAddress(), ABI);
     }
-
-    getSprContract() {
-        return super.buildContract(ContractAddress.getSpaceRidersAddress(), ABISPR);
-    }
-
+    
     /**
      * @param {string} contractAddress
      * function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
      **/
     async buySpr(to, amountIn) {
         const routerContract = await this.getContract();
-        const sprContract = await this.getSprContract();
-        
-        const busdAddress = await sprContract.busdAddress();
         const sprAddress = ContractAddress.getSpaceRidersAddress();
 
         const path = [
-            busdAddress,
+            ContractAddress.getBusdAddress(),
             sprAddress
         ];
-        console.log(path);
-
 
         const overrides = {
             // To convert Ether to Wei:
@@ -56,10 +47,8 @@ class RouterContract extends Contract {
     async getAmountsOut(amount, pathName) {
         const contract = await this.getContract();
 
-        
         const sprAddress = ContractAddress.getSpaceRidersAddress();
-        const sprContract = await this.getSprContract();
-        const busdAddress = await sprContract.busdAddress();
+        const busdAddress = ContractAddress.getBusdAddress();
 
         const contractMapping = {
             "busd": busdAddress,
@@ -89,14 +78,11 @@ class RouterContract extends Contract {
 
     async sellSpr(to, amountIn) {
         const routerContract = await this.getContract();
-        const sprContract = await this.getSprContract();
-
-        const busdAddress = await sprContract.busdAddress();
-        const sprAddress = ContractAddress.getSpaceRidersAddress();
-
+        
+        
         const path = [
-            sprAddress,
-            busdAddress
+            ContractAddress.getSpaceRidersAddress(),
+            ContractAddress.getBusdAddress()
         ];
 
         const overrides = {
