@@ -426,7 +426,11 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()" :amount="sprCost"/>
+                <IncreaseAllowance 
+                  :address="ContractAddress.getSpaceRidersGameAddress()" 
+                  :amount="sprCost"
+                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                />
                 <q-btn
                   label="Deposit"
                   color="warning"
@@ -515,7 +519,9 @@ const energyTimeLeft = computed(() => {
   const availableEnergy = $store.getters.activePlanet.ressources.energy;
   const consumption = energyConsumption.value/60;
   const minutesLeft = (availableEnergy / consumption);
-  return timeLeft(minutesLeft);
+  const tl = timeLeft(minutesLeft);
+  if (tl === "") return "N/A";
+  return tl;
 });
 
 

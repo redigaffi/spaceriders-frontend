@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import ContractAddress from "./ContractAddress";
 import Contract from "./Contract";
 
-const ABI = require("../../ABI/SpaceRiders.json");
+const ABI = require("../../ABI/Spaceriders.json");
 
 class SpaceRidersContract extends Contract {
     constructor() {
@@ -79,14 +79,22 @@ class SpaceRidersContract extends Contract {
      * @param {string} owner
      * @param {string} spender
      **/
-    async purchasingPower(owner) {
+    async purchasingPower(router, owner) {
         const contract = await this.getContract();
         
         const purchasingPower = await contract.purchasingPower(
+            router,
             owner
         );
         
         return parseInt(ethers.utils.formatEther(purchasingPower.toString(), 18));
+    }
+
+    /**
+     **/
+    async busdAddress() {
+        const contract = await this.getContract();
+        return await contract.busdAddress();
     }
 }
 

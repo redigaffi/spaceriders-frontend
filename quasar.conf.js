@@ -132,7 +132,11 @@ module.exports = configure(function (ctx) {
             <i></i><i></i><i></i>
             <i></i><i></i><i></i>
           </div>
-        </div>`,
+        </div>
+        <div class="loader-text">
+            LOADING...
+        </div>
+        `,
           html: true,
         },
       },

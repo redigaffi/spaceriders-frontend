@@ -2,10 +2,10 @@
   <!-- <q-btn @click="login" color="blue-7" :label="logInButtonText" /> -->
   <div>
     <div class="row">
-      <div class="">
+      <div class>
         <q-btn
           rounded
-          v-if="!this.error"
+          v-if="!error"
           :label="logInButtonText"
           class="glossy q-mr-sm"
           color="primary"
@@ -46,160 +46,187 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ApiRequest from "../service/http/ApiRequests";
 import { ethers } from "ethers";
 import { LOGGED_IN } from "../constants/Events";
+import { useQuasar } from "quasar";
+import { useStore } from "vuex";
+import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
+import { useRouter } from 'vue-router'
 
-export default {
-  name: "User",
-  data: () => {
-    return {
-      userInfoPopup: false,
-      error: false,
-    };
-  },
-  beforeMount: async function () {
-    if (this.chainData !== false) {
-      window.ethereum.on("networkChanged", async (networkId) => {
-        const chain = await this.checkChain();
-        if (!chain) {
-          this.error = true;
-          this.$store.commit("destroySession");
-        } else {
-          this.error = false;
-        }
-      });
 
-      window.ethereum.on("accountsChanged", async (accounts) => {
-        this.$store.commit("destroySession");
-      });
+const $store = useStore();
+const $quasar = useQuasar();
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
-      const chain = await this.checkChain();
+const userInfoPopup = ref(false);
+const error = ref(false);
+const router = useRouter();
 
+onBeforeMount(async () => {
+  if (chainData.value !== false) {
+    window.ethereum.on("networkChanged", async (networkId) => {
+      const chain = await checkChain();
       if (!chain) {
-        this.error = true;
-        this.$store.commit("destroySession");
+        error.value = true;
+        $store.commit("destroySession");
       } else {
-        this.error = false;
+        error.value = false;
       }
-    }
-  },
-  methods: {
-    logout: function () {
-      this.$store.commit("destroySession");
-    },
-    checkChain: async function () {
-      if (window.ethereum) {
-        const chainId = this.chainData.chainId;
-        const rpcUrl = this.chainData.rpc;
-        const chainName = this.chainData.chainName;
+    });
 
+    window.ethereum.on("accountsChanged", async (accounts) => {
+      $store.commit("destroySession");
+    });
+
+    const chain = await checkChain();
+
+    if (!chain) {
+      error.value = true;
+      $store.commit("destroySession");
+    } else {
+      error.value = false;
+    }
+  }
+});
+
+const logout = () => {
+  $store.commit("destroySession");
+  router.push({
+    name: 'nouser'
+  });
+};
+
+const checkChain = async () => {
+  if (window.ethereum) {
+    const chainId = chainData.value.chainId;
+    const rpcUrl = chainData.value.rpc;
+    const chainName = chainData.value.chainName;
+
+    try {
+      // check if the chain to connect to is installed
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: chainId }], // chainId must be in hexadecimal numbers
+      });
+
+      return true;
+    } catch (error) {
+      // This error code indicates that the chain has not been added to MetaMask
+      // if it is not, then install it into the user MetaMask
+      if (error.code === 4902) {
         try {
-          // check if the chain to connect to is installed
           await window.ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: chainId }], // chainId must be in hexadecimal numbers
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainName: chainName,
+                chainId: chainId,
+                rpcUrl: rpcUrl,
+              },
+            ],
           });
 
           return true;
-        } catch (error) {
-          // This error code indicates that the chain has not been added to MetaMask
-          // if it is not, then install it into the user MetaMask
-          if (error.code === 4902) {
-            try {
-              await window.ethereum.request({
-                method: "wallet_addEthereumChain",
-                params: [
-                  {
-                    chainName: chainName,
-                    chainId: chainId,
-                    rpcUrl: rpcUrl,
-                  },
-                ],
-              });
-
-              return true;
-            } catch (addError) {
-              return false;
-            }
-          }
+        } catch (addError) {
           return false;
         }
-      } else {
-        // if no window.ethereum then MetaMask is not installed
-        alert(
-          "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html"
-        );
-        return false;
       }
-    },
-
-    login: async function (e) {
-      let closeLoading = () => {};
-      if (!this.loggedIn) {
-        closeLoading = this.$notification("progress", "Signing in...", 0);
-      }
-
-      if (this.loggedIn) {
-        this.userInfoPopup = true;
-        return;
-      }
-
-      const chain = await this.checkChain();
-      if (!chain) {
-        this.error = true;
-        this.$store.commit("destroySession");
-        return;
-      }
-      this.error = false;
-
-      await window.ethereum.enable();
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = await provider.getSigner();
-
-      const address = await signer.getAddress();
-      const signature = await signer.signMessage(`its me:${address}`);
-      const re = await ApiRequest.authenticate(address, signature);
-
-      this.$store.commit("login", { jwt: re.data.jwt, address: address });
-      this.$eventBus.emit(LOGGED_IN);
-      closeLoading();
-      this.$notification("success", "Successfully started session!", 6000);
-    },
-  },
-
-  computed: {
-    chainData: function () {
-      return this.$store.getters.chainInfo;
-    },
-
-    tier: function () {
-      if (this.$store.getters.activePlanet === false) return;
-      return this.$store.getters.activePlanet.tier.tierName.toUpperCase();
-    },
-
-    loggedIn: function () {
-      return this.$store.getters.loggedIn;
-    },
-    address: function () {
-      return this.$store.getters.address;
-    },
-    logInButtonText: function () {
-      if (this.loggedIn) {
-        return this.shortAddress;
-      }
-
-      return "Login";
-    },
-    shortAddress: function () {
-      const address = this.$store.getters.address;
-      return `${address.substring(0, 4)}...${address.substring(
-        address.length - 4
-      )}`;
-    },
-  },
+      return false;
+    }
+  } else {
+    // if no window.ethereum then MetaMask is not installed
+    alert(
+      "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html"
+    );
+    return false;
+  }
 };
+
+const login = async (e) => {
+  if (loggedIn.value) {
+    userInfoPopup.value = true;
+    return;
+  }
+
+  $quasar.loading.show();
+
+  const chain = await checkChain();
+  if (!chain) {
+    error.value = true;
+    $store.commit("destroySession");
+    $quasar.loading.hide();
+    $notification("failed", "Checking metamask chain failed...", 6000);
+    return;
+  }
+
+  error.value = false;
+
+  let re = false;
+  let address = false;
+
+  try {
+    await window.ethereum.enable();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = await provider.getSigner();
+
+    address = await signer.getAddress();
+    const signature = await signer.signMessage(`its me:${address}`);
+
+    re = await ApiRequest.authenticate(address, signature);
+  } catch (ex) {
+    $quasar.loading.hide();
+    $notification("failed", "Checking metamask chain failed...", 6000);
+  }
+
+  if (re.data.success) {
+    $store.commit("login", { jwt: re.data.data.jwt, address: address });
+    $eventBus.emit(LOGGED_IN);
+    
+    router.push({
+      name: 'planet'
+    });
+
+  } else if (!re.data.success){
+    $quasar.loading.hide();
+    $notification("failed", re.data.error, 6000);
+  }
+
+  $quasar.loading.hide();
+};
+
+const chainData = computed(() => {
+  return $store.getters.chainInfo;
+});
+
+const tier = computed(() => {
+  if ($store.getters.activePlanet === false) return;
+  return $store.getters.activePlanet.tier.tierName.toUpperCase();
+});
+
+const loggedIn = computed(() => {
+  return $store.getters.loggedIn;
+});
+
+const address = computed(() => {
+  return $store.getters.address;
+});
+
+const logInButtonText = computed(() => {
+  if (loggedIn.value) {
+    return shortAddress.value;
+  }
+
+  return "Login";
+});
+
+const shortAddress = computed(() => {
+  const address = $store.getters.address;
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+});
 </script>
 <style lang="scss">
 .boring {
@@ -229,8 +256,7 @@ export default {
   background: black;
   overflow: hidden;
   top: 0;
-  animation: noise-1 3s linear infinite alternate-reverse,
-    glitch 5s 5.05s infinite;
+  animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
 }
 
 .glitch::after {

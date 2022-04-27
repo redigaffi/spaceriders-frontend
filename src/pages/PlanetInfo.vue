@@ -10,18 +10,14 @@
         </glass-element-heading>
 
         <q-card-section class="row q-col-gutter-sm text-center">
-          <div class="col-12 q-pa-sm">
+          <div class="col-12">
             <q-card flat class="bg-transparent text-dark">
               <img
-                src="~assets/img/planet-info-header.jpg"
+                src="~assets/img/overview.png"
                 width="100%"
-                style="height: 390px; width: 100%"
+                style="height: 400px; width: 100%"
               />
-              <q-card-section
-                class="text-secondary absolute-top tag-glass-element"
-              >
-                {{ this.$store.getters.activePlanet.name }}
-              </q-card-section>
+              
               <q-card-section
                 class="text-secondary absolute-bottom-right tag-glass-element"
               >
@@ -166,8 +162,8 @@
                     >
                       Withdraw
                       <template v-slot:loading>
-                        <q-spinner-rings size="1.45em" class="on-left" />
-                        {{ stakingHoursLeft }}
+                        <q-spinner-rings size="1em" class="on-left" />
+                      {{ stakingHoursLeft }} ${{lpPrice}}
                       </template>
                     </q-btn>
                   </q-item>
@@ -255,7 +251,7 @@
                   <span
                     class="text-weight-bold text-overline"
                     style="font-size: 16px"
-                    >{{ stakingLockedDays }}</span
+                    >{{ stakingLockedDays }} </span
                   >
                   days
                 </td>
@@ -279,6 +275,7 @@
             <IncreaseAllowance
               :address="ContractAddress.getSpaceRidersGameAddress()"
               :amount="selectedTierInfo.token_cost"
+              :tokenAddress="ContractAddress.getSpaceRidersAddress()"
             />
             <q-btn
               style="float: right"
@@ -304,9 +301,14 @@ import SpaceRidersGameContract, {
   BenefitStakingAttributes,
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
+
+import ERC20 from "../service/contract/ERC20";
 import ApiRequests from "../service/http/ApiRequests";
 import IncreaseAllowance from "../components/IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import { STAKE, UNSTAKE } from "../constants/Events";
+
+const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 const openUpdateDialog = ref(false);
 
@@ -367,9 +369,35 @@ const slotsAvailable = computed(() => {
   return `${$store.getters.activePlanet.slots_used}/${$store.getters.activePlanet.slots}`;
 });
 
+const lpPrice = ref(0);
 const isStaking = computed(() => {
-  return $store.getters.activePlanet.tier.staked;
+  const staked = $store.getters.activePlanet.tier.staked;
+  if (staked) lpValue();
+  return staked;
 });
+
+const lpValue = async () => {
+  if (!isStaking.value) return;
+  const chainInfo = $store.getters.chainInfo;
+  
+  const pairAddr = chainInfo.pairContract;
+  const pairContract = new ERC20(pairAddr);
+  const userLpBalance = await SpaceRidersGameContract.stakedLpAmount($store.getters.activePlanet.id);
+  
+  const totalLpSupply = await pairContract.totalSupply($store.getters.address);
+  
+  const sprAddr = chainInfo.tokenContract;
+  const sprContract = new ERC20(sprAddr);
+  const sprPairBalance = await sprContract.balanceOf(pairAddr);
+  const busdAddr = chainInfo.busdContract;
+  const busdContract = new ERC20(busdAddr);
+  const busdPairBalance = await busdContract.balanceOf(pairAddr);
+
+  const sprLpValue = ((userLpBalance/totalLpSupply)*sprPairBalance) * parseFloat($store.getters.tokenPrice);
+  const busdLpValue =(userLpBalance/totalLpSupply)*busdPairBalance;
+
+  lpPrice.value = (sprLpValue+busdLpValue).toFixed(1);
+};
 
 const layout = ref(false);
 
@@ -500,6 +528,7 @@ async function stake() {
     layout.value = false;
   }
 
+  $eventBus.emit(STAKE);
   $notification("success", "Staked successfully, enjoy!", 6000);
   closeWaitingNotification();
 }
@@ -551,6 +580,7 @@ async function unstake() {
     ).data;
     $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
+    $eventBus.emit(UNSTAKE);
     $notification("success", "Un-staked successfully, thank you!", 6000);
   } else {
     $notification("failed", "Something happened...", 6000);

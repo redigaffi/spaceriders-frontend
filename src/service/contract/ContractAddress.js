@@ -13,4 +13,8 @@ export default class ContractAddress {
     static getRouterAddress() {
         return Store.getters.chainInfo.routerContract;
     }
+
+    static getBusdAddress() {
+        return Store.getters.chainInfo.busdContract;
+    }
 }

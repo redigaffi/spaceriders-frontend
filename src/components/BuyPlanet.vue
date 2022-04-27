@@ -95,6 +95,7 @@
             <IncreaseAllowance
               :address="ContractAddress.getSpaceRidersGameAddress()"
               :amount="planetCost.token_cost"
+              :tokenAddress="ContractAddress.getSpaceRidersAddress()"
             />
           </div>
           <div class="col">

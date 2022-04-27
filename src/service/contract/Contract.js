@@ -15,12 +15,13 @@ export default class Contract {
     }
 
     buildContract(address, abi) {
-        return new ethers.Contract(
+        const contract = new ethers.Contract(
             address,
             abi,
             this.provider
-          )
-          .connect(this.signer);
+        );
+
+        return contract.connect(this.signer);
     }
 }
 

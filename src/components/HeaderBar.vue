@@ -15,6 +15,7 @@
       </div>
 
       <button
+        v-if="$store.getters.loggedIn"
         class="q-ml-md button q-pa-md q-mr-xs"
         style="
           border: 3px solid #2253f4;
@@ -62,7 +63,7 @@
       </button> -->
       <q-space />
 
-      <WithdrawResources>
+      <WithdrawResources v-if="hasActivePlanet">
         <button
           class="button q-pa-md q-mr-xs"
           style="
@@ -78,7 +79,7 @@
         </button>
       </WithdrawResources>
 
-      <Swap>
+      <Swap v-if="$store.getters.loggedIn">
         <button
           class="button q-pa-md q-mr-xs"
           style="
@@ -111,82 +112,103 @@
   </q-header>
 </template>
 
-<script>
+<script setup>
 import User from "./User.vue";
 import Balance from "./Balance.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
 import WithdrawResources from "components/WithdrawResources.vue";
+import routes from "../router/routes.js";
 
-const linksList = [
-  {
+const linksListInfo = {
+  overview: {
     title: "Overview",
     link: "/overview",
     icon: "info",
   },
-  {
+  planet: {
     title: "Planets",
     link: "/planet",
     icon: "fas fa-globe-europe",
   },
-  {
+  resources: {
     title: "Resources",
     link: "/resources",
     icon: "widgets",
   },
-  {
+  installations: {
     title: "Installations",
     link: "/installations",
     icon: "construction",
   },
-  {
+  research: {
     title: "Research",
     link: "/research",
     icon: "travel_explore",
   },
-  {
+  defense: {
     title: "Defense",
     link: "/defense",
     icon: "security",
   },
-  {
+  gm: {
     title: "Game Manual",
     link: "/",
     icon: "auto_stories",
   },
-];
-export default {
-  name: "HeaderBar",
-  components: {
-    User,
-    Balance,
-    NavLinks,
-    Swap,
-    WithdrawResources,
-  },
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
-  },
-  methods: {
-    al: function () {
-      alert("asd");
-    },
-  },
-  computed: {
-    isLoggedIn: function () {
-      return this.$store.getters.isLoggedIn;
-    },
-  },
 };
+
+const $store = useStore();
+let linksList = [];
+const loggedIn = $store.getters.loggedIn;
+const hasPlanets = $store.getters.activePlanet;
+
+
+for (const routeIdx in routes) {
+  const routeData = routes[routeIdx];
+
+  if (routeData.name === "overview") {
+    const requieresAuth = routeData.meta.requiresAuth;
+    const requiresPlanet = routeData.meta.requiresPlanet;
+    const notAdd =  (!loggedIn && requieresAuth) || (requiresPlanet && loggedIn && !hasPlanets);
+    if (!notAdd) {
+      linksList.push(linksListInfo[routeData.name]);
+    }
+
+    for (const childIdx in routeData.children) {
+      const childInfo = routeData.children[childIdx];
+      if (childInfo.path === '') continue;
+      
+      const childRequieresAuth = childInfo.meta.requiresAuth;
+      const childRequiresPlanet = childInfo.meta.requiresPlanet;
+
+      const notAdd =  (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
+      if (!notAdd && childInfo.meta.menu) {
+        linksList.push(linksListInfo[childInfo.name]);
+      }
+    }
+
+    linksList.push(linksListInfo.gm);
+    break;
+  }
+}
+
+
+const leftDrawerOpen = ref(false);
+const essentialLinks = linksList;
+
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+
+const hasActivePlanet = computed (() => {
+  return $store.getters.activePlanet !== false;
+});
+
+
+
 </script>
 <style lang="scss">
 .bg-navbar {

@@ -1,6 +1,10 @@
+
+
+
 // LAYOUTS
 const mainLayout = () => import("layouts/MainLayout.vue");
 const landingLayout = () => import("layouts/LandingLayout.vue");
+const NoLoginLayout = () => import("layouts/NoLogin.vue");
 
 // PAGES
 const resourcesPage = () => import("src/pages/Resources.vue");
@@ -14,34 +18,33 @@ const landingPage = () => import("src/pages/Landing1.vue");
 
 // ROUTES
 const routes = [
+  {
+    path: "/",
+    component: landingLayout,
+    children: [{ path: "/", component: landingPage, name: "landing" }],
+  },
   //TODO: change this component
   {
     path: "/overview",
     component: mainLayout,
-    // beforeEnter: (to, from, next) => {
-    //   const store = JSON.parse(localStorage.getItem("store"));
-    //   if (store) {
-    //     if (store.jwt) {
-    //       next();
-    //     } else {
-    //       next("/");
-    //     }
-    //   }
-    // },
+    name: "overview",
+    meta: { requiresAuth: true, requiresPlanet: true, menu: true },
     children: [
       { path: "", component: planetInfoPage },
-      { path: "/resources", component: resourcesPage },
-      { path: "/installations", component: installationsPage },
-      { path: "/research", component: researchPage },
-      { path: "/planet", component: planetPage },
-      { path: "/defense", component: defensePage },
+      { path: "/resources", component: resourcesPage, name: "resources", meta: {  menu: true, requiresAuth: true, requiresPlanet: true }  },
+      { path: "/installations", component: installationsPage, name: "installations", meta: { menu: true, requiresAuth: true, requiresPlanet: true }  },
+      { path: "/research", component: researchPage, name: "research", meta: { menu: true,requiresAuth: true, requiresPlanet: true }  },
+      { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false } },
+      { path: "/defense", component: defensePage, name: "defense", meta: { menu: true,requiresAuth: true, requiresPlanet: true } },
     ],
   },
   {
-    path: "/",
-    component: landingLayout,
-    children: [{ path: "", component: landingPage }],
+    path: "/nouser",
+    component: NoLoginLayout,
+    name: "nouser",
+    meta: { requiresAuth: false, requiresPlanet: false, menu: false },
   },
+  
 
   // Always leave this as last one,
   // but you can also remove it

@@ -471,7 +471,7 @@
     >
       <q-toolbar class="bg-primary">
         <q-toolbar-title class="text-body2 text-center" style="color: gold"
-          >RARITY MULTIPLIER</q-toolbar-title
+          >RARITY MULTIPLIERº</q-toolbar-title
         >
       </q-toolbar>
       <q-card-section>
@@ -536,7 +536,7 @@ import SpaceRidersGameContract, {
 } from "../service/contract/SpaceRidersGameContract";
 
 const testDialog = ref(false);
-const testDialog2 = ref(true);
+const testDialog2 = ref(false);
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
