@@ -83,6 +83,10 @@ async function upateBalance() {
       $store.getters.address
     );
 
+    if ($store.getters.activePlanet.freePlanet) {
+      tokenAmount.value += $store.getters.activePlanet.freeTokens;
+    }
+
   } catch (e) {
     console.log(e);
   }

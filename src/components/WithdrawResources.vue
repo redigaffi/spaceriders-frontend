@@ -626,7 +626,14 @@ async function convertRequest() {
     petrol: petrolAmount.value,
   };
   const re = await ApiRequests.conversionRequest(body);
-  if (re.success) {
+  if (re.success) {    
+    if ($store.getters.activePlanet.freePlanet) {
+      $eventBus.emit(CONVERT_COMPLETED);
+      closeNotification();
+      $notification("success", "Tokens converted successfully!", 6000);
+      return;
+    }
+
     const sD = new SignatureData(re.data.v, re.data.r, re.data.s);
     const tokenRequestExchange = new TokenExchangeAttributes(
       re.data.id,

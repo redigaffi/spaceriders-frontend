@@ -426,7 +426,8 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance 
+                <IncreaseAllowance
+                  v-if="!$store.getters.activePlanet.freePlanet"
                   :address="ContractAddress.getSpaceRidersGameAddress()" 
                   :amount="sprCost"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
@@ -835,6 +836,26 @@ async function depositEnergy(amount) {
     "Waiting for transaction to complete...",
     0
   );
+
+  if ($store.getters.activePlanet.freePlanet) {
+    const req = await ApiRequest.depositEnergy({
+      planetId: $store.getters.activePlanet.id,
+      guid: uuid,
+      amount: amount,
+    });
+    
+    if (req.success) {
+      closeNotification();
+      $notification("success", "Energy deposited successfuly!", 6000);
+      $store.commit("incrementEnergy", { energy: amount });
+      energyDepositPopup.value = false;
+    } else {
+      closeNotification();
+      $notification("failed", "Failed depositing energy...", 6000);
+    }
+    
+    return;
+  }
 
   let receipt = { status: 1 };
 

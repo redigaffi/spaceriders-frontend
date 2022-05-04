@@ -12,7 +12,7 @@
     <q-card-section class="row q-col-gutter-md">
       <div class="col-3">
         <img
-          :src="`data_img/${item.label}.png`"
+          :src="`data_img/${item.label}.webp`"
           alt=""
           style="width: 100%; height: 270px"
         />

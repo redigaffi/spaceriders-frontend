@@ -9,7 +9,7 @@
           <!-- IMAGE -->
           <div class="col-4 gt-sm">
             <img
-              :src="`data_img/${data.label}.png`"
+              :src="`data_img/${data.label}.webp`"
               width="100%"
               style="height: 340px; width: 100%"
             />

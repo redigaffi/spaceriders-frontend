@@ -5,12 +5,9 @@
       <div
         class="text-h6 text-center text-weight-bold text-secondary absolute-center"
       >
-        My Planets
+        Buy Planets
       </div>
 
-      <div>
-        <BuyPlanet />
-      </div>
     </q-card-section>
 
     <div v-if="anyUnClaimedPlanet">

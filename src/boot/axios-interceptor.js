@@ -1,4 +1,5 @@
 import { boot } from "quasar/wrappers";
+import {useQuasar} from "quasar"
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
@@ -31,6 +32,7 @@ export default boot(async ({ app, router, store }) => {
       console.log(error);
       if (error.response.status === 401) {
         store.commit("destroySession");
+        router.push({name: "nouser"})
       }
 
       return Promise.reject(error);

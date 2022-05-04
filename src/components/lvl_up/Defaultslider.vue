@@ -3,7 +3,7 @@
     <div class="col-12">
       <q-card flat class="bg-transparent text-dark">
         <img
-          :src="`data_img/${keyName}.png`"
+          :src="`data_img/${keyName}.webp`"
           width="100%"
           style="height: 400px; width: 100%"
         />

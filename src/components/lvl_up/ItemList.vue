@@ -25,7 +25,7 @@
             >
               <q-card-section class="q-pa-none">
                 <q-card flat class="bg-transparent text-dark cursor-pointer">
-                  <img :src="`data_img/${value.label}.png`" style="height: 110px" />
+                  <img :src="`data_img/${value.label}.webp`" style="height: 110px" />
 
                   <q-card-section
                     v-if="itemType"

@@ -1,5 +1,15 @@
 <template>
   <div>
+    
+    <q-btn
+      icon="add"
+      label="Free Planet"
+      color="warning"
+      class="q-mr-xs"
+      v-if="!$q.screen.xs"
+      @click="freePlanetPopup = true"
+    />
+    
     <q-btn
       icon="add"
       label="Buy Planet"
@@ -14,6 +24,64 @@
       color="warning"
       @click="buyPlanetPopup = true"
     />
+
+  <q-dialog v-model="freePlanetPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 600px; max-width: 70vw; border-radius: 20px"
+      >
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="warning"
+          icon="close"
+          v-close-popup
+        />
+        <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
+        <q-card-section class="text-center">
+          <div class="text-h6">MINT FREE PLANET</div>
+        </q-card-section>
+        <q-card-section class="q-gutter-sm q-pt-none">  
+          <q-input
+            label-color="white"
+            standout="bg-secondary"
+            v-model="planetName"
+            label="Planet Name"
+            hide-bottom-space
+            :rules="[
+              (val) => val.length <= 14 || 'Please use maximum 14 characters',
+            ]"
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px #2253f4;
+              color: #fff;
+            "
+          />
+        </q-card-section>
+
+        <q-card-actions class="row q-col-gutter-md q-px-md">
+          <div class="col">
+            <button
+              class="button q-py-sm full-width"
+              style="
+                border: 2px solid #2253f4;
+                border-radius: 5px;
+                font-size: 14px;
+                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                color: #fff;
+              "
+              @click="mintFreePlanet"
+              v-close-popup
+            >
+              Mint Planet
+            </button>
+          </div>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-dialog v-model="buyPlanetPopup">
       <q-card
@@ -134,7 +202,7 @@ import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
-import { NEW_PLANET_PURCHASED } from "../constants/Events";
+import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 
@@ -148,6 +216,8 @@ const $store = useStore();
 
 const planetName = ref("");
 const buyPlanetPopup = ref(false);
+const freePlanetPopup = ref(false);
+
 const planetCost = ref({});
 
 const planetCostDisplay = ref();
@@ -165,6 +235,22 @@ watchEffect(async () => {
     visible.value = false;
   }
 });
+
+async function mintFreePlanet() {
+  const closeNotification = $notification(
+    "progress",
+    "Waiting for transaction to complete...",
+    0
+  );
+  
+  const re = await ApiRequest.mintFreePlanet(planetName.value);
+  $store.commit("addPlanet", re.data);
+
+  $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
+  $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
+
+  closeNotification();
+}
 
 async function buyPlanet() {
   const planetGuid = uuidv4();

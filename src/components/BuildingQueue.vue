@@ -19,7 +19,7 @@
               <q-item class="q-pa-none">
                 <q-item-section avatar>
                   <img
-                    :src="`data_img/${bQ.label}.png`"
+                    :src="`data_img/${bQ.label}.webp`"
                     style="width: 70px; height: 70px"
                     alt=""
                   />

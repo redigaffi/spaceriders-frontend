@@ -32,6 +32,20 @@ export default class ApiRequests {
     return re;
   }
 
+    /**
+   *
+   * @param {string} tx Planet purchase TX.
+   * @param {string} planetGuid Planet GUID.
+   */
+    static async mintFreePlanet(name) {
+      const path = `${process.env.BASE_API_PATH}/planet/free`;
+      const body = {
+        name: name,
+      };
+      const re = (await axios.post(path, body)).data;
+      return re;
+    }
+  
   /**
    *
    * @param {string} planetGuid Planet GUID.
@@ -376,6 +390,7 @@ export default class ApiRequests {
     const body = {
       planetId: data.planetId,
       guid: data.guid,
+      amount: data.amount,
     };
 
     return (await axios.post(path, body)).data;

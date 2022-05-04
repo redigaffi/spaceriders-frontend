@@ -24,9 +24,9 @@ module.exports = configure(function (ctx) {
     boot: [
       "axios",
       "store-state",
+      "event-bus",
       "axios-interceptor",
       "notification-helper",
-      "event-bus",
       "particlesv3",
     ],
 
