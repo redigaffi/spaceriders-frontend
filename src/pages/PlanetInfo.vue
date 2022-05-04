@@ -13,7 +13,7 @@
           <div class="col-12">
             <q-card flat class="bg-transparent text-dark">
               <img
-                src="~assets/img/overview.png"
+                src="~assets/img/overview.webp"
                 width="100%"
                 style="height: 400px; width: 100%"
               />
