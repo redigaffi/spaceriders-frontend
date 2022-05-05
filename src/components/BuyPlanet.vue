@@ -6,7 +6,7 @@
       label="Free Planet"
       color="warning"
       class="q-mr-xs"
-      v-if="!$q.screen.xs"
+      v-if="!$q.screen.xs && canBuyFreePlanet"
       @click="freePlanetPopup = true"
     />
     
@@ -203,7 +203,7 @@ import SpaceRidersGameContract, {
 } from "../service/contract/SpaceRidersGameContract";
 
 import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
-import { ref, watchEffect, getCurrentInstance } from "vue";
+import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
 
 const $notification =
@@ -236,7 +236,27 @@ watchEffect(async () => {
   }
 });
 
+const canBuyFreePlanet = computed(() => {
+  let canFreeMint = true;
+
+  const planets = $store.getters.planets;
+  for (let idx in planets) {
+    const planet = planets[idx];
+    if (planet.freePlanet) {
+      canFreeMint = false;
+      break;
+    }
+  }
+
+  return canFreeMint;
+});
+
 async function mintFreePlanet() {
+
+  if (canBuyFreePlanet.value) {
+    $notification("failed", "You already own a free planet", 6000);
+    return;
+  }
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
@@ -244,10 +264,21 @@ async function mintFreePlanet() {
   );
   
   const re = await ApiRequest.mintFreePlanet(planetName.value);
-  $store.commit("addPlanet", re.data);
 
-  $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
-  $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
+  if (re.success) {
+    closeNotification();
+    $notification("success", "Free planet minted successfully!", 6000);
+
+    $store.commit("addPlanet", re.data);
+    $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
+    $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
+
+  } else {
+    closeNotification();
+    $notification("failed", re.error, 6000);
+    console.error(`${planetGuid}`);
+    
+  }
 
   closeNotification();
 }
