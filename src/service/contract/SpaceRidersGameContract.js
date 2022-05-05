@@ -68,7 +68,7 @@ class SpaceRidersGameContract extends Contract {
     const contract = await this.getContract();
 
     const overrides = {
-      //value: ethers.utils.parseEther("0.0025"),
+      value: ethers.utils.parseEther("0.0025"),
       gasLimit: 1972197,
     };
 
@@ -157,7 +157,7 @@ class SpaceRidersGameContract extends Contract {
         const contract = await this.getContract();
         
         const overrides = {
-            gasLimit: 721975,
+          gasLimit: 721975,
         };
 
         return await contract.convertFromPrimaryResources(
@@ -165,6 +165,32 @@ class SpaceRidersGameContract extends Contract {
             attributes.id,
             attributes.tokens,
             attributes.forAddress,
+            overrides
+        );
+    }
+    
+      /**
+     * Increase PP
+     * @param {*} amount 
+     * @param {*} claimRequest 
+     * @param {*} signatureData 
+     * @returns 
+     */
+      async addPurchasingPower(amount, claimRequest, signatureData) {
+        //addPurchasingPower(uint256 _amount, string memory _claimReq, OB.signatureData calldata sD)
+        const contract = await this.getContract();
+        
+        const overrides = {
+          // To convert Ether to Wei:
+          //@todo: get price from smart contract
+          value: ethers.utils.parseEther("0.0025"),
+          gasLimit: 1972197,
+        };
+
+        return await contract.addPurchasingPower(
+            amount,
+            claimRequest,
+            signatureData,
             overrides
         );
     }

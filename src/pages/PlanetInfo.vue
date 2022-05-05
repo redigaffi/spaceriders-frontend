@@ -94,6 +94,14 @@
                       class="q-mr-xs"
                     />
 
+                    <q-btn
+                      v-if="hasLvlUpPendingRewardClaim"
+                      color="dark"
+                      label="Lvl Reward"
+                      class="q-mr-xs"
+                      @click="claimPendingLvlUpReward"
+                    />
+
                     <q-dialog v-model="openUpdateDialog">
                       <q-card
                         class="bg-dark text-white"
@@ -331,6 +339,11 @@ const temperature = computed(() => {
   str += `${maxTemperature}°C`;
 
   return str;
+});
+
+const hasLvlUpPendingRewardClaim = computed(() => {
+  const pendingLvlUpClaims = $store.getters.activePlanet.pendingLvlUpClaims;
+  return pendingLvlUpClaims.length > 0;
 });
 
 const position = computed(() => {
@@ -587,5 +600,55 @@ async function unstake() {
   }
 
   closeWaitingNotification();
+}
+
+async function claimPendingLvlUpReward() {
+  
+  const closeWaitingNotification = $notification(
+    "progress",
+    "Waiting for transaction to complete...",
+    0
+  );
+
+  const req = await ApiRequests.claimPendingLvlUpReward({
+    planetId: $store.getters.activePlanet.id,
+    claimId: $store.getters.activePlanet.pendingLvlUpClaims[0].id,
+  });
+
+  if (req.success) {
+    const sD = new SignatureData(
+      req.data.v,
+      req.data.r,
+      req.data.s
+    );
+
+    let receipt = { status: 0 };
+
+    const tx = await SpaceRidersGameContract.addPurchasingPower(req.data.amount, req.data.claimId, sD);
+    receipt = await tx.wait();
+
+    if (receipt.status === 1) {
+      const req1 = await ApiRequests.confirmPendingLvlUpReward({
+        claimId: $store.getters.activePlanet.pendingLvlUpClaims[0].id,
+      });
+
+      if (!req1.success) {
+        closeWaitingNotification();
+        $notification("failed", "Something happened...", 6000);
+        return;
+      }
+    } else {
+      closeWaitingNotification();
+      $notification("failed", "Something happened...", 6000);
+      return;
+    }
+  } else {
+    closeWaitingNotification();
+    $notification("failed", "Something happened...", 6000);
+    return;
+  }
+
+  closeWaitingNotification();
+  $notification("success", "Successfully claimed level up reward", 6000);
 }
 </script>

@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import ContractAddress from "./ContractAddress";
 import Contract from "./Contract";
+import SignatureData from "./types/SignatureData";
 
 const ABI = require("../../ABI/Spaceriders.json");
 
@@ -76,6 +77,7 @@ class SpaceRidersContract extends Contract {
     }
 
     /**
+     * How much is left for user to buy
      * @param {string} owner
      * @param {string} spender
      **/
@@ -90,6 +92,13 @@ class SpaceRidersContract extends Contract {
         return parseInt(ethers.utils.formatEther(purchasingPower.toString(), 18));
     }
 
+    async purchasingPowerAmount(wallet) {
+        const contract = await this.getContract();
+        return await contract.purchasingPowerAmount(
+            wallet
+        );
+    }
+
     /**
      **/
     async busdAddress() {
@@ -99,6 +108,6 @@ class SpaceRidersContract extends Contract {
 }
 
 export default new SpaceRidersContract();
-export { };
-
-
+export {
+    SignatureData
+};
