@@ -8,3 +8,4 @@ export const SWAP_COMPLETED = 'completed-swap';
 export const CONVERT_COMPLETED = 'completed-convert';
 export const STAKE = 'user-stake';
 export const UNSTAKE = 'user-unstake';
+export const ENERGY_DEPOSITED = 'energy-deposited';

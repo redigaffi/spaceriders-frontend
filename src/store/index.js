@@ -151,6 +151,9 @@ import { createStore } from "vuex";
         state.activePlanet.ressources.petrol += payload.petrol;
         state.activePlanet.ressources.crystal += payload.crystal;
       },
+      restFreePlanetFreeTokens(state, payload) {
+        state.activePlanet.freeTokens -= payload.tokens;
+      },
       /**
        * Update planet values by providing planet, field name, and value to update.
        * @param {*} state

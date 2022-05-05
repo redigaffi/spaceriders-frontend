@@ -40,7 +40,8 @@ import {
   NEW_PLANET_PURCHASED,
   CONVERT_COMPLETED,
   STAKE,
-  UNSTAKE
+  UNSTAKE,
+  ENERGY_DEPOSITED
 } from "../constants/Events";
 import tc from "thousands-counter";
 import ApiRequest from "../service/http/ApiRequests";
@@ -53,6 +54,7 @@ $eventBus.on(NEW_PLANET_PURCHASED, upateBalance);
 $eventBus.on(CONVERT_COMPLETED, upateBalance);
 $eventBus.on(STAKE, upateBalance);
 $eventBus.on(UNSTAKE, upateBalance);
+$eventBus.on(ENERGY_DEPOSITED, upateBalance);
 
 const $store = useStore();
 const showTokenAmount = ref(true);

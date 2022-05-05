@@ -253,7 +253,7 @@ const canBuyFreePlanet = computed(() => {
 
 async function mintFreePlanet() {
 
-  if (canBuyFreePlanet.value) {
+  if (!canBuyFreePlanet.value) {
     $notification("failed", "You already own a free planet", 6000);
     return;
   }
@@ -277,7 +277,7 @@ async function mintFreePlanet() {
     closeNotification();
     $notification("failed", re.error, 6000);
     console.error(`${planetGuid}`);
-    
+
   }
 
   closeNotification();

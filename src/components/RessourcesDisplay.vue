@@ -460,7 +460,7 @@ import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
-import { ACTIVE_PLANET_CHANGED, UPDATED_ALL } from "../constants/Events";
+import { ACTIVE_PLANET_CHANGED, UPDATED_ALL, ENERGY_DEPOSITED } from "../constants/Events";
 
 
 const $notification =
@@ -848,6 +848,8 @@ async function depositEnergy(amount) {
       closeNotification();
       $notification("success", "Energy deposited successfuly!", 6000);
       $store.commit("incrementEnergy", { energy: amount });
+      $store.commit("restFreePlanetFreeTokens", { tokens: amount });
+      $eventBus.emit(ENERGY_DEPOSITED);
       energyDepositPopup.value = false;
     } else {
       closeNotification();
