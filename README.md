@@ -1,26 +1,30 @@
-# Cryptoverse (frontend)
+# Spaceriders (frontend)
 
 A Quasar Framework app
 
 ## Install the dependencies
 ```bash
-yarn
+yarn install or npm install
+```
+
+### Replace .env.dev and .env with:
+```
+BASE_API_PATH=http://api.spaceriders.io:81
+ENV=testnet
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+quasar dev or node_modules/.bin/quasar dev
 ```
 
-### Lint the files
-```bash
-yarn run lint
-```
+### Request ticket NFT (to be able to access the game)
+1. Have metamask installed
+2. Have an address ready
+3. Have BSC Testnet network configured in metamask, follow instructions: https://medium.com/spartanprotocol/how-to-connect-metamask-to-bsc-testnet-7d89c111ab2
+4. Get some testnet BNB (needed to do transactions), put in the field your metamask address: https://testnet.binance.org/faucet-smart, click: "Give me BNB"
+5. Ask main devs to give you a ticket NFT - send your address to main dev and he will mint you a ticket
+6. At this point, once you have the ticket, you should be able to access the game.
 
-### Build the app for production
-```bash
-quasar build
-```
 
-### Customize the configuration
-See [Configuring quasar.conf.js](https://v2.quasar.dev/quasar-cli/quasar-conf-js).
+
