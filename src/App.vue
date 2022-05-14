@@ -2,11 +2,15 @@
   <router-view />
 </template>
 <script setup>
+
 import ApiRequest from "./service/http/ApiRequests";
 import { getCurrentInstance, computed } from "vue";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
+if (!window.ethereum) {
+  alert("No Web3 wallet detected, please install metamask to play the game.");
+}
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
