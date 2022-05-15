@@ -91,51 +91,23 @@ module.exports = configure(function (ctx) {
       config: {
         dark: true,
         loading: {
-          message: `<div class="loader loader-white">
-          <div class="loader-spined">
-            <div class="loader--icon">
-              <i class="fa fa-rocket offset-45deg"></i>
-            </div>
+          message: `<div class="content">
+          <div class="planet">
+             <div class="ring"></div>
+                <div class="cover-ring"></div>
+             <div class="spots">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+       
+             </div>
           </div>
-          
-          <div class="pufs">
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-          </div>
-          <div class="particles">
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-          </div>
-        </div>
-        <div class="loader-text">
-            LOADING...
-        </div>
+          <p>loading</p>
+       </div>
         `,
           html: true,
         },
