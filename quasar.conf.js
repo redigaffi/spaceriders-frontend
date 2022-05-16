@@ -91,23 +91,12 @@ module.exports = configure(function (ctx) {
       config: {
         dark: true,
         loading: {
-          message: `<div class="content">
-          <div class="planet">
-             <div class="ring"></div>
-                <div class="cover-ring"></div>
-             <div class="spots">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-       
-             </div>
+          message: `
+          <div class="loader">
+              <div class="circle one"></div>
+              <div class="circle two"></div>
+              <div class="circle three"></div>
           </div>
-          <p>loading</p>
-       </div>
         `,
           html: true,
         },
