@@ -103,6 +103,14 @@
           "
         ></div>
         <div>$SPR = {{ price }}$</div>
+        <div>
+          <br />
+          [TESTNET]
+          <br />
+          <a href="https://testnet.binance.org/faucet-smart" target="_blank">Get BNB in testnet</a>
+          <br />
+          <a href="https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7" target="_blank">Get BUSD in testnet</a>
+        </div>
         
       </q-card-section>
 
