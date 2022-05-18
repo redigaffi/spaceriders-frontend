@@ -220,23 +220,23 @@
           <p class="main__subtitle wow animate__animated animate__fadeIn">
             Success in space is defined by your Strategy...
           </p>
-          <!-- <div class="fit row wrap justify-start items-start content-start">
-            <div class="q-mr-md">
+          <div class="fit row wrap justify-start items-start content-start">
+            <!--<div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
                   Buy $SPR
                 </button>
               </Swap>
-            </div>
+            </div>-->
             <div>
               <button
                 class="button main__button3 popup__open"
-                @click.prevent="$router.push('/research')"
+                @click.prevent="$router.push('/nouser')"
               >
-                Enter SpaceRiders
+                Enter alpha version
               </button>
             </div>
-          </div> -->
+          </div> 
 
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>

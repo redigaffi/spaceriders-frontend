@@ -202,7 +202,7 @@ import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
-import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
+import { NEW_PLANET_PURCHASED, PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
 
@@ -270,8 +270,14 @@ async function mintFreePlanet() {
     $notification("success", "Free planet minted successfully!", 6000);
 
     $store.commit("addPlanet", re.data);
+    
+    if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
+      $store.commit("setActivePlanet", data.data);
+    }
+
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
     $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
+    $eventBus.emit(ACTIVE_PLANET_CHANGED, re.data);
 
   } else {
     closeNotification();

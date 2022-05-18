@@ -161,39 +161,45 @@ const linksListInfo = {
 };
 
 const $store = useStore();
-let linksList = [];
-const loggedIn = $store.getters.loggedIn;
-const hasPlanets = $store.getters.activePlanet;
 
+let linksList = computed(() => {
+  let loggedIn = $store.getters.loggedIn;
+  let hasPlanets = $store.getters.activePlanet;
 
-for (const routeIdx in routes) {
-  const routeData = routes[routeIdx];
+  let tmplinksList = [];
 
-  if (routeData.name === "overview") {
-    const requieresAuth = routeData.meta.requiresAuth;
-    const requiresPlanet = routeData.meta.requiresPlanet;
-    const notAdd =  (!loggedIn && requieresAuth) || (requiresPlanet && loggedIn && !hasPlanets);
-    if (!notAdd) {
-      linksList.push(linksListInfo[routeData.name]);
-    }
+  for (const routeIdx in routes) {
+    const routeData = routes[routeIdx];
 
-    for (const childIdx in routeData.children) {
-      const childInfo = routeData.children[childIdx];
-      if (childInfo.path === '') continue;
-      
-      const childRequieresAuth = childInfo.meta.requiresAuth;
-      const childRequiresPlanet = childInfo.meta.requiresPlanet;
-
-      const notAdd =  (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
-      if (!notAdd && childInfo.meta.menu) {
-        linksList.push(linksListInfo[childInfo.name]);
+    if (routeData.name === "overview") {
+      const requieresAuth = routeData.meta.requiresAuth;
+      const requiresPlanet = routeData.meta.requiresPlanet;
+      const notAdd =  (!loggedIn && requieresAuth) || (requiresPlanet && loggedIn && !hasPlanets);
+      if (!notAdd) {
+        tmplinksList.push(linksListInfo[routeData.name]);
       }
-    }
 
-    linksList.push(linksListInfo.gm);
-    break;
+      for (const childIdx in routeData.children) {
+        const childInfo = routeData.children[childIdx];
+        if (childInfo.path === '') continue;
+        
+        const childRequieresAuth = childInfo.meta.requiresAuth;
+        const childRequiresPlanet = childInfo.meta.requiresPlanet;
+
+        const notAdd =  (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
+        if (!notAdd && childInfo.meta.menu) {
+          tmplinksList.push(linksListInfo[childInfo.name]);
+        }
+      }
+
+      tmplinksList.push(linksListInfo.gm);
+      break;
+    }
   }
-}
+
+  return tmplinksList;
+});
+
 
 
 const leftDrawerOpen = ref(false);
