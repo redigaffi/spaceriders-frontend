@@ -231,7 +231,7 @@
             <div>
               <button
                 class="button main__button3 popup__open"
-                @click.prevent="$router.push('/nouser')"
+                @click.prevent="redirectTestnet"
               >
                 Enter alpha version
               </button>
@@ -1338,7 +1338,12 @@ export default defineComponent({
       },
     ]);
 
+    function redirectTestnet() {
+        window.location.href = 'http://testnet.spaceriders.io/nouser';
+        return;
+    }
     return {
+      redirectTestnet: redirectTestnet,
       d,
       h,
       m,
