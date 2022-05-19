@@ -22,6 +22,7 @@
     "thousands-counter": "^2.1.0",
     "uuid": "^8.3.2",
     "vue-chartjs": "^4.0.4",
+    "vue-gtag-next": "^1.14.0",
     "vuex": "^4.0.1"
   },
   "devDependencies": {

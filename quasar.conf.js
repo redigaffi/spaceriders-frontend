@@ -28,6 +28,7 @@ module.exports = configure(function (ctx) {
       "axios-interceptor",
       "notification-helper",
       "particlesv3",
+      "google-analytics"
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
