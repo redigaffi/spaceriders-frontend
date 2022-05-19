@@ -2,7 +2,7 @@
   <router-view />
 </template>
 <script setup>
-
+import { event } from 'vue-gtag'
 import ApiRequest from "./service/http/ApiRequests";
 import { getCurrentInstance, computed } from "vue";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
@@ -16,6 +16,8 @@ const $eventBus = getCurrentInstance().appContext.config.globalProperties.$event
 const $store = useStore();
 
 const $quasar = useQuasar();
+
+event('site-view', { test: 'asd' })
 
 $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
   $quasar.loading.show();
