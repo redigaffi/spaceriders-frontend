@@ -15,7 +15,6 @@ export default boot(async ({ app, router }) => {
         }
       }
     });*/
-    console.log("Google boot");
     app.use(VueGtag, {
       appName: `SpaceRiders ${process.env.ENV}`,
       pageTrackerScreenviewEnabled: true,

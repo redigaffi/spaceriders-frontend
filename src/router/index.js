@@ -2,6 +2,7 @@ import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 import Store from "../store/index";
+import Vue from 'vue';
 
 /*
  * If not building with SSR mode, you can
@@ -48,6 +49,11 @@ export default route(function (/* { store, ssrContext } */) {
         next();
       }
   
+  })
+
+  Router.afterEach(async (to, from) => {
+   
+    document.title = "SpaceRiders - " + to.meta.title; 
   })
 
   return Router
