@@ -30,11 +30,11 @@ const routes = [
     name: "overview",
     meta: { requiresAuth: true, requiresPlanet: true, menu: true, title: "Overview" },
     children: [
+      { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "", component: planetInfoPage, meta: { title: ""} },
       { path: "/resources", component: resourcesPage, name: "resources", meta: {  menu: true, requiresAuth: true, requiresPlanet: true, title: "Resources" }  },
       { path: "/installations", component: installationsPage, name: "installations", meta: { menu: true, requiresAuth: true, requiresPlanet: true, title: "Installations" }  },
       { path: "/research", component: researchPage, name: "research", meta: { menu: true,requiresAuth: true, requiresPlanet: true, title: "Research" }  },
-      { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "/defense", component: defensePage, name: "defense", meta: { menu: true,requiresAuth: true, requiresPlanet: true, title: "Defense" } },
     ],
   },
@@ -42,7 +42,7 @@ const routes = [
     path: "/nouser",
     component: NoLoginLayout,
     name: "nouser",
-    meta: { requiresAuth: false, requiresPlanet: false, menu: false, title: "Nouser" },
+    meta: { requiresAuth: false, requiresPlanet: false, menu: false, title: "Login" },
   },
   
 

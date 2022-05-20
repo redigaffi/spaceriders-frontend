@@ -247,7 +247,7 @@
                         class="q-px-sm"
                         color="warning"
                         icon="expand_less"
-                        :label="itemType ? 'Build' : 'Upgrade'"
+                        :label="actionConfirmLabel"
                         no-caps
                         push
                         @click="upgrade"
@@ -715,7 +715,19 @@ export default defineComponent({
     
     };
 
+    const actionConfirmLabel = computed (() => {
+      if (props.itemType) {
+        return "Build";
+      } else {
+        if (props.data.type === Types.RESEARCH_TYPE) return "Research";
+        if (props.data.level > 0) return "Upgrade";
+      }
+
+      return "Build";
+    });
+
     return {
+      actionConfirmLabel: actionConfirmLabel,
       allRequirementsMeet: allRequirementsMeet,
       requirements: requirements,
       timeString: timeString,
