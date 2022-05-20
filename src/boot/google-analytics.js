@@ -5,7 +5,7 @@ import VueGtag from "vue-gtag";
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ app }) => {
-  console.log("asd")
+  
   if (process.env.ENV != "local") {
     /*app.use(VueGtag, {
       property: {
