@@ -726,7 +726,7 @@
 
     <!-- TOKENOMICS -->
     <div id="game"></div>
-    <section class="game">
+    <!--<section class="game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">Tokenomics</div>
@@ -734,11 +734,7 @@
             <div
               class="token__img--inner wow animate__animated animate__fadeIn"
             >
-              <!-- <img
-                src="~assets/landing/img/tkr_2.png"
-                alt="Диаграмма"
-                class="token__img"
-              /> -->
+              
               <PieChart />
             </div>
 
@@ -825,7 +821,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section>-->
 
     <!-- SOCIAL -->
     <div id="social"></div>
@@ -1217,12 +1213,12 @@
 import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
 import { defineComponent, ref } from "vue";
-import PieChart from "../components/pieChart";
+//import PieChart from "../components/pieChart";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "PageLanding",
-  components: { PieChart },
+  //components: { PieChart },
   setup() {
     // const $q = useQuasar();
     // $q.loading.show();
