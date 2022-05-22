@@ -386,14 +386,14 @@
           <div class="row fit wrap">
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/landing/img/gr_1.png"
+                src="~assets/landing/img/gr_1.webp"
                 alt=""
                 style="width: 100%"
               />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6">
               <img
-                src="~assets/landing/img/gr_2.png"
+                src="~assets/landing/img/gr_2.webp"
                 alt=""
                 style="width: 100%"
               />
@@ -459,7 +459,7 @@
               >
                 <div class="text-center">
                   <img
-                    src="~assets/landing/img/ast/jordi_ast.png"
+                    src="~assets/landing/img/ast/jordi_ast.webp"
                     style="width: 100px"
                   />
                 </div>
@@ -513,7 +513,7 @@
               >
                 <div class="text-center">
                   <img
-                    src="~assets/landing/img/ast/iniaki_ast.png"
+                    src="~assets/landing/img/ast/iniaki_ast.webp"
                     style="width: 100px"
                   />
                 </div>
@@ -592,7 +592,7 @@
               >
                 <div class="text-center">
                   <img
-                    src="~assets/landing/img/ast/max_ast.png"
+                    src="~assets/landing/img/ast/max_ast.webp"
                     style="width: 100px"
                   />
                 </div>
@@ -649,7 +649,7 @@
               >
                 <div class="text-center">
                   <img
-                    src="~assets/landing/img/ast/mac_ast_2.png"
+                    src="~assets/landing/img/ast/mac_ast_2.webp"
                     style="width: 100px"
                   />
                 </div>
@@ -1165,7 +1165,7 @@
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf" target="_blank">
               <img
-                src="~assets/landing/img/englishflag.png"
+                src="~assets/landing/img/englishflag.webp"
                 style="cursor: pointer"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
@@ -1176,7 +1176,7 @@
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf" target="_blank">
               <img
-                src="~assets/landing/img/spainflag.png"
+                src="~assets/landing/img/spainflag.webp"
                 style="cursor: pointer"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
@@ -1184,27 +1184,6 @@
               />
             </a>
           </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="openPdfModel">
-      <q-card style="border-radius: 30px; max-width: 80vw">
-        <q-card-section class="q-pa-none" v-if="$q.screen.gt.sm">
-          <q-pdfviewer
-            type="html5"
-            :src="pdfSrc"
-            style="width: 700px; height: 80vh"
-            hide-scrollbar
-          />
-        </q-card-section>
-        <q-card-section class="q-pa-none" v-else>
-          <q-pdfviewer
-            type="html5"
-            :src="pdfSrc"
-            style="width: 100%; height: 80vh"
-            hide-scrollbar
-          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -1216,7 +1195,6 @@ import "../assets/landing/js/wow.min.js";
 import "../assets/landing/js/main.js";
 import { defineComponent, ref } from "vue";
 //import PieChart from "../components/pieChart";
-import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "PageLanding",
@@ -1274,15 +1252,7 @@ export default defineComponent({
       scrollPosition.value = window.scrollY;
     };
 
-    const pdfSrc = ref("");
     const openWhitepaper = ref(false);
-    const openPdfModel = ref(false);
-    function openPdf(params) {
-      pdfSrc.value = params;
-      openWhitepaper.value = false;
-      openPdfModel.value = true;
-    }
-
     const faq_section = ref([
       {
         label: "What is SpaceRiders?",
@@ -1340,6 +1310,7 @@ export default defineComponent({
         window.location.href = 'http://testnet.spaceriders.io/nouser';
         return;
     }
+    
     return {
       redirectTestnet: redirectTestnet,
       d,
@@ -1353,9 +1324,6 @@ export default defineComponent({
       model: ref("GLMR"),
       openWhitepaper,
       slide: ref(1),
-      openPdf,
-      pdfSrc,
-      openPdfModel,
       faq_section,
     };
   },

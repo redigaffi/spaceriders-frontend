@@ -15,7 +15,7 @@
           :data-content="calculateClaimDate(p)"
         >
           <img
-            src="~assets/img/planet_queue.jpg"
+            src="~assets/img/planet_queue.webp"
             style="height: 250px; width: 100%"
           />
           <q-card-section
@@ -35,7 +35,7 @@
       >
         <q-card flat class="bg-transparent text-dark claimable-cards">
           <img
-            src="~assets/img/planet_claimable.jpg"
+            src="~assets/img/planet_claimable.webp"
             style="height: 250px; width: 100%"
           />
           <q-card-section

@@ -431,7 +431,7 @@ input::-webkit-inner-spin-button {
 /* Tokenomics */
 .token {
   padding: 5rem 0;
-  background: url("../img/token-bg.jpg") center no-repeat;
+  background: url("../img/token-bg.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }

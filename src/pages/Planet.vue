@@ -39,7 +39,7 @@
       <q-card-section class="text-center">
         <div>
           <img
-            src="~assets/img/no-planet.png"
+            src="~assets/img/no-planet.webp"
             alt=""
             srcset=""
             style="height: 230px"

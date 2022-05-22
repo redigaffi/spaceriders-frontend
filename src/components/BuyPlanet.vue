@@ -38,7 +38,7 @@
           icon="close"
           v-close-popup
         />
-        <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
+        <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
         <q-card-section class="text-center">
           <div class="text-h6">MINT FREE PLANET</div>
         </q-card-section>
@@ -96,7 +96,7 @@
           icon="close"
           v-close-popup
         />
-        <img src="~assets/img/buyplanet_footer-scaled.jpg" alt="" srcset="" />
+        <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
         <q-card-section class="text-center">
           <div class="text-h6">BUY A PLANET</div>
         </q-card-section>

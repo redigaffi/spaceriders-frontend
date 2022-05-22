@@ -20,7 +20,7 @@
             <div class="text-center text-subtitle2">
               <div>
                 <img
-                  src="~assets/img/resources/RES_ic_Metal.png"
+                  src="~assets/img/resources/RES_ic_Metal.webp"
                   alt
                   srcset
                   class="resource-icon-small"
@@ -55,7 +55,7 @@
             <div class="text-center text-subtitle2">
               <div>
                 <img
-                  src="~assets/img/resources/RES_ic_FUEL5.png"
+                  src="~assets/img/resources/RES_ic_FUEL5.webp"
                   alt
                   srcset
                   class="resource-icon-small"
@@ -90,7 +90,7 @@
             <div class="text-center text-subtitle2">
               <div>
                 <img
-                  src="~assets/img/resources/RES_ic_CRYSTAL.png"
+                  src="~assets/img/resources/RES_ic_CRYSTAL.webp"
                   alt
                   class="resource-icon-small"
                   srcset
@@ -325,7 +325,7 @@
               <div class="text-center text-subtitle2">
                 <div>
                   <img
-                    src="~assets/img/resources/RES_ic_Metal.png"
+                    src="~assets/img/resources/RES_ic_Metal.webp"
                     alt
                     srcset
                     class="resource-icon-small"
@@ -354,7 +354,7 @@
               <div class="text-center text-subtitle2">
                 <div>
                   <img
-                    src="~assets/img/resources/RES_ic_FUEL5.png"
+                    src="~assets/img/resources/RES_ic_FUEL5.webp"
                     alt
                     srcset
                     class="resource-icon-small"
@@ -383,7 +383,7 @@
               <div class="text-center text-subtitle2">
                 <div>
                   <img
-                    src="~assets/img/resources/RES_ic_CRYSTAL.png"
+                    src="~assets/img/resources/RES_ic_CRYSTAL.webp"
                     alt
                     class="resource-icon-small"
                     srcset

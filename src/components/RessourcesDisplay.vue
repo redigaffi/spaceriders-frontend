@@ -19,7 +19,7 @@
           }"
         >
           <img
-            src="~assets/img/resources/RES_ic_Metal.png"
+            src="~assets/img/resources/RES_ic_Metal.webp"
             alt
             srcset
             class="q-pt-sm planet-icons"
@@ -123,7 +123,7 @@
           }"
         >
           <img
-            src="~assets/img/resources/RES_ic_CRYSTAL.png"
+            src="~assets/img/resources/RES_ic_CRYSTAL.webp"
             alt
             srcset
             class="q-pt-sm planet-icons"
@@ -227,7 +227,7 @@
           }"
         >
           <img
-            src="~assets/img/resources/RES_ic_FUEL5.png"
+            src="~assets/img/resources/RES_ic_FUEL5.webp"
             alt
             srcset
             class="q-pt-sm planet-icons"
@@ -328,7 +328,7 @@
           :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
         >
           <img
-            src="~assets/img/resources/RES_ic_ENERGY.png"
+            src="~assets/img/resources/RES_ic_ENERGY.webp"
             alt
             srcset
             class="q-pt-sm planet-icons"
@@ -399,7 +399,7 @@
         />
 
         <q-img
-          src="~assets/img/buyplanet_footer-scaled.jpg"
+          src="~assets/img/buyplanet_footer-scaled.webp"
           style="height: 230px"
         >
           <div class="absolute-full text-subtitle2">

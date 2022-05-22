@@ -164,7 +164,7 @@ const buyMetadata = ref({
       "https://cryptologos.cc/logos/binance-usd-busd-logo.svg?v=022",
   },
   spr: {
-    image: "logo.png",
+    image: "logo.webp",
   },
 });
 

@@ -120,7 +120,7 @@
                           v-close-popup
                         />
                         <img
-                          src="~assets/img/buyplanet_footer-scaled.jpg"
+                          src="~assets/img/buyplanet_footer-scaled.webp"
                           alt=""
                           srcset=""
                         />
@@ -226,7 +226,7 @@
                     }}
                     &nbsp;
                     <img
-                      src="~assets/img/logo.png"
+                      src="~assets/img/logo.webp"
                       alt=""
                       style="height: 20px; width: 20px; vertical-align: middle"
                     />)</span

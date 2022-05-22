@@ -8,7 +8,7 @@
       color="primary"
       text-color="white"
     >
-      <img src="logo.png" style="width: 22px; height: 22px" />
+      <img src="logo.webp" style="width: 22px; height: 22px" />
       <div class="q-ml-sm">{{ tokenBalance }}</div>
     </q-btn>
     <q-btn
