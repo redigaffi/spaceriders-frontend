@@ -1163,24 +1163,26 @@
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <img
-              @click="openPdf('https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf')"
-              src="~assets/landing/img/englishflag.png"
-              style="cursor: pointer"
-              :style="
-                $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-              "
-            />
+            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf" target="_blank">
+              <img
+                src="~assets/landing/img/englishflag.png"
+                style="cursor: pointer"
+                :style="
+                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
+                "
+              />
+            </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <img
-              @click="openPdf('https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf')"
-              src="~assets/landing/img/spainflag.png"
-              style="cursor: pointer"
-              :style="
-                $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-              "
-            />
+            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf" target="_blank">
+              <img
+                src="~assets/landing/img/spainflag.png"
+                style="cursor: pointer"
+                :style="
+                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
+                "
+              />
+            </a>
           </div>
         </q-card-section>
       </q-card>
