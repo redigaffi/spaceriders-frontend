@@ -4,11 +4,13 @@
 @font-face {
   font-family: bodyFont;
   src: url("../assets/font/pirulen-rg.otf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: headingFont;
   src: url("../assets/font/TrueBlue-PhiloLogicXP-ExpandedRegular.otf");
+  font-display: swap;
 }
 
 body {

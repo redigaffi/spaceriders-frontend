@@ -1191,8 +1191,8 @@
 </template>
 
 <script>
-import "../assets/landing/js/wow.min.js";
-import "../assets/landing/js/main.js";
+
+
 import { defineComponent, ref } from "vue";
 //import PieChart from "../components/pieChart";
 
