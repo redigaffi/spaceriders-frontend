@@ -20,6 +20,7 @@ const landingPage = () => import("src/pages/Landing1.vue");
 const routes = [
   {
     path: "/",
+    name: "landing",
     component: landingLayout,
     children: [{ path: "/", component: landingPage, name: "landing", meta: {title: "Landing"} }],
   },
@@ -30,8 +31,8 @@ const routes = [
     name: "overview",
     meta: { requiresAuth: true, requiresPlanet: true, menu: true, title: "Overview" },
     children: [
-      { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "", component: planetInfoPage, meta: { title: ""} },
+      { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "/resources", component: resourcesPage, name: "resources", meta: {  menu: true, requiresAuth: true, requiresPlanet: true, title: "Resources" }  },
       { path: "/installations", component: installationsPage, name: "installations", meta: { menu: true, requiresAuth: true, requiresPlanet: true, title: "Installations" }  },
       { path: "/research", component: researchPage, name: "research", meta: { menu: true,requiresAuth: true, requiresPlanet: true, title: "Research" }  },

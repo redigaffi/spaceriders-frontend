@@ -1164,7 +1164,7 @@
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <img
-              @click="openPdf('/pdf/english.pdf')"
+              @click="openPdf('https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf')"
               src="~assets/landing/img/englishflag.png"
               style="cursor: pointer"
               :style="
@@ -1174,7 +1174,7 @@
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <img
-              @click="openPdf('/pdf/spain.pdf')"
+              @click="openPdf('https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf')"
               src="~assets/landing/img/spainflag.png"
               style="cursor: pointer"
               :style="

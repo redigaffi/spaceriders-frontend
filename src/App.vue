@@ -2,114 +2,21 @@
   <router-view />
 </template>
 <script setup>
-import { event } from 'vue-gtag'
 import ApiRequest from "./service/http/ApiRequests";
-import { getCurrentInstance, computed } from "vue";
-import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "./constants/Events";
 import { useStore } from "vuex";
-import { useQuasar } from "quasar";
+
 if (!window.ethereum) {
   alert("No Web3 wallet detected, please install metamask to play the game.");
 }
 
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
-
-const $quasar = useQuasar();
-
-event('site-view', { test: 'asd' })
-
-$eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
-  $quasar.loading.show();
-  await updateAll();
-  await updateInterval();
-  $quasar.loading.hide();
-});
-
-$eventBus.on(LOGGED_IN, async () => {
-  await updateAll();
-  await updateInterval();
-});
 
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit("setChainInfo", { chainInfo: data });
 }
 
-async function update(activePlanet) {
-  ApiRequest.tokenPrice().then((tokenPrice) => {
-    $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
-  });
-
-  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id)).data;
-
-  $store.commit("setActivePlanet", allPlanetInfo.planet);
-  $store.commit("setResourceData", allPlanetInfo.resources);
-  $store.commit("setInstallationData", allPlanetInfo.installation);
-  $store.commit("setResearchData", allPlanetInfo.research);
-  $store.commit("setDefenseData", allPlanetInfo.defense);
-  $store.commit("addEmails", { emails: allPlanetInfo.email });
-}
-
-async function updateAll() {
-  if (!$store.getters.loggedIn) return;
-
-  let activePlanetId = false;
-  if ($store.getters.activePlanet) {
-    activePlanetId = $store.getters.activePlanet.id;
-  }
-
-  const planets = (await ApiRequest.getAllPlanets()).data;
-  $store.commit("setPlanets", planets);
-
-  let activePlanet = false;
-  if (activePlanetId !== false) {
-    activePlanet = planets.filter((o) => o.id === activePlanetId)[0];
-  } else if (!activePlanetId && planets.length > 0) {
-    let activePlanets = planets.filter((o) => o.claimed);
-    if (activePlanets.length > 0) {
-      activePlanet = activePlanets[0];
-    }
-  }
-  if (activePlanet !== false) {
-    $store.commit("setActivePlanet", activePlanet);
-    await update(activePlanet);
-  }
-
-  $eventBus.emit(UPDATED_ALL);
-}
-
-async function updateInterval() {
-  if (!$store.getters.loggedIn) return;
-
-  if ($store.getters.updateIntervalId !== false) {
-    clearInterval($store.getters.updateIntervalId);
-  }
-
-  if ($store.getters.activePlanet) {
-    const timerId = setInterval(async () => {
-      update($store.getters.activePlanet);
-    }, 60000);
-
-    $store.commit("setUpdateIntervalId", { updateIntervalId: timerId });
-  }
-}
-
-async function init() {
-  if ($store.getters.loggedIn) {
-    $quasar.loading.show();
-    // On page refresh reset all.
-    await updateAll();
-    // Start timer
-    await updateInterval();
-    $quasar.loading.hide();
-  }
-}
-
-
 getChainData();
-init();
-
 </script>
 
 <style lang="scss">
