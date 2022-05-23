@@ -519,6 +519,8 @@ async function stake() {
   } catch (e) {
     console.log(e);
     closeWaitingNotification();
+    $notification("failed", "Staked failed, please try again...", 6000);
+    return;
   }
 
   if (receipt.status === 1) {
