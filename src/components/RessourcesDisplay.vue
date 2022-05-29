@@ -427,7 +427,7 @@
 
               <q-card-section class="q-pt-none text-center">
                 <IncreaseAllowance
-                  v-if="!$store.getters.activePlanet.freePlanet"
+                  v-if="!$store.getters.activePlanet.free_planet"
                   :address="ContractAddress.getSpaceRidersGameAddress()" 
                   :amount="sprCost"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
@@ -479,7 +479,7 @@ const activePlanet = computed(() => {
 
 const energyAvailable = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy;
+  return $store.getters.activePlanet.resources.energy;
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -507,7 +507,7 @@ function timeLeft(minLeft) {
 
 const energyConsumption = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy_usage.toFixed(4);
+  return $store.getters.activePlanet.resources.energy_usage.toFixed(4);
 });
 
 const metalReserve = computed(() => {
@@ -517,7 +517,7 @@ const metalReserve = computed(() => {
 
 const energyTimeLeft = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  const availableEnergy = $store.getters.activePlanet.ressources.energy;
+  const availableEnergy = $store.getters.activePlanet.resources.energy;
   const consumption = energyConsumption.value/60;
   const minutesLeft = (availableEnergy / consumption);
   const tl = timeLeft(minutesLeft);
@@ -533,7 +533,7 @@ const metalReserveDisplay = computed(() => {
 });
 
 const metalAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.metal.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.metal.toFixed(1), {
     digits: 1,
   });
 });
@@ -549,7 +549,7 @@ const crystalReserveDisplay = computed(() => {
 });
 
 const crystalAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.crystal.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.crystal.toFixed(1), {
     digits: 1,
   });
 });
@@ -565,7 +565,7 @@ const petrolReserveDisplay = computed(() => {
 });
 
 const petrolAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.petrol.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.petrol.toFixed(1), {
     digits: 1,
   });
 });
@@ -837,7 +837,7 @@ async function depositEnergy(amount) {
     0
   );
 
-  if ($store.getters.activePlanet.freePlanet) {
+  if ($store.getters.activePlanet.free_planet) {
     const req = await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
@@ -894,7 +894,7 @@ async function depositEnergy(amount) {
 const maxEnergyDeposit = computed(() => {
   const planet = $store.getters.activePlanet;
   if (!planet) return 0;
-  return planet.ressources.energy_max_deposit;
+  return planet.resources.energy_max_deposit;
 });
 
 function startEnergyTimer() {
@@ -913,7 +913,7 @@ function startEnergyTimer() {
       return;
     }
     
-    const eC = $store.getters.activePlanet.ressources.energy_usage;
+    const eC = $store.getters.activePlanet.resources.energy_usage;
     $store.commit('decrementEnergy', {energy: eC/60})
   }, 1000);
 

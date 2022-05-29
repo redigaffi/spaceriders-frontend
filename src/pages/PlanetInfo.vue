@@ -342,7 +342,7 @@ const temperature = computed(() => {
 });
 
 const hasLvlUpPendingRewardClaim = computed(() => {
-  const pendingLvlUpClaims = $store.getters.activePlanet.pendingLvlUpClaims;
+  const pendingLvlUpClaims = $store.getters.activePlanet.pending_lvl_up_claims;
   return pendingLvlUpClaims.length > 0;
 });
 
@@ -393,16 +393,16 @@ const lpValue = async () => {
   if (!isStaking.value) return;
   const chainInfo = $store.getters.chainInfo;
   
-  const pairAddr = chainInfo.pairContract;
+  const pairAddr = chainInfo.pair_contract;
   const pairContract = new ERC20(pairAddr);
   const userLpBalance = await SpaceRidersGameContract.stakedLpAmount($store.getters.activePlanet.id);
   
   const totalLpSupply = await pairContract.totalSupply($store.getters.address);
   
-  const sprAddr = chainInfo.tokenContract;
+  const sprAddr = chainInfo.token_contract;
   const sprContract = new ERC20(sprAddr);
   const sprPairBalance = await sprContract.balanceOf(pairAddr);
-  const busdAddr = chainInfo.busdContract;
+  const busdAddr = chainInfo.busd_contract;
   const busdContract = new ERC20(busdAddr);
   const busdPairBalance = await busdContract.balanceOf(pairAddr);
 
@@ -438,7 +438,7 @@ const activeTier = computed(() => {
   if ($store.getters.activePlanet === false) return;
   if (!$store.getters.activePlanet.tier.staked) return;
 
-  return $store.getters.activePlanet.tier.tierName;
+  return $store.getters.activePlanet.tier.tier_name;
 });
 
 function calculateClaimDate(time) {
@@ -464,7 +464,7 @@ function calculateClaimDate(time) {
 const stakingHoursLeft = computed(() => {
   if ($store.getters.activePlanet === false) return;
   if (!$store.getters.activePlanet.tier.staked) return;
-  const stakingFinished = $store.getters.activePlanet.tier.timeRelease;
+  const stakingFinished = $store.getters.activePlanet.tier.time_release;
 
   let timeString = calculateClaimDate(stakingFinished);
   if (timeString === false) return "Withdraw";
@@ -502,7 +502,7 @@ async function stake() {
     stakingRequest.planetId,
     String(stakingRequest.amount),
     stakingRequest.tier,
-    stakingRequest.timeRelease
+    stakingRequest.time_release
   );
 
   const sD = new SignatureData(
@@ -537,7 +537,7 @@ async function stake() {
     }
 
     const updatedPlanet = (
-      await ApiRequests.getActivePlanet($store.getters.activePlanet.id)
+      await ApiRequests.getAllInfoPlanet($store.getters.activePlanet.id)
     ).data;
     $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
@@ -552,7 +552,7 @@ const unstakeDisabled = computed(() => {
   if ($store.getters.activePlanet === false) return false;
   if (!$store.getters.activePlanet.tier.staked) return false;
 
-  const timeRelease = $store.getters.activePlanet.tier.timeRelease;
+  const timeRelease = $store.getters.activePlanet.tier.time_release;
   const now = Date.now() / 1000;
 
   return timeRelease - now >= 0;
@@ -591,7 +591,7 @@ async function unstake() {
     }
 
     const updatedPlanet = (
-      await ApiRequests.getActivePlanet($store.getters.activePlanet.id)
+      await ApiRequests.getAllInfoPlanet($store.getters.activePlanet.id)
     ).data;
     $store.commit("updateActivePlanet", { planet: updatedPlanet });
     layout.value = false;
@@ -614,7 +614,7 @@ async function claimPendingLvlUpReward() {
 
   const req = await ApiRequests.claimPendingLvlUpReward({
     planetId: $store.getters.activePlanet.id,
-    claimId: $store.getters.activePlanet.pendingLvlUpClaims[0].id,
+    claimId: $store.getters.activePlanet.pending_lvl_up_claims[0].id,
   });
 
   if (req.success) {
@@ -631,7 +631,7 @@ async function claimPendingLvlUpReward() {
 
     if (receipt.status === 1) {
       const req1 = await ApiRequests.confirmPendingLvlUpReward({
-        claimId: $store.getters.activePlanet.pendingLvlUpClaims[0].id,
+        claimId: $store.getters.activePlanet.pending_lvl_up_claims[0].id,
       });
 
       if (!req1.success) {

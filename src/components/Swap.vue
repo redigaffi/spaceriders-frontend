@@ -184,7 +184,7 @@ const price = ref(0.0);
 
 const reloadPriceData = async () => {
   visible.value = true;
-  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.routerContract, $store.getters.address);
+  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.router_contract, $store.getters.address);
   price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
   visible.value = false;
 };

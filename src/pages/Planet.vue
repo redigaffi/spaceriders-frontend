@@ -210,11 +210,7 @@ export default defineComponent({
     ClaimPlanetList,
     BuyPlanet,
   },
-  setup() {
-    return {
-      // testPlanel: ref(true),
-    };
-  },
+  
   data: function () {
     return {
       claimRefreshId: -1,

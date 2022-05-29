@@ -451,18 +451,18 @@ export default defineComponent({
         const petrolCost = dataItem.cost_petrol * quantity.value;
 
         return (
-          activePlanet.ressources.metal >= metalCost &&
-          activePlanet.ressources.petrol >= petrolCost &&
-          activePlanet.ressources.crystal >= crystalCost
+          activePlanet.resources.metal >= metalCost &&
+          activePlanet.resources.petrol >= petrolCost &&
+          activePlanet.resources.crystal >= crystalCost
         );
       }
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
 
       return (
-        activePlanet.ressources.metal >= level.cost_metal &&
-        activePlanet.ressources.petrol >= level.cost_petrol &&
-        activePlanet.ressources.crystal >= level.cost_crystal
+        activePlanet.resources.metal >= level.cost_metal &&
+        activePlanet.resources.petrol >= level.cost_petrol &&
+        activePlanet.resources.crystal >= level.cost_crystal
       );
     };
     
@@ -471,9 +471,9 @@ export default defineComponent({
       const level = data[props.data.label]["upgrades"][props.data.level];
 
       return (
-        activePlanet.ressources.metal >= level.cost_metal &&
-        activePlanet.ressources.petrol >= level.cost_petrol &&
-        activePlanet.ressources.crystal >= level.cost_crystal
+        activePlanet.resources.metal >= level.cost_metal &&
+        activePlanet.resources.petrol >= level.cost_petrol &&
+        activePlanet.resources.crystal >= level.cost_crystal
       );
     };
 
@@ -521,12 +521,11 @@ export default defineComponent({
         data.quantity = quantity.value;
       }
 
-      const re = await apiCall(data);
-
-      if (re.success) {
+      try {
+        const re = await apiCall(data);
         let saveStore = {
           label: props.data.label,
-          upgradeFinish: re.data.upgrade_finish,
+          upgradeFinish: Date.parse(re.data.finish + "Z")
         };
 
         if (props.itemType) {
@@ -535,19 +534,10 @@ export default defineComponent({
 
         $store.commit(storeUpdateMethod, saveStore);
 
-        let prices = {};
-        if (props.itemType) {
-          prices = dataSource(props.data.type)[props.data.label].data;
-        } else {
-          prices = dataSource(props.data.type)[props.data.label]["upgrades"][
-            props.data.level + 1
-          ];
-        }
-
         $store.commit("restPlanetResources", {
-          metal: prices.cost_metal,
-          crystal: prices.cost_crystal,
-          petrol: prices.cost_petrol,
+          metal: re.data.metal_paid,
+          crystal: re.data.crystal_paid,
+          petrol: re.data.petrol_paid,
         });
 
         $eventBus.emit(BUILDING_UPGRADED);
@@ -558,12 +548,13 @@ export default defineComponent({
         }
 
         $notification("success", notificationMessage);
-      } else {
-        $notification("failed", re.error);
+      } catch(e) {
+        $notification("failed", e);
       }
     };
 
     const health = computed(() => {
+      if (props.data.level === 0) return false;
       if (props.data.health === undefined) return false;
 
       const fullHealth = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level].health;

@@ -193,18 +193,26 @@ const $store = useStore();
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 let buildingQueueData = computed(() => {
-  return {
-    ...$store.getters.resourceData,
-    ...$store.getters.installationData,
-  };
+  let re = {}
+  for (let rl in $store.getters.activePlanet.resources_level) {
+    const data = $store.getters.activePlanet.resources_level[rl];
+    re[data.label] = data;
+  }
+
+  for (let il in $store.getters.activePlanet.installation_level) {
+    const data = $store.getters.activePlanet.installation_level[il];
+    re[data.label] = data;
+  }
+  
+  return re;
 });
 
 let researchQueueData = computed(() => {
-  return $store.getters.researchData;
+  return $store.getters.activePlanet.research_level;
 });
 
 let defenseFleetQueueData = computed(() => {
-  return $store.getters.defenseData;
+  return $store.getters.activePlanet.defense_items;
 });
 
 const anyUnreadMessage = computed(() => {
@@ -285,8 +293,8 @@ async function update(activePlanet) {
     $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
   });
 
-  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id)).data;
-
+  const allPlanetInfoReq = (await ApiRequest.getAllInfoPlanet(activePlanet.id));
+  const allPlanetInfo = allPlanetInfoReq.data;
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
@@ -303,7 +311,7 @@ async function updateAll() {
     activePlanetId = $store.getters.activePlanet.id;
   }
 
-  const planets = (await ApiRequest.getAllPlanets()).data;
+  const planets = (await ApiRequest.getAllPlanets());
   $store.commit("setPlanets", planets);
 
   let activePlanet = false;
@@ -315,9 +323,10 @@ async function updateAll() {
       activePlanet = activePlanets[0];
     }
   }
+
   if (activePlanet !== false) {
     $store.commit("setActivePlanet", activePlanet);
-    await update(activePlanet);
+    update(activePlanet);
   }
 
   $eventBus.emit(UPDATED_ALL);

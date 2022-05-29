@@ -8,9 +8,7 @@ export default class ApiRequests {
     };
 
     const path = `${process.env.BASE_API_PATH}/jwt`;
-    const re = await axios.post(path, body);
-
-    return re;
+    return await axios.post(path, body);
   }
 
   /**
@@ -18,18 +16,15 @@ export default class ApiRequests {
    * @param {string} tx Planet purchase TX.
    * @param {string} planetGuid Planet GUID.
    */
-  static async buyPlanet(tx, planetGuid, name) {
+  static async buyPlanet(planetGuid, name) {
     const path = `${process.env.BASE_API_PATH}/planet/buy`;
 
     const body = {
-      tx: tx,
-      planetId: planetGuid,
+      planet_id: planetGuid,
       name: name,
     };
 
-    const re = (await axios.post(path, body)).data;
-
-    return re;
+    return (await axios.post(path, body));
   }
 
     /**
@@ -42,8 +37,7 @@ export default class ApiRequests {
       const body = {
         name: name,
       };
-      const re = (await axios.post(path, body)).data;
-      return re;
+      return (await axios.post(path, body));
     }
   
   /**
@@ -54,10 +48,10 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/planet/claim`;
 
     const body = {
-      planetId: planetGuid,
+      planet_id: planetGuid,
     };
 
-    return (await axios.post(path, body)).data;
+    return (await axios.post(path, body));
   }
 
   /**
@@ -87,40 +81,17 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/planet/fetch_cost_data`;
 
     const body = {
-      planetId: planetGuid,
+      planet_id: planetGuid,
     };
 
     return (await axios.post(path, body)).data;
-  }
-
-  static async getUnClaimPlanet() {
-    const path = `${process.env.BASE_API_PATH}/planet/unclaimed`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
-   * Gets active planets
-   */
-  static async getPlanets() {
-    const path = `${process.env.BASE_API_PATH}/planet/claimed`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
-   * Gets current active planet
-   * @param {number} planetId
-   * @returns
-   */
-  static async getActivePlanet(planetId) {
-    const path = `${process.env.BASE_API_PATH}/planet/${planetId}`;
-    return (await axios.get(path)).data;
   }
 
   /**
    * Gets all planets (claimed/unclaimed)
    */
   static async getAllPlanets() {
-    const path = `${process.env.BASE_API_PATH}/planet/all`;
+    const path = `${process.env.BASE_API_PATH}/planets`;
     return (await axios.get(path)).data;
   }
 
@@ -171,14 +142,15 @@ export default class ApiRequests {
    * @returns
    */
   static async upgradeRessource(data) {
-    const path = `${process.env.BASE_API_PATH}/ressource/upgrade`;
+    const path = `${process.env.BASE_API_PATH}/planet/build`;
 
     const body = {
+      type: "resources",
       label: data.label,
-      planetId: data.planetGuid,
+      planet_id: data.planetGuid,
     };
 
-    return (await axios.post(path, body)).data;
+    return (await axios.post(path, body));
   }
 
   /**
@@ -359,8 +331,8 @@ export default class ApiRequests {
    * @returns
    */
   static async getAllInfoPlanet(planetId) {
-    const path = `${process.env.BASE_API_PATH}/all/${planetId}`;
-    return (await axios.get(path)).data;
+    const path = `${process.env.BASE_API_PATH}/planet/${planetId}`;
+    return (await axios.get(path));
   }
 
   /**

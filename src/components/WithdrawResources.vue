@@ -545,13 +545,13 @@ const $eventBus =
 const convertResourcesDialog = ref(false);
 const visible = ref(true);
 const maxMetalConversion = computed(() => {
-  return $store.getters.activePlanet.ressources.metal;
+  return $store.getters.activePlanet.resources.metal;
 });
 const maxCrystalConversion = computed(() => {
-  return $store.getters.activePlanet.ressources.crystal;
+  return $store.getters.activePlanet.resources.crystal;
 });
 const maxPetrolConversion = computed(() => {
-  return $store.getters.activePlanet.ressources.petrol;
+  return $store.getters.activePlanet.resources.petrol;
 });
 const activePlanet = computed(() => {
   return $store.getters.activePlanet;
@@ -627,7 +627,7 @@ async function convertRequest() {
   };
   const re = await ApiRequests.conversionRequest(body);
   if (re.success) {    
-    if ($store.getters.activePlanet.freePlanet) {
+    if ($store.getters.activePlanet.free_planet) {
       $eventBus.emit(CONVERT_COMPLETED);
       closeNotification();
       $notification("success", "Tokens converted successfully!", 6000);

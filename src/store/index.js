@@ -134,6 +134,7 @@ import { createStore } from "vuex";
       },
 
       refreshAllData(state) {
+        state.activePlanet = {...state.activePlanet};
         state.resourceData = {...state.resourceData};
         state.installationData = {...state.installationData};
         state.researchData = {...state.researchData};
@@ -141,18 +142,18 @@ import { createStore } from "vuex";
       },
 
       restPlanetResources(state, payload) {
-        state.activePlanet.ressources.metal -= payload.metal;
-        state.activePlanet.ressources.petrol -= payload.petrol;
-        state.activePlanet.ressources.crystal -= payload.crystal;
+        state.activePlanet.resources.metal -= payload.metal;
+        state.activePlanet.resources.petrol -= payload.petrol;
+        state.activePlanet.resources.crystal -= payload.crystal;
       },
 
       addPlanetResources(state, payload) {
-        state.activePlanet.ressources.metal += payload.metal;
-        state.activePlanet.ressources.petrol += payload.petrol;
-        state.activePlanet.ressources.crystal += payload.crystal;
+        state.activePlanet.resources.metal += payload.metal;
+        state.activePlanet.resources.petrol += payload.petrol;
+        state.activePlanet.resources.crystal += payload.crystal;
       },
       restFreePlanetFreeTokens(state, payload) {
-        state.activePlanet.freeTokens -= payload.tokens;
+        state.activePlanet.free_tokens -= payload.tokens;
       },
       /**
        * Update planet values by providing planet, field name, and value to update.
@@ -182,6 +183,11 @@ import { createStore } from "vuex";
         resource.upgrading = true;
         resource.current_upgrade_time_left = payload.upgradeFinish;
         state.resourceData[label] = resource;
+        
+        // @TODO: fix this
+        //const building = state.activePlanet.resources_level.filter(r => r.label===label)[0];
+        //building.building = true;
+        //building.finish = payload.upgradeFinish;
       },
       repairRessourceData(state, payload) {
         const label = payload.label;
@@ -283,7 +289,7 @@ import { createStore } from "vuex";
 
       incrementResources(state, payload) {
         const key = payload.ressource;
-        state.activePlanet.ressources[key] += payload.value;
+        state.activePlanet.resources[key] += payload.value;
       },
 
       decrementReserve(state, payload) {
@@ -292,11 +298,11 @@ import { createStore } from "vuex";
       },
       
       incrementEnergy(state, payload) {
-        state.activePlanet.ressources.energy += payload.energy;
+        state.activePlanet.resources.energy += payload.energy;
       },
 
       decrementEnergy(state, payload) {
-        state.activePlanet.ressources.energy -= payload.energy;
+        state.activePlanet.resources.energy -= payload.energy;
       },
     },
 

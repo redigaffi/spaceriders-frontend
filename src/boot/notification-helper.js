@@ -17,6 +17,14 @@ export default boot(({ app, router, store }) => {
         icon = "fas fa-check-circle";
         break;
       case "failed":
+        if (msg instanceof Error) {
+          try {
+            msg = msg.response.data.message
+          } catch(e) {
+            msg = "Something unexpected happened..."
+          }
+        }
+
         color = "red-9";
         icon = "fas fa-times-circle";
         break;

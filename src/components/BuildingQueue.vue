@@ -29,7 +29,7 @@
                   <div v-if="!itemType && !bQ.repairing" class="text-body2">
                     Upgrade to :
                     <span class="text-secondary text-weight-bold">{{
-                      bQ.level + 1
+                      bQ.current_level + 1
                     }}</span>
                   </div>
                   <div v-if="itemType" class="text-body2">
@@ -116,10 +116,8 @@ export default defineComponent({
       const now = new Date();
       
       let finish;
-      if (building.upgrading || building.building) {
-        finish  = new Date(building.current_upgrade_time_left * 1000);
-      } else if (building.repairing) {
-        finish  = new Date(building.current_repair_time_left * 1000);
+      if (building.building || building.repairing) {
+        finish  = new Date(building.finish + "Z");
       }
     
       const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
@@ -148,19 +146,16 @@ export default defineComponent({
           const now = new Date();
           
           let finish;
-          if (b.upgrading || b.building) {
-            finish  = new Date(b.current_upgrade_time_left * 1000);
-          } else if (b.repairing) {
-            finish  = new Date(b.current_repair_time_left * 1000);
+          if (b.building || b.repairing) {
+            finish  = new Date(b.finish + "Z");
           }
 
           const diffSeconds = finish.getTime() - now.getTime();
 
           queueTimeoutIds[b.label] = setTimeout(() => {
-            if (b.upgrading || b.building) {
+            if (b.building) {
               $store.commit("upgradeFinished", { label: b.label, type: b.type });
             } else if (b.repairing) {
-              console.log("repairing queue")
               $store.commit("repairFinished", { label: b.label, type: b.type });
             }
             queueTimeoutIds[b.label] = undefined;
@@ -175,7 +170,7 @@ export default defineComponent({
       let re = [];
       for (let key in data) {
         const building = data[key];
-        if (building.repairing || building.upgrading || building.building) {
+        if (building.building || building.repairing) {
           re.push(building);
         }
       }

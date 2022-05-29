@@ -1,5 +1,4 @@
 import { boot } from "quasar/wrappers";
-import {useQuasar} from "quasar"
 const Buffer = require('buffer/').Buffer 
 
 function parseJwt(token) {
@@ -13,6 +12,7 @@ function parseJwt(token) {
 export default boot(async ({ app, router, store }) => {
   const axios = app.config.globalProperties.$axios;
   const $q = app.config.globalProperties.$q;
+  const $notification = app.config.globalProperties.$notification;
 
   axios.interceptors.request.use(
     (config) => {
@@ -33,6 +33,10 @@ export default boot(async ({ app, router, store }) => {
       return config;
     },
     function (err) {
+      alert("something failed, see console for error")
+      console.error(err)
+      $q.loading.hide();
+
       return Promise.reject(err);
     }
   );
@@ -42,11 +46,21 @@ export default boot(async ({ app, router, store }) => {
       return response;
     },
     (error) => {
-      if (error.response.status === 401) {
-        store.commit("destroySession");
-        router.push({name: "nouser"});
+      
+      try {
+        if (error.response.status === 401) {
+          store.commit("destroySession");
+          router.push({name: "nouser"});
+          $notification("failed", "Authentication failed, please try again.");
+          $q.loading.hide();
+        }
+      } catch(ex) {
+        $notification("failed", ex);
+        console.error(ex)
         $q.loading.hide();
+        return;
       }
+      $q.loading.hide();
 
       return Promise.reject(error);
     }
