@@ -449,6 +449,7 @@
 </template>
 
 <script setup>
+import ObjectID from "bson-objectid";
 import ResourceType from "../constants/ResourceType";
 import { ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
@@ -794,14 +795,15 @@ const isResourceAlert = (resourceType) => {
   const rD = $store.getters.resourceData;
 
   const mine = rD[mappings[resourceType]["mine"]];
-  if (mine === undefined) return false;
+  if (mine === undefined || mine === false) return false;
   const mineCurrentHealth = mine["health"];
   const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
   const mineFullHealth = mineCurrentHealth / mineMaxHealth < 1;
 
   const warehouse = rD[mappings[resourceType]["warehouse"]];
   const warehouseCurrentHealth = warehouse["health"];
-  const warehouseMaxHealth = warehouse["upgrades"][mine["level"]]["health"];
+  let mineLvl = mine["level"]
+  const warehouseMaxHealth = warehouse["upgrades"][mineLvl]["health"];
   const warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth < 1;
 
   const reserveEmpty = $store.getters.activePlanet.reserves[resourceType] <= 0;
@@ -820,11 +822,11 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value} $SPR `;
+  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $SPR `;
 });
 
 async function depositEnergy(amount) {
-  const uuid = uuidv4();
+  const uuid = ObjectID().toHexString();
   const energyDeposit = new EnergyDepositAttributes(
     uuid,
     amount.toString(),
@@ -837,55 +839,44 @@ async function depositEnergy(amount) {
     0
   );
 
-  if ($store.getters.activePlanet.free_planet) {
-    const req = await ApiRequest.depositEnergy({
-      planetId: $store.getters.activePlanet.id,
-      guid: uuid,
-      amount: amount,
-    });
-    
-    if (req.success) {
+  if ($store.getters.activePlanet.price_paid === 0) {
+    try {
+      await ApiRequest.depositEnergy({
+        planetId: $store.getters.activePlanet.id,
+        guid: uuid,
+        amount: amount,
+      });
+
       closeNotification();
       $notification("success", "Energy deposited successfuly!", 6000);
       $store.commit("incrementEnergy", { energy: amount });
       $store.commit("restFreePlanetFreeTokens", { tokens: amount });
       $eventBus.emit(ENERGY_DEPOSITED);
       energyDepositPopup.value = false;
-    } else {
+    } catch(ex) {
       closeNotification();
-      $notification("failed", "Failed depositing energy...", 6000);
+      $notification("failed", ex, 6000);
     }
     
     return;
   }
 
-  let receipt = { status: 1 };
 
   try {
     const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
-    receipt = await tx.wait();
-  } catch (e) {
-    console.log("error");
-    console.log(e);
-    closeNotification();
-  }
-
-  if (receipt.status === 1) {
-    const req = await ApiRequest.depositEnergy({
+    await tx.wait();
+  
+    await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
     });
-
-    if (req.success) {
-      $notification("success", "Energy deposited successfuly!", 6000);
-      $store.commit("incrementEnergy", { energy: amount });
-      energyDepositPopup.value = false;
-    } else {
-      $notification("failed", "Failed depositing energy...", 6000);
-    }
-  } else {
-    $notification("failed", "Failed depositing energy...", 6000);
+  
+    $notification("success", "Energy deposited successfuly!", 6000);
+    $store.commit("incrementEnergy", { energy: amount });
+    energyDepositPopup.value = false;
+  } catch (ex) {
     closeNotification();
+    $notification("failed", ex, 6000);
   }
 
   closeNotification();

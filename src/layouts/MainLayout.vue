@@ -193,18 +193,10 @@ const $store = useStore();
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 let buildingQueueData = computed(() => {
-  let re = {}
-  for (let rl in $store.getters.activePlanet.resources_level) {
-    const data = $store.getters.activePlanet.resources_level[rl];
-    re[data.label] = data;
+  return {
+    ...$store.getters.resourceData,
+    ...$store.getters.installationData,
   }
-
-  for (let il in $store.getters.activePlanet.installation_level) {
-    const data = $store.getters.activePlanet.installation_level[il];
-    re[data.label] = data;
-  }
-  
-  return re;
 });
 
 let researchQueueData = computed(() => {
@@ -284,6 +276,7 @@ $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
 });
 
 $eventBus.on(LOGGED_IN, async () => {
+  console.log("AS1D")
   await updateAll();
   await updateInterval();
 });

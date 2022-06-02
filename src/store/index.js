@@ -134,7 +134,11 @@ import { createStore } from "vuex";
       },
 
       refreshAllData(state) {
-        state.activePlanet = {...state.activePlanet};
+        state.activePlanet.defense_items = {...state.activePlanet.defense_items};
+        state.activePlanet.installation_level = {...state.activePlanet.installation_level};
+        state.activePlanet.research_level = {...state.activePlanet.research_level};
+        state.activePlanet.resources_level = {...state.activePlanet.resources_level};
+        
         state.resourceData = {...state.resourceData};
         state.installationData = {...state.installationData};
         state.researchData = {...state.researchData};
@@ -180,8 +184,8 @@ import { createStore } from "vuex";
       upgradeRessourceData(state, payload) {
         const label = payload.label;
         let resource = state.resourceData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.resourceData[label] = resource;
         
         // @TODO: fix this
@@ -201,16 +205,16 @@ import { createStore } from "vuex";
       upgradeInstallationData(state, payload) {
         const label = payload.label;
         let resource = state.installationData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.installationData[label] = resource;
       },
 
       upgradeResearchData(state, payload) {
         const label = payload.label;
         let resource = state.researchData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.researchData[label] = resource;
       },
 
@@ -219,7 +223,7 @@ import { createStore } from "vuex";
         let resource = state.defenseData[label];
         resource.building = true;
         resource.quantity_building = payload.quantity;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.finish = payload.upgradeFinish;
         state.defenseData[label] = resource;
       },
 
@@ -230,7 +234,7 @@ import { createStore } from "vuex";
 
         dataSource.repairing = false;
         dataSource.health = dataSource["upgrades"][level].health;
-        dataSource.current_repair_time_left = false;
+        dataSource.finish = false;
 
         state.resourceData[label] = dataSource;
       },
@@ -260,14 +264,14 @@ import { createStore } from "vuex";
         }
         
         if (type === "infrastructure") {
-          dataSource.upgrading = false;
+          dataSource.building = false;
           dataSource.level = dataSource.level+1;
-          dataSource.current_upgrade_time_left = false;
+          dataSource.finish = false;
 
         } else if (type === "item") {
           dataSource.building = false;
           dataSource.available += dataSource.quantity_building;
-          dataSource.current_upgrade_time_left = false;
+          dataSource.finish = false;
         }
         
         switch(payload.type) {

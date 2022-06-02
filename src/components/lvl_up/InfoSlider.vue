@@ -490,29 +490,25 @@ export default defineComponent({
       const activePlanetId = activePlanet.id;
 
       let storeUpdateMethod = "";
-      let apiCall = "";
       switch (props.data.type) {
         case Types.RESOURCE_TYPE:
           storeUpdateMethod = "upgradeRessourceData";
-          apiCall = ApiRequests.upgradeRessource;
           break;
         case Types.INSTALLATION_TYPE:
           storeUpdateMethod = "upgradeInstallationData";
-          apiCall = ApiRequests.upgradeInstallation;
           break;
 
         case Types.RESEARCH_TYPE:
           storeUpdateMethod = "upgradeResearchData";
-          apiCall = ApiRequests.upgradeResearch;
           break;
 
         case Types.DEFENSE_TYPE:
           storeUpdateMethod = "buildDefenseData";
-          apiCall = ApiRequests.buildDefense;
           break;
       }
 
       let data = {
+        type: props.data.type,
         label: props.data.label,
         planetGuid: activePlanetId,
       };
@@ -522,10 +518,10 @@ export default defineComponent({
       }
 
       try {
-        const re = await apiCall(data);
+        const re = await ApiRequests.build(data);
         let saveStore = {
           label: props.data.label,
-          upgradeFinish: Date.parse(re.data.finish + "Z")
+          upgradeFinish: re.data.finish
         };
 
         if (props.itemType) {
@@ -542,7 +538,7 @@ export default defineComponent({
 
         $eventBus.emit(BUILDING_UPGRADED);
 
-        let notificationMessage = `${props.data.name} upgraded and added to the building queue.`;
+        let notificationMessage = `${props.data.name} upgraded and added to the queue.`;
         if (props.itemType) {
           notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
         }

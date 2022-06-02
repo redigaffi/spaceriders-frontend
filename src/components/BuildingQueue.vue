@@ -29,7 +29,7 @@
                   <div v-if="!itemType && !bQ.repairing" class="text-body2">
                     Upgrade to :
                     <span class="text-secondary text-weight-bold">{{
-                      bQ.current_level + 1
+                      bQ.level + 1
                     }}</span>
                   </div>
                   <div v-if="itemType" class="text-body2">
@@ -115,11 +115,7 @@ export default defineComponent({
     function calculateClaimDate(building) {
       const now = new Date();
       
-      let finish;
-      if (building.building || building.repairing) {
-        finish  = new Date(building.finish + "Z");
-      }
-    
+      let finish = new Date(building.finish * 1000);
       const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
       const s = Math.round(diffSeconds % 60);
       const minutes = Math.round((diffSeconds - s) / 60);
@@ -145,11 +141,7 @@ export default defineComponent({
         if (queueTimeoutIds[b.label] === undefined) {
           const now = new Date();
           
-          let finish;
-          if (b.building || b.repairing) {
-            finish  = new Date(b.finish + "Z");
-          }
-
+          let finish = new Date(b.finish * 1000);
           const diffSeconds = finish.getTime() - now.getTime();
 
           queueTimeoutIds[b.label] = setTimeout(() => {

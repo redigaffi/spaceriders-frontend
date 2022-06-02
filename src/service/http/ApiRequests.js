@@ -106,23 +106,7 @@ export default class ApiRequests {
     return (await axios.get(path)).data;
   }
 
-  /**
-   * Upgrades defense.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async buildDefense(data) {
-    const path = `${process.env.BASE_API_PATH}/defense/build`;
 
-    const body = {
-      label: data.label,
-      planetId: data.planetGuid,
-      quantity: data.quantity,
-    };
-
-    return (await axios.post(path, body)).data;
-  }
 
   /**
    * Gets all resources for a given planet
@@ -136,16 +120,15 @@ export default class ApiRequests {
   }
 
   /**
-   * Upgrades a Ressource Building.
    * @param {string} label
    * @param {string} planetGuid
    * @returns
    */
-  static async upgradeRessource(data) {
+  static async build(data) {
     const path = `${process.env.BASE_API_PATH}/planet/build`;
 
     const body = {
-      type: "resources",
+      type: data.type,
       label: data.label,
       planet_id: data.planetGuid,
     };
@@ -165,23 +148,6 @@ export default class ApiRequests {
   }
 
   /**
-   * Upgrades a Installation Building.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async upgradeInstallation(data) {
-    const path = `${process.env.BASE_API_PATH}/installation/upgrade`;
-
-    const body = {
-      label: data.label,
-      planetId: data.planetGuid,
-    };
-
-    return (await axios.post(path, body)).data;
-  }
-
-  /**
    * Gets all research data for a given planet
    *
    * @param {string} planetId
@@ -190,23 +156,6 @@ export default class ApiRequests {
   static async getResearchData(planetId) {
     const path = `${process.env.BASE_API_PATH}/research/${planetId}`;
     return (await axios.get(path)).data;
-  }
-
-  /**
-   * Upgrades Research.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async upgradeResearch(data) {
-    const path = `${process.env.BASE_API_PATH}/research/upgrade`;
-
-    const body = {
-      label: data.label,
-      planetId: data.planetGuid,
-    };
-
-    return (await axios.post(path, body)).data;
   }
 
 
@@ -357,11 +306,11 @@ export default class ApiRequests {
    * @returns
    */
   static async depositEnergy(data) {
-    const path = `${process.env.BASE_API_PATH}/energy/deposit`;
+    const path = `${process.env.BASE_API_PATH}/planet/energy`;
 
     const body = {
-      planetId: data.planetId,
-      guid: data.guid,
+      planet_id: data.planetId,
+      deposit_id: data.guid,
       amount: data.amount,
     };
 
