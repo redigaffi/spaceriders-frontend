@@ -377,14 +377,8 @@ export default class ApiRequests {
    * @returns
    */
     static async claimPendingLvlUpReward(data) {
-      const path = `${process.env.BASE_API_PATH}/planet/lvl/reward/claim`;
-  
-      const body = {
-        planetId: data.planetId,
-        claimId: data.claimId,
-      };
-  
-      return (await axios.post(path, body)).data;
+      const path = `${process.env.BASE_API_PATH}/planet/level/reward/${data.claimId}/sign`;
+      return (await axios.get(path));
     }
 
     /**
@@ -392,12 +386,7 @@ export default class ApiRequests {
      * @returns
      */
     static async confirmPendingLvlUpReward(data) {
-      const path = `${process.env.BASE_API_PATH}/planet/lvl/reward/confirm`;
-  
-      const body = {
-        claimId: data.claimId,
-      };
-  
-      return (await axios.post(path, body)).data;
+      const path = `${process.env.BASE_API_PATH}/planet/level/reward/${data.claimId}/confirm`;
+      return (await axios.get(path));
     }
 }

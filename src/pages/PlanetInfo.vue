@@ -256,7 +256,8 @@ const temperature = computed(() => {
 const hasLvlUpPendingRewardClaim = computed(() => {
   const pendingLvlUpClaims = $store.getters.activePlanet.pending_levelup_reward;
   if (!pendingLvlUpClaims) return false;
-  return pendingLvlUpClaims.length > 0;
+  
+  return pendingLvlUpClaims.filter(c => !c.completed) > 0;
 });
 
 const position = computed(() => {
@@ -504,45 +505,30 @@ async function claimPendingLvlUpReward() {
     0
   );
 
-  const req = await ApiRequests.claimPendingLvlUpReward({
-    planetId: $store.getters.activePlanet.id,
-    claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
-  });
+  try {
+    const req = await ApiRequests.claimPendingLvlUpReward({
+      planetId: $store.getters.activePlanet.id,
+      claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
+    });
 
-  if (req.success) {
     const sD = new SignatureData(
       req.data.v,
       req.data.r,
       req.data.s
     );
 
-    let receipt = { status: 0 };
+    const tx = await SpaceRidersGameContract.addPurchasingPower(req.data.amount, req.data.claim_id, sD);
+    await tx.wait();
 
-    const tx = await SpaceRidersGameContract.addPurchasingPower(req.data.amount, req.data.claimId, sD);
-    receipt = await tx.wait();
-
-    if (receipt.status === 1) {
-      const req1 = await ApiRequests.confirmPendingLvlUpReward({
+    await ApiRequests.confirmPendingLvlUpReward({
         claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
-      });
+    });
 
-      if (!req1.success) {
-        closeWaitingNotification();
-        $notification("failed", "Something happened...", 6000);
-        return;
-      }
-    } else {
-      closeWaitingNotification();
-      $notification("failed", "Something happened...", 6000);
-      return;
-    }
-  } else {
     closeWaitingNotification();
-    $notification("failed", "Something happened...", 6000);
-    return;
+    $notification("success", "Successfully claimed level up reward", 6000);
+  } catch(e) {
+    closeWaitingNotification();
+    $notification("failed", e, 6000);
   }
-
-  closeWaitingNotification();
-  $notification("success", "Successfully claimed level up reward", 6000);
 }
 </script>
