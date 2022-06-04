@@ -51,6 +51,7 @@
             hide-bottom-space
             :rules="[
               (val) => val.length <= 14 || 'Please use maximum 14 characters',
+              (val) => val.length >= 4 || 'Please use minimum 4 characters',
             ]"
             style="
               border: 2px solid #2253f4;

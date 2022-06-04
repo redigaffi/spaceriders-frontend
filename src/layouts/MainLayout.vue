@@ -184,6 +184,7 @@ import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import AsteroidCollision from "../components/email_templates/AsteroidCollision.vue";
+import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "../constants/Events";
@@ -230,6 +231,8 @@ const templateName = computed(() => {
   switch (activeEmail.value.template) {
     case "asteroid_collision":
       return AsteroidCollision;
+    case "plain":
+      return Plain;
   }
 
   return "";
@@ -241,6 +244,8 @@ const body = computed(() => {
   switch (activeEmail.value.template) {
     case "asteroid_collision":
       return JSON.parse(activeEmail.value.body);
+    case "plain":
+      return activeEmail.value.body;
   }
 
   return "";
@@ -288,12 +293,13 @@ async function update(activePlanet) {
 
   const allPlanetInfoReq = (await ApiRequest.getAllInfoPlanet(activePlanet.id));
   const allPlanetInfo = allPlanetInfoReq.data;
+  
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
   $store.commit("setResearchData", allPlanetInfo.research);
   $store.commit("setDefenseData", allPlanetInfo.defense);
-  $store.commit("addEmails", { emails: allPlanetInfo.email });
+  $store.commit("addEmails", { emails: allPlanetInfo.emails });
 }
 
 async function updateAll() {

@@ -31,7 +31,7 @@ const routes = [
     name: "overview",
     meta: { requiresAuth: true, requiresPlanet: true, menu: true, title: "Overview" },
     children: [
-      { path: "", component: planetInfoPage, meta: { title: ""} },
+      { path: "", component: planetInfoPage, meta: { title: "Overview"} },
       { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "/resources", component: resourcesPage, name: "resources", meta: {  menu: true, requiresAuth: true, requiresPlanet: true, title: "Resources" }  },
       { path: "/installations", component: installationsPage, name: "installations", meta: { menu: true, requiresAuth: true, requiresPlanet: true, title: "Installations" }  },
