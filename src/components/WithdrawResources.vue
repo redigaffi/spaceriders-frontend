@@ -3,14 +3,9 @@
     <slot></slot>
   </div>
   <q-dialog v-model="convertResourcesDialog">
-    <q-card
-      class="bg-dark text-white"
-      style="width: 600px; max-width: 70vw; border-radius: 20px"
-    >
+    <q-card class="bg-dark text-white" style="width: 600px; max-width: 70vw; border-radius: 20px">
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2 absolute-center"
-          >RESOURCE CONVERSION</q-toolbar-title
-        >
+        <q-toolbar-title class="text-body2 absolute-center">RESOURCE CONVERSION</q-toolbar-title>
         <q-btn round flat icon="close" v-close-popup />
       </q-toolbar>
 
@@ -19,15 +14,10 @@
           <div class="col-3">
             <div class="text-center text-subtitle2">
               <div>
-                <img
-                  src="~assets/img/resources/RES_ic_Metal.webp"
-                  alt
-                  srcset
-                  class="resource-icon-small"
-                />
+                <img src="~assets/img/resources/RES_ic_Metal.webp" alt srcset class="resource-icon-small" />
                 <!-- <div class="text-white">-{{ metalAmount }} Metal</div> -->
                 <div class="text-weight-bold neonText">
-                  Metal Price: {{ metalCostUsd }}$
+                  Metal Price: {{ metalCostUsdClean }}$
                 </div>
               </div>
             </div>
@@ -35,13 +25,8 @@
           <div class="col full-height q-pt-lg">
             <q-slide-transition>
               <div>
-                <q-slider
-                  v-model="metalAmount"
-                  :min="0"
-                  :max="maxMetalConversion"
-                  color="warning"
-                  class="custom-slider-track"
-                />
+                <q-slider v-model="metalAmount" :min="0" :max="maxMetalConversion" color="warning"
+                  class="custom-slider-track" />
                 <div class="text-white text-center">
                   -{{ metalAmount }} Metal
                 </div>
@@ -54,15 +39,10 @@
           <div class="col-3">
             <div class="text-center text-subtitle2">
               <div>
-                <img
-                  src="~assets/img/resources/RES_ic_FUEL5.webp"
-                  alt
-                  srcset
-                  class="resource-icon-small"
-                />
+                <img src="~assets/img/resources/RES_ic_FUEL5.webp" alt srcset class="resource-icon-small" />
 
                 <div class="text-weight-bold neonText">
-                  Petrol Price: {{ petrolCostUsd }}$
+                  Petrol Price: {{ petrolCostUsdClean }}$
                 </div>
               </div>
             </div>
@@ -70,13 +50,8 @@
           <div class="col full-height q-pt-lg">
             <q-slide-transition>
               <div>
-                <q-slider
-                  v-model="petrolAmount"
-                  :min="0"
-                  :max="maxPetrolConversion"
-                  color="warning"
-                  class="custom-slider-track"
-                />
+                <q-slider v-model="petrolAmount" :min="0" :max="maxPetrolConversion" color="warning"
+                  class="custom-slider-track" />
                 <div class="text-white text-center">
                   -{{ petrolAmount }} PETROL
                 </div>
@@ -89,15 +64,10 @@
           <div class="col-3">
             <div class="text-center text-subtitle2">
               <div>
-                <img
-                  src="~assets/img/resources/RES_ic_CRYSTAL.webp"
-                  alt
-                  class="resource-icon-small"
-                  srcset
-                />
+                <img src="~assets/img/resources/RES_ic_CRYSTAL.webp" alt class="resource-icon-small" srcset />
                 <!-- <div class="text-white">-{{ crystalAmount }} Crystal</div> -->
                 <div class="text-weight-bold neonText">
-                  Crystal Price: {{ crystalCostUsd }}$
+                  Crystal Price: {{ crystalCostUsdClean }}$
                 </div>
               </div>
             </div>
@@ -105,13 +75,8 @@
           <div class="col full-height q-pt-lg">
             <q-slide-transition>
               <div>
-                <q-slider
-                  v-model="crystalAmount"
-                  :min="0"
-                  :max="maxCrystalConversion"
-                  color="warning"
-                  class="custom-slider-track"
-                />
+                <q-slider v-model="crystalAmount" :min="0" :max="maxCrystalConversion" color="warning"
+                  class="custom-slider-track" />
                 <div class="text-white text-center">
                   -{{ crystalAmount }} CRYSTAL
                 </div>
@@ -123,60 +88,43 @@
         <q-card-section>
           <q-card flat>
             <q-card-section class="text-center">
-              <q-badge
-                style="
+              <q-badge style="
                   border: 2px solid #21ba45;
                   border-radius: 5px;
                   font-size: 14px;
                   box-shadow: 0 0 20px #21ba45;
                   color: #fff;
-                "
-                class="text-subtitle2 q-px-lg q-mb-md"
-              >
-                <span class="q-pl-md text-weight-bold"
-                  >${{ totalUsdWithdraw }} - ({{
+                " class="text-subtitle2 q-px-lg q-mb-md">
+                <span class="q-pl-md text-weight-bold">${{ totalUsdWithdraw }} - ({{
                     totalTokenWithdraw
-                  }}
-                  $SPR)</span
-                >
+                }}
+                  $SPR)</span>
               </q-badge>
               <br />
-              <q-badge
-                v-if="fee != false"
-                style="
+              <q-badge v-if="fee != false" style="
                   border: 2px solid red;
                   border-radius: 5px;
                   font-size: 14px;
                   box-shadow: 0 0 20px red;
                   color: #fff;
-                "
-                class="q-mt-xs text-subtitle2 q-px-lg"
-              >
-                <span class="q-pl-md text-weight-bold"
-                  >Fee: {{ fee }}% - ${{ totalUsdWithdrawFee }} ({{
+                " class="q-mt-xs text-subtitle2 q-px-lg">
+                <span class="q-pl-md text-weight-bold">Fee: {{ fee }}% - ${{ totalUsdWithdrawFee }} ({{
                     totalTokenWithdrawFee
-                  }}) $SPR</span
-                >
+                }}) $SPR</span>
               </q-badge>
             </q-card-section>
           </q-card>
         </q-card-section>
 
         <q-card-section class="q-pt-none text-center">
-          <button
-            class="button q-pa-md q-mr-xs"
-            style="
+          <button class="button q-pa-md q-mr-xs" style="
               border: 3px solid #2253f4;
               border-radius: 5px;
               box-shadow: 0 0 20px rgb(34 83 244 / 76%);
               color: #fff;
               font-size: 12px;
               padding: 7px 15px;
-            "
-            @click="convertRequest"
-            :disabled="totalTokenWithdrawFee <= 0"
-            v-close-popup
-          >
+            " @click="convertRequest" :disabled="totalTokenWithdrawFee <= 0" v-close-popup>
             CONVERT
           </button>
         </q-card-section>
@@ -185,33 +133,21 @@
         <q-card-section>
           <q-card flat>
             <q-card-section>
-              <q-card
-                flat
-                class="bg-transparent row q-col-gutter-sm justify-between q-py-md"
-              >
+              <q-card flat class="bg-transparent row q-col-gutter-sm justify-between q-py-md">
                 <span class="text-h6">Pending Conversions</span>
-                <span class="text-h8"
-                  >Please confirm before creating new conversions
+                <span class="text-h8">Please confirm before creating new conversions
                 </span>
               </q-card>
             </q-card-section>
 
             <q-card-section class="text-center">
-              <div
-                v-for="pendingConversion in pendingConversions"
-                :key="pendingConversion.id"
-              >
-                <q-btn
-                  color="black"
-                  class="full-width"
-                  @click="retryConversion(pendingConversion)"
-                  :label="
-                    pendingConversion.date +
-                    ' - ' +
-                    pendingConversion.token +
-                    ' $SPR'
-                  "
-                />
+              <div class="retryentry" v-for="pendingConversion in pendingConversions" :key="pendingConversion.id">
+                <q-btn color="black" class="full-width" @click="retryConversion(pendingConversion)" :label="
+                  pendingConversion.date +
+                  ' - ' +
+                  pendingConversion.token +
+                  ' $SPR'
+                " />
               </div>
             </q-card-section>
           </q-card>
@@ -224,20 +160,15 @@
   </q-dialog>
 
   <q-dialog v-model="testDialog2">
-    <q-card
-      class="bg-dark text-white"
-      style="
+    <q-card class="bg-dark text-white" style="
         width: 1000px;
         max-width: 70vw;
         border-radius: 20px;
         max-width: 70vw;
         border-radius: 20px;
-      "
-    >
+      ">
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2 absolute-center"
-          >RESOURCES CONVERSION</q-toolbar-title
-        >
+        <q-toolbar-title class="text-body2 absolute-center">RESOURCES CONVERSION</q-toolbar-title>
         <q-btn round flat icon="close" v-close-popup />
       </q-toolbar>
 
@@ -251,38 +182,25 @@
                   box-shadow: 0 0 20px white;
                   color: #fff;
                 ">
-              <q-toolbar-title
-                class="text-body2 text-center"
-                style="color: gold"
-                >RARITY MULTIPLIER</q-toolbar-title
-              >
+              <q-toolbar-title class="text-body2 text-center" style="color: gold">RARITY MULTIPLIER</q-toolbar-title>
             </q-toolbar>
             <q-card-section>
               <q-list dense>
                 <q-item>
                   <q-item-section class="col-6"> METAL </q-item-section>
-                  <q-item-section
-                    class="text-right"
-                    style="border-left: 3px solid white; padding-left: 10px"
-                  >
+                  <q-item-section class="text-right" style="border-left: 3px solid white; padding-left: 10px">
                     1.0
                   </q-item-section>
                 </q-item>
                 <q-item class="q-py-none">
                   <q-item-section class="col-6"> PETROL </q-item-section>
-                  <q-item-section
-                    class="text-right"
-                    style="border-left: 3px solid white; padding-left: 10px"
-                  >
+                  <q-item-section class="text-right" style="border-left: 3px solid white; padding-left: 10px">
                     1.0
                   </q-item-section>
                 </q-item>
                 <q-item>
                   <q-item-section class="col-6"> CRYSTAL </q-item-section>
-                  <q-item-section
-                    class="text-right"
-                    style="border-left: 3px solid white; padding-left: 10px"
-                  >
+                  <q-item-section class="text-right" style="border-left: 3px solid white; padding-left: 10px">
                     1.0
                   </q-item-section>
                 </q-item>
@@ -295,11 +213,7 @@
                   box-shadow: 0 0 20px white;
                   color: #fff;
                 ">
-              <q-toolbar-title
-                class="text-body2 text-center"
-                style="color: gold"
-                >BONUS MULTIPLIER</q-toolbar-title
-              >
+              <q-toolbar-title class="text-body2 text-center" style="color: gold">BONUS MULTIPLIER</q-toolbar-title>
             </q-toolbar>
             <q-card-section>
               <q-list dense>
@@ -307,10 +221,7 @@
                   <q-item-section class="col-6">
                     Level Bonus MULTIPLIER
                   </q-item-section>
-                  <q-item-section
-                    class="text-right"
-                    style="border-left: 3px solid white; padding-left: 10px"
-                  >
+                  <q-item-section class="text-right" style="border-left: 3px solid white; padding-left: 10px">
                     1.0
                   </q-item-section>
                 </q-item>
@@ -324,12 +235,7 @@
             <div class="col-3">
               <div class="text-center text-subtitle2">
                 <div>
-                  <img
-                    src="~assets/img/resources/RES_ic_Metal.webp"
-                    alt
-                    srcset
-                    class="resource-icon-small"
-                  />
+                  <img src="~assets/img/resources/RES_ic_Metal.webp" alt srcset class="resource-icon-small" />
                   <!-- <div class="text-white">-{{ metalAmount }} Metal</div> -->
                   <div class="text-weight-bold neonText">Metal Price: 1$</div>
                 </div>
@@ -338,11 +244,7 @@
             <div class="col full-height q-pt-lg">
               <q-slide-transition>
                 <div>
-                  <q-slider
-                    :min="0"
-                    color="warning"
-                    class="custom-slider-track"
-                  />
+                  <q-slider :min="0" color="warning" class="custom-slider-track" />
                   <div class="text-white text-center">-1 Metal</div>
                 </div>
               </q-slide-transition>
@@ -353,12 +255,7 @@
             <div class="col-3">
               <div class="text-center text-subtitle2">
                 <div>
-                  <img
-                    src="~assets/img/resources/RES_ic_FUEL5.webp"
-                    alt
-                    srcset
-                    class="resource-icon-small"
-                  />
+                  <img src="~assets/img/resources/RES_ic_FUEL5.webp" alt srcset class="resource-icon-small" />
 
                   <div class="text-weight-bold neonText">Petrol Price: 1$</div>
                 </div>
@@ -367,11 +264,7 @@
             <div class="col full-height q-pt-lg">
               <q-slide-transition>
                 <div>
-                  <q-slider
-                    :min="0"
-                    color="warning"
-                    class="custom-slider-track"
-                  />
+                  <q-slider :min="0" color="warning" class="custom-slider-track" />
                   <div class="text-white text-center">-1 PETROL</div>
                 </div>
               </q-slide-transition>
@@ -382,12 +275,7 @@
             <div class="col-3">
               <div class="text-center text-subtitle2">
                 <div>
-                  <img
-                    src="~assets/img/resources/RES_ic_CRYSTAL.webp"
-                    alt
-                    class="resource-icon-small"
-                    srcset
-                  />
+                  <img src="~assets/img/resources/RES_ic_CRYSTAL.webp" alt class="resource-icon-small" srcset />
                   <!-- <div class="text-white">-{{ crystalAmount }} Crystal</div> -->
                   <div class="text-weight-bold neonText">Crystal Price: 1$</div>
                 </div>
@@ -396,11 +284,7 @@
             <div class="col full-height q-pt-lg">
               <q-slide-transition>
                 <div>
-                  <q-slider
-                    :min="0"
-                    color="warning"
-                    class="custom-slider-track"
-                  />
+                  <q-slider :min="0" color="warning" class="custom-slider-track" />
                   <div class="text-white text-center">-1 CRYSTAL</div>
                 </div>
               </q-slide-transition>
@@ -409,45 +293,35 @@
 
           <q-card-section class="row q-col-gutter-md">
             <div class="col">
-              <q-badge
-                style="
+              <q-badge style="
                   border: 2px solid #21ba45;
                   border-radius: 5px;
                   font-size: 14px;
                   box-shadow: 0 0 20px #21ba45;
                   color: #fff;
-                "
-                class="text-subtitle2 q-px-lg q-mb-md full-width"
-              >
+                " class="text-subtitle2 q-px-lg q-mb-md full-width">
                 <span class="text-left text-weight-bold">$1 - 1 $SPR</span>
               </q-badge>
               <br />
-              <q-badge
-                style="
+              <q-badge style="
                   border: 2px solid red;
                   border-radius: 5px;
                   font-size: 14px;
                   box-shadow: 0 0 20px red;
                   color: #fff;
-                "
-                class="q-mt-xs text-subtitle2 q-px-lg full-width"
-              >
+                " class="q-mt-xs text-subtitle2 q-px-lg full-width">
                 <span class="text-weight-bold">Fee: 1 $SPR</span>
               </q-badge>
 
               <div class="q-pt-md text-right">
-                <button
-                  class="button q-pa-md q-mr-xs"
-                  style="
+                <button class="button q-pa-md q-mr-xs" style="
                     border: 3px solid #2253f4;
                     border-radius: 5px;
                     box-shadow: 0 0 20px rgb(34 83 244 / 76%);
                     color: #fff;
                     font-size: 12px;
                     padding: 7px 15px;
-                  "
-                  v-close-popup
-                >
+                  " v-close-popup>
                   CONVERT
                 </button>
               </div>
@@ -459,53 +333,40 @@
   </q-dialog>
 
   <q-dialog v-model="testDialog">
-    <q-card
-      class="bg-dark text-white"
-      style="
+    <q-card class="bg-dark text-white" style="
         width: 600px;
         max-width: 70vw;
         border-radius: 20px;
         border: 3px solid gold;
         box-shadow: 0 0 20px gold;
-      "
-    >
+      ">
       <q-toolbar class="bg-primary">
-        <q-toolbar-title class="text-body2 text-center" style="color: gold"
-          >RARITY MULTIPLIERº</q-toolbar-title
-        >
+        <q-toolbar-title class="text-body2 text-center" style="color: gold">RARITY MULTIPLIERº</q-toolbar-title>
       </q-toolbar>
       <q-card-section>
         <q-list dense>
           <q-item>
             <q-item-section class="col-6"> METAL </q-item-section>
-            <q-item-section
-              style="border-left: 3px solid white; padding-left: 10px"
-            >
+            <q-item-section style="border-left: 3px solid white; padding-left: 10px">
               1.0
             </q-item-section>
           </q-item>
           <q-item>
             <q-item-section class="col-6"> PETROL </q-item-section>
-            <q-item-section
-              style="border-left: 3px solid white; padding-left: 10px"
-            >
+            <q-item-section style="border-left: 3px solid white; padding-left: 10px">
               1.0
             </q-item-section>
           </q-item>
           <q-item>
             <q-item-section class="col-6"> CRYSTAL </q-item-section>
-            <q-item-section
-              style="border-left: 3px solid white; padding-left: 10px"
-            >
+            <q-item-section style="border-left: 3px solid white; padding-left: 10px">
               1.0
             </q-item-section>
           </q-item>
         </q-list>
       </q-card-section>
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title class="text-body2 text-center" style="color: gold"
-          >BONUS MULTIPLIER</q-toolbar-title
-        >
+        <q-toolbar-title class="text-body2 text-center" style="color: gold">BONUS MULTIPLIER</q-toolbar-title>
       </q-toolbar>
       <q-card-section>
         <q-list dense>
@@ -513,9 +374,7 @@
             <q-item-section class="col-6">
               Level Bonus MULTIPLIER
             </q-item-section>
-            <q-item-section
-              style="border-left: 3px solid white; padding-left: 10px"
-            >
+            <q-item-section style="border-left: 3px solid white; padding-left: 10px">
               1.0
             </q-item-section>
           </q-item>
@@ -559,9 +418,23 @@ const activePlanet = computed(() => {
 const metalAmount = ref(0);
 const crystalAmount = ref(0);
 const petrolAmount = ref(0);
+
+
 const metalCostUsd = ref(0);
+const metalCostUsdClean = computed(() => {
+  return metalCostUsd.value.toFixed(4);
+})
+
 const petrolCostUsd = ref(0);
+const petrolCostUsdClean = computed(() => {
+  return petrolCostUsd.value.toFixed(4);
+})
+
 const crystalCostUsd = ref(0);
+const crystalCostUsdClean = computed(() => {
+  return crystalCostUsd.value.toFixed(4);
+})
+
 const fee = ref(false);
 const pendingConversions = ref(false);
 const updatePreviewData = async () => {
@@ -570,9 +443,9 @@ const updatePreviewData = async () => {
   petrolAmount.value = 0;
   const data = (await ApiRequests.getPreviewConversion(activePlanet.value.id))
     .data;
-  metalCostUsd.value = data.metalCost;
-  petrolCostUsd.value = data.petrolCost;
-  crystalCostUsd.value = data.crystalCost;
+  metalCostUsd.value = data.metal_cost;
+  petrolCostUsd.value = data.petrol_cost;
+  crystalCostUsd.value = data.crystal_cost;
   fee.value = data.fee;
 };
 const totalUsdWithdraw = computed(() => {
@@ -597,9 +470,11 @@ const totalTokenWithdrawFee = computed(() => {
   const feeMultiplier = (100 - fee.value) / 100;
   return (tokens * feeMultiplier).toFixed(2);
 });
+
 const getPendingConversions = async () => {
   return (await ApiRequests.getPendingConversions(activePlanet.value.id)).data;
 };
+
 const reloadDialog = async () => {
   visible.value = true;
   pendingConversions.value = await getPendingConversions();
@@ -625,8 +500,10 @@ async function convertRequest() {
     crystal: crystalAmount.value,
     petrol: petrolAmount.value,
   };
-  const re = await ApiRequests.conversionRequest(body);
-  if (re.success) {    
+
+  try {
+    const re = (await ApiRequests.conversionRequest(body)).data;
+
     if ($store.getters.activePlanet.free_planet) {
       $eventBus.emit(CONVERT_COMPLETED);
       closeNotification();
@@ -634,114 +511,108 @@ async function convertRequest() {
       return;
     }
 
-    const sD = new SignatureData(re.data.v, re.data.r, re.data.s);
+    const sD = new SignatureData(re.v, re.r, re.s);
     const tokenRequestExchange = new TokenExchangeAttributes(
-      re.data.id,
-      re.data.tokens,
-      re.data.forAddress
+      re.id,
+      re.tokens,
+      re.forAddress
     );
-    let receipt = { status: 0 };
-    try {
-      const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
+    
+    const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
         sD,
         tokenRequestExchange
-      );
-      receipt = await tx.wait();
-      console.log(receipt);
-      const confirm = await await ApiRequests.confirmConversion({
+    );
+    
+    await tx.wait();
+    
+    await ApiRequests.confirmConversion({
         planetId: $store.getters.activePlanet.id,
-        guid: re.data.id,
-      });
-      if (!confirm.success) {
-        closeNotification();
-        $notification("failed", "Something failed...", 6000);
-        return;
-      }
-      $eventBus.emit(CONVERT_COMPLETED);
-      closeNotification();
-      $notification("success", "Tokens converted successfully!", 6000);
-    } catch (e) {
-      // let api know request failed
+        guid: re.id,
+    });
+
+    $eventBus.emit(CONVERT_COMPLETED);
+    closeNotification();  
+    $notification("success", "Tokens converted successfully!", 6000);
+
+  } catch (e) {
       console.log("error");
       console.log(e);
       closeNotification();
-      $notification("failed", "Something failed...", 6000);
-    }
-  } else {
-    closeNotification();
-    $notification("failed", re.error, 6000);
-    console.error(`error`);
+      $notification("failed", e, 6000);
   }
+
   closeNotification();
 }
+
 async function retryConversion(pendingConversion) {
   const closeNotification = $notification(
     "progress",
     "Waiting for transaction to complete...",
     0
   );
+
   const action = pendingConversion.action;
+
   if (action === "CALL_SMART_CONTRACT") {
-    const retryApi = await ApiRequests.retryConversion({
-      planetId: $store.getters.activePlanet.id,
-      guid: pendingConversion.id,
-    });
-    if (retryApi.success) {
-      try {
-        const sD = new SignatureData(
+
+    try {
+      const retryApi = await ApiRequests.retryConversion({
+        planetId: $store.getters.activePlanet.id,
+        guid: pendingConversion.id,
+      });
+
+      const sD = new SignatureData(
           retryApi.data.v,
           retryApi.data.r,
           retryApi.data.s
         );
+        
         const tokenRequestExchange = new TokenExchangeAttributes(
           retryApi.data.id,
           retryApi.data.tokens,
           retryApi.data.forAddress
         );
+
         const tx = await SpaceRidersGameContract.convertFromPrimaryResources(
           sD,
           tokenRequestExchange
         );
-        const receipt = await tx.wait();
-        console.log(receipt);
-        const confirm = await await ApiRequests.confirmConversion({
+        
+        await tx.wait();
+         
+        await ApiRequests.confirmConversion({
           planetId: $store.getters.activePlanet.id,
           guid: retryApi.data.id,
         });
-        if (!confirm.success) {
-          closeNotification();
-          $notification("failed", "Something failed...", 6000);
-          return;
-        }
+
         await reloadDialog();
         closeNotification();
         $notification("success", "Confirmation completed!", 6000);
-      } catch (e) {
-        // let api know request failed
-        console.log("error");
-        console.log(e);
-        closeNotification();
-        $notification("failed", "Something failed...", 6000);
-      }
-    } else {
+
+    } catch (e) {
       closeNotification();
-      $notification("failed", retryApi.error, 6000);
-      return;
+      $notification("failed", e, 6000);
     }
+
+
   } else if (action === "CONFIRM_API") {
-    const confirm = await await ApiRequests.confirmConversion({
-      planetId: $store.getters.activePlanet.id,
-      guid: pendingConversion.id,
-    });
-    if (!confirm.success) {
+
+    try {
+      await await ApiRequests.confirmConversion({
+        planetId: $store.getters.activePlanet.id,
+        guid: pendingConversion.id,
+      });
+
+      await reloadDialog();
       closeNotification();
-      $notification("failed", "Something failed...", 6000);
-      return;
+      $notification("success", "Confirmation completed!", 6000);
+
+    } catch (e) {
+      closeNotification();
+      $notification("failed", e, 6000);
     }
-    await reloadDialog();
-    closeNotification();
-    $notification("success", "Confirmation completed!", 6000);
   }
+
   closeNotification();
 }
 </script>
@@ -751,5 +622,8 @@ async function retryConversion(pendingConversion) {
     border: 1px solid white;
     box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff;
   }
+}
+.retryentry {
+  margin-top: 10px;
 }
 </style>

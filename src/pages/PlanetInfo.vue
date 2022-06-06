@@ -256,8 +256,7 @@ const temperature = computed(() => {
 const hasLvlUpPendingRewardClaim = computed(() => {
   const pendingLvlUpClaims = $store.getters.activePlanet.pending_levelup_reward;
   if (!pendingLvlUpClaims) return false;
-  
-  return pendingLvlUpClaims.filter(c => !c.completed) > 0;
+  return pendingLvlUpClaims.filter(c => !c.completed).length > 0;
 });
 
 const position = computed(() => {

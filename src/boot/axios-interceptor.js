@@ -57,8 +57,13 @@ export default boot(async ({ app, router, store }) => {
       try {
         if (error.response.status === 401) {
           store.commit("destroySession");
+          const text = error.response.data.message;
           router.push({name: "nouser"});
-          $notification("failed", "Authentication failed, please try again.");
+          if (text !== undefined) {
+            $notification("failed", text);
+          } else {
+            $notification("failed", "Authentication failed, please try again.");
+          }
           $q.loading.hide();
         }
       } catch(ex) {

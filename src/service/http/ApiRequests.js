@@ -131,6 +131,7 @@ export default class ApiRequests {
       type: data.type,
       label: data.label,
       planet_id: data.planetGuid,
+      quantity: data.quantity
     };
 
     return (await axios.post(path, body));
@@ -166,16 +167,16 @@ export default class ApiRequests {
    * @returns
    */
   static async conversionRequest(data) {
-    const path = `${process.env.BASE_API_PATH}/conversion/convert`;
+    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/sign`;
 
     const body = {
-      planetId: data.planetId,
+      planet_id: data.planetId,
       metal: data.metal,
       crystal: data.crystal,
       petrol: data.petrol,
     };
 
-    return (await axios.post(path, body)).data;
+    return (await axios.post(path, body));
   }
 
   /**
@@ -325,8 +326,8 @@ export default class ApiRequests {
    * @returns
    */
   static async getPreviewConversion(planetId) {
-    const path = `${process.env.BASE_API_PATH}/conversion/preview/${planetId}`;
-    return (await axios.get(path)).data;
+    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/preview`;
+    return (await axios.get(path));
   }
 
 
@@ -336,14 +337,14 @@ export default class ApiRequests {
    * @returns
    */
   static async confirmConversion(data) {
-    const path = `${process.env.BASE_API_PATH}/conversion/confirm`;
+    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/confirm`;
 
     const body = {
-      planetId: data.planetId,
-      tokenConversionId: data.guid,
+      planet_id: data.planetId,
+      token_conversion_id: data.guid,
     };
 
-    return (await axios.post(path, body)).data;
+    return (await axios.post(path, body));
   }
 
   /**
@@ -351,8 +352,8 @@ export default class ApiRequests {
    * @returns
    */
   static async getPendingConversions(planetId) {
-    const path = `${process.env.BASE_API_PATH}/conversion/pending/${planetId}`;
-    return (await axios.get(path)).data;
+    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/pending`;
+    return (await axios.get(path));
   }
 
     /**
@@ -361,14 +362,14 @@ export default class ApiRequests {
    * @returns
    */
     static async retryConversion(data) {
-      const path = `${process.env.BASE_API_PATH}/conversion/retry`;
+      const path = `${process.env.BASE_API_PATH}/planet/resources/convert/retry`;
   
       const body = {
-        planetId: data.planetId,
-        tokenConversionId: data.guid,
+        planet_id: data.planetId,
+        token_conversion_id: data.guid,
       };
   
-      return (await axios.post(path, body)).data;
+      return (await axios.post(path, body));
     }
 
 
