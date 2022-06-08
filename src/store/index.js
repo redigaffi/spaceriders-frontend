@@ -297,6 +297,10 @@ import { createStore } from "vuex";
         
       },
 
+      claimPendingLvlUp(state, payload) {
+        state.activePlanet.pending_levelup_reward[payload.idx].completed = true;
+      },
+
       incrementResources(state, payload) {
         const key = payload.ressource;
         state.activePlanet.resources[key] += payload.value;

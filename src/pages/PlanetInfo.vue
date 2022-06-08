@@ -423,7 +423,7 @@ async function stake() {
 
     const tx = await SpaceRidersGameContract.stakingRequest(sD, attributes);
     await tx.wait();
-
+    await new Promise(r => setTimeout(r, 5000));
     await ApiRequest.confirmStakingRequest({
       planetId: $store.getters.activePlanet.id,
     });
@@ -523,10 +523,13 @@ async function claimPendingLvlUpReward() {
 
     const tx = await SpaceRidersGameContract.addPurchasingPower(req.data.amount, req.data.claim_id, sD);
     await tx.wait();
-
+    await new Promise(r => setTimeout(r, 5000));
+    
     await ApiRequests.confirmPendingLvlUpReward({
         claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
     });
+
+    $store.commit('claimPendingLvlUp', {idx: 0});
 
     notif($notification(
       "success",
