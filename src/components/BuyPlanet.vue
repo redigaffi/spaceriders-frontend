@@ -207,6 +207,9 @@ import SpaceRidersGameContract, {
 import { NEW_PLANET_PURCHASED, PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -256,19 +259,25 @@ const canBuyFreePlanet = computed(() => {
 async function mintFreePlanet() {
 
   if (!canBuyFreePlanet.value) {
-    $notification("failed", "You already own a free planet", 6000);
+    $q.notify($notification(
+      "failed",
+      "You already own a free planet",
+    ))
     return;
   }
-  const closeNotification = $notification(
+  
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
   
   try {
     const re = await ApiRequest.mintFreePlanet(planetName.value);
-    closeNotification();
-    $notification("success", "Free planet minted successfully!", 6000);
+    
+    notif($notification(
+      "success",
+      "Free planet minted successfully!",
+    ))
 
     $store.commit("addPlanet", re.data);
     
@@ -281,22 +290,21 @@ async function mintFreePlanet() {
     $eventBus.emit(ACTIVE_PLANET_CHANGED, re.data);
 
   } catch(ex) {
-    closeNotification();
-    $notification("failed", ex, 6000);
+    notif($notification(
+      "failed",
+      ex,
+    ))
   }
-
-  closeNotification();
 }
 
 async function buyPlanet() {
   const planetGuid = ObjectID().toHexString();
 
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
-
+  ))
+  
   try {
     const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
     const sD = new SignatureData(
@@ -315,22 +323,24 @@ async function buyPlanet() {
     // wait till mined
     await tx.wait();
     const re = await ApiRequest.buyPlanet(planetGuid, planetName.value);
-
+    
     $store.commit("addPlanet", re.data);
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
 
-    closeNotification();
-    $notification("success", "Planet purchased successfully!", 6000);
+    notif($notification(
+      "success",
+      "Planet purchased successfully!",
+    ))
 
   } catch (e) {
-    
-    closeNotification();
-    $notification("failed", e, 6000);
+    notif($notification(
+      "failed",
+      e,
+    ));
 
     console.log("error");
     console.log(e);
   }
 
-  closeNotification();
 }
 </script>

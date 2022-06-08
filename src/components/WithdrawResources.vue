@@ -393,6 +393,8 @@ import SpaceRidersGameContract, {
   SignatureData,
   TokenExchangeAttributes,
 } from "../service/contract/SpaceRidersGameContract";
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
 
 const testDialog = ref(false);
 const testDialog2 = ref(false);
@@ -489,11 +491,11 @@ watch(async () => {
   }
 });
 async function convertRequest() {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
+
   const body = {
     planetId: $store.getters.activePlanet.id,
     metal: metalAmount.value,
@@ -506,8 +508,10 @@ async function convertRequest() {
 
     if ($store.getters.activePlanet.free_planet) {
       $eventBus.emit(CONVERT_COMPLETED);
-      closeNotification();
-      $notification("success", "Tokens converted successfully!", 6000);
+      notif($notification(
+        "success",
+        "Tokens converted successfully!",
+      ))
       return;
     }
 
@@ -531,25 +535,28 @@ async function convertRequest() {
     });
 
     $eventBus.emit(CONVERT_COMPLETED);
-    closeNotification();  
-    $notification("success", "Tokens converted successfully!", 6000);
+    notif($notification(
+      "success",
+      "Tokens converted successfully!",
+    ))
 
   } catch (e) {
       console.log("error");
       console.log(e);
-      closeNotification();
-      $notification("failed", e, 6000);
+      notif($notification(
+        "failed",
+        e,
+      ))
   }
 
   closeNotification();
 }
 
 async function retryConversion(pendingConversion) {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   const action = pendingConversion.action;
 
@@ -586,12 +593,16 @@ async function retryConversion(pendingConversion) {
         });
 
         await reloadDialog();
-        closeNotification();
-        $notification("success", "Confirmation completed!", 6000);
+        notif($notification(
+          "success",
+          "Confirmation completed!",
+        ))
 
     } catch (e) {
-      closeNotification();
-      $notification("failed", e, 6000);
+      notif($notification(
+        "failed",
+        e,
+      ))
     }
 
 
@@ -604,16 +615,19 @@ async function retryConversion(pendingConversion) {
       });
 
       await reloadDialog();
-      closeNotification();
-      $notification("success", "Confirmation completed!", 6000);
+      notif($notification(
+        "success",
+        "Confirmation completed!",
+      ))
 
     } catch (e) {
-      closeNotification();
-      $notification("failed", e, 6000);
+      notif($notification(
+        "failed",
+        e,
+      ))
     }
   }
 
-  closeNotification();
 }
 </script>
 <style lang="scss">

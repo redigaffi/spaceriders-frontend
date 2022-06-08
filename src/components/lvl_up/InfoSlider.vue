@@ -330,6 +330,7 @@ import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: "InfoSlider",
@@ -350,6 +351,7 @@ export default defineComponent({
     const quantity = ref(1);
 
     const $store = useStore();
+    const $q = useQuasar()
 
     const dataSource = (type) => {
       let data = {};
@@ -483,7 +485,10 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canUpgrade(props, activePlanet)) {
-        $notification("failed", `Can't upgrade, not enough resources...`);
+        $q.notify($notification(
+          "failed",
+          `Can't upgrade, not enough resources...`,
+        ))
         return;
       }
 
@@ -543,9 +548,15 @@ export default defineComponent({
           notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
         }
 
-        $notification("success", notificationMessage);
+        $q.notify($notification(
+          "success",
+          notificationMessage,
+        ))
       } catch(e) {
-        $notification("failed", e);
+        $q.notify($notification(
+          "failed",
+          e,
+        ))
       }
     };
 
@@ -664,7 +675,10 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canRepair(props, activePlanet)) {
-        $notification("failed", `Can't repair, not enough resources...`);
+        $q.notify($notification(
+          `Can't repair, not enough resources...`,
+          ex,
+        ))
         return;
       }
       
@@ -695,9 +709,15 @@ export default defineComponent({
         };
 
         $store.commit("repairRessourceData", saveStore);
-        $notification("success", "Repairing in progress...");
+        $q.notify($notification(
+          "success",
+          "Repairing in progress...",
+        ))
       } else {
-        $notification("failed", re.error);
+        $q.notify($notification(
+          "failed",
+          re.error,
+        ))
       }
     
     };

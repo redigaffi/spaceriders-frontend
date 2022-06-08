@@ -8,10 +8,12 @@ import ApiRequest from "../service/http/ApiRequests";
 import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { getCurrentInstance, toRefs } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from 'quasar'
 
 const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
+const $q = useQuasar()
 
 const props = defineProps({
     planet: Object,
@@ -20,18 +22,19 @@ const props = defineProps({
 const { planet } = toRefs(props);
 
 async function claimPlanet() {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   const planetGuid = planet.value.id;
   try {
     const apiCall = await ApiRequest.claimPlanet(planetGuid);
     const data = apiCall.data;
-    $notification("success", "Planet claimed successfully!", 6000);
-    
+    notif($notification(
+      "success",
+      "Planet claimed successfully!",
+    ))
     // First planet is set to default. (In case of first planet purchase)
     if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
       $store.commit("setActivePlanet", data);
@@ -41,11 +44,13 @@ async function claimPlanet() {
     $store.commit('updatePlanet', { planet: data, field: "claimed", value: true });
     $eventBus.emit(PLANET_CLAIMED, { planet: data });
     
-    closeNotification();
+    //closeNotification();
 
   } catch(e) {
-    $notification("failed", e, 6000);
-    closeNotification();
+    notif($notification(
+      "failed",
+      e,
+    ))
   }
 }
 </script>

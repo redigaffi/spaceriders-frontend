@@ -5,16 +5,16 @@ import { useQuasar } from "quasar"
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(({ app, router, store }) => {
   
-  app.config.globalProperties.$notification = (type, msg, timeout = 6000) => {
-    let spinner = false;
-    let color;
-    let icon;
-    let progress = true;
+  app.config.globalProperties.$notification = (type, msg) => {
+    
+    
+    let timeout = 0;
 
     switch (type) {
       case "success":
-        color = "green-7";
-        icon = "fas fa-check-circle";
+        type =  'positive';
+        timeout = 2000;
+
         break;
       case "failed":
         if (msg instanceof Error) {
@@ -25,29 +25,26 @@ export default boot(({ app, router, store }) => {
           }
         }
 
-        color = "red-9";
-        icon = "fas fa-times-circle";
+        timeout = 2000;
+        type = 'negative';
         break;
       case "progress":
-        spinner = true;
-        color = "yellow-9";
+        
         timeout = 0;
-        progress = false;
+        type = "ongoing"
         break;
     }
     
-    return app.config.globalProperties.$q.notify({
-      progress: progress,
-      spinner: spinner,
+
+    return {
       classes: "notify",
       position: "top-right",
+      type: type,
       message: msg,
-      color: color,
       timeout: timeout,
-      icon: icon,
       //group: 'group', //force to delete previous msg
       actions: [{ label: "Close", color: "white", handler: () => {} }],
-    });
+    }
   };
 
 })

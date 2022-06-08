@@ -55,13 +55,12 @@ import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from 'vue-router'
 
+const $quasar = useQuasar()
 
 const $store = useStore();
-const $quasar = useQuasar();
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-//boot order??? const $notification =
-  getCurrentInstance().appContext.config.globalProperties.$notification;
+getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const userInfoPopup = ref(false);
 const error = ref(false);
@@ -160,7 +159,10 @@ const login = async (e) => {
     error.value = true;
     $store.commit("destroySession");
     $quasar.loading.hide();
-    $notification("failed", "Checking metamask chain failed...", 6000);
+    $quasar.notify($notification(
+      "failed",
+      "Checking metamask chain failed...",
+    ))
     return;
   }
 
@@ -180,7 +182,10 @@ const login = async (e) => {
     re = await ApiRequest.authenticate(address, signature);
   } catch (ex) {
     $quasar.loading.hide();
-    $notification("failed", ex, 6000);
+    $quasar.notify($notification(
+      "failed",
+      ex,
+    ))
   }
 
   $store.commit("login", { jwt: re.data.jwt, address: address });

@@ -227,6 +227,8 @@ import ApiRequests from "../service/http/ApiRequests";
 import IncreaseAllowance from "../components/IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 import { STAKE, UNSTAKE } from "../constants/Events";
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
@@ -391,11 +393,10 @@ async function openTierDialog() {
 }
 
 async function stake() {
-  const closeWaitingNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   const tier = selectedTier.value.value;
 
@@ -435,17 +436,19 @@ async function stake() {
     layout.value = false;
 
     $eventBus.emit(STAKE);
-    closeWaitingNotification();
-    $notification("success", "Staked successfully, enjoy!", 6000);
+    notif($notification(
+      "success",
+      "Staked successfully, enjoy!",
+    ))
 
   } catch (e) {
     console.log(e);
-    closeWaitingNotification();
-    $notification("failed", e, 6000);
+    notif($notification(
+      "failed",
+      e,
+    ))
     return;
   }
-
-  closeWaitingNotification();
 }
 
 const unstakeDisabled = computed(() => {
@@ -459,11 +462,10 @@ const unstakeDisabled = computed(() => {
 });
 
 async function unstake() {
-  const closeWaitingNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   try {
     const tx = await SpaceRidersGameContract.unstakingRequest(
@@ -484,25 +486,28 @@ async function unstake() {
     layout.value = false;
     $eventBus.emit(UNSTAKE);
 
-    closeWaitingNotification();
-    $notification("success", "Un-staked successfully, thank you!", 6000);
+    notif($notification(
+      "success",
+      "Un-staked successfully, thank you!",
+    ))
 
   } catch (e) {
     console.log(e);
-    closeWaitingNotification();
-    $notification("failed", e, 6000);
+    notif($notification(
+      "failed",
+      e,
+    ))
   }
 
-  closeWaitingNotification();
 }
 
 async function claimPendingLvlUpReward() {
 
-  const closeWaitingNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
+
 
   try {
     const req = await ApiRequests.claimPendingLvlUpReward({
@@ -523,11 +528,15 @@ async function claimPendingLvlUpReward() {
         claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
     });
 
-    closeWaitingNotification();
-    $notification("success", "Successfully claimed level up reward", 6000);
+    notif($notification(
+      "success",
+      "Successfully claimed level up reward",
+    ))
   } catch(e) {
-    closeWaitingNotification();
-    $notification("failed", e, 6000);
+    notif($notification(
+      "failed",
+      e,
+    ))
   }
 }
 </script>

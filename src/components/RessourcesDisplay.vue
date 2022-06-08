@@ -462,10 +462,12 @@ import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 import { ACTIVE_PLANET_CHANGED, UPDATED_ALL, ENERGY_DEPOSITED } from "../constants/Events";
+import { useQuasar } from 'quasar'
 
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
+const $q = useQuasar()
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
@@ -833,11 +835,10 @@ async function depositEnergy(amount) {
     $store.getters.activePlanet.id
   );
 
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   if ($store.getters.activePlanet.price_paid === 0) {
     try {
@@ -846,16 +847,19 @@ async function depositEnergy(amount) {
         guid: uuid,
         amount: amount,
       });
-
-      closeNotification();
-      $notification("success", "Energy deposited successfuly!", 6000);
+      notif($notification(
+        "success",
+        "Energy deposited successfuly!",
+      ))
       $store.commit("incrementEnergy", { energy: amount });
       $store.commit("restFreePlanetFreeTokens", { tokens: amount });
       $eventBus.emit(ENERGY_DEPOSITED);
       energyDepositPopup.value = false;
     } catch(ex) {
-      closeNotification();
-      $notification("failed", ex, 6000);
+      notif($notification(
+        "failed",
+        ex,
+      ))
     }
     
     return;
@@ -871,15 +875,20 @@ async function depositEnergy(amount) {
       guid: uuid,
     });
   
-    $notification("success", "Energy deposited successfuly!", 6000);
+    notif($notification(
+      "success",
+      "Energy deposited successfuly!",
+    ))
+
     $store.commit("incrementEnergy", { energy: amount });
     energyDepositPopup.value = false;
   } catch (ex) {
-    closeNotification();
-    $notification("failed", ex, 6000);
+    notif($notification(
+      "failed",
+      ex,
+    ))
   }
 
-  closeNotification();
 }
 
 const maxEnergyDeposit = computed(() => {

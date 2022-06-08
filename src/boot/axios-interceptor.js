@@ -25,7 +25,10 @@ export default boot(async ({ app, router, store }) => {
           store.commit("destroySession");
           router.push({name: "nouser"});
           $q.loading.hide();
-          $notification("failed", "Authentication token expired, login again.");
+          $q.notify($notification(
+            "failed",
+            "Authentication token expired, login again.",
+          ))
         }
 
         config.headers.Authorization = `Bearer ${jwt}`;
