@@ -246,7 +246,7 @@ import { createStore } from "vuex";
         let type = "";
         switch(payload.type) {
           case "resources":
-            type = "infrastructure";
+            type = "mines";
             dataSource = state.resourceData[label]
             break;
           case "installations":
@@ -263,7 +263,13 @@ import { createStore } from "vuex";
               break;
         }
         
-        if (type === "infrastructure") {
+        if (type === "mines") {
+          dataSource.building = false;
+          dataSource.level = dataSource.level+1;
+          dataSource.finish = false;
+          dataSource.health = dataSource.upgrades[dataSource.level].health;
+
+        }else if (type === "infrastructure") {
           dataSource.building = false;
           dataSource.level = dataSource.level+1;
           dataSource.finish = false;

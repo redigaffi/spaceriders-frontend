@@ -993,7 +993,7 @@ function startPetrolTimer() {
 }
 
 const startTimers = () => {
-  startEnergyTimer();
+  //startEnergyTimer();
   startMetalTimer();
   startCrystalTimer();
   startPetrolTimer();
