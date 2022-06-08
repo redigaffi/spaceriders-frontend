@@ -438,7 +438,7 @@ export default defineComponent({
         currentEnergyUsage = props.data.upgrades[props.data.level].energy_usage;
       }
 
-      return nextEnergyUsage - currentEnergyUsage;
+      return (nextEnergyUsage - currentEnergyUsage).toFixed(3);
     });
 
     const canUpgrade = (props, activePlanet) => {

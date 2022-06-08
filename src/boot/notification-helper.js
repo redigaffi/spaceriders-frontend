@@ -35,7 +35,7 @@ export default boot(({ app, router, store }) => {
         progress = false;
         break;
     }
-
+    
     return app.config.globalProperties.$q.notify({
       progress: progress,
       spinner: spinner,
