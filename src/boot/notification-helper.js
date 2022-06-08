@@ -17,7 +17,9 @@ export default boot(({ app, router, store }) => {
 
         break;
       case "failed":
-        if (msg instanceof Error) {
+        if (msg === undefined || msg === null || msg === false || typeof msg != "string" || msg === "") {
+          msg = "Something unexpected happened..."
+        } else if (msg instanceof Error) {
           try {
             msg = msg.response.data.message
           } catch(e) {

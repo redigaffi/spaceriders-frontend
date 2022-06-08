@@ -6,7 +6,7 @@
       flat
       class="bg-transparent text-secondary text-center row justify-center"
     >
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box  ">
         <q-btn
           stack
           flat
@@ -110,7 +110,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           stack
           flat
@@ -214,7 +214,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           stack
           flat
@@ -318,7 +318,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           @click="energyDepositPopup = true"
           stack
@@ -1008,8 +1008,9 @@ $eventBus.on(UPDATED_ALL, () => {
 });
 </script>
 <style>
-#equal-width {
-  width: 100px;
+.resource-box {
+  width:110px;
+  height: 110px;
 }
 
 .btn-red-glass-element {
