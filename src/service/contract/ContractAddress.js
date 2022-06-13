@@ -3,18 +3,18 @@ import Store from "../../store/index";
 
 export default class ContractAddress {
     static getSpaceRidersGameAddress() {
-        return Store.getters.chainInfo.gameContract;
+        return Store.getters.chainInfo.game_contract;
     }
 
     static getSpaceRidersAddress() {
-        return Store.getters.chainInfo.tokenContract;
+        return Store.getters.chainInfo.token_contract;
     }
 
     static getRouterAddress() {
-        return Store.getters.chainInfo.routerContract;
+        return Store.getters.chainInfo.router_contract;
     }
 
     static getBusdAddress() {
-        return Store.getters.chainInfo.busdContract;
+        return Store.getters.chainInfo.busd_contract;
     }
 }

@@ -6,7 +6,7 @@
       flat
       class="bg-transparent text-secondary text-center row justify-center"
     >
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box  ">
         <q-btn
           stack
           flat
@@ -110,7 +110,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           stack
           flat
@@ -214,7 +214,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           stack
           flat
@@ -318,7 +318,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-      <div id="equal-width" class="col-xs-6 col-sm-3 q-pa-sm">
+      <div class="resource-box">
         <q-btn
           @click="energyDepositPopup = true"
           stack
@@ -427,7 +427,7 @@
 
               <q-card-section class="q-pt-none text-center">
                 <IncreaseAllowance
-                  v-if="!$store.getters.activePlanet.freePlanet"
+                  v-if="!$store.getters.activePlanet.free_planet"
                   :address="ContractAddress.getSpaceRidersGameAddress()" 
                   :amount="sprCost"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
@@ -449,6 +449,7 @@
 </template>
 
 <script setup>
+import ObjectID from "bson-objectid";
 import ResourceType from "../constants/ResourceType";
 import { ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
@@ -461,10 +462,12 @@ import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 import { ACTIVE_PLANET_CHANGED, UPDATED_ALL, ENERGY_DEPOSITED } from "../constants/Events";
+import { useQuasar } from 'quasar'
 
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
+const $q = useQuasar()
 
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
@@ -479,7 +482,7 @@ const activePlanet = computed(() => {
 
 const energyAvailable = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy;
+  return $store.getters.activePlanet.resources.energy;
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -507,7 +510,7 @@ function timeLeft(minLeft) {
 
 const energyConsumption = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.ressources.energy_usage.toFixed(4);
+  return $store.getters.activePlanet.resources.energy_usage.toFixed(4);
 });
 
 const metalReserve = computed(() => {
@@ -517,7 +520,7 @@ const metalReserve = computed(() => {
 
 const energyTimeLeft = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  const availableEnergy = $store.getters.activePlanet.ressources.energy;
+  const availableEnergy = $store.getters.activePlanet.resources.energy;
   const consumption = energyConsumption.value/60;
   const minutesLeft = (availableEnergy / consumption);
   const tl = timeLeft(minutesLeft);
@@ -533,7 +536,7 @@ const metalReserveDisplay = computed(() => {
 });
 
 const metalAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.metal.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.metal.toFixed(1), {
     digits: 1,
   });
 });
@@ -549,7 +552,7 @@ const crystalReserveDisplay = computed(() => {
 });
 
 const crystalAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.crystal.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.crystal.toFixed(1), {
     digits: 1,
   });
 });
@@ -565,7 +568,7 @@ const petrolReserveDisplay = computed(() => {
 });
 
 const petrolAvailable = computed(() => {
-  return tc($store.getters.activePlanet.ressources.petrol.toFixed(1), {
+  return tc($store.getters.activePlanet.resources.petrol.toFixed(1), {
     digits: 1,
   });
 });
@@ -794,14 +797,15 @@ const isResourceAlert = (resourceType) => {
   const rD = $store.getters.resourceData;
 
   const mine = rD[mappings[resourceType]["mine"]];
-  if (mine === undefined) return false;
+  if (mine === undefined || mine === false) return false;
   const mineCurrentHealth = mine["health"];
   const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
   const mineFullHealth = mineCurrentHealth / mineMaxHealth < 1;
 
   const warehouse = rD[mappings[resourceType]["warehouse"]];
   const warehouseCurrentHealth = warehouse["health"];
-  const warehouseMaxHealth = warehouse["upgrades"][mine["level"]]["health"];
+  let mineLvl = mine["level"]
+  const warehouseMaxHealth = warehouse["upgrades"][mineLvl]["health"];
   const warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth < 1;
 
   const reserveEmpty = $store.getters.activePlanet.reserves[resourceType] <= 0;
@@ -820,81 +824,77 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value} $SPR `;
+  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $SPR `;
 });
 
 async function depositEnergy(amount) {
-  const uuid = uuidv4();
+  const uuid = ObjectID().toHexString();
   const energyDeposit = new EnergyDepositAttributes(
     uuid,
     amount.toString(),
     $store.getters.activePlanet.id
   );
 
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
-  if ($store.getters.activePlanet.freePlanet) {
-    const req = await ApiRequest.depositEnergy({
-      planetId: $store.getters.activePlanet.id,
-      guid: uuid,
-      amount: amount,
-    });
-    
-    if (req.success) {
-      closeNotification();
-      $notification("success", "Energy deposited successfuly!", 6000);
+  if ($store.getters.activePlanet.price_paid === 0) {
+    try {
+      await ApiRequest.depositEnergy({
+        planetId: $store.getters.activePlanet.id,
+        guid: uuid,
+        amount: amount,
+      });
+      notif($notification(
+        "success",
+        "Energy deposited successfuly!",
+      ))
       $store.commit("incrementEnergy", { energy: amount });
       $store.commit("restFreePlanetFreeTokens", { tokens: amount });
       $eventBus.emit(ENERGY_DEPOSITED);
       energyDepositPopup.value = false;
-    } else {
-      closeNotification();
-      $notification("failed", "Failed depositing energy...", 6000);
+    } catch(ex) {
+      notif($notification(
+        "failed",
+        ex,
+      ))
     }
     
     return;
   }
 
-  let receipt = { status: 1 };
 
   try {
     const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
-    receipt = await tx.wait();
-  } catch (e) {
-    console.log("error");
-    console.log(e);
-    closeNotification();
-  }
-
-  if (receipt.status === 1) {
-    const req = await ApiRequest.depositEnergy({
+    await tx.wait();
+  
+    await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
     });
+  
+    notif($notification(
+      "success",
+      "Energy deposited successfuly!",
+    ))
 
-    if (req.success) {
-      $notification("success", "Energy deposited successfuly!", 6000);
-      $store.commit("incrementEnergy", { energy: amount });
-      energyDepositPopup.value = false;
-    } else {
-      $notification("failed", "Failed depositing energy...", 6000);
-    }
-  } else {
-    $notification("failed", "Failed depositing energy...", 6000);
-    closeNotification();
+    $store.commit("incrementEnergy", { energy: amount });
+    energyDepositPopup.value = false;
+  } catch (ex) {
+    notif($notification(
+      "failed",
+      ex,
+    ))
   }
 
-  closeNotification();
 }
 
 const maxEnergyDeposit = computed(() => {
   const planet = $store.getters.activePlanet;
   if (!planet) return 0;
-  return planet.ressources.energy_max_deposit;
+  return planet.resources.energy_max_deposit;
 });
 
 function startEnergyTimer() {
@@ -913,7 +913,7 @@ function startEnergyTimer() {
       return;
     }
     
-    const eC = $store.getters.activePlanet.ressources.energy_usage;
+    const eC = $store.getters.activePlanet.resources.energy_usage;
     $store.commit('decrementEnergy', {energy: eC/60})
   }, 1000);
 
@@ -993,7 +993,7 @@ function startPetrolTimer() {
 }
 
 const startTimers = () => {
-  startEnergyTimer();
+  //startEnergyTimer();
   startMetalTimer();
   startCrystalTimer();
   startPetrolTimer();
@@ -1008,8 +1008,9 @@ $eventBus.on(UPDATED_ALL, () => {
 });
 </script>
 <style>
-#equal-width {
-  width: 100px;
+.resource-box {
+  width:110px;
+  height: 110px;
 }
 
 .btn-red-glass-element {

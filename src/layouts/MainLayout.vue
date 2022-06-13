@@ -184,6 +184,7 @@ import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import AsteroidCollision from "../components/email_templates/AsteroidCollision.vue";
+import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "../constants/Events";
@@ -196,15 +197,15 @@ let buildingQueueData = computed(() => {
   return {
     ...$store.getters.resourceData,
     ...$store.getters.installationData,
-  };
+  }
 });
 
 let researchQueueData = computed(() => {
-  return $store.getters.researchData;
+  return $store.getters.activePlanet.research_level;
 });
 
 let defenseFleetQueueData = computed(() => {
-  return $store.getters.defenseData;
+  return $store.getters.activePlanet.defense_items;
 });
 
 const anyUnreadMessage = computed(() => {
@@ -230,6 +231,8 @@ const templateName = computed(() => {
   switch (activeEmail.value.template) {
     case "asteroid_collision":
       return AsteroidCollision;
+    case "plain":
+      return Plain;
   }
 
   return "";
@@ -241,6 +244,8 @@ const body = computed(() => {
   switch (activeEmail.value.template) {
     case "asteroid_collision":
       return JSON.parse(activeEmail.value.body);
+    case "plain":
+      return activeEmail.value.body;
   }
 
   return "";
@@ -276,6 +281,7 @@ $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
 });
 
 $eventBus.on(LOGGED_IN, async () => {
+  console.log("AS1D")
   await updateAll();
   await updateInterval();
 });
@@ -285,14 +291,15 @@ async function update(activePlanet) {
     $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
   });
 
-  const allPlanetInfo = (await ApiRequest.getAllInfoPlanet(activePlanet.id)).data;
-
+  const allPlanetInfoReq = (await ApiRequest.getAllInfoPlanet(activePlanet.id));
+  const allPlanetInfo = allPlanetInfoReq.data;
+  
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
   $store.commit("setResearchData", allPlanetInfo.research);
   $store.commit("setDefenseData", allPlanetInfo.defense);
-  $store.commit("addEmails", { emails: allPlanetInfo.email });
+  $store.commit("addEmails", { emails: allPlanetInfo.emails });
 }
 
 async function updateAll() {
@@ -303,7 +310,7 @@ async function updateAll() {
     activePlanetId = $store.getters.activePlanet.id;
   }
 
-  const planets = (await ApiRequest.getAllPlanets()).data;
+  const planets = (await ApiRequest.getAllPlanets());
   $store.commit("setPlanets", planets);
 
   let activePlanet = false;
@@ -315,9 +322,10 @@ async function updateAll() {
       activePlanet = activePlanets[0];
     }
   }
+
   if (activePlanet !== false) {
     $store.commit("setActivePlanet", activePlanet);
-    await update(activePlanet);
+    update(activePlanet);
   }
 
   $eventBus.emit(UPDATED_ALL);

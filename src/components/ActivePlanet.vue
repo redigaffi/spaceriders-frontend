@@ -47,10 +47,6 @@ export default {
       this.$store.commit("setActivePlanet", p);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, p);
     },
-    fetchPlanets: async function () {
-      const planets = (await ApiRequest.getPlanets()).data;
-      this.$store.commit("setPlanets", { planets: planets})
-    },
     isActivePlanet: function (p) {
       const currentActivePlanet = this.$store.getters.activePlanet;
       if (currentActivePlanet !== false) {

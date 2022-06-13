@@ -25,8 +25,8 @@ module.exports = configure(function (ctx) {
       "axios",
       "store-state",
       "event-bus",
-      "axios-interceptor",
       "notification-helper",
+      "axios-interceptor",
       "particlesv3",
       "google-analytics"
     ],
@@ -51,7 +51,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: "history", // available values: 'hash', 'history'
-
+      devtool: 'source-map',
       env: ctx.dev
         ? require("dotenv").config({ path: ".env.dev" }).parsed
         : process.env,

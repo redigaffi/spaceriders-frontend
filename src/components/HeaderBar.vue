@@ -36,6 +36,7 @@
               :to="nav.link"
               exact
               exact-active-class="text-positive"
+              v-bind="nav.attr"
             >
               <q-item-section top avatar>
                 <q-avatar color="warning" text-color="white" :icon="nav.icon" />
@@ -127,36 +128,49 @@ const linksListInfo = {
     title: "Overview",
     link: "/overview",
     icon: "info",
+    attr: {}
+
   },
   planet: {
     title: "Planets",
     link: "/planet",
     icon: "fas fa-globe-europe",
+    attr: {}
+
   },
   resources: {
     title: "Resources",
     link: "/resources",
     icon: "widgets",
+    attr: {}
+
   },
   installations: {
     title: "Installations",
     link: "/installations",
     icon: "construction",
+    attr: {}
+
   },
   research: {
     title: "Research",
     link: "/research",
     icon: "travel_explore",
+    attr: {}
+
   },
   defense: {
     title: "Defense",
     link: "/defense",
     icon: "security",
+    attr: {}
+
   },
   gm: {
     title: "Game Manual",
-    link: "/",
+    link: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
     icon: "auto_stories",
+    attr: { href:"https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro", target: '_blank' }
   },
 };
 

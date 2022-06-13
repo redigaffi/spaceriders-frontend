@@ -20,10 +20,12 @@ import ERC20 from "../service/contract/ERC20";
 import { useStore } from "vuex";
 import { toRefs, getCurrentInstance, ref, onMounted, watch } from "vue";
 import { ethers } from "ethers";
+import { useQuasar } from 'quasar'
 
 const $store = useStore();
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
+const $q = useQuasar()
 
 const props = defineProps({
   tokenAddress: String,
@@ -56,11 +58,10 @@ watch(async () => {
 });
 
 async function approve() {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ));
 
   let receipt = { status: 0 };
 
@@ -75,13 +76,17 @@ async function approve() {
   }
 
   if (receipt.status === 1) {
-    $notification("success", "Increased allowance successfuly!", 6000);
+    notif($notification(
+      "success",
+      "Increased allowance successfuly!",
+    ))
   } else {
-    $notification("failed", "Failed increasing allowance...", 6000);
-    closeNotification();
+    notif($notification(
+      "failed",
+      "Failed increasing allowance...",
+    ))
   }
 
   approveDisabled.value = true;
-  closeNotification();
 }
 </script>
