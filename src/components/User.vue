@@ -61,6 +61,8 @@ const $store = useStore();
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 getCurrentInstance().appContext.config.globalProperties.$notification;
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const userInfoPopup = ref(false);
 const error = ref(false);
@@ -180,6 +182,15 @@ const login = async (e) => {
     const signature = await signer.signMessage(`its me:${address}`);
 
     re = await ApiRequest.authenticate(address, signature);
+    $store.commit("login", { jwt: re.data.jwt, address: address });
+    $eventBus.emit(LOGGED_IN);
+    
+    router.push({
+      name: 'planet'
+    });
+    
+    $quasar.loading.hide();
+    
   } catch (ex) {
     $quasar.loading.hide();
     $quasar.notify($notification(
@@ -188,14 +199,7 @@ const login = async (e) => {
     ))
   }
 
-  $store.commit("login", { jwt: re.data.jwt, address: address });
-  $eventBus.emit(LOGGED_IN);
-  
-  router.push({
-    name: 'planet'
-  });
-  
-  $quasar.loading.hide();
+ 
 };
 
 const chainData = computed(() => {
