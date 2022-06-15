@@ -184,6 +184,7 @@ import Headerbar from "../components/HeaderBar.vue";
 import RessourcesDisplay from "../components/RessourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import AsteroidCollision from "../components/email_templates/AsteroidCollision.vue";
+import SpacePirates from "../components/email_templates/SpacePirates.vue";
 import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
 import ApiRequest from "../service/http/ApiRequests";
@@ -231,6 +232,8 @@ const templateName = computed(() => {
   switch (activeEmail.value.template) {
     case "asteroid_collision":
       return AsteroidCollision;
+    case "space_pirates":
+      return SpacePirates;
     case "plain":
       return Plain;
   }
@@ -243,6 +246,8 @@ const body = computed(() => {
 
   switch (activeEmail.value.template) {
     case "asteroid_collision":
+      return JSON.parse(activeEmail.value.body);
+    case "space_pirates":
       return JSON.parse(activeEmail.value.body);
     case "plain":
       return activeEmail.value.body;

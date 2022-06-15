@@ -32,5 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-.development.env
-.production.env
+.env.dev

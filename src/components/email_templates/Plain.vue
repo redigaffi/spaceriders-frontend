@@ -9,5 +9,5 @@ const props = defineProps({
 });
 
 const { body } = toRefs(props);
-console.log(body)
+
 </script>

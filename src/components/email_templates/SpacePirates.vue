@@ -10,52 +10,79 @@
           padding: 7px 15px;
         ">
         <q-item-section class="">
-          <q-item-label style="word-break: break-all" class="text-body1">Bad news Rider... An asteroid just arrived,
-            take a look at the
-            damages caused</q-item-label>
+          <q-item-label style="word-break: break-all" class="text-body1">
+          Bad news Rider... Pirates decided to stop by your planet and steal
+          resources.
+          </q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
 
     <q-list dense class="text-subtitle2 q-mt-lg">
       <q-item>
+        <q-item-section class="">
+          <q-item-label class="text-h6">Resources stolen</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
         <q-item-section class="text-white">
-          <q-table
-            title="Damage report"
-            :rows="damageRows"
-            :columns="damageColumns"
-            no-data-label="No damages this time!"
-            hide-pagination
-            row-key="name"
-          />
+          <q-item-section caption>Total Stolen </q-item-section>
+        </q-item-section>
+
+        <q-item-section class="col-4 text-right">
+          {{ body.result.loss.total }}
+        </q-item-section>
+      </q-item>
+
+      <q-item>
+        <q-item-section class="text-white">
+          <q-item-section caption>Metal Stolen </q-item-section>
+        </q-item-section>
+
+        <q-item-section class="col-4 text-right">
+          {{ body.result.loss.metal }}
+        </q-item-section>
+      </q-item>
+
+      <q-item>
+        <q-item-section class="text-white">
+          <q-item-section caption>Crystal Stolen </q-item-section>
+        </q-item-section>
+
+        <q-item-section class="col-4 text-right">
+          {{ body.result.loss.crystal }}
+        </q-item-section>
+      </q-item>
+
+      <q-item>
+        <q-item-section class="text-white">
+          <q-item-section caption>Petrol Stolen</q-item-section>
+        </q-item-section>
+
+        <q-item-section class="col-4 text-right">
+          {{ body.result.loss.petrol }}
         </q-item-section>
       </q-item>
     </q-list>
 
-    <q-expansion-item
-      class="shadow-1 overflow-hidden q-mt-xl"
-      style="border-radius: 15px"
-      icon="explore"
-      label="Additional details"
-      header-class="bg-primary text-white"
-      expand-icon-class="text-white"
-    >
+    <q-expansion-item class="shadow-1 overflow-hidden q-mt-xl" style="border-radius: 15px" icon="explore"
+      label="Additional details" header-class="bg-primary text-white" expand-icon-class="text-white">
       <q-card>
         <q-card-section>
           <q-list dense class="text-subtitle2 q-mb-md">
             <q-item>
               <q-item-section class="">
-                <q-item-label class="text-h6">Asteroid stats</q-item-label>
+                <q-item-label class="text-h6">Pirate Stats</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item>
               <q-item-section class="text-white">
-                <q-item-section caption>Diameter </q-item-section>
+                <q-item-section caption>Pirate Amount </q-item-section>
               </q-item-section>
 
               <q-item-section class="col-4 text-right">
-                {{ body.asteroid.size }}km
+                {{ body.general.amount_space_ships }}
               </q-item-section>
             </q-item>
 
@@ -65,7 +92,7 @@
               </q-item-section>
 
               <q-item-section class="col-4 text-right">
-                {{ body.asteroid.distance }}m
+                {{ body.general.distance }}m
               </q-item-section>
             </q-item>
 
@@ -75,22 +102,24 @@
               </q-item-section>
 
               <q-item-section class="col-4 text-right">
-                {{ body.asteroid.speed }}m/s
+                {{ body.general.speed }}m/s
               </q-item-section>
             </q-item>
 
             <q-item>
               <q-item-section class="text-white">
-                <q-item-section caption>Attack Points </q-item-section>
+                <q-item-section caption>Total SpacePirates Health </q-item-section>
               </q-item-section>
 
               <q-item-section class="col-4 text-right">
-                {{ body.asteroid.attack_points }}
+                {{ body.general.total_health }}
               </q-item-section>
             </q-item>
           </q-list>
+
           <q-separator />
           <br />
+
           <q-list dense class="text-subtitle2">
             <q-item>
               <q-item-section class="">
@@ -181,8 +210,8 @@
               </q-item-section>
             </q-item>
           </q-list>
-          <q-separator />
-          <br />
+
+
         </q-card-section>
       </q-card>
     </q-expansion-item>
@@ -191,7 +220,6 @@
 <script setup>
 import { defineProps, reactive, toRefs } from "vue";
 import { useStore } from "vuex";
-import Types from "../../constants/Types";
 
 const $store = useStore();
 
@@ -200,6 +228,8 @@ const props = defineProps({
 });
 
 const { body } = toRefs(props);
+console.log(body.value);
+
 
 const defenseColumns = [
   { name: "name", align: "center", label: "Name", field: "name" },
@@ -226,37 +256,4 @@ for (const key in body.value.defense.items) {
   }
 }
 
-const damageColumns = [
-  { name: "name", align: "center", label: "Name", field: "name" },
-  {
-    name: "damageTaken",
-    align: "center",
-    label: "Damge/Qty Destroyed",
-    field: "damageTaken",
-  },
-  //{ name: 'attackPoints', align: 'center', label: 'Attack Points', field: 'attackPoints'},
-];
-
-function getSource(type) {
-  switch (type) {
-    case Types.DEFENSE_TYPE:
-      return $store.getters.defenseData;
-    case Types.RESOURCE_TYPE:
-      return $store.getters.resourceData;
-  }
-}
-
-let damageRows = [];
-
-for (const key in body.value.result) {
-  const item = body.value.result[key];
-  const info = getSource(item.type)[key];
-
-  if (item.damage_taken > 0) {
-    damageRows.push({
-      name: info.name,
-      damageTaken: `${item.damage_taken} (-${item.damage_taken_percentage}%)`,
-    });
-  }
-}
 </script>
