@@ -3,6 +3,7 @@
 
 // LAYOUTS
 const mainLayout = () => import("layouts/MainLayout.vue");
+const basicLayout = () => import("layouts/BasicLayout.vue");
 const landingLayout = () => import("layouts/LandingLayout.vue");
 const NoLoginLayout = () => import("layouts/NoLogin.vue");
 
@@ -14,6 +15,8 @@ const planetPage = () => import("pages/Planet.vue");
 const defensePage = () => import("pages/Defense.vue");
 const planetInfoPage = () => import("pages/PlanetInfo.vue");
 
+const planetExplorer = () => import("pages/PlanetExplorer.vue");
+
 const landingPage = () => import("src/pages/Landing1.vue");
 
 // ROUTES
@@ -24,7 +27,12 @@ const routes = [
     component: landingLayout,
     children: [{ path: "/", component: landingPage, name: "landing", meta: {title: "Landing"} }],
   },
-  //TODO: change this component
+  {
+    path: "/explorer",
+    name: "explorer",
+    component: basicLayout,
+    children: [{ path: "", component: planetExplorer, name: "explorer", meta: {title: "Landing"} }],
+  },
   {
     path: "/overview",
     component: mainLayout,
