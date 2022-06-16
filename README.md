@@ -7,7 +7,7 @@ A Quasar Framework app
 yarn install or npm install
 ```
 
-### Replace .env.dev and .env with:
+### Replace .env.example with .env.dev and add the following content:
 ```
 BASE_API_PATH=http://api.spaceriders.io:81
 ENV=testnet
