@@ -348,13 +348,13 @@ function sendPlanetEmail() {
 }
 
 function rightPage() {
-  fromSolarSystem.value += 1;
-  toSolarSystem.value += 1;
+  fromSolarSystem.value += 7;
+  toSolarSystem.value += 7;
 }
 
 function leftPage() {
-  fromSolarSystem.value -= 1;
-  toSolarSystem.value -= 1;
+  fromSolarSystem.value -= 7;
+  toSolarSystem.value -= 7;
 }
 
 function upPage() {
