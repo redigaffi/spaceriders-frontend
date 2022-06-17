@@ -31,7 +31,7 @@ const routes = [
     path: "/explorer",
     name: "explorer",
     component: basicLayout,
-    children: [{ path: "", component: planetExplorer, name: "explorer", meta: {title: "Landing"} }],
+    children: [{ path: "", component: planetExplorer, name: "explorer", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Planet Explorer"} }],
   },
   {
     path: "/overview",

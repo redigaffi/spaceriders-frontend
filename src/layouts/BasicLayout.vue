@@ -75,29 +75,11 @@ async function updateAll() {
   $eventBus.emit(UPDATED_ALL);
 }
 
-async function updateInterval() {
-  if (!$store.getters.loggedIn) return;
-
-  if ($store.getters.updateIntervalId !== false) {
-    clearInterval($store.getters.updateIntervalId);
-  }
-
-  if ($store.getters.activePlanet) {
-    const timerId = setInterval(async () => {
-      update($store.getters.activePlanet);
-    }, 60000);
-
-    $store.commit("setUpdateIntervalId", { updateIntervalId: timerId });
-  }
-}
-
 async function init() {  
   if ($store.getters.loggedIn) {
     $quasar.loading.show();
     // On page refresh reset all.
     await updateAll();
-    // Start timer
-    await updateInterval();
     $quasar.loading.hide();
   }
 }

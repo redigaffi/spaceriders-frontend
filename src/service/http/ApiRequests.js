@@ -390,4 +390,13 @@ export default class ApiRequests {
       const path = `${process.env.BASE_API_PATH}/planet/level/reward/${data.claimId}/confirm`;
       return (await axios.get(path));
     }
+
+    /**
+     * @param {object} data
+     * @returns
+     */
+     static async getPlanetsByPositionRange(data) {
+      const path = `${process.env.BASE_API_PATH}/planets/${data.galaxy}/${data.fromSolarSystem}/${data.toSolarSystem}`;
+      return (await axios.get(path));
+    }
 }
