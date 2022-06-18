@@ -25,6 +25,7 @@
       width="100px"
       label="From Solar System"
       style="float: left; margin-left: 20px; width: 190px;"
+      :step="7"
       @change="fromChange"
     />
 
@@ -39,6 +40,7 @@
       width="50px"
       label="To Solar System"
       style="float: left; margin-left: 20px; width: 170px;"
+      :step="7"
       @change="toChange" 
     />
   </div>
@@ -148,7 +150,7 @@
 
 
 <script setup>
-import { ref, onBeforeMount, onMounted, watch } from "vue";
+import { ref, onBeforeMount, onMounted, watchEffect } from "vue";
 import ApiRequests from "../service/http/ApiRequests";
 import { useQuasar } from "quasar";
 
@@ -290,7 +292,7 @@ onBeforeMount(async () => {
 
 });
 
-watch(async () => {
+watchEffect(async () => {
   loaded.value = false;
   $quasar.loading.show();
 
@@ -358,7 +360,7 @@ function leftPage() {
 }
 
 function upPage() {
-    galaxy.value += 1;
+  galaxy.value += 1;
 }
 
 function downPage() {
