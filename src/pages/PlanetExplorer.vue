@@ -414,12 +414,10 @@ function openPlanetInfoCall(solarSystem, position) {
 
 function copyPlanetUrlClipBoard() {
   const sp = selectedPlanetInfo.value;
-  let basePath = `${window.location.origin}${$route.path}`;
-  if (process.env.ENV != "mainnet") {
-    basePath = `${window.location.origin}/#${$route.path}`;
-  }
-
+  
+  let basePath = `${window.location.origin}/explorer`;
   let fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
+
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(fullPath);
 

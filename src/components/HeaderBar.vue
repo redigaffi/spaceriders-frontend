@@ -136,7 +136,6 @@ const linksListInfo = {
     link: "/planet",
     icon: "fas fa-globe-europe",
     attr: {}
-
   },
   resources: {
     title: "Resources",
@@ -166,6 +165,12 @@ const linksListInfo = {
     attr: {}
 
   },
+  explorer: {
+    title: "Explorer",
+    link: "/explorer",
+    icon: "fa fa-satellite-dish",
+    attr: {}
+  },
   gm: {
     title: "Game Manual",
     link: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
@@ -176,6 +181,7 @@ const linksListInfo = {
 
 const $store = useStore();
 
+//@TODO: refactor this way of constructing menu.
 let linksList = computed(() => {
   let loggedIn = $store.getters.loggedIn;
   let hasPlanets = $store.getters.activePlanet;
@@ -184,7 +190,7 @@ let linksList = computed(() => {
 
   for (const routeIdx in routes) {
     const routeData = routes[routeIdx];
-
+    
     if (routeData.name === "overview") {
       const requieresAuth = routeData.meta.requiresAuth;
       const requiresPlanet = routeData.meta.requiresPlanet;
@@ -197,12 +203,21 @@ let linksList = computed(() => {
         const childInfo = routeData.children[childIdx];
         if (childInfo.path === '') continue;
         
+
         const childRequieresAuth = childInfo.meta.requiresAuth;
         const childRequiresPlanet = childInfo.meta.requiresPlanet;
 
-        const notAdd =  (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
+        const notAdd = (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
         if (!notAdd && childInfo.meta.menu) {
           tmplinksList.push(linksListInfo[childInfo.name]);
+        }
+
+        
+        if (childInfo.name === "planet") {
+          
+          if (loggedIn) {
+            tmplinksList.push(linksListInfo.explorer);
+          }
         }
       }
 
