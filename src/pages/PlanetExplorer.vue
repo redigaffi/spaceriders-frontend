@@ -419,7 +419,7 @@ function copyPlanetUrlClipBoard() {
     basePath = `${window.location.origin}#${$route.path}`;
   }
 
-  let fullPath = `${basePath}${sp.galaxy}/${sp.solar_system}/${sp.position}`;
+  let fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(fullPath);
 
