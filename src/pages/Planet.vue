@@ -7,7 +7,6 @@
       >
         Buy Planets
       </div>
-
     </q-card-section>
 
     <div v-if="anyUnClaimedPlanet">
@@ -62,35 +61,40 @@
 
   <q-dialog v-model="planetCongratulationsPopup">
     <q-card
-      class=""
+      class="planetCongratulationsPopup-card"
       flat
-      style="width: 700px; max-width: 80vw; border-radius: 20px"
+      style="width: 800px; max-width: 80vw; border-radius: 20px"
     >
-        <q-btn
-          round
-          class="absolute-top-right"
-          flat
-          color="warning"
-          icon="close"
-          v-close-popup
-        />
-      <q-card-section class="q-pa-none row q-col-gutter-sm">
+      <q-btn
+        round
+        class="absolute-top-right"
+        flat
+        color="warning"
+        icon="close"
+        v-close-popup
+      />
+      <q-card-section
+        class="q-pa-none row q-col-gutter-sm"
+        style="padding: 50px 30px"
+      >
         <div
           class="col"
-          style="background-size: cover; display: flex; justify-content: center;"
+          style="
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            background-position: center;
+            background-size: cover;
+          "
           :style="{
-            background: `url(https://spaceriders-planets.s3.us-east-2.amazonaws.com/${this.newPlanetInfo.image}-${this.newPlanetInfo.rarity}.png)`,
+            background: `url(https://spaceriders-planets.s3.us-east-2.amazonaws.com/${this.newPlanetInfo.image}-${this.newPlanetInfo.rarity}.png) center/cover`,
           }"
         ></div>
 
-        <div class="q-py-md col flex flex-center">
+        <div class="q-py-none col flex flex-center">
           <q-card
-            style="
-              border: 2px solid #2253f4;
-              border-radius: 5px;
-              box-shadow: 0 0 20px #2253f4;
-              color: #fff;
-            "
+            class="bg-img"
+            style="border-radius: 5px; color: #fff; padding: 20px 20px"
           >
             <q-card-section class="q-pa-none">
               <div class="text-subtitle2">
@@ -108,14 +112,16 @@
                   </div>
                   <div class="q-mt-md">
                     <div class="text-secondary">
-                      <q-list dense class="text-left">
+                      <q-list dense class="text-left q-mt-sm">
                         <q-item class="congratulationsDialogItem">
                           <q-item-section
                             class="text-subtitle2 text-weight-bold"
                             lines="1"
                             >Diameter :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.diameter }}
                           </q-item-section>
                         </q-item>
@@ -126,7 +132,9 @@
                             lines="1"
                             >Temperature :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.temperature }}
                           </q-item-section>
                         </q-item>
@@ -136,7 +144,9 @@
                             lines="1"
                             >Position :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.position }}
                           </q-item-section>
                         </q-item>
@@ -147,7 +157,9 @@
                             lines="1"
                             >Metal Reserve :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.metalReserve }}
                           </q-item-section>
                         </q-item>
@@ -158,7 +170,9 @@
                             lines="1"
                             >Crystal Reserve :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.crystalReserve }}
                           </q-item-section>
                         </q-item>
@@ -168,13 +182,15 @@
                             lines="1"
                             >Petrol Reserve :
                           </q-item-section>
-                          <q-item-section avatar class="text-white"
+                          <q-item-section
+                            avatar
+                            style="color: rgb(33, 186, 69) !important"
                             >{{ this.newPlanetInfo.petrolReserve }}
                           </q-item-section>
                         </q-item>
 
                         <div
-                          class="congratulationsDialogItem text-center q-pt-md"
+                          class="congratulationsDialogItem text-center q-mt-md"
                         >
                           <button class="epic-button">
                             <span>{{
@@ -182,11 +198,9 @@
                             }}</span>
                           </button>
                         </div>
-
                       </q-list>
                     </div>
                   </div>
-
                 </q-card-section>
               </div>
             </q-card-section>
@@ -351,31 +365,48 @@ export default defineComponent({
 .congratulationsDialogItem {
   // border: 1px solid #2253f4;
   color: #fff;
+  padding: 2px 0px !important;
+  border-bottom: 1px solid !important;
+  margin-bottom: 6px !important;
+  &:last-child {
+    border-bottom: none !important;
+  }
+}
+.planetCongratulationsPopup-card .bg-img {
+  background: url(../assets/img/cardpopup.webp) center/cover;
+  // background-size: cover;
+  // background-position: center;
 }
 
 .epic-button {
   cursor: pointer;
   position: relative;
-  padding: 0.3rem 1.3rem;
-  border-radius: 3.75rem;
+  /* padding: 0.3rem 1.3rem; */
+  /* border-radius: 3.75rem; */
   line-height: 2.5rem;
   font-size: 1rem;
   font-weight: 600;
-
-  border: 1px solid #2253f4;
-  background-image: linear-gradient(-180deg, #2253f4 0%, #2253f4 100%);
-  box-shadow: 0 1rem 1.25rem 0 rgba(34, 83, 244, 0.5),
-    0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
-    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
-    0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  border: 1px solid #808080;
+  /* background-image: linear-gradient(-180deg, #2253f4 0%, #2253f4 100%); */
+  /* box-shadow: 0 1rem 1.25rem 0 rgb(34 83 244 / 50%), 0 -0.25rem 1.5rem #6e0f9b inset, 0 0.75rem 0.5rem rgb(255 255 255 / 40%) inset, 0 0.25rem 0.5rem 0 #b446cf inset; */
+  max-width: 250px;
+  width: 100%;
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+  background: #808080;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
 .epic-button span {
-  color: transparent;
-  background-image: linear-gradient(0deg, #ee82da 0%, #fefafd 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  filter: drop-shadow(0 2px 2px hsla(290, 100%, 20%, 1));
+  // color: transparent;
+  // background-image: linear-gradient(0deg, #ee82da 0%, #fefafd 100%);
+  // -webkit-background-clip: text;
+  // background-clip: text;
+  // filter: drop-shadow(0 2px 2px hsla(290, 100%, 20%, 1));
+  color: #fff;
 }
 
 .epic-button::before {
@@ -398,6 +429,7 @@ export default defineComponent({
     #ffffff 80%,
     rgba(255, 255, 255, 0) 100%
   );
+  display: none;
 }
 
 .epic-button::after {
