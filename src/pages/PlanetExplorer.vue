@@ -420,7 +420,8 @@ function copyPlanetUrlClipBoard() {
   }
 
   let fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
-  navigator.clipboard.writeText(copyText.value);
+  navigator.clipboard.writeText(fullPath);
+  alert("Copied to clipboard");
 }
 </script>
 
