@@ -433,13 +433,13 @@ function copyPlanetUrlClipBoard() {
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    return new Promise((res, rej) => {
+    new Promise((res, rej) => {
         // here the magic happens
         document.execCommand('copy') ? res() : rej();
         textArea.remove();
     });
   }
-  
+
   alert("Copied to clipboard");
 }
 </script>
