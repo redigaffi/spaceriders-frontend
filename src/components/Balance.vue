@@ -85,8 +85,8 @@ async function upateBalance() {
       $store.getters.address
     );
 
-    if ($store.getters.activePlanet.freePlanet) {
-      tokenAmount.value += $store.getters.activePlanet.freeTokens;
+    if ($store.getters.activePlanet.free_planet) {
+      tokenAmount.value += $store.getters.activePlanet.free_tokens;
     }
 
   } catch (e) {

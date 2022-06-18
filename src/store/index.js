@@ -134,6 +134,11 @@ import { createStore } from "vuex";
       },
 
       refreshAllData(state) {
+        state.activePlanet.defense_items = {...state.activePlanet.defense_items};
+        state.activePlanet.installation_level = {...state.activePlanet.installation_level};
+        state.activePlanet.research_level = {...state.activePlanet.research_level};
+        state.activePlanet.resources_level = {...state.activePlanet.resources_level};
+        
         state.resourceData = {...state.resourceData};
         state.installationData = {...state.installationData};
         state.researchData = {...state.researchData};
@@ -141,18 +146,18 @@ import { createStore } from "vuex";
       },
 
       restPlanetResources(state, payload) {
-        state.activePlanet.ressources.metal -= payload.metal;
-        state.activePlanet.ressources.petrol -= payload.petrol;
-        state.activePlanet.ressources.crystal -= payload.crystal;
+        state.activePlanet.resources.metal -= payload.metal;
+        state.activePlanet.resources.petrol -= payload.petrol;
+        state.activePlanet.resources.crystal -= payload.crystal;
       },
 
       addPlanetResources(state, payload) {
-        state.activePlanet.ressources.metal += payload.metal;
-        state.activePlanet.ressources.petrol += payload.petrol;
-        state.activePlanet.ressources.crystal += payload.crystal;
+        state.activePlanet.resources.metal += payload.metal;
+        state.activePlanet.resources.petrol += payload.petrol;
+        state.activePlanet.resources.crystal += payload.crystal;
       },
       restFreePlanetFreeTokens(state, payload) {
-        state.activePlanet.freeTokens -= payload.tokens;
+        state.activePlanet.free_tokens -= payload.tokens;
       },
       /**
        * Update planet values by providing planet, field name, and value to update.
@@ -179,9 +184,14 @@ import { createStore } from "vuex";
       upgradeRessourceData(state, payload) {
         const label = payload.label;
         let resource = state.resourceData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.resourceData[label] = resource;
+        
+        // @TODO: fix this
+        //const building = state.activePlanet.resources_level.filter(r => r.label===label)[0];
+        //building.building = true;
+        //building.finish = payload.upgradeFinish;
       },
       repairRessourceData(state, payload) {
         const label = payload.label;
@@ -195,16 +205,16 @@ import { createStore } from "vuex";
       upgradeInstallationData(state, payload) {
         const label = payload.label;
         let resource = state.installationData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.installationData[label] = resource;
       },
 
       upgradeResearchData(state, payload) {
         const label = payload.label;
         let resource = state.researchData[label];
-        resource.upgrading = true;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.building = true;
+        resource.finish = payload.upgradeFinish;
         state.researchData[label] = resource;
       },
 
@@ -213,7 +223,7 @@ import { createStore } from "vuex";
         let resource = state.defenseData[label];
         resource.building = true;
         resource.quantity_building = payload.quantity;
-        resource.current_upgrade_time_left = payload.upgradeFinish;
+        resource.finish = payload.upgradeFinish;
         state.defenseData[label] = resource;
       },
 
@@ -224,7 +234,7 @@ import { createStore } from "vuex";
 
         dataSource.repairing = false;
         dataSource.health = dataSource["upgrades"][level].health;
-        dataSource.current_repair_time_left = false;
+        dataSource.finish = false;
 
         state.resourceData[label] = dataSource;
       },
@@ -236,7 +246,7 @@ import { createStore } from "vuex";
         let type = "";
         switch(payload.type) {
           case "resources":
-            type = "infrastructure";
+            type = "mines";
             dataSource = state.resourceData[label]
             break;
           case "installations":
@@ -253,15 +263,21 @@ import { createStore } from "vuex";
               break;
         }
         
-        if (type === "infrastructure") {
-          dataSource.upgrading = false;
+        if (type === "mines") {
+          dataSource.building = false;
           dataSource.level = dataSource.level+1;
-          dataSource.current_upgrade_time_left = false;
+          dataSource.finish = false;
+          dataSource.health = dataSource.upgrades[dataSource.level].health;
+
+        }else if (type === "infrastructure") {
+          dataSource.building = false;
+          dataSource.level = dataSource.level+1;
+          dataSource.finish = false;
 
         } else if (type === "item") {
           dataSource.building = false;
           dataSource.available += dataSource.quantity_building;
-          dataSource.current_upgrade_time_left = false;
+          dataSource.finish = false;
         }
         
         switch(payload.type) {
@@ -281,9 +297,13 @@ import { createStore } from "vuex";
         
       },
 
+      claimPendingLvlUp(state, payload) {
+        state.activePlanet.pending_levelup_reward[payload.idx].completed = true;
+      },
+
       incrementResources(state, payload) {
         const key = payload.ressource;
-        state.activePlanet.ressources[key] += payload.value;
+        state.activePlanet.resources[key] += payload.value;
       },
 
       decrementReserve(state, payload) {
@@ -292,11 +312,11 @@ import { createStore } from "vuex";
       },
       
       incrementEnergy(state, payload) {
-        state.activePlanet.ressources.energy += payload.energy;
+        state.activePlanet.resources.energy += payload.energy;
       },
 
       decrementEnergy(state, payload) {
-        state.activePlanet.ressources.energy -= payload.energy;
+        state.activePlanet.resources.energy -= payload.energy;
       },
     },
 

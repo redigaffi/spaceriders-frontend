@@ -55,10 +55,12 @@ import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from 'vue-router'
 
+const $quasar = useQuasar()
 
 const $store = useStore();
-const $quasar = useQuasar();
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+
+getCurrentInstance().appContext.config.globalProperties.$notification;
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
 
@@ -102,9 +104,9 @@ const logout = () => {
 
 const checkChain = async () => {
   if (window.ethereum) {
-    const chainId = chainData.value.chainId;
+    const chainId = chainData.value.chain_id;
     const rpcUrl = chainData.value.rpc;
-    const chainName = chainData.value.chainName;
+    const chainName = chainData.value.chain_name;
 
     try {
       // check if the chain to connect to is installed
@@ -123,9 +125,9 @@ const checkChain = async () => {
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainName: chainName,
                 chainId: chainId,
-                rpcUrl: rpcUrl,
+                chainName: chainName,
+                rpcUrls: [rpcUrl],
               },
             ],
           });
@@ -159,7 +161,10 @@ const login = async (e) => {
     error.value = true;
     $store.commit("destroySession");
     $quasar.loading.hide();
-    $notification("failed", "Checking metamask chain failed...", 6000);
+    $quasar.notify($notification(
+      "failed",
+      "Checking metamask chain failed...",
+    ))
     return;
   }
 
@@ -177,25 +182,24 @@ const login = async (e) => {
     const signature = await signer.signMessage(`its me:${address}`);
 
     re = await ApiRequest.authenticate(address, signature);
-  } catch (ex) {
-    $quasar.loading.hide();
-    $notification("failed", "Checking metamask chain failed...", 6000);
-  }
-
-  if (re.data.success) {
-    $store.commit("login", { jwt: re.data.data.jwt, address: address });
+    $store.commit("login", { jwt: re.data.jwt, address: address });
     $eventBus.emit(LOGGED_IN);
     
     router.push({
       name: 'planet'
     });
-
-  } else if (!re.data.success){
+    
     $quasar.loading.hide();
-    $notification("failed", re.data.error, 6000);
+    
+  } catch (ex) {
+    $quasar.loading.hide();
+    $quasar.notify($notification(
+      "failed",
+      ex,
+    ))
   }
 
-  $quasar.loading.hide();
+ 
 };
 
 const chainData = computed(() => {
@@ -204,7 +208,7 @@ const chainData = computed(() => {
 
 const tier = computed(() => {
   if ($store.getters.activePlanet === false) return;
-  return $store.getters.activePlanet.tier.tierName.toUpperCase();
+  return $store.getters.activePlanet.tier.tier_name.toUpperCase();
 });
 
 const loggedIn = computed(() => {

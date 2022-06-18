@@ -8,10 +8,12 @@ import ApiRequest from "../service/http/ApiRequests";
 import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { getCurrentInstance, toRefs } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from 'quasar'
 
 const $notification = getCurrentInstance().appContext.config.globalProperties.$notification;
 const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
 const $store = useStore();
+const $q = useQuasar()
 
 const props = defineProps({
     planet: Object,
@@ -20,32 +22,35 @@ const props = defineProps({
 const { planet } = toRefs(props);
 
 async function claimPlanet() {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   const planetGuid = planet.value.id;
-  const data = await ApiRequest.claimPlanet(planetGuid);
+  try {
+    const apiCall = await ApiRequest.claimPlanet(planetGuid);
+    const data = apiCall.data;
+    notif($notification(
+      "success",
+      "Planet claimed successfully!",
+    ))
+    // First planet is set to default. (In case of first planet purchase)
+    if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
+      $store.commit("setActivePlanet", data);
+      $eventBus.emit(ACTIVE_PLANET_CHANGED, data);
+    }
+    
+    $store.commit('updatePlanet', { planet: data, field: "claimed", value: true });
+    $eventBus.emit(PLANET_CLAIMED, { planet: data });
+    
+    //closeNotification();
 
-  if (!data.success) {
-    $notification("failed", data.error, 6000);
-    closeNotification();
-    return;
+  } catch(e) {
+    notif($notification(
+      "failed",
+      e,
+    ))
   }
-
-  $notification("success", "Planet claimed successfully!", 6000);
-
-  // First planet is set to default. (In case of first planet purchase)
-  if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
-    $store.commit("setActivePlanet", data.data);
-  }
-  
-  $store.commit('updatePlanet', { planet: data.data, field: "claimed", value: true });
-
-  $eventBus.emit(ACTIVE_PLANET_CHANGED, data.data);
-  $eventBus.emit(PLANET_CLAIMED, { planet: data.data });
-  closeNotification();
 }
 </script>

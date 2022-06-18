@@ -52,7 +52,6 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.afterEach(async (to, from) => {
-   
     document.title = "SpaceRiders - " + to.meta.title; 
   })
 

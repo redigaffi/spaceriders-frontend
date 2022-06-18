@@ -330,6 +330,7 @@ import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: "InfoSlider",
@@ -350,6 +351,7 @@ export default defineComponent({
     const quantity = ref(1);
 
     const $store = useStore();
+    const $q = useQuasar()
 
     const dataSource = (type) => {
       let data = {};
@@ -438,7 +440,7 @@ export default defineComponent({
         currentEnergyUsage = props.data.upgrades[props.data.level].energy_usage;
       }
 
-      return nextEnergyUsage - currentEnergyUsage;
+      return (nextEnergyUsage - currentEnergyUsage).toFixed(3);
     });
 
     const canUpgrade = (props, activePlanet) => {
@@ -451,18 +453,18 @@ export default defineComponent({
         const petrolCost = dataItem.cost_petrol * quantity.value;
 
         return (
-          activePlanet.ressources.metal >= metalCost &&
-          activePlanet.ressources.petrol >= petrolCost &&
-          activePlanet.ressources.crystal >= crystalCost
+          activePlanet.resources.metal >= metalCost &&
+          activePlanet.resources.petrol >= petrolCost &&
+          activePlanet.resources.crystal >= crystalCost
         );
       }
 
       const level = data[props.data.label]["upgrades"][props.data.level + 1];
 
       return (
-        activePlanet.ressources.metal >= level.cost_metal &&
-        activePlanet.ressources.petrol >= level.cost_petrol &&
-        activePlanet.ressources.crystal >= level.cost_crystal
+        activePlanet.resources.metal >= level.cost_metal &&
+        activePlanet.resources.petrol >= level.cost_petrol &&
+        activePlanet.resources.crystal >= level.cost_crystal
       );
     };
     
@@ -471,9 +473,9 @@ export default defineComponent({
       const level = data[props.data.label]["upgrades"][props.data.level];
 
       return (
-        activePlanet.ressources.metal >= level.cost_metal &&
-        activePlanet.ressources.petrol >= level.cost_petrol &&
-        activePlanet.ressources.crystal >= level.cost_crystal
+        activePlanet.resources.metal >= level.cost_metal &&
+        activePlanet.resources.petrol >= level.cost_petrol &&
+        activePlanet.resources.crystal >= level.cost_crystal
       );
     };
 
@@ -483,36 +485,35 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canUpgrade(props, activePlanet)) {
-        $notification("failed", `Can't upgrade, not enough resources...`);
+        $q.notify($notification(
+          "failed",
+          `Can't upgrade, not enough resources...`,
+        ))
         return;
       }
 
       const activePlanetId = activePlanet.id;
 
       let storeUpdateMethod = "";
-      let apiCall = "";
       switch (props.data.type) {
         case Types.RESOURCE_TYPE:
           storeUpdateMethod = "upgradeRessourceData";
-          apiCall = ApiRequests.upgradeRessource;
           break;
         case Types.INSTALLATION_TYPE:
           storeUpdateMethod = "upgradeInstallationData";
-          apiCall = ApiRequests.upgradeInstallation;
           break;
 
         case Types.RESEARCH_TYPE:
           storeUpdateMethod = "upgradeResearchData";
-          apiCall = ApiRequests.upgradeResearch;
           break;
 
         case Types.DEFENSE_TYPE:
           storeUpdateMethod = "buildDefenseData";
-          apiCall = ApiRequests.buildDefense;
           break;
       }
 
       let data = {
+        type: props.data.type,
         label: props.data.label,
         planetGuid: activePlanetId,
       };
@@ -521,12 +522,11 @@ export default defineComponent({
         data.quantity = quantity.value;
       }
 
-      const re = await apiCall(data);
-
-      if (re.success) {
+      try {
+        const re = await ApiRequests.build(data);
         let saveStore = {
           label: props.data.label,
-          upgradeFinish: re.data.upgrade_finish,
+          upgradeFinish: re.data.finish
         };
 
         if (props.itemType) {
@@ -535,35 +535,33 @@ export default defineComponent({
 
         $store.commit(storeUpdateMethod, saveStore);
 
-        let prices = {};
-        if (props.itemType) {
-          prices = dataSource(props.data.type)[props.data.label].data;
-        } else {
-          prices = dataSource(props.data.type)[props.data.label]["upgrades"][
-            props.data.level + 1
-          ];
-        }
-
         $store.commit("restPlanetResources", {
-          metal: prices.cost_metal,
-          crystal: prices.cost_crystal,
-          petrol: prices.cost_petrol,
+          metal: re.data.metal_paid,
+          crystal: re.data.crystal_paid,
+          petrol: re.data.petrol_paid,
         });
 
         $eventBus.emit(BUILDING_UPGRADED);
 
-        let notificationMessage = `${props.data.name} upgraded and added to the building queue.`;
+        let notificationMessage = `${props.data.name} upgraded and added to the queue.`;
         if (props.itemType) {
           notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
         }
 
-        $notification("success", notificationMessage);
-      } else {
-        $notification("failed", re.error);
+        $q.notify($notification(
+          "success",
+          notificationMessage,
+        ))
+      } catch(e) {
+        $q.notify($notification(
+          "failed",
+          e,
+        ))
       }
     };
 
     const health = computed(() => {
+      if (props.data.level === 0) return false;
       if (props.data.health === undefined) return false;
 
       const fullHealth = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level].health;
@@ -677,7 +675,10 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canRepair(props, activePlanet)) {
-        $notification("failed", `Can't repair, not enough resources...`);
+        $q.notify($notification(
+          `Can't repair, not enough resources...`,
+          ex,
+        ))
         return;
       }
       
@@ -708,9 +709,15 @@ export default defineComponent({
         };
 
         $store.commit("repairRessourceData", saveStore);
-        $notification("success", "Repairing in progress...");
+        $q.notify($notification(
+          "success",
+          "Repairing in progress...",
+        ))
       } else {
-        $notification("failed", re.error);
+        $q.notify($notification(
+          "failed",
+          re.error,
+        ))
       }
     
     };

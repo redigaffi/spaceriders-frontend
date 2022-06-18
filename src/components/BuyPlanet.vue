@@ -51,6 +51,7 @@
             hide-bottom-space
             :rules="[
               (val) => val.length <= 14 || 'Please use maximum 14 characters',
+              (val) => val.length >= 4 || 'Please use minimum 4 characters',
             ]"
             style="
               border: 2px solid #2253f4;
@@ -137,6 +138,7 @@
             hide-bottom-space
             :rules="[
               (val) => val.length <= 14 || 'Please use maximum 14 characters',
+              (val) => val.length >= 4 || 'Please use minimum 4 characters',
             ]"
             style="
               border: 2px solid #2253f4;
@@ -177,7 +179,7 @@
                 color: #fff;
               "
               @click="buyPlanet"
-              :disabled="planetName.length > 14"
+              :disabled="planetName.length < 4 || planetName.length > 14"
               v-close-popup
             >
               Buy Planet
@@ -197,7 +199,7 @@ import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
-
+import ObjectID from "bson-objectid";
 import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
@@ -205,6 +207,9 @@ import SpaceRidersGameContract, {
 import { NEW_PLANET_PURCHASED, PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -229,7 +234,7 @@ watchEffect(async () => {
     planetCost.value = "";
     bnbFeeDisplay.value = "";
     visible.value = true;
-    planetCost.value = await ApiRequest.fetchPlanetCost();
+    planetCost.value = await ApiRequest.fetchPlanetCost();  
     planetCostDisplay.value = `${planetCost.value.token_cost} $SPR ($${planetCost.value.usd_cost})`;
     bnbFeeDisplay.value = "0.0025 BNB";
     visible.value = false;
@@ -242,7 +247,7 @@ const canBuyFreePlanet = computed(() => {
   const planets = $store.getters.planets;
   for (let idx in planets) {
     const planet = planets[idx];
-    if (planet.freePlanet) {
+    if (planet.free_planet) {
       canFreeMint = false;
       break;
     }
@@ -254,93 +259,88 @@ const canBuyFreePlanet = computed(() => {
 async function mintFreePlanet() {
 
   if (!canBuyFreePlanet.value) {
-    $notification("failed", "You already own a free planet", 6000);
+    $q.notify($notification(
+      "failed",
+      "You already own a free planet",
+    ))
     return;
   }
-  const closeNotification = $notification(
+  
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
   
-  const re = await ApiRequest.mintFreePlanet(planetName.value);
-
-  if (re.success) {
-    closeNotification();
-    $notification("success", "Free planet minted successfully!", 6000);
+  try {
+    const re = await ApiRequest.mintFreePlanet(planetName.value);
+    
+    notif($notification(
+      "success",
+      "Free planet minted successfully!",
+    ))
 
     $store.commit("addPlanet", re.data);
     
     if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
-      $store.commit("setActivePlanet", data.data);
+      $store.commit("setActivePlanet", re.data);
     }
 
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
     $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
     $eventBus.emit(ACTIVE_PLANET_CHANGED, re.data);
 
-  } else {
-    closeNotification();
-    $notification("failed", re.error, 6000);
-    console.error(`${planetGuid}`);
-
+  } catch(ex) {
+    notif($notification(
+      "failed",
+      ex,
+    ))
   }
-
-  closeNotification();
 }
 
 async function buyPlanet() {
-  const planetGuid = uuidv4();
+  const planetGuid = ObjectID().toHexString();
 
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
-
-  let receipt = { status: 0 };
-
-  const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
-  const sD = new SignatureData(
-    planetCostData.v,
-    planetCostData.r,
-    planetCostData.s
-  );
-
+  ))
+  
   try {
+    const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
+    const sD = new SignatureData(
+      planetCostData.v,
+      planetCostData.r,
+      planetCostData.s
+    );
+
     const tx = await SpaceRidersGameContract.buyPlanet(
-      planetGuid,
+      planetCostData.planet_id,
       planetCostData.price,
       sD,
-      planetCostData.tokenURI
+      planetCostData.token_uri
     );
-    receipt = await tx.wait();
-    console.log(receipt);
+
+    // wait till mined
+    await tx.wait();
+    const re = await ApiRequest.buyPlanet(planetGuid, planetName.value);
+    
+    $store.commit("addPlanet", re.data);
+    $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
+
+    notif($notification(
+      "success",
+      "Planet purchased successfully!",
+    ))
+
   } catch (e) {
+    notif($notification(
+      "failed",
+      e,
+    ));
+
     console.log("error");
     console.log(e);
   }
 
-  if (receipt.status === 1) {
-    const txHash = receipt.transactionHash;
-    const re = await ApiRequest.buyPlanet(txHash, planetGuid, planetName.value);
-
-    if (re.success) {
-      closeNotification();
-      $notification("success", "Planet purchases successfully!", 6000);
-    } else {
-      closeNotification();
-      $notification("failed", re.error, 6000);
-      console.error(`${planetGuid}`);
-    }
-
-    $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
-    $store.commit("addPlanet", re.data);
-  } else {
-    closeNotification();
-    $notification("failed", "Something failed, please try again!", 1500);
-  }
-
-  closeNotification();
 }
 </script>

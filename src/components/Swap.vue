@@ -156,6 +156,8 @@ import ERC20 from "../service/contract/ERC20";
 import { SWAP_COMPLETED } from "../constants/Events";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
 
 const pathNames = ref(["busd", "spr"]);
 const buyMetadata = ref({
@@ -184,7 +186,7 @@ const price = ref(0.0);
 
 const reloadPriceData = async () => {
   visible.value = true;
-  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.routerContract, $store.getters.address);
+  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.router_contract, $store.getters.address);
   price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
   visible.value = false;
 };
@@ -230,11 +232,10 @@ const swapComponents = () => {
 };
 
 const buySpr = async () => {
-  const closeNotification = $notification(
+  const notif = $q.notify($notification(
     "progress",
     "Waiting for transaction to complete...",
-    0
-  );
+  ))
 
   let receipt = { status: 0 };
   try {
@@ -251,19 +252,24 @@ const buySpr = async () => {
   } catch (e) {
     console.log("error");
     console.log(e);
-    closeNotification();
+    notif($notification(
+      "failed",
+      "Swap failed...",
+    ))
   }
 
   if (receipt.status === 1) {
-    closeNotification();
-    $notification("success", "Swap succeeded!", 6000);
+    notif($notification(
+      "success",
+      "Swap succeeded!",
+    ))
     $eventBus.emit(SWAP_COMPLETED);
   } else {
-    closeNotification();
-    $notification("failed", "Failed swapping...", 6000);
+    notif($notification(
+      "failed",
+      "Swap failed...",
+    ))
   }
-
-  closeNotification();
 };
 
 async function addToken() {

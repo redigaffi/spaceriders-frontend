@@ -3,6 +3,7 @@
 
 // LAYOUTS
 const mainLayout = () => import("layouts/MainLayout.vue");
+const basicLayout = () => import("layouts/BasicLayout.vue");
 const landingLayout = () => import("layouts/LandingLayout.vue");
 const NoLoginLayout = () => import("layouts/NoLogin.vue");
 
@@ -14,6 +15,8 @@ const planetPage = () => import("pages/Planet.vue");
 const defensePage = () => import("pages/Defense.vue");
 const planetInfoPage = () => import("pages/PlanetInfo.vue");
 
+const planetExplorer = () => import("pages/PlanetExplorer.vue");
+
 const landingPage = () => import("src/pages/Landing1.vue");
 
 // ROUTES
@@ -24,14 +27,19 @@ const routes = [
     component: landingLayout,
     children: [{ path: "/", component: landingPage, name: "landing", meta: {title: "Landing"} }],
   },
-  //TODO: change this component
+  {
+    path: "/explorer",
+    name: "explorer",
+    component: basicLayout,
+    children: [{ path: "", component: planetExplorer, name: "explorer", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Planet Explorer"} }],
+  },
   {
     path: "/overview",
     component: mainLayout,
     name: "overview",
     meta: { requiresAuth: true, requiresPlanet: true, menu: true, title: "Overview" },
     children: [
-      { path: "", component: planetInfoPage, meta: { title: ""} },
+      { path: "", component: planetInfoPage, meta: { title: "Overview"} },
       { path: "/planet", component: planetPage, name: "planet", meta: { menu: true,requiresAuth: true, requiresPlanet: false, title: "Planet" } },
       { path: "/resources", component: resourcesPage, name: "resources", meta: {  menu: true, requiresAuth: true, requiresPlanet: true, title: "Resources" }  },
       { path: "/installations", component: installationsPage, name: "installations", meta: { menu: true, requiresAuth: true, requiresPlanet: true, title: "Installations" }  },
