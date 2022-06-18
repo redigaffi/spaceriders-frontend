@@ -78,6 +78,12 @@
           </q-tooltip>
         </q-btn>
 
+        <q-btn flat round size="sm" color="red" icon="share" @click="copyPlanetUrlClipBoard">
+          <q-tooltip>
+            Copy planet permalink
+          </q-tooltip>
+        </q-btn>
+
 
         <q-card-section class="q-pa-sm q-mt-sm">
           <div class="text-h9">
@@ -120,7 +126,7 @@
   </div>
 
   <div v-if="loaded">
-    <div   v-for="(_, a) in 7" :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`" class="row">
+    <div v-for="(_, a) in 7" :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`" class="row">
       <div v-for="(_, b) in 12" :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`" class="col-1 box" :class="{
         'no_planet': loaded && !planetsByPosition[a][b].id,
         'has_planet': loaded && planetsByPosition[a][b].id,
@@ -153,8 +159,12 @@
 import { ref, onBeforeMount, onMounted, watchEffect } from "vue";
 import ApiRequests from "../service/http/ApiRequests";
 import { useQuasar } from "quasar";
+import { useRoute, useRouter } from "vue-router";
+
 
 const $quasar = useQuasar();
+const $route = useRoute();
+const $router = useRouter();
 
 const openPlanetInfo = ref(false)
 
@@ -264,10 +274,23 @@ let planetsByPosition = ref([
 ]);
 
 const loaded = ref(false);
-
 onBeforeMount(async () => {
+
   loaded.value = false;
   $quasar.loading.show();
+  
+  if ($route.name === "explorer-exact-position") {
+    const g = parseInt($route.params.galaxy);
+    const s = parseInt($route.params.solarSystem);
+    
+    if (g > 0 && g <= 100) galaxy.value = g;
+    else galaxy.value = 0;
+
+    if (s > 0 && s <= 93) fromSolarSystem.value = s;
+    else fromSolarSystem.value = 0
+    
+    toSolarSystem.value = fromSolarSystem.value+7;
+  }
 
   // Dont call api if cascade updating models is still going on
   if (Math.abs(toSolarSystem.value - fromSolarSystem.value) !== 7) {
@@ -287,9 +310,17 @@ onBeforeMount(async () => {
   planetsByPosition.value = data.data.planets;
   
   loaded.value = true;
+  
+  if ($route.name === "explorer-exact-position") {
+    let pos = parseInt($route.params.position)
+    if (pos >= 1 && pos <= 12 ) {
+      openPlanetInfoCall(fromSolarSystem.value, pos-1);
+    } else {
+      alert("Wrong planet position")
+    }
+  }
 
   $quasar.loading.hide();
-
 });
 
 watchEffect(async () => {
@@ -378,6 +409,20 @@ function openPlanetInfoCall(solarSystem, position) {
     }
 
     selectedPlanetInfo.value = planetInfo;
+  }
+}
+
+function copyPlanetUrlClipBoard() {
+  const sp = selectedPlanetInfo.value;
+  let basePath = `${window.location.origin}${$route.path}`;
+  let fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
+  console.log(fullPath)
+
+
+  if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(fullPath);
+  } else {
+    alert("Cant copy to clipboard, url printed in developer console")
   }
 }
 </script>

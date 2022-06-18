@@ -34,6 +34,12 @@ const routes = [
     children: [{ path: "", component: planetExplorer, name: "explorer", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Planet Explorer"} }],
   },
   {
+    path: "/explorer/:galaxy/:solarSystem/:position",
+    name: "explorer-exact-position",
+    component: basicLayout,
+    children: [{ path: "", component: planetExplorer, name: "explorer-exact-position", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Planet Explorer"} }],
+  },
+  {
     path: "/overview",
     component: mainLayout,
     name: "overview",
