@@ -87,7 +87,7 @@
             background-size: cover;
           "
           :style="{
-            background: `url(https://spaceriders-planets.s3.us-east-2.amazonaws.com/${this.newPlanetInfo.image}-${this.newPlanetInfo.rarity}.png) center/cover`,
+            background: `url(https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.image}-bg.webp) center/cover`,
           }"
         ></div>
 
@@ -285,8 +285,10 @@ export default defineComponent({
       obj.rarity = this.newPlanetStats.rarity;
 
       const colorMapping = {
+        uncommon: "blue-grey-6",
         common: "blue-grey-6",
         epic: "info",
+        rare: "info",
         legendary: "purple-9",
       };
 
@@ -302,7 +304,7 @@ export default defineComponent({
       }
 
       obj.temperature += `${maxTemperature}°C`;
-      obj.image = this.newPlanetStats.image;
+      obj.image = `${this.newPlanetStats.image}-${this.newPlanetStats.rarity}`;
 
       return obj;
     },

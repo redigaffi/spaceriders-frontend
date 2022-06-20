@@ -17,7 +17,7 @@ export default boot(({ app, router, store }) => {
 
         break;
       case "failed":
-        if (msg === undefined || msg === null || msg === false || typeof msg != "string" || msg === "") {
+        if (msg === undefined || msg === null || msg === false || msg === "") {
           msg = "Something unexpected happened..."
         } else if (msg instanceof Error) {
           try {

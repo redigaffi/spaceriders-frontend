@@ -31,7 +31,7 @@
               @click="changeActivatePlanet(props.row.planet)"
             >
               <div>
-                <img :src="props.row.image_url" style="height: 100px; width: 100px" />
+                <img :src="props.row.image_url" style="height: 95px; width: 100%" />
               </div>
 
               <q-card-section class="q-pt-none" style="line-height: 1">
@@ -72,9 +72,11 @@ const $eventBus =
 const $store = useStore();
 
 const colorMapping = {
+  uncommon: "blue-grey-6",
   common: "blue-grey-6",
   epic: "info",
-  legendary: "purple-9"
+  rare: "info",
+  legendary: "purple-9",
 };
 
 let rows = computed(() => {

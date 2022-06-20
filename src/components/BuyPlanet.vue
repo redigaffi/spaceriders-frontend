@@ -247,7 +247,7 @@ const canBuyFreePlanet = computed(() => {
   const planets = $store.getters.planets;
   for (let idx in planets) {
     const planet = planets[idx];
-    if (planet.free_planet) {
+    if (planet.price_paid === 0) {
       canFreeMint = false;
       break;
     }
