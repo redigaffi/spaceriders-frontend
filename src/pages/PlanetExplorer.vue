@@ -11,7 +11,8 @@
       color="warning"
       width="50px"
       label="Galaxy"
-      style="float: left; width: 90px;" 
+      style="float: left; width: 90px;"
+      @change="galaxyChange"
     />
 
     <q-input 
@@ -46,7 +47,7 @@
   </div>
 
   <div style="margin-bottom: 25px">
-    <q-page-sticky v-if="fromSolarSystem<100 " style="z-index: 1;" position="right" :offset="[18, 0]">
+    <q-page-sticky v-if="toSolarSystem<100 " style="z-index: 1;" position="right" :offset="[18, 0]">
       <q-btn @click="rightPage" round color="accent" icon="arrow_upward" class="rotate-90" />
     </q-page-sticky>
     
@@ -83,7 +84,6 @@
             Copy planet permalink
           </q-tooltip>
         </q-btn>
-
 
         <q-card-section class="q-pa-sm q-mt-sm">
           <div class="text-h9">
@@ -139,7 +139,7 @@
           </q-tooltip>
         </div>
 
-        <div @click="openPlanetInfoCall(a, b)" v-else>
+        <div @click="openPlanetInfoCall(planetsByPosition[a][b].solar_system, planetsByPosition[a][b].position)" v-else>
 
           <img :src="planetsByPosition[a][b].image_url" />
 
@@ -153,7 +153,6 @@
     </div>
   </div> 
 </template>
-
 
 <script setup>
 import { ref, onBeforeMount, onMounted, watchEffect } from "vue";
@@ -314,7 +313,7 @@ onBeforeMount(async () => {
   if ($route.name === "explorer-exact-position") {
     let pos = parseInt($route.params.position)
     if (pos >= 1 && pos <= 12 ) {
-      openPlanetInfoCall(fromSolarSystem.value, pos-1);
+      openPlanetInfoCall(fromSolarSystem.value, pos);
     } else {
       alert("Wrong planet position")
     }
@@ -348,14 +347,21 @@ watchEffect(async () => {
 
 });
 
+function galaxyChange() {
+  if (galaxy.value < 0) {
+    galaxy.value = 0;
+  }
+}
+
 function fromChange() {
   if (fromSolarSystem.value < 0) {
     fromSolarSystem.value = 0;
     return;
   }
 
-  if (fromSolarSystem.value > 93) {
+  if (fromSolarSystem.value >= 93) {
     fromSolarSystem.value = 93;
+    toSolarSystem.value = 100;
     return;
   }
 
@@ -368,8 +374,9 @@ function toChange() {
     return;
   }
 
-  if (toSolarSystem.value > 100) {
+  if (toSolarSystem.value >= 100) {
     toSolarSystem.value = 100;
+    fromSolarSystem.value = 93;
     return;
   }
 
@@ -388,6 +395,11 @@ function rightPage() {
 function leftPage() {
   fromSolarSystem.value -= 7;
   toSolarSystem.value -= 7;
+
+  if (fromSolarSystem.value < 0) {
+    fromSolarSystem.value = 0
+    toSolarSystem.value = 7;
+  }
 }
 
 function upPage() {
@@ -402,13 +414,29 @@ const selectedPlanetInfo = ref(false)
 function openPlanetInfoCall(solarSystem, position) {
   if (loaded.value) {
     openPlanetInfo.value = true;
-    const planetInfo = planetsByPosition.value[solarSystem][position];
     
-    if (!planetInfo.id) {
+    let planetByPosition = {
+      id: false
+    }
+
+    for (let i = 0; i < 7; i++) {
+      const solarSystemPlanets = planetsByPosition.value[i];
+      const re = solarSystemPlanets.filter(
+        p => 
+          p.galaxy == galaxy.value && 
+          p.solar_system == solarSystem && 
+          p.position == position
+      );
+      if (re.length > 0) {
+        planetByPosition = re[0];
+      }
+    }
+
+    if (!planetByPosition.id) {
       return;
     }
 
-    selectedPlanetInfo.value = planetInfo;
+    selectedPlanetInfo.value = planetByPosition;
   }
 }
 
