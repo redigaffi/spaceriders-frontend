@@ -64,7 +64,7 @@
 
     <q-drawer v-model="openPlanetInfo" :width="400" :breakpoint="500" overlay side="right" class="bg-dark-3">
       <q-card>
-        <img :src="selectedPlanetInfo.image_bg_url" style="height: 400px; width: 100%; z-index: 2" />
+        <img :src="selectedPlanetInfo.image_url_bg" style="height: 240px; width: 100%; z-index: 2" />
 
         <q-btn flat round size="sm" color="red" icon="close"
           @click="openPlanetInfo = false; selectedPlanetInfo = false">
@@ -463,7 +463,7 @@ function copyPlanetUrlClipBoard() {
 }
 
 .box img {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 95px;
 }
 </style>

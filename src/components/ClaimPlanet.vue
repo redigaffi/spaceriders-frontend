@@ -42,6 +42,7 @@ async function claimPlanet() {
     }
     
     $store.commit('updatePlanet', { planet: data, field: "claimed", value: true });
+    $store.commit('updatePlanet', { planet: data, field: "image_url", value: data.image_url });
     $eventBus.emit(PLANET_CLAIMED, { planet: data });
     
     //closeNotification();
