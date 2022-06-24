@@ -27,7 +27,7 @@
 
   <q-dialog v-model="freePlanetPopup">
       <q-card
-        class="bg-dark text-white"
+        class="bg-dark text-white q-pb-md"
         style="width: 600px; max-width: 70vw; border-radius: 20px"
       >
         <q-btn
@@ -86,7 +86,7 @@
 
     <q-dialog v-model="buyPlanetPopup">
       <q-card
-        class="bg-dark text-white"
+        class="bg-dark text-white q-pb-md"
         style="width: 600px; max-width: 70vw; border-radius: 20px"
       >
         <q-btn
