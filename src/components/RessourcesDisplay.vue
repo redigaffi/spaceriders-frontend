@@ -382,7 +382,7 @@
     <q-dialog v-model="energyDepositPopup">
       <q-card
         class="bg-dark text-white"
-        style="width: 600px; max-width: 70vw; border-radius: 20px"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
       >
         <q-card-section class="q-pa-xs text-center">
           <span class="q-ml-sm text-overline" style="font-size: 14px"
@@ -398,11 +398,10 @@
           v-close-popup
         />
 
-        <q-img
-          src="~assets/img/buyplanet_footer-scaled.webp"
-          style="height: 230px"
+        <div
+          class="energy-popup"
         >
-          <div class="absolute-full text-subtitle2">
+          <div class="text-subtitle2">
             <q-card-section>
               <q-card-section class="q-pt-none text-center">
                 <div class="q-mb-lg">
@@ -431,18 +430,22 @@
                   :address="ContractAddress.getSpaceRidersGameAddress()" 
                   :amount="sprCost"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                  customWidth
                 />
                 <q-btn
                   label="Deposit"
                   color="warning"
                   no-caps
-                  class="q-px-lg"
+                  class="q-px-lg q-py-sm full-width"
                   @click="depositEnergy(sprCost)"
+                  style="
+                  max-width: 130px;
+                  "
                 />
               </q-card-section>
             </q-card-section>
           </div>
-        </q-img>
+        </div>
       </q-card>
     </q-dialog>
   </div>
@@ -824,7 +827,7 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $SPR `;
+  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $SPR`;
 });
 
 async function depositEnergy(amount) {
@@ -1007,7 +1010,12 @@ $eventBus.on(UPDATED_ALL, () => {
   startTimers();
 });
 </script>
-<style>
+<style lang="scss">
+.energy-popup{
+  background: linear-gradient(to top, rgba(0,0, 0, 0.3), rgba(0,0, 0, 0.3)), url(~assets/img/buyplanet_footer-scaled.webp);
+  background-size: cover;
+  background-position: center;
+}
 .resource-box {
   width:110px;
   height: 110px;

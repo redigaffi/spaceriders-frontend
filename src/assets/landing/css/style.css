@@ -104,6 +104,9 @@ input::-webkit-inner-spin-button {
   z-index: 15;
   transition: 0.2s linear;
 }
+.header.header-bg{
+  background: rgba(0, 0, 0, 0.75);
+}
 
 .header.top {
   background: rgba(0, 0, 0, 0.75);

@@ -98,7 +98,7 @@
                 <span class="q-pl-md text-weight-bold">${{ totalUsdWithdraw }} - ({{
                     totalTokenWithdraw
                 }}
-                  $SPR)</span>
+                  SPR)</span>
               </q-badge>
               <br />
               <q-badge v-if="fee != false" style="

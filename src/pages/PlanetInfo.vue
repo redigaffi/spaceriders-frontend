@@ -1,39 +1,54 @@
 <template>
   <q-card class="glass-element text-white">
-    <glass-element-heading class="text-h6 text-center text-weight-bold text-secondary">
+    <glass-element-heading
+      class="text-h6 text-center text-weight-bold text-secondary"
+    >
       OVERVIEW
     </glass-element-heading>
 
     <div class="col-12">
       <q-card flat class="bg-transparent text-dark">
-        <img src="~assets/img/overview.webp" width="100%" style="height: 400px; width: 100%" />
+        <img
+          src="~assets/img/overview.webp"
+          width="100%"
+          style="height: 400px; width: 100%"
+        />
 
-        <q-card-section class="text-secondary absolute-bottom-right tag-glass-element">
+        <q-card-section
+          class="text-secondary absolute-bottom-right tag-glass-element overview-card"
+        >
           <q-list dense class="text-left">
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Diameter :</q-item-section>
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Diameter :</q-item-section
+              >
               <q-item-section avatar>
                 {{ diameter }} KM ({{ slotsAvailable }})
               </q-item-section>
             </q-item>
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Temperature :</q-item-section>
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Temperature :</q-item-section
+              >
               <q-item-section avatar> {{ temperature }} </q-item-section>
             </q-item>
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Position :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Position :
               </q-item-section>
               <q-item-section avatar> [{{ position }}] </q-item-section>
             </q-item>
 
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Metal Reserve :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Metal Reserve :
               </q-item-section>
               <q-item-section avatar> {{ metalReserve }} </q-item-section>
             </q-item>
 
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Crystal Reserve :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Crystal Reserve :
               </q-item-section>
               <q-item-section avatar>
                 {{ crystalReserve }}
@@ -41,7 +56,8 @@
             </q-item>
 
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Petrol Reserve :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Petrol Reserve :
               </q-item-section>
               <q-item-section avatar>
                 {{ petrolReserve }}
@@ -49,7 +65,8 @@
             </q-item>
 
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Rarity :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Rarity :
               </q-item-section>
               <q-item-section avatar>
                 {{ rarity }}
@@ -57,7 +74,8 @@
             </q-item>
 
             <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold">Level :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Level :
               </q-item-section>
               <q-item-section avatar>
                 {{ level }}
@@ -65,7 +83,8 @@
             </q-item>
 
             <q-item v-if="isStaking">
-              <q-item-section class="text-subtitle2 text-weight-bold">Staking Time :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >Staking Time :
               </q-item-section>
               <q-item-section avatar>
                 {{ stakingHoursLeft }}
@@ -73,49 +92,90 @@
             </q-item>
 
             <q-item v-if="isStaking">
-              <q-item-section class="text-subtitle2 text-weight-bold">LP Value :
+              <q-item-section class="text-subtitle2 text-weight-bold"
+                >LP Value :
               </q-item-section>
-              <q-item-section avatar>
-                {{ lpPrice }}$
-              </q-item-section>
+              <q-item-section avatar> {{ lpPrice }}$ </q-item-section>
             </q-item>
 
-
             <q-item>
-              <q-btn @click="openUpdateDialog = !openUpdateDialog" color="dark" label="Update" class="q-mr-xs" />
+              <q-btn
+                @click="openUpdateDialog = !openUpdateDialog"
+                color="dark"
+                label="Update"
+                class="q-mr-xs"
+              />
 
-              <q-btn v-if="hasLvlUpPendingRewardClaim" color="dark" label="Lvl Reward" class="q-mr-xs"
-                @click="claimPendingLvlUpReward" />
+              <q-btn
+                v-if="hasLvlUpPendingRewardClaim"
+                color="dark"
+                label="Lvl Reward"
+                class="q-mr-xs"
+                @click="claimPendingLvlUpReward"
+              />
 
               <q-dialog v-model="openUpdateDialog">
-                <q-card class="bg-dark text-white" style="
-                          width: 600px;
-                          max-width: 70vw;
-                          border-radius: 20px;
-                        ">
-                  <q-btn round class="absolute-top-right" flat color="warning" icon="close" v-close-popup />
-                  <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
+                <q-card
+                  class="bg-dark text-white"
+                  style="width: 600px; max-width: 70vw; border-radius: 20px"
+                >
+                  <q-btn
+                    round
+                    class="absolute-top-right"
+                    flat
+                    color="warning"
+                    icon="close"
+                    v-close-popup
+                  />
+                  <img
+                    src="~assets/img/buyplanet_footer-scaled.webp"
+                    alt=""
+                    srcset=""
+                  />
                   <q-card-section class="text-center">
                     <div class="text-h6">RENAME PLANET</div>
                     <div class="text-subtitle1">
-                      Updating a planet costs 0.5BNB, also, you can choose
-                      a planet name (which can be changed later).
+                      Updating a planet costs 0.5BNB, also, you can choose a
+                      planet name (which can be changed later).
                     </div>
                   </q-card-section>
                   <q-card-section class="q-pt-none">
-                    <q-input label-color="info" v-model="planetName" autofocus label="Planet Name"
-                      standout="bg-secondary" />
+                    <q-input
+                      label-color="info"
+                      v-model="planetName"
+                      autofocus
+                      label="Planet Name"
+                      standout="bg-secondary"
+                    />
                   </q-card-section>
 
                   <q-card-section class="q-pt-none text-center">
-                    <q-btn label="Rename Planet" color="warning" no-caps class="q-px-lg" v-close-popup />
+                    <q-btn
+                      label="Rename Planet"
+                      color="warning"
+                      no-caps
+                      class="q-px-lg"
+                      v-close-popup
+                    />
                   </q-card-section>
                 </q-card>
               </q-dialog>
 
-              <q-btn v-if="!isStaking" @click="openTierDialog" color="warning" label="Upgrade" class="full-width" />
-              <q-btn v-else @click="unstake" color="negative" class="full-width text-weight-bolder"
-                :loading="unstakeDisabled" :disable="unstakeDisabled">
+              <q-btn
+                v-if="!isStaking"
+                @click="openTierDialog"
+                color="warning"
+                label="Upgrade"
+                class="full-width"
+              />
+              <q-btn
+                v-else
+                @click="unstake"
+                color="negative"
+                class="full-width text-weight-bolder"
+                :loading="unstakeDisabled"
+                :disable="unstakeDisabled"
+              >
                 Withdraw
                 <template v-slot:loading>
                   <q-spinner-rings size="1em" class="on-left" />
@@ -126,10 +186,13 @@
           </q-list>
         </q-card-section>
 
-
-
         <q-dialog v-model="layout">
-          <q-layout style="height: 500px" view="l l f" container class="bg-dark">
+          <q-layout
+            style="height: 500px"
+            view="l l f"
+            container
+            class="bg-dark"
+          >
             <q-header class="bg-primary">
               <q-toolbar>
                 <q-toolbar-title>Upgrade Tier</q-toolbar-title>
@@ -141,10 +204,18 @@
             <q-page-container>
               <q-page padding v-if="!isStaking">
                 <div>
-                  <q-select color="info" filled v-model="selectedTier" :options="tierOptions" label="CHOOSE NEW TIER"
-                    stack-label>
+                  <q-select
+                    color="info"
+                    filled
+                    v-model="selectedTier"
+                    :options="tierOptions"
+                    label="CHOOSE NEW TIER"
+                    stack-label
+                  >
                     <template v-slot:label>
-                      <span style="color: #2253f4" class="text-weight-bold">CHOOSE NEW TIER</span>
+                      <span style="color: #2253f4" class="text-weight-bold"
+                        >CHOOSE NEW TIER</span
+                      >
                     </template>
                   </q-select>
                 </div>
@@ -154,13 +225,24 @@
                       <span>Price</span>
                     </td>
                     <td>
-                      <span class="text-weight-bold text-overline" style="font-size: 20px">
+                      <span
+                        class="text-weight-bold text-overline"
+                        style="font-size: 20px"
+                      >
                         ${{ selectedTierInfo.usd_cost }} ({{
-                            selectedTierInfo.token_cost
+                          selectedTierInfo.token_cost
                         }}
                         &nbsp;
-                        <img src="~assets/img/logo.webp" alt=""
-                          style="height: 20px; width: 20px; vertical-align: middle" />)</span>
+                        <img
+                          src="~assets/img/logo.webp"
+                          alt=""
+                          style="
+                            height: 20px;
+                            width: 20px;
+                            vertical-align: middle;
+                          "
+                        />)</span
+                      >
                     </td>
                   </tr>
                   <tr>
@@ -168,9 +250,14 @@
                       <span>Benefits</span>
                     </td>
                     <td>
-                      <ul class="text-weight-bold text-overline q-ma-none q-pa-none"
-                        style="font-size: 14px; list-style-type: none">
-                        <li v-for="benefit in selectedTierInfo.benefit_lines" :key="benefit">
+                      <ul
+                        class="text-weight-bold text-overline q-ma-none q-pa-none"
+                        style="font-size: 14px; list-style-type: none"
+                      >
+                        <li
+                          v-for="benefit in selectedTierInfo.benefit_lines"
+                          :key="benefit"
+                        >
                           {{ benefit }}
                         </li>
                       </ul>
@@ -181,7 +268,10 @@
                       <span>Staking locked</span>
                     </td>
                     <td>
-                      <span class="text-weight-bold text-overline" style="font-size: 16px">{{ stakingLockedDays }}
+                      <span
+                        class="text-weight-bold text-overline"
+                        style="font-size: 16px"
+                        >{{ stakingLockedDays }}
                       </span>
                       days
                     </td>
@@ -192,15 +282,27 @@
                       <span>Performance fee</span>
                     </td>
                     <td>
-                      <span class="text-weight-bold text-overline" style="font-size: 16px">
-                        0.5%</span>
+                      <span
+                        class="text-weight-bold text-overline"
+                        style="font-size: 16px"
+                      >
+                        0.5%</span
+                      >
                     </td>
                   </tr>
                 </table>
 
-                <IncreaseAllowance :address="ContractAddress.getSpaceRidersGameAddress()"
-                  :amount="selectedTierInfo.token_cost" :tokenAddress="ContractAddress.getSpaceRidersAddress()" />
-                <q-btn style="float: right" color="warning" label="Upgrade" @click="stake" />
+                <IncreaseAllowance
+                  :address="ContractAddress.getSpaceRidersGameAddress()"
+                  :amount="selectedTierInfo.token_cost"
+                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                />
+                <q-btn
+                  style="float: right"
+                  color="warning"
+                  label="Upgrade"
+                  @click="stake"
+                />
               </q-page>
             </q-page-container>
           </q-layout>
@@ -227,10 +329,11 @@ import ApiRequests from "../service/http/ApiRequests";
 import IncreaseAllowance from "../components/IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
 import { STAKE, UNSTAKE } from "../constants/Events";
-import { useQuasar } from 'quasar'
-const $q = useQuasar()
+import { useQuasar } from "quasar";
+const $q = useQuasar();
 
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 const openUpdateDialog = ref(false);
 
@@ -258,7 +361,7 @@ const temperature = computed(() => {
 const hasLvlUpPendingRewardClaim = computed(() => {
   const pendingLvlUpClaims = $store.getters.activePlanet.pending_levelup_reward;
   if (!pendingLvlUpClaims) return false;
-  return pendingLvlUpClaims.filter(c => !c.completed).length > 0;
+  return pendingLvlUpClaims.filter((c) => !c.completed).length > 0;
 });
 
 const position = computed(() => {
@@ -310,7 +413,9 @@ const lpValue = async () => {
 
   const pairAddr = chainInfo.pair_contract;
   const pairContract = new ERC20(pairAddr);
-  const userLpBalance = await SpaceRidersGameContract.stakedLpAmount($store.getters.activePlanet.id);
+  const userLpBalance = await SpaceRidersGameContract.stakedLpAmount(
+    $store.getters.activePlanet.id
+  );
 
   const totalLpSupply = await pairContract.totalSupply($store.getters.address);
 
@@ -321,7 +426,10 @@ const lpValue = async () => {
   const busdContract = new ERC20(busdAddr);
   const busdPairBalance = await busdContract.balanceOf(pairAddr);
 
-  const sprLpValue = ((userLpBalance / totalLpSupply) * sprPairBalance) * parseFloat($store.getters.tokenPrice);
+  const sprLpValue =
+    (userLpBalance / totalLpSupply) *
+    sprPairBalance *
+    parseFloat($store.getters.tokenPrice);
   const busdLpValue = (userLpBalance / totalLpSupply) * busdPairBalance;
 
   lpPrice.value = (sprLpValue + busdLpValue).toFixed(1);
@@ -393,10 +501,9 @@ async function openTierDialog() {
 }
 
 async function stake() {
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   const tier = selectedTier.value.value;
 
@@ -423,7 +530,7 @@ async function stake() {
 
     const tx = await SpaceRidersGameContract.stakingRequest(sD, attributes);
     await tx.wait();
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 5000));
     await ApiRequest.confirmStakingRequest({
       planetId: $store.getters.activePlanet.id,
     });
@@ -436,17 +543,10 @@ async function stake() {
     layout.value = false;
 
     $eventBus.emit(STAKE);
-    notif($notification(
-      "success",
-      "Staked successfully, enjoy!",
-    ))
-
+    notif($notification("success", "Staked successfully, enjoy!"));
   } catch (e) {
     console.log(e);
-    notif($notification(
-      "failed",
-      e,
-    ))
+    notif($notification("failed", e));
     return;
   }
 }
@@ -462,10 +562,9 @@ const unstakeDisabled = computed(() => {
 });
 
 async function unstake() {
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const tx = await SpaceRidersGameContract.unstakingRequest(
@@ -486,28 +585,17 @@ async function unstake() {
     layout.value = false;
     $eventBus.emit(UNSTAKE);
 
-    notif($notification(
-      "success",
-      "Un-staked successfully, thank you!",
-    ))
-
+    notif($notification("success", "Un-staked successfully, thank you!"));
   } catch (e) {
     console.log(e);
-    notif($notification(
-      "failed",
-      e,
-    ))
+    notif($notification("failed", e));
   }
-
 }
 
 async function claimPendingLvlUpReward() {
-
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
-
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const req = await ApiRequests.claimPendingLvlUpReward({
@@ -515,31 +603,46 @@ async function claimPendingLvlUpReward() {
       claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
     });
 
-    const sD = new SignatureData(
-      req.data.v,
-      req.data.r,
-      req.data.s
-    );
+    const sD = new SignatureData(req.data.v, req.data.r, req.data.s);
 
-    const tx = await SpaceRidersGameContract.addPurchasingPower(req.data.amount, req.data.claim_id, sD);
+    const tx = await SpaceRidersGameContract.addPurchasingPower(
+      req.data.amount,
+      req.data.claim_id,
+      sD
+    );
     await tx.wait();
-    await new Promise(r => setTimeout(r, 5000));
-    
+    await new Promise((r) => setTimeout(r, 5000));
+
     await ApiRequests.confirmPendingLvlUpReward({
-        claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
+      claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
     });
 
-    $store.commit('claimPendingLvlUp', {idx: 0});
+    $store.commit("claimPendingLvlUp", { idx: 0 });
 
-    notif($notification(
-      "success",
-      "Successfully claimed level up reward",
-    ))
-  } catch(e) {
-    notif($notification(
-      "failed",
-      e,
-    ))
+    notif($notification("success", "Successfully claimed level up reward"));
+  } catch (e) {
+    notif($notification("failed", e));
   }
 }
 </script>
+<style lang="scss">
+.overview-card {
+  background: url(../assets/img/hologram1.webp);
+  // background: #0E6D89;
+  background-size: auto;
+  background-position: center;
+  &::before {
+    display: none !important;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 3px;
+  left: calc(100% - 410px);
+  background-position-x: center;
+  width: 400px;
+  border: 5px solid #08b7ed !important;
+  bottom: 3px;
+  border-radius: 10px !important;
+}
+</style>

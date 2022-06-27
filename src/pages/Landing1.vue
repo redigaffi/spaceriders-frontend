@@ -1,6 +1,6 @@
 <template>
   <div id="landing">
-    <header class="header">
+    <header class="header" ref="headRef">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="header__inner">
           <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
@@ -1194,6 +1194,7 @@
 
 
 import { defineComponent, ref } from "vue";
+import { onMounted } from "@vue/runtime-core";
 //import PieChart from "../components/pieChart";
 
 export default defineComponent({
@@ -1203,6 +1204,17 @@ export default defineComponent({
     // const $q = useQuasar();
     // $q.loading.show();
 
+    const headRef = ref(null); // obtain the reference
+      onMounted(() => {
+        window.addEventListener("scroll", () => {
+          var curr = window.pageYOffset;
+          if (curr >= 100) {
+            headRef.value.classList.add("header-bg");
+          }else{
+            headRef.value.classList.remove("header-bg");
+          }
+        });
+      });
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -1325,6 +1337,7 @@ export default defineComponent({
       openWhitepaper,
       slide: ref(1),
       faq_section,
+      headRef
     };
   },
 });
