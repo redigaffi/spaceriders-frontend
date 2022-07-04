@@ -438,112 +438,126 @@ const previousPriceData = computed(() => {
   };
 });
 
-const ws = new WebSocket(process.env.BASE_WS_PATH);
+let ws = false;
 
-onBeforeUnmount(() => {
-  console.log("Closing websocket...")
-  ws.close()
-})
+const connect = () => {
+  ws = new WebSocket(process.env.BASE_WS_PATH);
 
-ws.onopen = function (event) {
-  console.log("Connection to websockets established!");
-  // Keep connection open
-  setInterval(() => {
+  ws.onopen = function (event) {
+    console.log("Connection to websockets established!");
+    // Keep connection open
+    setInterval(() => {
+      ws.send(JSON.stringify({
+        use_case: "ping"
+      }));
+    }, 5000);
+
+    // Initial data load
     ws.send(JSON.stringify({
-      use_case: "ping"
-    }));
-  }, 5000);
-
-  // Initial data load
-  ws.send(JSON.stringify({
-    use_case: "trade_fetch_historical_data",
-    data: {
-      market_code: marketCode,
-      candle_time_frame: candleTimeFrame.value
-    }
-  }));
-
-
-  setInterval(() => {
-    ws.send(JSON.stringify({
-      use_case: "trade_fetch_current_candle",
+      use_case: "trade_fetch_historical_data",
       data: {
         market_code: marketCode,
         candle_time_frame: candleTimeFrame.value
       }
     }));
-  }, 500);
 
-};
 
-ws.onmessage = function (event) {
-  const data = JSON.parse(event.data);
-  if (data.response_type === "ping") {
-    return;
-  }
+    setInterval(() => {
+      ws.send(JSON.stringify({
+        use_case: "trade_fetch_current_candle",
+        data: {
+          market_code: marketCode,
+          candle_time_frame: candleTimeFrame.value
+        }
+      }));
+    }, 500);
 
-  if (data.response_type === "trade_fetch_historical_data") {
-    
-    updateLast24HourInfo(data.data.last_24_info)
-    addNewTrades(data.data.last_trades);
+  };
 
-    candlePriceData.value = data.data.price_candle_data;
-    initialCandlePriceDataLoad(candlePriceData.value)
+  ws.onclose = (e) => {
+    setTimeout(function () {
+      connect();
+    }, 1000);
+  };
 
-    orderBook.value["buy"] = []
-    orderBook.value["sell"] = []
-    addOrderBook("buy", data.data.open_buy_orders);
-    addOrderBook("sell", data.data.open_sell_orders);
-
-  } else if (data.response_type === "trade_fetch_order_book_data") {
-    orderBook.value["buy"] = []
-    orderBook.value["sell"] = []
-    addOrderBook("buy", data.data.open_buy_orders);
-    addOrderBook("sell", data.data.open_sell_orders);
-
-  } else if (data.response_type === "trade_fetch_current_candle") {
-    updateLast24HourInfo(data.data.last_24_info)
-    const now = new Date();
-    const currentCandleData = data.data.price_candle_data;
-
-    const newDateInterval = Object.keys(currentCandleData)[0]
-    const newCurrentCandleData = Object.values(currentCandleData)[0]
-
-    if (!currentCandleDateInterval.value) {
-      currentCandleDateInterval.value = newDateInterval;
-
-      // Time Interval is closed
-    } else if (currentCandleDateInterval.value != newDateInterval) {
-
-      if (newCurrentCandleData === null && Object.keys(candlePriceData.value).length > 0) {
-        const previousValues = Object.values(candlePriceData.value);
-        const previousCandle = previousValues[previousValues.length - 1];
-        const previousCandleClosePrice = previousCandle.close;
-
-        previousCandle.id.date_formatted = newDateInterval;
-        previousCandle.open = previousCandleClosePrice
-        previousCandle.high = previousCandleClosePrice
-        previousCandle.low = previousCandleClosePrice
-        previousCandle.close = previousCandleClosePrice
-
-        candlePriceData.value[previousCandle.id.date_formatted] = previousCandle;
-        const parsedPreviousCandle = parseCandleData(previousCandle);
-        candlestickSeries.update(parsedPreviousCandle);
-      } 
-
-      currentCandleDateInterval.value = newDateInterval;
-    } else if (newCurrentCandleData !== null) {
-      newCurrentCandleData.id.date_formatted = newDateInterval;
-      const newCandle = parseCandleData(newCurrentCandleData);
-
-      candlePriceData.value[newDateInterval] = newCurrentCandleData;
-      candlestickSeries.update(newCandle);
-
+  ws.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    if (data.response_type === "ping") {
+      return;
     }
-  } else if (data.response_type === "trade") {
-    addNewTrades(data.data.executed_trades);
-  }
+
+    if (data.response_type === "trade_fetch_historical_data") {
+      
+      updateLast24HourInfo(data.data.last_24_info)
+      addNewTrades(data.data.last_trades);
+
+      candlePriceData.value = data.data.price_candle_data;
+      initialCandlePriceDataLoad(candlePriceData.value)
+
+      orderBook.value["buy"] = []
+      orderBook.value["sell"] = []
+      addOrderBook("buy", data.data.open_buy_orders);
+      addOrderBook("sell", data.data.open_sell_orders);
+
+    } else if (data.response_type === "trade_fetch_order_book_data") {
+      orderBook.value["buy"] = []
+      orderBook.value["sell"] = []
+      addOrderBook("buy", data.data.open_buy_orders);
+      addOrderBook("sell", data.data.open_sell_orders);
+
+    } else if (data.response_type === "trade_fetch_current_candle") {
+      updateLast24HourInfo(data.data.last_24_info)
+      const now = new Date();
+      const currentCandleData = data.data.price_candle_data;
+
+      const newDateInterval = Object.keys(currentCandleData)[0]
+      const newCurrentCandleData = Object.values(currentCandleData)[0]
+
+      if (!currentCandleDateInterval.value) {
+        currentCandleDateInterval.value = newDateInterval;
+
+        // Time Interval is closed
+      } else if (currentCandleDateInterval.value != newDateInterval) {
+
+        if (newCurrentCandleData === null && Object.keys(candlePriceData.value).length > 0) {
+          const previousValues = Object.values(candlePriceData.value);
+          const previousCandle = previousValues[previousValues.length - 1];
+          const previousCandleClosePrice = previousCandle.close;
+
+          previousCandle.id.date_formatted = newDateInterval;
+          previousCandle.open = previousCandleClosePrice
+          previousCandle.high = previousCandleClosePrice
+          previousCandle.low = previousCandleClosePrice
+          previousCandle.close = previousCandleClosePrice
+
+          candlePriceData.value[previousCandle.id.date_formatted] = previousCandle;
+          const parsedPreviousCandle = parseCandleData(previousCandle);
+          candlestickSeries.update(parsedPreviousCandle);
+        } 
+
+        currentCandleDateInterval.value = newDateInterval;
+      } else if (newCurrentCandleData !== null) {
+        newCurrentCandleData.id.date_formatted = newDateInterval;
+        const newCandle = parseCandleData(newCurrentCandleData);
+
+        candlePriceData.value[newDateInterval] = newCurrentCandleData;
+        candlestickSeries.update(newCandle);
+
+      }
+    } else if (data.response_type === "trade") {
+      addNewTrades(data.data.executed_trades);
+    }
+  };
+
+  onBeforeUnmount(() => {
+    console.log("Closing websocket...")
+    ws.close()
+  });
 };
+
+
+connect();
+
 
 function changeCandleTimeframe(time) {
   trades.value = [];
