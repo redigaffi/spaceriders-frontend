@@ -438,7 +438,7 @@ const previousPriceData = computed(() => {
   };
 });
 
-const ws = new WebSocket(`ws://localhost:8011/ws`);
+const ws = new WebSocket(process.env.BASE_WS_PATH);
 
 onBeforeUnmount(() => {
   console.log("Closing websocket...")
