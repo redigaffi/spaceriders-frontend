@@ -171,6 +171,7 @@ const galaxy = ref(0)
 const fromSolarSystem = ref(0)
 const toSolarSystem = ref(7)
 
+//@TODO: This sucks.
 let planetsByPosition = ref([
   [
     {id: false},

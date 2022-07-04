@@ -4,6 +4,7 @@
 // LAYOUTS
 const mainLayout = () => import("layouts/MainLayout.vue");
 const basicLayout = () => import("layouts/BasicLayout.vue");
+const basicLayoutNoAnimBg = () => import("layouts/BasicLayoutNoAnimBg.vue");
 const landingLayout = () => import("layouts/LandingLayout.vue");
 const NoLoginLayout = () => import("layouts/NoLogin.vue");
 
@@ -16,6 +17,7 @@ const defensePage = () => import("pages/Defense.vue");
 const planetInfoPage = () => import("pages/PlanetInfo.vue");
 
 const planetExplorer = () => import("pages/PlanetExplorer.vue");
+const tradingPage = () => import("pages/Trading.vue");
 
 const landingPage = () => import("src/pages/Landing1.vue");
 
@@ -39,6 +41,13 @@ const routes = [
     name: "explorer-exact-position",
     component: basicLayout,
     children: [{ path: "", component: planetExplorer, name: "explorer-exact-position", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Planet Explorer"} }],
+  },
+  {
+    path: "/trade/:market",
+    name: "trading",
+    component: basicLayoutNoAnimBg,
+    meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Trading"},
+    children: [{ path: "", component: tradingPage, name: "trading", meta: {requiresAuth: true, requiresPlanet: false, menu: false, title: "Trading"} }],
   },
   {
     path: "/overview",
