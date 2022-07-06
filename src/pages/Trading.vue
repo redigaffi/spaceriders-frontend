@@ -309,9 +309,15 @@
 
 <script setup>
 import { createChart } from 'lightweight-charts';
-import { ref, computed, onMounted, watchEffect, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, watchEffect, onBeforeUnmount, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
+
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const SYMBOLS = {
   "METAL": "mtl",
@@ -475,8 +481,12 @@ const connect = () => {
   };
 
   ws.onclose = (e) => {
+    console.log("WS closed...")
     setTimeout(function () {
-      connect();
+      if (ws.readyState == 2 || ws.readyState == 3) {
+        connect();
+      }
+      
     }, 1000);
   };
 
@@ -486,7 +496,14 @@ const connect = () => {
       return;
     }
 
-    if (data.response_type === "trade_fetch_historical_data") {
+    if (data.response_type === "error") {
+      
+      $q.notify($notification(
+        "failed",
+        data.data,
+      ));
+
+    } else if (data.response_type === "trade_fetch_historical_data") {
       
       updateLast24HourInfo(data.data.last_24_info)
       addNewTrades(data.data.last_trades);
@@ -552,6 +569,11 @@ const connect = () => {
   onBeforeUnmount(() => {
     console.log("Closing websocket...")
     ws.close()
+  });
+
+  window.addEventListener('unload', () => {
+    //console.log("Closing websocket... 1")
+    //ws.close()
   });
 };
 
