@@ -399,4 +399,22 @@ export default class ApiRequests {
       const path = `${process.env.BASE_API_PATH}/planets/${data.galaxy}/${data.fromSolarSystem}/${data.toSolarSystem}`;
       return (await axios.get(path));
     }
+
+    /**
+     * @param {object} data
+     * @returns
+     */
+     static async getCurrencyMarketOpenOrders(data) {
+      const path = `${process.env.BASE_API_PATH}/currency_market/orders/open/${data.marketCode}/${data.planetId}`;
+      return (await axios.get(path));
+    }
+
+    /**
+     * @param {object} data
+     * @returns
+     */
+     static async cancelOrder(data) {
+      const path = `${process.env.BASE_API_PATH}/currency_market/order/${data.orderId}/close`;
+      return (await axios.post(path));
+    }
 }

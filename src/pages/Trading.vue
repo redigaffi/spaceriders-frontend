@@ -203,7 +203,7 @@
                     <div class="row">
                       <div class="col-6 text-left">Buy {{ pair1 }}</div>
                       <div class="col-6 text-right">
-                        <q-icon name="fas fa-wallet" /> 5000 {{ pair2 }}
+                        <q-icon name="fas fa-wallet" /> {{ activePlanet.resources[pair2.toLowerCase()]}} {{ pair2 }}
                       </div>
                     </div>
 
@@ -231,7 +231,7 @@
                     <div class="row">
                       <div class="col-6 text-left">Sell {{ pair1 }}</div>
                       <div class="col-6 text-right">
-                        <q-icon name="fas fa-wallet" /> 5000 {{ pair1 }}
+                        <q-icon name="fas fa-wallet" /> {{ activePlanet.resources[pair1.toLowerCase()] }} {{ pair1 }}
                       </div>
                     </div>
 
@@ -258,8 +258,39 @@
             </q-tab-panel>
 
             <q-tab-panel name="openTrades">
-              <div class="text-h6">Open Trades</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <!--<div class="text-h6">Open Trades</div>-->
+              <div class="row full-width q-mt-xs" style="height: 270px;">
+                <q-scroll-area class="full-width full-height">
+                  <div class="row text-center">
+                    <div class="col">created</div>
+                    <div class="col">type</div>
+                    <div class="col">amount</div>
+                    <div class="col">filled</div>
+                    <div class="col">price</div>
+                    <div class="col"></div>
+                  </div>
+        
+                  <q-separator dark class="q-mt-sm"/>
+
+                  <div v-for="myOpenOrder in myOpenOrders" :key="myOpenOrder" class="row text-center q-mt-sm">
+                    <div class="col">{{ myOpenOrder.created_date }}</div>
+                    <div class="col" :class="{
+                      'price-text-negative': myOpenOrder.type == 'sell',
+                      'price-text-positive': myOpenOrder.type == 'buy',
+                    }">
+                      {{ myOpenOrder.type }}
+                    </div>
+                    <div class="col">{{ myOpenOrder.amount }}</div>
+                    <div class="col">{{ myOpenOrder.amount_filled }}</div>
+                    <div class="col">{{ myOpenOrder.price }}</div>
+                    <div class="col">
+                      <q-btn size="sm" color="red" label="Cancel" @click="cancelOrder(myOpenOrder.id)" />
+                    </div>
+                  </div>
+
+                </q-scroll-area>
+              </div>
+              
             </q-tab-panel>
 
             <q-tab-panel name="closedTrades">
@@ -284,7 +315,6 @@
         <div class="col text-left ">PR. ({{ SYMBOLS[pair2] }})</div>
         <div class="col text-center">Qty. ({{ SYMBOLS[pair1] }})</div>
         <div class="col text-right">Time</div>
-
       </div>
 
       <q-scroll-area class="full-width full-height q-mt-sm">
@@ -299,7 +329,6 @@
             <div class="col text-right">{{ trade.time }}</div>
 
           </div>
-
         </transition-group>
       </q-scroll-area>
     </div>
@@ -313,11 +342,17 @@ import { ref, computed, onMounted, watchEffect, onBeforeUnmount, getCurrentInsta
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from 'quasar'
+import ApiRequest from "../service/http/ApiRequests";
 
 const $q = useQuasar()
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
+
+
+const activePlanet = computed(() => {
+  return $store.getters.activePlanet;
+});
 
 const SYMBOLS = {
   "METAL": "mtl",
@@ -372,10 +407,21 @@ const pairs = marketCode.split("_");
 
 const pair1 = pairs[0];
 const pair2 = pairs[1];
-const userActionTab = ref("spotTrading")
+const userActionTab = ref("spotTrading");
+
+const myOpenOrders = ref([]);
+watchEffect(async () => {
+  if (userActionTab.value == "openTrades") {
+    const re = await ApiRequest.getCurrencyMarketOpenOrders({
+      marketCode: marketCode,
+      planetId: $store.getters.activePlanet.id
+    });
+
+    myOpenOrders.value = re.data;
+  }
+});
 
 const tradeType = ref("limit");
-
 const buyPrice = ref(0);
 const buyAmount = ref(0);
 const buyTotal = ref(0);
@@ -703,6 +749,20 @@ function sellSpot() {
   }
 
   ws.send(JSON.stringify(req));
+}
+
+const cancelOrder = async (orderId) => {
+  
+  await ApiRequest.cancelOrder({
+    orderId: orderId
+  });
+
+  const re = await ApiRequest.getCurrencyMarketOpenOrders({
+    marketCode: marketCode,
+    planetId: $store.getters.activePlanet.id
+  });
+
+  myOpenOrders.value = re.data;
 }
 
 </script>
