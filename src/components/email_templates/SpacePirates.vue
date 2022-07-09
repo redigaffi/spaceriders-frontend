@@ -10,7 +10,7 @@
           padding: 7px 15px;
         ">
         <q-item-section class="">
-          <q-item-label style="word-break: break-all" class="text-body1">
+          <q-item-label class="text-body1">
           Bad news Rider... Pirates decided to stop by your planet and steal
           resources.
           </q-item-label>
