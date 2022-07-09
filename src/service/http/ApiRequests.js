@@ -417,4 +417,13 @@ export default class ApiRequests {
       const path = `${process.env.BASE_API_PATH}/currency_market/order/${data.orderId}/close`;
       return (await axios.post(path));
     }
+
+    /**
+     * @param {object} data
+     * @returns
+     */
+     static async getAllCurrencyMarketInfo() {
+      const path = `${process.env.BASE_API_PATH}/currency_market/all`;
+      return (await axios.get(path));
+    }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="row q-ml-xl">
-    <div class="col-2 q-mr-lg glass-element-darker" style="border-radius: 0px; height: 650px" >
+    <div class="col-2 q-mr-lg glass-element-darker" style="border-radius: 0px; height: 650px">
 
       <div class="row q-mb-sm">
         <div class="col  text-center">
@@ -10,9 +10,9 @@
       </div>
 
       <div class="row q-mb-sm">
-        <div class="col text-left">PR. ({{ SYMBOLS[pair2] }})</div>
-        <div class="col text-center">Qty ({{ SYMBOLS[pair1] }})</div>
-        <div class="col text-right">Total ({{ SYMBOLS[pair2] }})</div>
+        <div class="col text-left" style="font-size:12px">PRICE ({{ SYMBOLS[pair2] }})</div>
+        <div class="col text-center" style="font-size:12px">Qty ({{ SYMBOLS[pair1] }})</div>
+        <div class="col text-right" style="font-size:12px">Total ({{ SYMBOLS[pair2] }})</div>
       </div>
 
       <q-separator dark />
@@ -36,8 +36,8 @@
 
         <div class="full-width full-height q-mt-xs">
           <q-separator class="q-mt-xs" />
-          
-          <div  style="font-size:18px; display:inline;" :class="{
+
+          <div style="font-size:18px; display:inline;" :class="{
             'price-text-positive': currentPriceData.priceAction == 'positive',
             'price-text-negative': currentPriceData.priceAction == 'negative',
           }">
@@ -45,7 +45,8 @@
             <q-icon v-if="currentPriceData.priceAction == 'positive'" name="fas fa-arrow-up" />
             <q-icon v-else name="fas fa-arrow-down" />
           </div>
-          <span class="q-ml-lg" style="color: #aeb0af" v-if="previousPriceData.price">{{ previousPriceData.price }}</span>
+          <span class="q-ml-lg" style="color: #aeb0af" v-if="previousPriceData.price">{{ previousPriceData.price
+          }}</span>
           <q-separator class="q-mt-xs" dark />
         </div>
 
@@ -73,15 +74,15 @@
     <div class="col-6">
 
       <div class="row glass-element-darker" style="border-radius: 0px; height: 50px">
-        
+
         <div class="col-2 q-mt-sm">
           <div style="font-size: 13px;">{{ pair1 }}/{{ pair2 }}</div>
         </div>
 
         <q-separator vertical />
 
-        <div class="col-1 q-ml-xs text-center" >
-          
+        <div class="col-1 q-ml-xs text-center">
+
           <div class="row">
             <div class="q-ml-sm " :class="{
               'price-text-positive': currentPriceData.priceAction == 'positive',
@@ -93,7 +94,7 @@
             </div>
           </div>
           <div class="row q-ml-sm" style="font-size: 10px;">
-              {{previousPriceData.price}}
+            {{ previousPriceData.price }}
           </div>
         </div>
 
@@ -123,7 +124,7 @@
 
         <div class="col-2 q-ml-sm">
           <div class="row" style="font-size: 10px; color: #aeb0af">
-            24h Vol. ({{SYMBOLS[pair1]}})
+            24h Vol. ({{ SYMBOLS[pair1] }})
           </div>
           <div class="row" style="font-size: 10px;">
             {{ pair1Volume }}
@@ -134,7 +135,7 @@
 
         <div class="col-2 q-ml-sm">
           <div class="row" style="font-size: 10px; color: #aeb0af">
-            24h Vol. ({{SYMBOLS[pair2]}})
+            24h Vol. ({{ SYMBOLS[pair2] }})
           </div>
           <div class="row" style="font-size: 10px;">
             {{ pair2Volume }}
@@ -144,27 +145,25 @@
         <q-separator vertical />
 
         <div class="col-2 q-mt-sm q-ml-sm">
-          
-          <div class="row" style="font-size: 11px;">
-            
-              <div class="col-2 cursor-pointer"
-                :class="{
-                  'text-blue': candleTimeFrame == '1m'
-                }"
-                @click="changeCandleTimeframe('1m')">1m</div>
-              
-              <div class="col-3 cursor-pointer" :class="{
-                  'text-blue': candleTimeFrame == '15m'
-                }" @click="changeCandleTimeframe('15m')">15m</div>
 
-              <div class="col-3 cursor-pointer" :class="{
-                  'text-blue': candleTimeFrame == '1h'
-                }" @click="changeCandleTimeframe('1h')">1h</div>
+          <div class="row" style="font-size: 11px;">
+
+            <div class="col-2 cursor-pointer" :class="{
+              'text-blue': candleTimeFrame == '1m'
+            }" @click="changeCandleTimeframe('1m')">1m</div>
+
+            <div class="col-3 cursor-pointer" :class="{
+              'text-blue': candleTimeFrame == '15m'
+            }" @click="changeCandleTimeframe('15m')">15m</div>
+
+            <div class="col-3 cursor-pointer" :class="{
+              'text-blue': candleTimeFrame == '1h'
+            }" @click="changeCandleTimeframe('1h')">1h</div>
 
           </div>
-          
+
         </div>
-      
+
       </div>
 
       <div id="chart" class="row q-mt-lg" style="height: 550px">
@@ -203,24 +202,27 @@
                     <div class="row">
                       <div class="col-6 text-left">Buy {{ pair1 }}</div>
                       <div class="col-6 text-right">
-                        <q-icon name="fas fa-wallet" /> {{ activePlanet.resources[pair2.toLowerCase()]}} {{ pair2 }}
+                        <q-icon name="fas fa-wallet" /> {{ activePlanet.resources[pair2.toLowerCase()] }} {{ pair2 }}
                       </div>
                     </div>
 
-                    <q-input v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-xs" v-model.number="buyPrice" dense prefix="Price" :suffix="pair2">
-                        <template v-slot:append>
-                          <q-btn @click="getLastPrice('buy')" size="xs" color="black" class="" label="last" />
-                        </template>
+                    <q-input v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" standout="bg-secondary"
+                      class="q-mt-xs" v-model.number="buyPrice" dense prefix="Price" :suffix="pair2">
+                      <template v-slot:append>
+                        <q-btn @click="getLastPrice('buy')" size="xs" color="black" class="" label="last" />
+                      </template>
                     </q-input>
 
-                    <q-input standout="bg-secondary" v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" class="q-mt-sm" v-model.number="buyAmount" dense prefix="Amount" :suffix="pair1" />
+                    <q-input standout="bg-secondary" v-if="tradeType == 'limit'" input-class="text-right q-mr-xs"
+                      class="q-mt-sm" v-model.number="buyAmount" dense prefix="Amount" :suffix="pair1" />
 
-                    <q-input input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-sm" v-model.number="buyTotal" dense prefix="Total" :suffix="pair2" >
+                    <q-input input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-sm"
+                      v-model.number="buyTotal" dense prefix="Total" :suffix="pair2">
                       <template v-slot:append>
                         <q-btn @click="maxBalance('buy')" size="xs" color="black" class="" label="max" />
                       </template>
                     </q-input>
-             
+
                     <q-btn @click="buySpot" color="green" class="full-width q-mt-sm" label="Buy" />
 
                   </div>
@@ -235,15 +237,18 @@
                       </div>
                     </div>
 
-                    <q-input v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-xs" v-model.number="sellPrice" dense prefix="Price" :suffix="pair2">
+                    <q-input v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" standout="bg-secondary"
+                      class="q-mt-xs" v-model.number="sellPrice" dense prefix="Price" :suffix="pair2">
                       <template v-slot:append>
                         <q-btn @click="getLastPrice('sell')" size="xs" color="black" class="" label="last" />
                       </template>
                     </q-input>
 
-                    <q-input standout="bg-secondary" v-if="tradeType == 'limit'" input-class="text-right q-mr-xs" class="q-mt-sm" v-model.number="sellAmount" dense prefix="Amount" :suffix="pair1" />
-                      
-                    <q-input input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-sm" v-model.number="sellTotal" dense prefix="Total" :suffix="pair2">
+                    <q-input standout="bg-secondary" v-if="tradeType == 'limit'" input-class="text-right q-mr-xs"
+                      class="q-mt-sm" v-model.number="sellAmount" dense prefix="Amount" :suffix="pair1" />
+
+                    <q-input input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-sm"
+                      v-model.number="sellTotal" dense prefix="Total" :suffix="pair2">
                       <template v-slot:append>
                         <q-btn @click="maxBalance('sell')" size="xs" color="black" class="" label="max" />
                       </template>
@@ -269,8 +274,8 @@
                     <div class="col">price</div>
                     <div class="col"></div>
                   </div>
-        
-                  <q-separator dark class="q-mt-sm"/>
+
+                  <q-separator dark class="q-mt-sm" />
 
                   <div v-for="myOpenOrder in myOpenOrders" :key="myOpenOrder" class="row text-center q-mt-sm">
                     <div class="col">{{ myOpenOrder.created_date }}</div>
@@ -290,7 +295,7 @@
 
                 </q-scroll-area>
               </div>
-              
+
             </q-tab-panel>
 
             <q-tab-panel name="closedTrades">
@@ -303,34 +308,69 @@
 
     </div>
 
-    <div class="col-2 q-ml-lg glass-element-darker" style="border-radius: 0px; font-size: 90%; height: 500px">
-      <div class="row q-mb-sm">
-        <div class="col  text-center">
-          Market Orders (last 24H)
-          <q-separator dark class="q-mt-sm" />
+
+    <div class="col-2 q-ml-lg">
+      
+      <div class="row glass-element-darker" style="border-radius: 0px; font-size: 90%; height: 200px">
+        <div class="col">
+            <div class="row">
+              <div class="col text-center">Markets</div>
+            </div>
+
+            <q-separator class="q-mt-sm" />
+
+            <div class="row q-mt-sm full-width">
+              <div class="col text-left">Pair</div>
+              <div class="col text-right">Price</div>
+            </div>
+
+            <q-separator class="q-mt-sm" />
+            
+            <q-scroll-area class="q-mt-xs full-width full-height">
+                <div @click="changeMarket(market.market)" v-for="market in markets" :key="market.pair" class="row cursor-pointer">
+                  <div class="col text-left">{{market.market}}</div>
+                  <div class="col text-right">{{market.last_price}}</div>
+                </div>
+            </q-scroll-area>
         </div>
-
-      </div>
-      <div class="row q-mb-sm">
-        <div class="col text-left ">PR. ({{ SYMBOLS[pair2] }})</div>
-        <div class="col text-center">Qty. ({{ SYMBOLS[pair1] }})</div>
-        <div class="col text-right">Time</div>
       </div>
 
-      <q-scroll-area class="full-width full-height q-mt-sm">
-        <q-separator dark class="q-mt-xs" />
-        <transition-group name="bounce">
-          <div v-for="trade in reverseOrderedTrades" :key="trade" class="row market-order-entry q-mt-xs" :class="{
-            'market-order-price-positive': trade.priceAction === 'positive',
-            'market-order-price-negative': trade.priceAction === 'negative'
-          }">
-            <div class="col text-left">{{ trade.price }}</div>
-            <div class="col text-center">{{ trade.amount }}</div>
-            <div class="col text-right">{{ trade.time }}</div>
+      <div class="row q-mt-lg glass-element-darker" style="border-radius: 0px; font-size: 90%; height: 500px">
+        <div class="col">
+          <div class="row q-mb-sm">
+            <div class="col  text-center">
+              Market Orders (last 24H)
+              <q-separator dark class="q-mt-sm" />
+            </div>
 
           </div>
-        </transition-group>
-      </q-scroll-area>
+          <div class="row q-mb-sm">
+            <div class="col text-left" style="font-size:12px">PRICE ({{ SYMBOLS[pair2] }})</div>
+            <div class="col text-center" style="font-size:12px">Qty ({{ SYMBOLS[pair1] }})</div>
+            <div class="col text-right" style="font-size:12px">Time</div>
+          </div>
+
+          <q-scroll-area class="full-width full-height q-mt-sm">
+            <q-separator dark class="q-mt-xs" />
+            <transition-group name="bounce">
+              <div v-for="trade in reverseOrderedTrades" :key="trade" class="row market-order-entry q-mt-xs" :class="{
+                'market-order-price-positive': trade.priceAction === 'positive',
+                'market-order-price-negative': trade.priceAction === 'negative'
+              }">
+                <div class="col text-left">{{ trade.price }}</div>
+                <div class="col text-center">{{ trade.amount }}</div>
+                <div class="col text-right">{{ trade.time }}</div>
+
+              </div>
+            </transition-group>
+          </q-scroll-area>
+        </div>
+      </div>
+
+
+
+
+
     </div>
   </div>
 
@@ -357,11 +397,16 @@ const activePlanet = computed(() => {
 const SYMBOLS = {
   "METAL": "mtl",
   "PETROL": "ptr",
+  "CRYSTAL": "cry",
 }
+
+const markets = ref([]);
 
 // https://github.com/tradingview/lightweight-charts/issues/383
 let candlestickSeries = false;
-onMounted(() => {
+onMounted(async () => {
+  const re = await ApiRequest.getAllCurrencyMarketInfo();
+  markets.value = re.data;
 
   const chart = createChart(document.getElementById('chart'), { height: "540", });
 
@@ -421,6 +466,12 @@ watchEffect(async () => {
   }
 });
 
+
+setInterval(async () => {
+  const re = await ApiRequest.getAllCurrencyMarketInfo();
+  markets.value = re.data;
+}, 5000);
+
 const tradeType = ref("limit");
 const buyPrice = ref(0);
 const buyAmount = ref(0);
@@ -456,7 +507,7 @@ const pair2Volume = ref(-1);
 
 function getLastPrice(action) {
   if (trades.value.length > 0) {
-    const lastTrade = trades.value[trades.value.length-1];
+    const lastTrade = trades.value[trades.value.length - 1];
     if (action === "buy") buyPrice.value = lastTrade.price;
     else if (action === "sell") sellPrice.value = lastTrade.price;
   }
@@ -465,7 +516,7 @@ function getLastPrice(action) {
 function maxBalance(action) {
   if (action === "buy") buyAmount.value = 5000;
   else if (action === "sell") sellAmount.value = 5000;
-  
+
 }
 
 const reverseOrderedTrades = computed(() => {
@@ -515,6 +566,16 @@ const connect = () => {
 
 
     setInterval(() => {
+        
+      ws.send(JSON.stringify({
+        use_case: "trade_fetch_order_book_data",
+        data: {
+          market_code: marketCode,
+          candle_time_frame: candleTimeFrame.value
+        }
+      }));
+
+
       ws.send(JSON.stringify({
         use_case: "trade_fetch_current_candle",
         data: {
@@ -532,7 +593,7 @@ const connect = () => {
       if (ws.readyState == 2 || ws.readyState == 3) {
         connect();
       }
-      
+
     }, 1000);
   };
 
@@ -543,14 +604,14 @@ const connect = () => {
     }
 
     if (data.response_type === "error") {
-      
+
       $q.notify($notification(
         "failed",
         data.data,
       ));
 
     } else if (data.response_type === "trade_fetch_historical_data") {
-      
+
       updateLast24HourInfo(data.data.last_24_info)
       addNewTrades(data.data.last_trades);
 
@@ -596,7 +657,7 @@ const connect = () => {
           candlePriceData.value[previousCandle.id.date_formatted] = previousCandle;
           const parsedPreviousCandle = parseCandleData(previousCandle);
           candlestickSeries.update(parsedPreviousCandle);
-        } 
+        }
 
         currentCandleDateInterval.value = newDateInterval;
       } else if (newCurrentCandleData !== null) {
@@ -662,7 +723,7 @@ function initialCandlePriceDataLoad(candles) {
   for (const candleIdx in candles) {
     twCandles.push(parseCandleData(candles[candleIdx]));
   }
-  
+
   candlestickSeries.setData(twCandles);
 }
 
@@ -752,7 +813,7 @@ function sellSpot() {
 }
 
 const cancelOrder = async (orderId) => {
-  
+
   await ApiRequest.cancelOrder({
     orderId: orderId
   });
@@ -765,11 +826,16 @@ const cancelOrder = async (orderId) => {
   myOpenOrders.value = re.data;
 }
 
+const changeMarket = async (marketCode) => {
+  const pairs = marketCode.split("/")
+  const code = `${pairs[0]}_${pairs[1]}`;
+  await $router.push({ name: 'trading', params: { market:code }, force: true })
+  $router.go(0);
+}
 </script>
 
 
 <style lang="scss">
-
 .order_book {
   width: 100%;
 }
