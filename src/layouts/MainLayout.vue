@@ -44,7 +44,7 @@
             color="primary"
             @click="openInboxModel = !openInboxModel"
           >
-            <q-badge v-if="anyUnreadMessage" floating color="info" rounded />
+            <q-badge class="animation absolute-top-right" v-if="anyUnreadMessage" color="info" rounded />
           </q-btn>
         </q-page-sticky>
 
@@ -951,5 +951,13 @@ body {
 
 .unread_msg {
   border-left: 4px solid #2253f4;
+}
+.animation{
+  animation: scaleUp 2s ease infinite;
+}
+@keyframes scaleUp {
+  0% {transform: scale(1); opacity: 0.5;}
+  50% {transform: scale(2); opacity: 1;}
+  100% {transform: scale(1); opacity: 0.5;}
 }
 </style>
