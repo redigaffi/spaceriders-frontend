@@ -11,14 +11,14 @@
             <img
               :src="`data_img/${data.label}.webp`"
               width="100%"
-              style="height: 340px; width: 100%"
+              style="height: 100%; width: 100%"
             />
           </div>
           <!-- CARD -->
           <div class="col">
             <q-card-section
               class="
-                text-h5 text-secondary text-weight-bold text-left
+                text-h6 text-secondary text-weight-bold text-left
                 tag-glass-element
               "
             >
