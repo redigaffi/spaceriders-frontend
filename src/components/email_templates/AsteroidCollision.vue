@@ -10,7 +10,7 @@
           padding: 7px 15px;
         ">
         <q-item-section class="">
-          <q-item-label style="word-break: break-all" class="text-body1">Bad news Rider... An asteroid just arrived,
+          <q-item-label class="text-body1">Bad news Rider... An asteroid just arrived,
             take a look at the
             damages caused</q-item-label>
         </q-item-section>
