@@ -12,7 +12,11 @@
   src: url("../assets/font/TrueBlue-PhiloLogicXP-ExpandedRegular.otf");
   font-display: swap;
 }
-
+@font-face {
+  font-family: plantFont;
+  src: url("../assets/font/Orbitron-Regular.ttf");
+  font-display: swap;
+}
 body {
   font-family: bodyFont;
   border: 1px solid black;
