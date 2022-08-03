@@ -451,7 +451,7 @@
           <div class="text-2 title game__title">TEAM</div>
 
           <div class="q-pt-xl row q-col-gutter-sm">
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -505,7 +505,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -584,7 +584,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -641,61 +641,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
-              <q-card
-                flat
-                class="bg-transparent text-center"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/mac_ast_2.webp"
-                    style="width: 100px"
-                  />
-                </div>
 
-                <q-card-section>
-                  <div class="text-h5">Mack</div>
-                  <div class="text-h6">CTO</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div>Front End Analytics</div>
-                  <div>Strategy Analyst</div>
-                  <div>Systems Analyst</div>
-                  <div>Data Analysis</div>
-                  <div>Blockchain Enthusiast</div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/company/spaceridersio"
-                  />
-                  <q-btn
-                    flat
-                    color="white"
-                    icon="fab fa-telegram-plane"
-                    type="a"
-                    target="_blank"
-                    href="https://t.me/SpaceRidersENChat"
-                  />
-                  <q-btn
-                    flat
-                    color="white"
-                    icon="fab fa-discord"
-                    type="a"
-                    target="_blank"
-                    href="https://discord.gg/h733Kh6XTn"
-                  />
-                </q-card-section>
-              </q-card>
-            </div>
           </div>
         </div>
       </div>
