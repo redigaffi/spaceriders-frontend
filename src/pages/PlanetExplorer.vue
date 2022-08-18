@@ -484,6 +484,9 @@ function copyPlanetUrlClipBoard() {
 
 .has_planet {
   transition: 0.5s;
+  > div{
+    height: 100% !important;
+  }
 }
 
 .has_planet:hover {
@@ -493,6 +496,7 @@ function copyPlanetUrlClipBoard() {
 
 .box img {
   width: 100%;
-  height: 95px;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
