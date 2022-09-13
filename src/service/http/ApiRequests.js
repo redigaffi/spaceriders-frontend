@@ -24,22 +24,9 @@ export default class ApiRequests {
       name: name,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
-    /**
-   *
-   * @param {string} tx Planet purchase TX.
-   * @param {string} planetGuid Planet GUID.
-   */
-    static async mintFreePlanet(name) {
-      const path = `${process.env.BASE_API_PATH}/planet/free`;
-      const body = {
-        name: name,
-      };
-      return (await axios.post(path, body));
-    }
-  
   /**
    *
    * @param {string} planetGuid Planet GUID.
@@ -51,7 +38,7 @@ export default class ApiRequests {
       planet_id: planetGuid,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -106,8 +93,6 @@ export default class ApiRequests {
     return (await axios.get(path)).data;
   }
 
-
-
   /**
    * Gets all resources for a given planet
    *
@@ -131,10 +116,10 @@ export default class ApiRequests {
       type: data.type,
       label: data.label,
       planet_id: data.planetGuid,
-      quantity: data.quantity
+      quantity: data.quantity,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -159,7 +144,6 @@ export default class ApiRequests {
     return (await axios.get(path)).data;
   }
 
-
   /**
    * Conversion Request.
    * @param {string} label
@@ -176,7 +160,7 @@ export default class ApiRequests {
       petrol: data.petrol,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -187,7 +171,7 @@ export default class ApiRequests {
    */
   static async getTierInfo() {
     const path = `${process.env.BASE_API_PATH}/planet/staking/info`;
-    return (await axios.get(path));
+    return await axios.get(path);
   }
 
   /**
@@ -204,7 +188,7 @@ export default class ApiRequests {
       planet_id: data.planetId,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -220,7 +204,7 @@ export default class ApiRequests {
       planet_id: data.planetId,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   static async unstakeRequest(data) {
@@ -230,7 +214,7 @@ export default class ApiRequests {
       planet_id: data.planetId,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -266,7 +250,7 @@ export default class ApiRequests {
    */
   static async getAllInfoPlanet(planetId) {
     const path = `${process.env.BASE_API_PATH}/planet/${planetId}`;
-    return (await axios.get(path));
+    return await axios.get(path);
   }
 
   /**
@@ -303,6 +287,25 @@ export default class ApiRequests {
   }
 
   /**
+   * Depost $BKM
+   * @param {object} data
+   * @returns
+   */
+  static async bkmTransaction(data) {
+    const path = `${process.env.BASE_API_PATH}/planet/bkm`;
+
+    const body = {
+      planet_id: data.planetId,
+      deposit_id: data.guid,
+      amount: data.amount,
+      type: data.type,
+
+    };
+
+    return (await axios.post(path, body)).data;
+  }
+
+  /**
    * Token Price
    * @param {object} data
    * @returns
@@ -327,9 +330,8 @@ export default class ApiRequests {
    */
   static async getPreviewConversion(planetId) {
     const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/preview`;
-    return (await axios.get(path));
+    return await axios.get(path);
   }
-
 
   /**
    * Confirm conversion
@@ -344,7 +346,7 @@ export default class ApiRequests {
       token_conversion_id: data.guid,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -353,77 +355,58 @@ export default class ApiRequests {
    */
   static async getPendingConversions(planetId) {
     const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/pending`;
-    return (await axios.get(path));
+    return await axios.get(path);
   }
 
-    /**
+  /**
    * Confirm conversion
    * @param {object} data
    * @returns
    */
-    static async retryConversion(data) {
-      const path = `${process.env.BASE_API_PATH}/planet/resources/convert/retry`;
-  
-      const body = {
-        planet_id: data.planetId,
-        token_conversion_id: data.guid,
-      };
-  
-      return (await axios.post(path, body));
-    }
+  static async retryConversion(data) {
+    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/retry`;
 
+    const body = {
+      planet_id: data.planetId,
+      token_conversion_id: data.guid,
+    };
+
+    return await axios.post(path, body);
+  }
 
   /**
    * @param {object} data
    * @returns
    */
-    static async claimPendingLvlUpReward(data) {
-      const path = `${process.env.BASE_API_PATH}/planet/level/reward/${data.claimId}/sign`;
-      return (await axios.get(path));
-    }
+  static async getPlanetsByPositionRange(data) {
+    const path = `${process.env.BASE_API_PATH}/planets/${data.galaxy}/${data.fromSolarSystem}/${data.toSolarSystem}`;
+    return await axios.get(path);
+  }
 
-    /**
-     * @param {object} data
-     * @returns
-     */
-    static async confirmPendingLvlUpReward(data) {
-      const path = `${process.env.BASE_API_PATH}/planet/level/reward/${data.claimId}/confirm`;
-      return (await axios.get(path));
-    }
+  /**
+   * @param {object} data
+   * @returns
+   */
+  static async getCurrencyMarketOpenOrders(data) {
+    const path = `${process.env.BASE_API_PATH}/currency_market/orders/open/${data.marketCode}/${data.planetId}`;
+    return await axios.get(path);
+  }
 
-    /**
-     * @param {object} data
-     * @returns
-     */
-     static async getPlanetsByPositionRange(data) {
-      const path = `${process.env.BASE_API_PATH}/planets/${data.galaxy}/${data.fromSolarSystem}/${data.toSolarSystem}`;
-      return (await axios.get(path));
-    }
+  /**
+   * @param {object} data
+   * @returns
+   */
+  static async cancelOrder(data) {
+    const path = `${process.env.BASE_API_PATH}/currency_market/order/${data.orderId}/close`;
+    return await axios.post(path);
+  }
 
-    /**
-     * @param {object} data
-     * @returns
-     */
-     static async getCurrencyMarketOpenOrders(data) {
-      const path = `${process.env.BASE_API_PATH}/currency_market/orders/open/${data.marketCode}/${data.planetId}`;
-      return (await axios.get(path));
-    }
-
-    /**
-     * @param {object} data
-     * @returns
-     */
-     static async cancelOrder(data) {
-      const path = `${process.env.BASE_API_PATH}/currency_market/order/${data.orderId}/close`;
-      return (await axios.post(path));
-    }
-
-    /**
-     * @param {object} data
-     * @returns
-     */
-     static async getAllCurrencyMarketInfo() {
-      const path = `${process.env.BASE_API_PATH}/currency_market/all`;
-      return (await axios.get(path));
-    }
+  /**
+   * @param {object} data
+   * @returns
+   */
+  static async getAllCurrencyMarketInfo() {
+    const path = `${process.env.BASE_API_PATH}/currency_market/all`;
+    return await axios.get(path);
+  }
 }

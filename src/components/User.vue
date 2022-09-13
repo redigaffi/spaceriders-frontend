@@ -10,7 +10,7 @@
           class="glossy q-mr-sm"
           color="primary"
           icon="person"
-          @click="login"
+          @click="chooseLoginPopupFunc"
         />
         <q-btn
           v-else
@@ -44,6 +44,41 @@
       </q-card>
     </q-dialog>
   </div>
+
+  <q-dialog v-model="chooseLoginPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 350px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >Login</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                    <q-btn color="amber" style="width: 150px;" glossy label="Metamask" @click="login"/>
+              </q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                    <q-btn color="amber" style="width: 150px;" glossy label="Facewallet" @click="alert('Integration in process...')" />
+              </q-card-section>
+            </q-card-section>
+          </div>
+
+      </q-card>
+    </q-dialog>
+
 </template>
 
 <script setup>
@@ -65,6 +100,7 @@ const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const userInfoPopup = ref(false);
+const chooseLoginPopup = ref(false);
 const error = ref(false);
 const router = useRouter();
 
@@ -148,6 +184,14 @@ const checkChain = async () => {
   }
 };
 
+const chooseLoginPopupFunc = async (e) => {
+  if (loggedIn.value) {
+    userInfoPopup.value = true;
+    return;
+  }
+
+  chooseLoginPopup.value = true
+}
 const login = async (e) => {
   if (loggedIn.value) {
     userInfoPopup.value = true;
@@ -184,13 +228,13 @@ const login = async (e) => {
     re = await ApiRequest.authenticate(address, signature);
     $store.commit("login", { jwt: re.data.jwt, address: address });
     $eventBus.emit(LOGGED_IN);
-    
+
     router.push({
       name: 'planet'
     });
-    
+
     $quasar.loading.hide();
-    
+
   } catch (ex) {
     $quasar.loading.hide();
     $quasar.notify($notification(
@@ -199,7 +243,7 @@ const login = async (e) => {
     ))
   }
 
- 
+
 };
 
 const chainData = computed(() => {

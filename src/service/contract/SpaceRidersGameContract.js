@@ -12,12 +12,14 @@ class BenefitStakingAttributes {
    * @param {int} amount
    * @param {string} tier
    * @param {int} timeRelease
+   * @param {string} router
    */
-  constructor(planetId, amount, tier, timeRelease) {
+  constructor(planetId, amount, tier, timeRelease, router) {
     this.planetId = planetId;
     this.amount = amount;
     this.tier = tier;
     this.timeRelease = timeRelease;
+    this.router = router;
   }
 }
 
@@ -37,11 +39,11 @@ class EnergyDepositAttributes {
 
 class TokenExchangeAttributes {
     /**
-     * 
-     * @param {*} id 
-     * @param {*} tokens 
-     * @param {*} validTimeWindow 
-     * @param {*} forAddress 
+     *
+     * @param {*} id
+     * @param {*} tokens
+     * @param {*} validTimeWindow
+     * @param {*} forAddress
      */
     constructor(id, tokens, forAddress) {
         this.id = id;
@@ -78,6 +80,7 @@ class SpaceRidersGameContract extends Contract {
       attributes.amount,
       attributes.tier,
       attributes.timeRelease,
+      attributes.router,
       overrides
     );
   }
@@ -122,17 +125,65 @@ class SpaceRidersGameContract extends Contract {
     );
   }
 
+  /**
+   * @param {EnergyDepositAttributes} energyDeposit
+  **/
+  async bkmDeposit(bkmDeposit) {
+    const contract = await this.getContract();
+
+    const overrides = {
+      // To convert Ether to Wei:
+      //@todo: get price from smart contract
+      //value: ethers.utils.parseEther("0.05"),
+      value: ethers.utils.parseEther("0.0025"),
+      gasLimit: 1972197,
+    };
+
+    const amountInWei = ethers.utils
+      .parseEther(bkmDeposit.amount)
+      .toString();
+
+    return await contract.bkmDeposit(
+      amountInWei,
+      bkmDeposit.guid,
+      bkmDeposit.planetId,
+      overrides
+    );
+  }
+
+  async bkmWithdraw(bkmDeposit) {
+    const contract = await this.getContract();
+
+    const overrides = {
+      // To convert Ether to Wei:
+      //@todo: get price from smart contract
+      //value: ethers.utils.parseEther("0.05"),
+      value: ethers.utils.parseEther("0.0025"),
+      gasLimit: 1972197,
+    };
+
+    const amountInWei = ethers.utils
+      .parseEther(bkmDeposit.amount)
+      .toString();
+
+    return await contract.bkmWithdraw(
+      amountInWei,
+      bkmDeposit.guid,
+      bkmDeposit.planetId,
+      overrides
+    );
+  }
     /**
-     * 
-     * @param {*} planetGuid 
-     * @param {*} price 
-     * @param {*} sD 
-     * @param {*} tokenURI 
-     * @returns 
+     *
+     * @param {*} planetGuid
+     * @param {*} price
+     * @param {*} sD
+     * @param {*} tokenURI
+     * @returns
      */
     async buyPlanet(planetGuid, price, sD, tokenURI) {
       const contract = await this.getContract();
-      
+
       const overrides = {
           // To convert Ether to Wei:
           //@todo: get price from smart contract
@@ -151,11 +202,11 @@ class SpaceRidersGameContract extends Contract {
 
     /**
      * @param {string} planetGuid Planet GUID.
-     * 
+     *
      **/
     async convertFromPrimaryResources(signatureData, attributes) {
         const contract = await this.getContract();
-        
+
         const overrides = {
           gasLimit: 721975,
         };
@@ -165,32 +216,6 @@ class SpaceRidersGameContract extends Contract {
             attributes.id,
             attributes.tokens,
             attributes.forAddress,
-            overrides
-        );
-    }
-    
-      /**
-     * Increase PP
-     * @param {*} amount 
-     * @param {*} claimRequest 
-     * @param {*} signatureData 
-     * @returns 
-     */
-      async addPurchasingPower(amount, claimRequest, signatureData) {
-        //addPurchasingPower(uint256 _amount, string memory _claimReq, OB.signatureData calldata sD)
-        const contract = await this.getContract();
-        
-        const overrides = {
-          // To convert Ether to Wei:
-          //@todo: get price from smart contract
-          value: ethers.utils.parseEther("0.0025"),
-          gasLimit: 1972197,
-        };
-
-        return await contract.addPurchasingPower(
-            amount,
-            claimRequest,
-            signatureData,
             overrides
         );
     }

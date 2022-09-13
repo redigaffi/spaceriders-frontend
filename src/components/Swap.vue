@@ -85,24 +85,7 @@
       </q-card-section>
 
       <q-card-section style="color: #fff">
-        <div
-          class="q-my-md"
-          style="
-            border-top: 2px solid #2253f4;
-            border-radius: 5px;
-            box-shadow: 0 0 20px #2253f4;
-          "
-        ></div>
-        <div>Purchasing Power: {{ purchasingPower }} $SPR</div>
-        <div
-          class="q-my-md"
-          style="
-            border-top: 2px solid #2253f4;
-            border-radius: 5px;
-            box-shadow: 0 0 20px #2253f4;
-          "
-        ></div>
-        <div>$SPR = {{ price }}$</div>
+        <div>$BKM = {{ price }}$</div>
         <div>
           <br />
           [TESTNET]
@@ -111,7 +94,7 @@
           <br />
           <a href="https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7" target="_blank">Get BUSD in testnet</a>
         </div>
-        
+
       </q-card-section>
 
       <q-card-actions class="row q-col-gutter-md">
@@ -147,7 +130,7 @@
 </template>
 
 <script setup>
-import { ref, watch, getCurrentInstance, onBeforeMount } from "vue";
+import { ref, watch, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import RouterContract from "../service/contract/RouterContract";
@@ -159,13 +142,13 @@ import ContractAddress from "../service/contract/ContractAddress";
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
 
-const pathNames = ref(["busd", "spr"]);
+const pathNames = ref(["busd", "bkm"]);
 const buyMetadata = ref({
   busd: {
     image:
       "https://cryptologos.cc/logos/binance-usd-busd-logo.svg?v=022",
   },
-  spr: {
+  bkm: {
     image: "logo.webp",
   },
 });
@@ -181,12 +164,10 @@ const openPopup = ref(false);
 
 const $store = useStore();
 
-const purchasingPower = ref(0);
 const price = ref(0.0);
 
 const reloadPriceData = async () => {
   visible.value = true;
-  purchasingPower.value = await SpaceRiders.purchasingPower($store.getters.chainInfo.router_contract, $store.getters.address);
   price.value = parseFloat(await ApiRequests.tokenPrice()).toFixed(6);
   visible.value = false;
 };
@@ -209,12 +190,12 @@ const buyFromChange = async () => {
 
 const maxBalance = async () => {
   if (pathNames.value[0] === "busd") {
-    
+
     const busdContract = new ERC20(ContractAddress.getBusdAddress());
     buyFromAmount.value = await busdContract.balanceOf($store.getters.address);
     buyFromChange();
-  } else if (pathNames.value[0] === "spr") {
-    
+  } else if (pathNames.value[0] === "bkm") {
+
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
     buyFromChange();
   }
@@ -244,7 +225,7 @@ const buySpr = async () => {
       tx = await RouterContract.buySpr($store.getters.address, buyFromAmount.value.toString());
 
       receipt = await tx.wait();
-    } else if (pathNames.value[0] === "spr") {
+    } else if (pathNames.value[0] === "bkm") {
       tx = await RouterContract.sellSpr($store.getters.address, buyFromAmount.value.toString());
 
       receipt = await tx.wait();
@@ -282,7 +263,7 @@ async function addToken() {
         type: 'ERC20', // Initially only supports ERC20, but eventually more!
         options: {
           address: ContractAddress.getSpaceRidersAddress(), // The address that the token is at.
-          symbol: "SPR", // A ticker symbol or shorthand, up to 5 chars.
+          symbol: "BKM", // A ticker symbol or shorthand, up to 5 chars.
           decimals: 18, // The number of decimals in the token
           //image: tokenImage, // A string url of the token logo
         },

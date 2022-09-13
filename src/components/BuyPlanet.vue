@@ -1,15 +1,6 @@
 <template>
   <div>
-    
-    <q-btn
-      icon="add"
-      label="Free Planet"
-      color="warning"
-      class="q-mr-xs"
-      v-if="!$q.screen.xs && canBuyFreePlanet"
-      @click="freePlanetPopup = true"
-    />
-    
+
     <q-btn
       icon="add"
       label="Buy Planet"
@@ -42,7 +33,7 @@
         <q-card-section class="text-center">
           <div class="text-h6">MINT FREE PLANET</div>
         </q-card-section>
-        <q-card-section class="q-gutter-sm q-pt-none">  
+        <q-card-section class="q-gutter-sm q-pt-none">
           <q-input
             label-color="white"
             standout="bg-secondary"
@@ -62,25 +53,6 @@
             "
           />
         </q-card-section>
-
-        <q-card-actions class="row q-col-gutter-md q-px-md">
-          <div class="col">
-            <button
-              class="button q-py-sm full-width"
-              style="
-                border: 2px solid #2253f4;
-                border-radius: 5px;
-                font-size: 14px;
-                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-                color: #fff;
-              "
-              @click="mintFreePlanet"
-              v-close-popup
-            >
-              Mint Planet
-            </button>
-          </div>
-        </q-card-actions>
       </q-card>
     </q-dialog>
 
@@ -159,7 +131,7 @@
             v-close-popup
           />
         </q-card-section>
-        
+
           /> -->
           <div class="col">
             <IncreaseAllowance
@@ -234,68 +206,12 @@ watchEffect(async () => {
     planetCost.value = "";
     bnbFeeDisplay.value = "";
     visible.value = true;
-    planetCost.value = await ApiRequest.fetchPlanetCost();  
-    planetCostDisplay.value = `${planetCost.value.token_cost} $SPR ($${planetCost.value.usd_cost})`;
+    planetCost.value = await ApiRequest.fetchPlanetCost();
+    planetCostDisplay.value = `${planetCost.value.token_cost} $BKM ($${planetCost.value.usd_cost})`;
     bnbFeeDisplay.value = "0.0025 BNB";
     visible.value = false;
   }
 });
-
-const canBuyFreePlanet = computed(() => {
-  let canFreeMint = true;
-
-  const planets = $store.getters.planets;
-  for (let idx in planets) {
-    const planet = planets[idx];
-    if (planet.price_paid === 0) {
-      canFreeMint = false;
-      break;
-    }
-  }
-
-  return canFreeMint;
-});
-
-async function mintFreePlanet() {
-
-  if (!canBuyFreePlanet.value) {
-    $q.notify($notification(
-      "failed",
-      "You already own a free planet",
-    ))
-    return;
-  }
-  
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
-  
-  try {
-    const re = await ApiRequest.mintFreePlanet(planetName.value);
-    
-    notif($notification(
-      "success",
-      "Free planet minted successfully!",
-    ))
-
-    $store.commit("addPlanet", re.data);
-    
-    if ($store.getters.planets.filter((p) => p.claimed).length === 0) {
-      $store.commit("setActivePlanet", re.data);
-    }
-
-    $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
-    $eventBus.emit(PLANET_CLAIMED, { planet: re.data });
-    $eventBus.emit(ACTIVE_PLANET_CHANGED, re.data);
-
-  } catch(ex) {
-    notif($notification(
-      "failed",
-      ex,
-    ))
-  }
-}
 
 async function buyPlanet() {
   const planetGuid = ObjectID().toHexString();
@@ -304,7 +220,7 @@ async function buyPlanet() {
     "progress",
     "Waiting for transaction to complete...",
   ))
-  
+
   try {
     const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
     const sD = new SignatureData(
@@ -323,7 +239,7 @@ async function buyPlanet() {
     // wait till mined
     await tx.wait();
     const re = await ApiRequest.buyPlanet(planetGuid, planetName.value);
-    
+
     $store.commit("addPlanet", re.data);
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
 

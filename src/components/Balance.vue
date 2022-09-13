@@ -81,13 +81,9 @@ onBeforeMount(() => {
 
 async function upateBalance() {
   try {
-    tokenAmount.value = await SpaceRiders.totalBalanceOf(
+    tokenAmount.value = await SpaceRiders.balanceOf(
       $store.getters.address
     );
-
-    if ($store.getters.activePlanet.free_planet) {
-      tokenAmount.value += $store.getters.activePlanet.free_tokens;
-    }
 
   } catch (e) {
     console.log(e);

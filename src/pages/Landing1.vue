@@ -224,7 +224,7 @@
             <!--<div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
-                  Buy $SPR
+                  Buy $BKM
                 </button>
               </Swap>
             </div>-->
@@ -236,7 +236,7 @@
                 Enter alpha version
               </button>
             </div>
-          </div> 
+          </div>
 
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>
@@ -263,8 +263,8 @@
             </div>
             <div>
               <p class="text-h4 text-justify">
-                SpaceRiders <b> ($SPR) </b> is a Play-To-Earn
-                <b> real-time </b> strategy NFT game set in space. $SPR enables
+                SpaceRiders <b> ($BKM) </b> is a Play-To-Earn
+                <b> real-time </b> strategy NFT game set in space. $BKM enables
                 players to purchase and acquire virtual items within the
                 SpaceRiders game.
               </p>
@@ -302,8 +302,8 @@
               </p>
               <p class="game__item--text custom-font">
                 Once users decide to take rewards by changing resources to the
-                native $SPR Token, they will get the rewards in the resources
-                current value in $ USD regardless of what the value of $SPR is.
+                native $BKM Token, they will get the rewards in the resources
+                current value in $ USD regardless of what the value of $BKM is.
               </p>
             </div>
 
@@ -362,13 +362,13 @@
             <div class="game__item">
               <p class="game__item--title">Purchasing Power</p>
               <p class="game__item--text custom-font">
-                When you first buy $SPR you are able to buy a maximum amount of
+                When you first buy $BKM you are able to buy a maximum amount of
                 X$ worth. If you reach that amount, you are unable to buy more
                 tokens unless you mint a new planet to increase your buying
                 power.
               </p>
               <p class="game__item--text custom-font">
-                We do this because we want to make sure that $SPR is bought and
+                We do this because we want to make sure that $BKM is bought and
                 sold by GAMERS. Later on your buying power will increase thanks
                 to the xp, but this is yet under development.
               </p>
@@ -680,7 +680,7 @@
             <div
               class="token__img--inner wow animate__animated animate__fadeIn"
             >
-              
+
               <PieChart />
             </div>
 
@@ -751,7 +751,7 @@
           <div class="q-pt-md">
             <h2 class="text-h4">Token Allocation</h2>
             <p class="text-h5 text-justify q-pt-md">
-              We use a dual token system with $SPR which is split into Gaming
+              We use a dual token system with $BKM which is split into Gaming
               Tokens and Trading Tokens to ensure the sustainability &
               scalability of the SpaceRiders ecosystem. We have implemented
               economic incentives to encourage users to participate in the Space
@@ -1215,22 +1215,22 @@ export default defineComponent({
       {
         label: "What is SpaceRiders?",
         description: [
-          "SpaceRiders ($SPR) is a Play-To-Earn real-time strategy NFT game settled in space.",
-          "$SPR enables players to purchase and acquire virtual items within the SpaceRiders game.",
+          "SpaceRiders ($BKM) is a Play-To-Earn real-time strategy NFT game settled in space.",
+          "$BKM enables players to purchase and acquire virtual items within the SpaceRiders game.",
         ],
       },
       {
-        label: "Where do I buy $SPR token?",
+        label: "Where do I buy $BKM token?",
         description: [
           "For convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
           "Our exchange tool is directly linked to PancakeSwap thus saving you time and effort.",
-          "If you prefer, you can also purchase $SPR Token on PancakeSwap itself.",
+          "If you prefer, you can also purchase $BKM Token on PancakeSwap itself.",
         ],
       },
       {
         label: "What do I need to play SpaceRiders?",
         description: [
-          "You need a compatible wallet such as MetaMask and enough $SPR previously purchased in order to mint a planet and fill your energy.",
+          "You need a compatible wallet such as MetaMask and enough $BKM previously purchased in order to mint a planet and fill your energy.",
         ],
       },
       {
@@ -1251,13 +1251,13 @@ export default defineComponent({
       {
         label: "How does SpaceRiders use the blockchain?",
         description: [
-          "$SPR is the in-game currency of SpaceRiders game, it is used for any purchase and for rewards.",
+          "$BKM is the in-game currency of SpaceRiders game, it is used for any purchase and for rewards.",
         ],
       },
       {
         label: "How do I expect to make passive income?",
         description: [
-          "Passive income will generate from your earnings when converting resources to $SPR.",
+          "Passive income will generate from your earnings when converting resources to $BKM.",
           "This will come from the mines you're upgrading.",
           "To maximize your ROI you'll need to focus and follow your own strategy.",
         ],
@@ -1268,7 +1268,7 @@ export default defineComponent({
         window.location.href = 'http://testnet.spaceriders.io/nouser';
         return;
     }
-    
+
     return {
       redirectTestnet: redirectTestnet,
       d,
