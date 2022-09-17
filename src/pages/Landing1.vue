@@ -217,8 +217,10 @@
             <span class="blue">SPACE</span>RIDERS
           </h2>
 
-          <p class="main__subtitle wow animate__animated animate__fadeIn">
-            Success in space is defined by your Strategy...
+          <p class="main__subtitle wow animate__animated animate__fadeIn"
+          >
+            SpaceRiders is a combat and planetary management simulator set in
+            space that integrates blockchain technology.
           </p>
           <div class="fit row wrap justify-start items-start content-start">
             <!--<div class="q-mr-md">
@@ -236,7 +238,7 @@
                 Enter alpha version
               </button>
             </div>
-          </div> 
+          </div>
 
           <div class="main__coming--soon wow animate__animated animate__fadeIn">
             <p class="main__coming--text">Coming Soon</p>
@@ -641,7 +643,6 @@
                 </q-card-section>
               </q-card>
             </div>
-
           </div>
         </div>
       </div>
@@ -1109,7 +1110,10 @@
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf" target="_blank">
+            <a
+              href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf"
+              target="_blank"
+            >
               <img
                 src="~assets/landing/img/englishflag.webp"
                 style="cursor: pointer"
@@ -1120,7 +1124,10 @@
             </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf" target="_blank">
+            <a
+              href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf"
+              target="_blank"
+            >
               <img
                 src="~assets/landing/img/spainflag.webp"
                 style="cursor: pointer"
@@ -1137,8 +1144,6 @@
 </template>
 
 <script>
-
-
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 //import PieChart from "../components/pieChart";
@@ -1151,16 +1156,16 @@ export default defineComponent({
     // $q.loading.show();
 
     const headRef = ref(null); // obtain the reference
-      onMounted(() => {
-        window.addEventListener("scroll", () => {
-          var curr = window.pageYOffset;
-          if (curr >= 100) {
-            headRef.value.classList.add("header-bg");
-          }else{
-            headRef.value.classList.remove("header-bg");
-          }
-        });
+    onMounted(() => {
+      window.addEventListener("scroll", () => {
+        var curr = window.pageYOffset;
+        if (curr >= 100) {
+          headRef.value.classList.add("header-bg");
+        } else {
+          headRef.value.classList.remove("header-bg");
+        }
       });
+    });
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -1265,10 +1270,10 @@ export default defineComponent({
     ]);
 
     function redirectTestnet() {
-        window.location.href = 'http://testnet.spaceriders.io/nouser';
-        return;
+      window.location.href = "http://testnet.spaceriders.io/nouser";
+      return;
     }
-    
+
     return {
       redirectTestnet: redirectTestnet,
       d,
@@ -1283,7 +1288,7 @@ export default defineComponent({
       openWhitepaper,
       slide: ref(1),
       faq_section,
-      headRef
+      headRef,
     };
   },
 });
@@ -1293,8 +1298,4 @@ export default defineComponent({
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
 </style>
-<style lang="scss">
-
-
-
-</style>
+<style lang="scss"></style>
