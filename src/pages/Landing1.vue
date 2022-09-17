@@ -1109,10 +1109,10 @@
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf" target="_blank">
+            <a href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/" target="_blank">
               <img
-                src="~assets/landing/img/englishflag.webp"
-                style="cursor: pointer"
+                src="~assets/landing/img/usa.png"
+                style="cursor: pointer; width: 100%;"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
@@ -1120,10 +1120,10 @@
             </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf" target="_blank">
+            <a href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/" target="_blank">
               <img
-                src="~assets/landing/img/spainflag.webp"
-                style="cursor: pointer"
+                src="~assets/landing/img/spain.png"
+                style="cursor: pointer; width: 100%;"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
