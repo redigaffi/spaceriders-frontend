@@ -284,94 +284,74 @@
 
           <div class="game__content">
             <div class="game__item">
-              <p class="game__item--title">Advanced Innovative System</p>
+              <p class="game__item--title">Play to Own</p>
               <p class="game__item--text custom-font">
-                At SpaceRiders, we strive towards innovation and being
-                futureproof. A range of new contemporary systems have been born
-                in the development of this project which will benefit both the
-                health and longevity of the game, long term and short term.
+                SpaceRiders defines itself as a Play to Own. This game model
+                integrates blockchain technology, through which NFTs are
+                implemented. Thanks to both integrations, you as a player have
+                total ownership of all your in-game assets as well as complete
+                freedom to do with them anything that you want.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Fixed Entry & Rewards Price</p>
+              <p class="game__item--title">Mines & Warehouses</p>
               <p class="game__item--text custom-font">
-                To enter SpaceRiders, you will need to mint a planet first. Our
-                innovative systems ensures that users will always pay the same
-                price in $ USD when minting a planet, regardless of the token
-                price. This ensures fairness to our users.
-              </p>
-              <p class="game__item--text custom-font">
-                Once users decide to take rewards by changing resources to the
-                native $SPR Token, they will get the rewards in the resources
-                current value in $ USD regardless of what the value of $SPR is.
+                The extraction of resources (Metal, Crystal, Gasoline) is the
+                key to the game and this is possible thanks to the mines. Once
+                the mines extract resources they are stored in their relevant
+                warehouse depending on the resource. The higher the level of
+                your mines, the higher the production, but also the higher the
+                energy consumption.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Stake to Benefit</p>
+              <p class="game__item--title">Player Driven Economy</p>
               <p class="game__item--text custom-font">
-                Unlike common blockchain games, we have introduced a unique
-                concept into SpaceRiders called Stake to Benefit (STB). This is
-                unique for a variety of reasons, one of them being that the user
-                receives in-game benefits for staking, reduced time on
-                upgrades/builds and discounts on upgrade and building costs.
-                Tiers need to be unlocked one by one.
+                Users have total control over the game economy through offer and
+                demand. Thanks to the Intergalactic Stock Market we give
+                absolute power to the gamers which decide the value and price of
+                each resource. This trading platform allows users to trade any
+                resource in parity with $BKM or other resources.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Smart and Controlled Distribution</p>
+              <p class="game__item--title">Player vs Environment (PVE)</p>
 
               <p class="game__item--text custom-font">
-                A 50/50 system, where each user invests, they will be
-                distributed tokens in the following way:
-              </p>
-              <ul class="game__item--text custom-font">
-                <li>⦁ 50% Tradeable Tokens (TT)</li>
-                <li>⦁ 50% Gaming Token (GT)</li>
-              </ul>
-              <p class="game__item--text custom-font">
-                This method will prevent the token being exploited and has been
-                pioneered to achieve long term and short-term token health to
-                encourage users to play and enjoy the game. A more detailed
-                analysis can be found within the Game Manual.
+                Space is a dangerous and outlaw territory, throughout its vast
+                galaxies and solar systems you’ll have to fight for survival and
+                growth of your planet. Asteroids can damage your planet's
+                buildings and Space Pirates might steal your resources if you’re
+                not prepared. To prevent this from happening, build up your
+                Laser Launchers and Missile Launchers!
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">In-Game Features</p>
+              <p class="game__item--title">Free to Play</p>
 
               <p class="game__item--text custom-font">
-                You will have all the tools needed to succeed within the game at
-                your disposal. This includes defensive weaponry, laser
-                technology and In-game Research Facilities which includes an
-                investigation laboratory.
-              </p>
-
-              <p class="q-pt-md" style="font-size: 24px; font-weight: 900">
-                XP (Experience Points)
-              </p>
-              <p class="game__item--text custom-font">
-                There are an abundance of opportunities for players to gain XP
-                within the game. For example, constructing defense systems,
-                successful defense from asteroid attacks, repairs and any
-                upgrades.
+                SpaceRiders has a Free to Play version, where entry is not
+                limited to those who pay. This version is an exact copy of the
+                Full Version, but is found on the Binance Smart Chain Testnet.
+                This Free to Play version will be opened in special events
+                during a few weeks so that everyone can access SpaceRiders for
+                free.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Purchasing Power</p>
+              <p class="game__item--title">Installations</p>
               <p class="game__item--text custom-font">
-                When you first buy $SPR you are able to buy a maximum amount of
-                X$ worth. If you reach that amount, you are unable to buy more
-                tokens unless you mint a new planet to increase your buying
-                power.
-              </p>
-              <p class="game__item--text custom-font">
-                We do this because we want to make sure that $SPR is bought and
-                sold by GAMERS. Later on your buying power will increase thanks
-                to the xp, but this is yet under development.
+                Installations play a key role in any planets’ growth and
+                expansion throughout the solar system. Hangar permits the
+                construction of defensive structures and, in the near future,
+                spaceships to conquer the universe. The Investigation Laboratory
+                opens the door to innovation and progress by researching
+                necessary technologies for your benefit.
               </p>
             </div>
           </div>
