@@ -1213,7 +1213,7 @@ export default defineComponent({
       {
         label: "What do I need to play SpaceRiders?",
         description: [
-          "You need a compatible wallet such as MetaMask and enough $SPR previously purchased in order to mint a planet and fill your energy.",
+          "You need a compatible wallet such as MetaMask and enough $BKM previously purchased in order to mint a planet and fill your energy.",
         ],
       },
       {
