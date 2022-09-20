@@ -19,12 +19,6 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('overview')"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
-              class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
               >GAME MECHANICS</a
             >
@@ -245,36 +239,6 @@
         </div>
       </div>
     </section>
-
-    <div id="overview"></div>
-    <section class="custom-game">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">OVERVIEW</div>
-          <div class="q-pt-xl custom-font" style="color: #cbcbcb">
-            <div>
-              <p class="text-h4 text-justify">
-                Explore a limitless galaxy where the narrative is directed
-                entirely by you, the players. In SpaceRiders, you are the leader
-                of your empire, <b> the destiny </b>of your planets relies upon
-                you! By building and customizing your planets, you will be
-                securing territory, crossing the deep corners of space to turn
-                the tide of the war.
-              </p>
-            </div>
-            <div>
-              <p class="text-h4 text-justify">
-                SpaceRiders <b> ($SPR) </b> is a Play-To-Earn
-                <b> real-time </b> strategy NFT game set in space. $SPR enables
-                players to purchase and acquire virtual items within the
-                SpaceRiders game.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- GAME MECHANICS -->
     <div id="game"></div>
     <section class="game">
@@ -940,12 +904,6 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('overview')"
-              class="footer__nav--link go"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
               v-on:click.prevent="scrollPageTo('game')"
               class="footer__nav--link go"
               >GAME MECHANICS</a
@@ -1028,12 +986,6 @@
           class="header__nav--link go"
           v-on:click.prevent="scrollPageTo('landing')"
           >HOME</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('overview')"
-          >OVERVIEW</a
         >
         <a
           href="#"
