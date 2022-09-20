@@ -217,8 +217,7 @@
             <span class="blue">SPACE</span>RIDERS
           </h2>
 
-          <p class="main__subtitle wow animate__animated animate__fadeIn"
-          >
+          <p class="main__subtitle wow animate__animated animate__fadeIn">
             SpaceRiders is a combat and planetary management simulator set in
             space that integrates blockchain technology.
           </p>
@@ -1110,21 +1109,27 @@
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/" target="_blank">
+            <a
+              href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/"
+              target="_blank"
+            >
               <img
                 src="~assets/landing/img/usa.png"
-                style="cursor: pointer; width: 100%;"
+                style="cursor: pointer; width: 100%"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
               />
             </a>
           </div>
-           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/" target="_blank">
+          <div class="col-xs-12 col-sm-12 col-md-6 text-center">
+            <a
+              href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/"
+              target="_blank"
+            >
               <img
                 src="~assets/landing/img/spain.png"
-                style="cursor: pointer; width: 100%;"
+                style="cursor: pointer; width: 100%"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
@@ -1214,16 +1219,15 @@ export default defineComponent({
       {
         label: "What is SpaceRiders?",
         description: [
-          "SpaceRiders ($SPR) is a Play-To-Earn real-time strategy NFT game settled in space.",
-          "$SPR enables players to purchase and acquire virtual items within the SpaceRiders game.",
+          "SpaceRiders is a combat and planetary management simulator set in space that integrates blockchain technology.",
         ],
       },
       {
-        label: "Where do I buy $SPR token?",
+        label: "Where can I buy $BKM token?",
         description: [
-          "For convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
+          "For the convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
           "Our exchange tool is directly linked to PancakeSwap thus saving you time and effort.",
-          "If you prefer, you can also purchase $SPR Token on PancakeSwap itself.",
+          "If you prefer, you can also purchase $BKM Token on PancakeSwap itself.",
         ],
       },
       {
@@ -1233,32 +1237,29 @@ export default defineComponent({
         ],
       },
       {
-        label: "When will users be able to play SpaceRiders?",
+        label: "When will I be able to play SpaceRiders?",
         description: [
           "The MVP (Minimum Viable Product) is completed and is currently undergoing rigorous testing by the development team prior to rolling it out, to ensure that your first experience within the game is exceptional.",
-          "As stated in our roadmap, we anticipate launch of this version in Q2 2022.",
+          "As stated in our roadmap, we anticipate launch of this version in Q3 2022.",
         ],
       },
       {
-        label: "Will SpaceRiders be a Free To Play?",
+        label: "Will SpaceRiders be a Free to Play?",
         description: [
-          "To enter SpaceRiders, you will need to mint a planet first.",
-          "Our innovative systems ensures that users will always pay the same price in $USD when minting a planet, regardless of our token price.",
-          "This ensures fairness to our users.",
+          "SpaceRiders is a Play to Own - Player Driven Economy - Free to Play.",
+          "Mainnet version isn’t Free to Play, but during special events a replica of the main version will open to the public into Testnet as a Free to Play, ensuring accessibility to all users.",
         ],
       },
       {
         label: "How does SpaceRiders use the blockchain?",
         description: [
-          "$SPR is the in-game currency of SpaceRiders game, it is used for any purchase and for rewards.",
+          "SpaceRiders is a Play to Own and as such we integrate blockchain as an ownership validation and as a source of existence for our real economy.",
         ],
       },
       {
-        label: "How do I expect to make passive income?",
+        label: "Can I earn money while playing SpaceRiders?",
         description: [
-          "Passive income will generate from your earnings when converting resources to $SPR.",
-          "This will come from the mines you're upgrading.",
-          "To maximize your ROI you'll need to focus and follow your own strategy.",
+          "SpaceRiders isn’t a Play to Earn hence why our main focus isn’t users making money, despite that, you can trade Resources in exchange of $BKM in the Intergalactic Stock Market (ISM) and withdraw the generated $BKM to your wallet.",
         ],
       },
     ]);
