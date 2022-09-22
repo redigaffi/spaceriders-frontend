@@ -284,17 +284,24 @@
                   </tr>
                 </table>
 
-                <IncreaseAllowance
-                  :address="ContractAddress.getSpaceRidersGameAddress()"
-                  :amount="selectedTierInfo.token_cost"
-                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-                />
-                <q-btn
-                  style="float: right"
-                  color="warning"
-                  label="Upgrade"
-                  @click="stake"
-                />
+                <div class="row q-col-gutter-sm">
+                  <div class="col-md-6">
+                    <IncreaseAllowance
+                      :address="ContractAddress.getSpaceRidersGameAddress()"
+                      :amount="selectedTierInfo.token_cost"
+                      :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <q-btn
+                      style="border-radius: 5px; height: 41px;"
+                      class="full-width"
+                      color="warning"
+                      label="Upgrade"
+                      @click="stake"
+                    />
+                  </div>
+                </div>
               </q-page>
             </q-page-container>
           </q-layout>

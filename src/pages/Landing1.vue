@@ -19,12 +19,6 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('overview')"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
-              class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
               >GAME MECHANICS</a
             >
@@ -218,7 +212,8 @@
           </h2>
 
           <p class="main__subtitle wow animate__animated animate__fadeIn">
-            Success in space is defined by your Strategy...
+            SpaceRiders is a combat and planetary management simulator set in
+            space that integrates blockchain technology.
           </p>
           <div class="fit row wrap justify-start items-start content-start">
             <!--<div class="q-mr-md">
@@ -245,132 +240,79 @@
       </div>
     </section>
 
-    <div id="overview"></div>
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">OVERVIEW</div>
-          <div class="q-pt-xl custom-font" style="color: #cbcbcb">
-            <div>
-              <p class="text-h4 text-justify">
-                Explore a limitless galaxy where the narrative is directed
-                entirely by you, the players. In SpaceRiders, you are the leader
-                of your empire, <b> the destiny </b>of your planets relies upon
-                you! By building and customizing your planets, you will be
-                securing territory, crossing the deep corners of space to turn
-                the tide of the war.
-              </p>
-            </div>
-            <div>
-              <p class="text-h4 text-justify">
-                SpaceRiders <b> ($BKM) </b> is a Play-To-Earn
-                <b> real-time </b> strategy NFT game set in space. $BKM enables
-                players to purchase and acquire virtual items within the
-                SpaceRiders game.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME MECHANICS -->
-    <div id="game"></div>
-    <section class="game">
-      <div :class="$q.screen.lt.md ? 'q-px-sm' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">GAME MECHANICS</div>
-
           <div class="game__content">
             <div class="game__item">
-              <p class="game__item--title">Advanced Innovative System</p>
+              <p class="game__item--title">Play to Own</p>
               <p class="game__item--text custom-font">
-                At SpaceRiders, we strive towards innovation and being
-                futureproof. A range of new contemporary systems have been born
-                in the development of this project which will benefit both the
-                health and longevity of the game, long term and short term.
+                SpaceRiders defines itself as a Play to Own. This game model
+                integrates blockchain technology, through which NFTs are
+                implemented. Thanks to both integrations, you as a player have
+                total ownership of all your in-game assets as well as complete
+                freedom to do with them anything that you want.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Fixed Entry & Rewards Price</p>
+              <p class="game__item--title">Mines & Warehouses</p>
               <p class="game__item--text custom-font">
-                To enter SpaceRiders, you will need to mint a planet first. Our
-                innovative systems ensures that users will always pay the same
-                price in $ USD when minting a planet, regardless of the token
-                price. This ensures fairness to our users.
-              </p>
-              <p class="game__item--text custom-font">
-                Once users decide to take rewards by changing resources to the
-                native $BKM Token, they will get the rewards in the resources
-                current value in $ USD regardless of what the value of $BKM is.
+                The extraction of resources (Metal, Crystal, Petrol) is the
+                key to the game and this is possible thanks to the mines. Once
+                the mines extract resources they are stored in their relevant
+                warehouse depending on the resource. The higher the level of
+                your mines, the higher the production, but also the higher the
+                energy consumption.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Stake to Benefit</p>
+              <p class="game__item--title">Player Driven Economy</p>
               <p class="game__item--text custom-font">
-                Unlike common blockchain games, we have introduced a unique
-                concept into SpaceRiders called Stake to Benefit (STB). This is
-                unique for a variety of reasons, one of them being that the user
-                receives in-game benefits for staking, reduced time on
-                upgrades/builds and discounts on upgrade and building costs.
-                Tiers need to be unlocked one by one.
+                Users have total control over the game economy through offer and
+                demand. Thanks to the Intergalactic Stock Market we give
+                absolute power to the gamers which decide the value and price of
+                each resource. This trading platform allows users to trade any
+                resource in parity with $BKM or other resources.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Smart and Controlled Distribution</p>
+              <p class="game__item--title">Player vs Environment (PVE)</p>
 
               <p class="game__item--text custom-font">
-                A 50/50 system, where each user invests, they will be
-                distributed tokens in the following way:
-              </p>
-              <ul class="game__item--text custom-font">
-                <li>⦁ 50% Tradeable Tokens (TT)</li>
-                <li>⦁ 50% Gaming Token (GT)</li>
-              </ul>
-              <p class="game__item--text custom-font">
-                This method will prevent the token being exploited and has been
-                pioneered to achieve long term and short-term token health to
-                encourage users to play and enjoy the game. A more detailed
-                analysis can be found within the Game Manual.
+                Space is a dangerous and outlaw territory, throughout its vast
+                galaxies and solar systems you’ll have to fight for survival and
+                growth of your planet. Asteroids can damage your planet's
+                buildings and Space Pirates might steal your resources if you’re
+                not prepared. To prevent this from happening, build up your
+                Laser Launchers and Missile Launchers!
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">In-Game Features</p>
+              <p class="game__item--title">Free to Play</p>
 
               <p class="game__item--text custom-font">
-                You will have all the tools needed to succeed within the game at
-                your disposal. This includes defensive weaponry, laser
-                technology and In-game Research Facilities which includes an
-                investigation laboratory.
-              </p>
-
-              <p class="q-pt-md" style="font-size: 24px; font-weight: 900">
-                XP (Experience Points)
-              </p>
-              <p class="game__item--text custom-font">
-                There are an abundance of opportunities for players to gain XP
-                within the game. For example, constructing defense systems,
-                successful defense from asteroid attacks, repairs and any
-                upgrades.
+                SpaceRiders has a Free to Play version, where entry is not
+                limited to those who pay. This version is an exact copy of the
+                Full Version, but is found on the Binance Smart Chain Testnet.
+                This Free to Play version will be opened in special events
+                during a few weeks so that everyone can access SpaceRiders for
+                free.
               </p>
             </div>
 
             <div class="game__item">
-              <p class="game__item--title">Purchasing Power</p>
+              <p class="game__item--title">Installations</p>
               <p class="game__item--text custom-font">
-                When you first buy $BKM you are able to buy a maximum amount of
-                X$ worth. If you reach that amount, you are unable to buy more
-                tokens unless you mint a new planet to increase your buying
-                power.
-              </p>
-              <p class="game__item--text custom-font">
-                We do this because we want to make sure that $BKM is bought and
-                sold by GAMERS. Later on your buying power will increase thanks
-                to the xp, but this is yet under development.
+                Installations play a key role in any planets’ growth and
+                expansion throughout the solar system. Hangar permits the
+                construction of defensive structures and, in the near future,
+                spaceships to conquer the universe. The Investigation Laboratory
+                opens the door to innovation and progress by researching
+                necessary technologies for your benefit.
               </p>
             </div>
           </div>
@@ -641,7 +583,6 @@
                 </q-card-section>
               </q-card>
             </div>
-
           </div>
         </div>
       </div>
@@ -960,12 +901,6 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('overview')"
-              class="footer__nav--link go"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
               v-on:click.prevent="scrollPageTo('game')"
               class="footer__nav--link go"
               >GAME MECHANICS</a
@@ -1052,12 +987,6 @@
         <a
           href="#"
           class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('overview')"
-          >OVERVIEW</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
           v-on:click.prevent="scrollPageTo('game')"
           >GAME MECHANICS</a
         >
@@ -1109,10 +1038,13 @@
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-english.pdf" target="_blank">
+            <a
+              href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/"
+              target="_blank"
+            >
               <img
-                src="~assets/landing/img/englishflag.webp"
-                style="cursor: pointer"
+                src="~assets/landing/img/usa.png"
+                style="cursor: pointer; width: 100%"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
@@ -1120,10 +1052,13 @@
             </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
-            <a href="https://spaceriders-public-data.s3.eu-west-1.amazonaws.com/darkpaper-spain.pdf" target="_blank">
+            <a
+              href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/"
+              target="_blank"
+            >
               <img
-                src="~assets/landing/img/spainflag.webp"
-                style="cursor: pointer"
+                src="~assets/landing/img/spain.png"
+                style="cursor: pointer; width: 100%"
                 :style="
                   $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
                 "
@@ -1137,8 +1072,6 @@
 </template>
 
 <script>
-
-
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 //import PieChart from "../components/pieChart";
@@ -1151,16 +1084,16 @@ export default defineComponent({
     // $q.loading.show();
 
     const headRef = ref(null); // obtain the reference
-      onMounted(() => {
-        window.addEventListener("scroll", () => {
-          var curr = window.pageYOffset;
-          if (curr >= 100) {
-            headRef.value.classList.add("header-bg");
-          }else{
-            headRef.value.classList.remove("header-bg");
-          }
-        });
+    onMounted(() => {
+      window.addEventListener("scroll", () => {
+        var curr = window.pageYOffset;
+        if (curr >= 100) {
+          headRef.value.classList.add("header-bg");
+        } else {
+          headRef.value.classList.remove("header-bg");
+        }
       });
+    });
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -1215,14 +1148,13 @@ export default defineComponent({
       {
         label: "What is SpaceRiders?",
         description: [
-          "SpaceRiders ($BKM) is a Play-To-Earn real-time strategy NFT game settled in space.",
-          "$BKM enables players to purchase and acquire virtual items within the SpaceRiders game.",
+          "SpaceRiders is a combat and planetary management simulator set in space that integrates blockchain technology.",
         ],
       },
       {
-        label: "Where do I buy $BKM token?",
+        label: "Where can I buy $BKM token?",
         description: [
-          "For convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
+          "For the convenience of our users, we have pioneered our very own exchange tool which can be easily accessible on the landing page of our website and also on the game itself.",
           "Our exchange tool is directly linked to PancakeSwap thus saving you time and effort.",
           "If you prefer, you can also purchase $BKM Token on PancakeSwap itself.",
         ],
@@ -1234,39 +1166,36 @@ export default defineComponent({
         ],
       },
       {
-        label: "When will users be able to play SpaceRiders?",
+        label: "When will I be able to play SpaceRiders?",
         description: [
           "The MVP (Minimum Viable Product) is completed and is currently undergoing rigorous testing by the development team prior to rolling it out, to ensure that your first experience within the game is exceptional.",
-          "As stated in our roadmap, we anticipate launch of this version in Q2 2022.",
+          "As stated in our roadmap, we anticipate launch of this version in Q4 2022.",
         ],
       },
       {
-        label: "Will SpaceRiders be a Free To Play?",
+        label: "Will SpaceRiders be a Free to Play?",
         description: [
-          "To enter SpaceRiders, you will need to mint a planet first.",
-          "Our innovative systems ensures that users will always pay the same price in $USD when minting a planet, regardless of our token price.",
-          "This ensures fairness to our users.",
+          "SpaceRiders is a Play to Own - Player Driven Economy - Free to Play.",
+          "Mainnet version isn’t Free to Play, but during special events a replica of the main version will open to the public into Testnet as a Free to Play, ensuring accessibility to all users.",
         ],
       },
       {
         label: "How does SpaceRiders use the blockchain?",
         description: [
-          "$BKM is the in-game currency of SpaceRiders game, it is used for any purchase and for rewards.",
+          "SpaceRiders is a Play to Own and as such we integrate blockchain as an ownership validation and as a source of existence for our real economy.",
         ],
       },
       {
-        label: "How do I expect to make passive income?",
+        label: "Can I earn money while playing SpaceRiders?",
         description: [
-          "Passive income will generate from your earnings when converting resources to $BKM.",
-          "This will come from the mines you're upgrading.",
-          "To maximize your ROI you'll need to focus and follow your own strategy.",
+          "SpaceRiders isn’t a Play to Earn hence why our main focus isn’t users making money, despite that, you can trade Resources in exchange of $BKM in the Intergalactic Stock Market (ISM) and withdraw the generated $BKM to your wallet.",
         ],
       },
     ]);
 
     function redirectTestnet() {
-        window.location.href = 'http://testnet.spaceriders.io/nouser';
-        return;
+      window.location.href = "http://testnet.spaceriders.io/nouser";
+      return;
     }
 
     return {
@@ -1283,7 +1212,7 @@ export default defineComponent({
       openWhitepaper,
       slide: ref(1),
       faq_section,
-      headRef
+      headRef,
     };
   },
 });
@@ -1293,8 +1222,4 @@ export default defineComponent({
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
 </style>
-<style lang="scss">
-
-
-
-</style>
+<style lang="scss"></style>
