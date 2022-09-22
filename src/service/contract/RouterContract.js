@@ -14,7 +14,7 @@ class RouterContract extends Contract {
     async getContract() {
         return await super.buildContract(ContractAddress.getRouterAddress(), ABI);
     }
-    
+
     /**
      * @param {string} contractAddress
      * function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
@@ -52,7 +52,7 @@ class RouterContract extends Contract {
 
         const contractMapping = {
             "busd": busdAddress,
-            "spr": sprAddress 
+            "bkm": sprAddress
         }
 
         const path = [
@@ -66,20 +66,20 @@ class RouterContract extends Contract {
             //value: ethers.utils.parseEther(bnbAmount),
             gasLimit: 6721975,
         };
-        
+
         const amounts = await contract.getAmountsOut(
             ethers.utils.parseEther(amount),
             path,
             overrides
         );
-        
+
         return parseFloat(ethers.utils.formatEther(amounts[1])).toFixed(2);
     }
 
     async sellSpr(to, amountIn) {
         const routerContract = await this.getContract();
-        
-        
+
+
         const path = [
             ContractAddress.getSpaceRidersAddress(),
             ContractAddress.getBusdAddress()
@@ -101,7 +101,7 @@ class RouterContract extends Contract {
         );
     }
 
-    
+
 }
 
 export default new RouterContract();

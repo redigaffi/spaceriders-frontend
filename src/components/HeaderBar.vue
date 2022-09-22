@@ -64,22 +64,6 @@
       </button> -->
       <q-space />
 
-      <WithdrawResources v-if="hasActivePlanet">
-        <button
-          class="button q-pa-md q-mr-xs"
-          style="
-            border: 3px solid #2253f4;
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-            color: #fff;
-            font-size: 12px;
-            padding: 7px 15px;
-          "
-        >
-          CONVERT
-        </button>
-      </WithdrawResources>
-
       <Swap v-if="$store.getters.loggedIn">
         <button
           class="button q-pa-md q-mr-xs"
@@ -120,7 +104,6 @@ import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
-import WithdrawResources from "components/WithdrawResources.vue";
 import routes from "../router/routes.js";
 
 const linksListInfo = {
@@ -190,7 +173,7 @@ let linksList = computed(() => {
 
   for (const routeIdx in routes) {
     const routeData = routes[routeIdx];
-    
+
     if (routeData.name === "overview") {
       const requieresAuth = routeData.meta.requiresAuth;
       const requiresPlanet = routeData.meta.requiresPlanet;
@@ -202,7 +185,7 @@ let linksList = computed(() => {
       for (const childIdx in routeData.children) {
         const childInfo = routeData.children[childIdx];
         if (childInfo.path === '') continue;
-        
+
 
         const childRequieresAuth = childInfo.meta.requiresAuth;
         const childRequiresPlanet = childInfo.meta.requiresPlanet;
@@ -212,9 +195,9 @@ let linksList = computed(() => {
           tmplinksList.push(linksListInfo[childInfo.name]);
         }
 
-        
+
         if (childInfo.name === "planet") {
-          
+
           if (loggedIn) {
             tmplinksList.push(linksListInfo.explorer);
           }

@@ -106,14 +106,6 @@
                 class="q-mr-xs"
               />
 
-              <q-btn
-                v-if="hasLvlUpPendingRewardClaim"
-                color="dark"
-                label="Lvl Reward"
-                class="q-mr-xs"
-                @click="claimPendingLvlUpReward"
-              />
-
               <q-dialog v-model="openUpdateDialog">
                 <q-card
                   class="bg-dark text-white"
@@ -365,12 +357,6 @@ const temperature = computed(() => {
   return str;
 });
 
-const hasLvlUpPendingRewardClaim = computed(() => {
-  const pendingLvlUpClaims = $store.getters.activePlanet.pending_levelup_reward;
-  if (!pendingLvlUpClaims) return false;
-  return pendingLvlUpClaims.filter((c) => !c.completed).length > 0;
-});
-
 const position = computed(() => {
   const position = $store.getters.activePlanet.position;
   const solarSystem = $store.getters.activePlanet.solar_system;
@@ -526,7 +512,8 @@ async function stake() {
       stakingRequest.planet_id,
       String(stakingRequest.amount),
       stakingRequest.tier,
-      stakingRequest.time_release
+      stakingRequest.time_release,
+      stakingRequest.router
     );
 
     const sD = new SignatureData(
@@ -599,38 +586,6 @@ async function unstake() {
   }
 }
 
-async function claimPendingLvlUpReward() {
-  const notif = $q.notify(
-    $notification("progress", "Waiting for transaction to complete...")
-  );
-
-  try {
-    const req = await ApiRequests.claimPendingLvlUpReward({
-      planetId: $store.getters.activePlanet.id,
-      claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
-    });
-
-    const sD = new SignatureData(req.data.v, req.data.r, req.data.s);
-
-    const tx = await SpaceRidersGameContract.addPurchasingPower(
-      req.data.amount,
-      req.data.claim_id,
-      sD
-    );
-    await tx.wait();
-    await new Promise((r) => setTimeout(r, 5000));
-
-    await ApiRequests.confirmPendingLvlUpReward({
-      claimId: $store.getters.activePlanet.pending_levelup_reward[0].id,
-    });
-
-    $store.commit("claimPendingLvlUp", { idx: 0 });
-
-    notif($notification("success", "Successfully claimed level up reward"));
-  } catch (e) {
-    notif($notification("failed", e));
-  }
-}
 </script>
 <style lang="scss">
 .overview-card {

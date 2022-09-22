@@ -219,7 +219,7 @@
             <!--<div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
-                  Buy $SPR
+                  Buy $BKM
                 </button>
               </Swap>
             </div>-->
@@ -239,7 +239,7 @@
         </div>
       </div>
     </section>
-    
+
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
@@ -621,7 +621,7 @@
             <div
               class="token__img--inner wow animate__animated animate__fadeIn"
             >
-              
+
               <PieChart />
             </div>
 
@@ -692,7 +692,7 @@
           <div class="q-pt-md">
             <h2 class="text-h4">Token Allocation</h2>
             <p class="text-h5 text-justify q-pt-md">
-              We use a dual token system with $SPR which is split into Gaming
+              We use a dual token system with $BKM which is split into Gaming
               Tokens and Trading Tokens to ensure the sustainability &
               scalability of the SpaceRiders ecosystem. We have implemented
               economic incentives to encourage users to participate in the Space

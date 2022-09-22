@@ -60,7 +60,7 @@ import { createStore } from "vuex";
       addEmails(state, payload) {
         state.emails = payload.emails
       },
-      
+
       updateEmail(state, payload) {
         let email = payload.email;
         let eI = state.emails.findIndex((e) => e.id === email.id);
@@ -112,7 +112,7 @@ import { createStore } from "vuex";
       setInstallationData(state, payload) {
         state.installationData = payload;
       },
-      
+
       setResearchData(state, payload) {
         state.researchData = payload;
       },
@@ -138,7 +138,7 @@ import { createStore } from "vuex";
         state.activePlanet.installation_level = {...state.activePlanet.installation_level};
         state.activePlanet.research_level = {...state.activePlanet.research_level};
         state.activePlanet.resources_level = {...state.activePlanet.resources_level};
-        
+
         state.resourceData = {...state.resourceData};
         state.installationData = {...state.installationData};
         state.researchData = {...state.researchData};
@@ -155,9 +155,6 @@ import { createStore } from "vuex";
         state.activePlanet.resources.metal += payload.metal;
         state.activePlanet.resources.petrol += payload.petrol;
         state.activePlanet.resources.crystal += payload.crystal;
-      },
-      restFreePlanetFreeTokens(state, payload) {
-        state.activePlanet.free_tokens -= payload.tokens;
       },
       /**
        * Update planet values by providing planet, field name, and value to update.
@@ -187,7 +184,7 @@ import { createStore } from "vuex";
         resource.building = true;
         resource.finish = payload.upgradeFinish;
         state.resourceData[label] = resource;
-        
+
         // @TODO: fix this
         //const building = state.activePlanet.resources_level.filter(r => r.label===label)[0];
         //building.building = true;
@@ -242,7 +239,7 @@ import { createStore } from "vuex";
       upgradeFinished(state, payload) {
         const label = payload.label;
         let dataSource = {};
-        
+
         let type = "";
         switch(payload.type) {
           case "resources":
@@ -262,7 +259,7 @@ import { createStore } from "vuex";
               dataSource = state.defenseData[label]
               break;
         }
-        
+
         if (type === "mines") {
           dataSource.building = false;
           dataSource.level = dataSource.level+1;
@@ -279,7 +276,7 @@ import { createStore } from "vuex";
           dataSource.available += dataSource.quantity_building;
           dataSource.finish = false;
         }
-        
+
         switch(payload.type) {
           case "resources":
             state.resourceData[label] = dataSource;
@@ -294,7 +291,7 @@ import { createStore } from "vuex";
             state.defenseData[label] = dataSource;
             break;
         }
-        
+
       },
 
       claimPendingLvlUp(state, payload) {
@@ -310,9 +307,17 @@ import { createStore } from "vuex";
         const key = payload.ressource;
         state.activePlanet.reserves[key] -= payload.value;
       },
-      
+
       incrementEnergy(state, payload) {
         state.activePlanet.resources.energy += payload.energy;
+      },
+
+      incrementBkm(state, payload) {
+        state.activePlanet.resources.bkm += payload.bkm;
+      },
+
+      decrementBkm(state, payload) {
+        state.activePlanet.resources.bkm -= payload.bkm;
       },
 
       decrementEnergy(state, payload) {
@@ -340,7 +345,7 @@ import { createStore } from "vuex";
       chainInfo: (state) => {
         return state.chainInfo;
       },
-      
+
       tokenPrice: (state) => {
         return state.tokenPrice;
       },
@@ -356,7 +361,7 @@ import { createStore } from "vuex";
       resourceData: (state) => {
         return state.resourceData;
       },
-      
+
       installationData: (state) => {
         return state.installationData;
       },
@@ -364,7 +369,7 @@ import { createStore } from "vuex";
       researchData: (state) => {
         return state.researchData;
       },
-      
+
       defenseData: (state) => {
         return state.defenseData;
       },

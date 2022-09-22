@@ -378,7 +378,205 @@
           </q-tooltip>
         </q-btn>
       </div>
+
+      <div class="resource-box">
+        <q-btn
+          @click="bkmPopup = true"
+          stack
+          flat
+          rounded
+          class="btn-glass-element"
+        >
+          <img
+            src="~assets/img/logo.webp"
+            alt
+            srcset
+            class="q-pt-sm planet-icons"
+          />
+          <p class="text-weight-bold text-body2">
+            {{ bkmAvailable }} (+)
+          </p>
+
+          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
+          <q-tooltip
+            class="bg-primary"
+            transition-show="scale"
+            transition-hide="scale"
+          >
+            <q-list dense class="text-subtitle2" style="width: 350px">
+              <q-item>
+                <q-item-section class="text-warning">
+                  <q-item-label class="text-subtitle1">$BKM</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section class="text-white">
+                  <q-item-section caption>Available</q-item-section>
+                </q-item-section>
+                <q-item-section class="col-4 text-right text-positive">{{
+                  bkmAvailable
+                }}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-tooltip>
+        </q-btn>
+      </div>
+
     </q-card>
+
+
+    <q-dialog v-model="bkmPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 350px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >$BKM</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                    <q-btn color="amber" style="width: 150px;" glossy label="Deposit" @click="bkmDepositPopup = true; bkmPopup = false" />
+              </q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                    <q-btn color="amber" style="width: 150px;" glossy label="Withdraw" @click="bkmWithdrawPopup = true; bkmPopup = false"/>
+              </q-card-section>
+            </q-card-section>
+          </div>
+
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="bkmDepositPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >DEPOSIT $BKM</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+        <div
+          class="energy-popup"
+        >
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                <q-slider
+                  id="depositEnergySlider"
+                  v-model="bkmDepositAmount"
+                  :min="0.5"
+                  :step="5"
+                  :max="5000"
+                  label
+                  label-always
+                  color="positive"
+                />
+              </q-card-section>
+
+              <q-card-section class="q-pt-none text-center">
+                <IncreaseAllowance
+                  v-if="!$store.getters.activePlanet.free_planet"
+                  :address="ContractAddress.getSpaceRidersGameAddress()"
+                  :amount="bkmDepositAmount"
+                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                  customWidth
+                />
+                <q-btn
+                  label="Deposit"
+                  color="warning"
+                  no-caps
+                  class="q-px-lg q-py-sm full-width"
+                  @click="depositBkm(bkmDepositAmount)"
+                  style="
+                  max-width: 130px;
+                  "
+                />
+              </q-card-section>
+            </q-card-section>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+
+    <q-dialog v-model="bkmWithdrawPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >WITHDRAW $BKM</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+        <div
+          class="energy-popup"
+        >
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                <q-slider
+                  id="depositEnergySlider"
+                  v-model="bkmWithdrawAmount"
+                  :min="0.5"
+                  :step="5"
+                  :max="5000"
+                  label
+                  label-always
+                  color="positive"
+                />
+              </q-card-section>
+
+              <q-card-section class="q-pt-none text-center">
+                <q-btn
+                  label="Withdraw"
+                  color="warning"
+                  no-caps
+                  class="q-px-lg q-py-sm full-width"
+                  @click="withdrawBkm(bkmWithdrawAmount)"
+                  style="
+                  max-width: 130px;
+                  "
+                />
+              </q-card-section>
+            </q-card-section>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="energyDepositPopup">
       <q-card
         class="bg-dark text-white"
@@ -386,7 +584,7 @@
       >
         <q-card-section class="q-pa-xs text-center">
           <span class="q-ml-sm text-overline" style="font-size: 14px"
-            >DEPOSIT ENERGY</span
+            >BUY ENERGY</span
           >
         </q-card-section>
         <q-btn
@@ -427,7 +625,7 @@
               <q-card-section class="q-pt-none text-center">
                 <IncreaseAllowance
                   v-if="!$store.getters.activePlanet.free_planet"
-                  :address="ContractAddress.getSpaceRidersGameAddress()" 
+                  :address="ContractAddress.getSpaceRidersGameAddress()"
                   :amount="sprCost"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
                   customWidth
@@ -460,7 +658,6 @@ import tc from "thousands-counter";
 import SpaceRidersGameContract, {
   EnergyDepositAttributes,
 } from "../service/contract/SpaceRidersGameContract";
-import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
@@ -486,6 +683,11 @@ const activePlanet = computed(() => {
 const energyAvailable = computed(() => {
   if ($store.getters.activePlanet === false) return false;
   return $store.getters.activePlanet.resources.energy;
+});
+
+const bkmAvailable = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
+  return $store.getters.activePlanet.resources.bkm;
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -812,12 +1014,18 @@ const isResourceAlert = (resourceType) => {
   const warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth < 1;
 
   const reserveEmpty = $store.getters.activePlanet.reserves[resourceType] <= 0;
-  
+
   return mineFullHealth || warehouseFullHealth || reserveEmpty;
 };
 
 const energyDepositPopup = ref(false);
+const bkmDepositPopup = ref(false);
+const bkmWithdrawPopup = ref(false);
+const bkmPopup = ref(false);
 const depositAmount = ref(1.0);
+
+const bkmDepositAmount = ref(1.0);
+const bkmWithdrawAmount = ref(1.0);
 
 const sprCost = computed(() => {
   const tokenPrice = $store.getters.tokenPrice;
@@ -827,7 +1035,7 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $SPR`;
+  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $BKM`;
 });
 
 async function depositEnergy(amount) {
@@ -843,41 +1051,15 @@ async function depositEnergy(amount) {
     "Waiting for transaction to complete...",
   ))
 
-  if ($store.getters.activePlanet.price_paid === 0) {
-    try {
-      await ApiRequest.depositEnergy({
-        planetId: $store.getters.activePlanet.id,
-        guid: uuid,
-        amount: amount,
-      });
-      notif($notification(
-        "success",
-        "Energy deposited successfuly!",
-      ))
-      $store.commit("incrementEnergy", { energy: amount });
-      $store.commit("restFreePlanetFreeTokens", { tokens: amount });
-      $eventBus.emit(ENERGY_DEPOSITED);
-      energyDepositPopup.value = false;
-    } catch(ex) {
-      notif($notification(
-        "failed",
-        ex,
-      ))
-    }
-    
-    return;
-  }
-
-
   try {
     const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
     await tx.wait();
-  
+
     await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
     });
-  
+
     notif($notification(
       "success",
       "Energy deposited successfuly!",
@@ -894,6 +1076,83 @@ async function depositEnergy(amount) {
 
 }
 
+async function depositBkm(amount) {
+  const uuid = ObjectID().toHexString();
+  const energyDeposit = new EnergyDepositAttributes(
+    uuid,
+    amount.toString(),
+    $store.getters.activePlanet.id
+  );
+
+  const notif = $q.notify($notification(
+    "progress",
+    "Waiting for transaction to complete...",
+  ))
+
+  try {
+    const tx = await SpaceRidersGameContract.bkmDeposit(energyDeposit);
+    await tx.wait();
+
+    await ApiRequest.bkmTransaction({
+      planetId: $store.getters.activePlanet.id,
+      guid: uuid,
+      type: "deposit"
+    });
+
+    notif($notification(
+      "success",
+      "$BKM deposited successfuly!",
+    ))
+
+    $store.commit("incrementBkm", { bkm: amount });
+    bkmDepositPopup.value = false;
+  } catch (ex) {
+    notif($notification(
+      "failed",
+      ex,
+    ))
+  }
+}
+
+async function withdrawBkm(amount) {
+  const uuid = ObjectID().toHexString();
+  const energyDeposit = new EnergyDepositAttributes(
+    uuid,
+    amount.toString(),
+    $store.getters.activePlanet.id
+  );
+
+  const notif = $q.notify($notification(
+    "progress",
+    "Waiting for transaction to complete...",
+  ))
+
+  try {
+    const tx = await SpaceRidersGameContract.bkmWithdraw(energyDeposit);
+    await tx.wait();
+
+    await ApiRequest.bkmTransaction({
+      planetId: $store.getters.activePlanet.id,
+      guid: uuid,
+      type: "withdraw",
+    });
+
+    notif($notification(
+      "success",
+      "$BKM withdrawed successfuly!",
+    ))
+
+    $store.commit("decrementBkm", { bkm: amount });
+    bkmDepositPopup.value = false;
+  } catch (ex) {
+    notif($notification(
+      "failed",
+      ex,
+    ))
+  }
+}
+
+
 const maxEnergyDeposit = computed(() => {
   const planet = $store.getters.activePlanet;
   if (!planet) return 0;
@@ -907,15 +1166,15 @@ function startEnergyTimer() {
     clearInterval($store.getters.energyTimerId);
     $store.commit('setEnergyTimerId', false);
   }
-  
+
   const intId = setInterval(() => {
     if (energyAvailable.value <= 0) {
-      
+
       clearInterval($store.getters.energyTimerId);
       $store.commit('setEnergyTimerId', false);
       return;
     }
-    
+
     const eC = $store.getters.activePlanet.resources.energy_usage;
     $store.commit('decrementEnergy', {energy: eC/60})
   }, 1000);
@@ -930,14 +1189,14 @@ function startMetalTimer() {
     clearInterval($store.getters.metalTimerId);
     $store.commit('setMetalTimerId', false);
   }
-  
+
   const intId = setInterval(() => {
     if (metalReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.metalTimerId);
       $store.commit('setMetalTimerId', false);
       return;
     }
-    
+
     const mP = metalProduction.value;
     $store.commit('decrementReserve', {
       ressource: "metal",
@@ -954,14 +1213,14 @@ function startCrystalTimer() {
     clearInterval($store.getters.crystalTimerId);
     $store.commit('setCrystalTimerId', false);
   }
-  
+
   const intId = setInterval(() => {
     if (crystalReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.crystalTimerId);
       $store.commit('setCrystalTimerId', false);
       return;
     }
-    
+
     const cP = crystalProduction.value;
     $store.commit('decrementReserve', {
       ressource: "crystal",
@@ -978,14 +1237,14 @@ function startPetrolTimer() {
     clearInterval($store.getters.petrolTimerId);
     $store.commit('setPetrolTimerId', false);
   }
-  
+
   const intId = setInterval(() => {
     if (petrolReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.petrolTimerId);
       $store.commit('setPetrolTimerId', false);
       return;
     }
-    
+
     const pP = petrolProduction.value;
     $store.commit('decrementReserve', {
       ressource: "petrol",
