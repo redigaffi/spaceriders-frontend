@@ -19,12 +19,6 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('overview')"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
-              class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
               >GAME MECHANICS</a
             >
@@ -245,43 +239,10 @@
         </div>
       </div>
     </section>
-
-    <div id="overview"></div>
+    
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">OVERVIEW</div>
-          <div class="q-pt-xl custom-font" style="color: #cbcbcb">
-            <div>
-              <p class="text-h4 text-justify">
-                Explore a limitless galaxy where the narrative is directed
-                entirely by you, the players. In SpaceRiders, you are the leader
-                of your empire, <b> the destiny </b>of your planets relies upon
-                you! By building and customizing your planets, you will be
-                securing territory, crossing the deep corners of space to turn
-                the tide of the war.
-              </p>
-            </div>
-            <div>
-              <p class="text-h4 text-justify">
-                SpaceRiders <b> ($SPR) </b> is a Play-To-Earn
-                <b> real-time </b> strategy NFT game set in space. $SPR enables
-                players to purchase and acquire virtual items within the
-                SpaceRiders game.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME MECHANICS -->
-    <div id="game"></div>
-    <section class="game">
-      <div :class="$q.screen.lt.md ? 'q-px-sm' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">GAME MECHANICS</div>
-
           <div class="game__content">
             <div class="game__item">
               <p class="game__item--title">Play to Own</p>
@@ -297,7 +258,7 @@
             <div class="game__item">
               <p class="game__item--title">Mines & Warehouses</p>
               <p class="game__item--text custom-font">
-                The extraction of resources (Metal, Crystal, Gasoline) is the
+                The extraction of resources (Metal, Crystal, Petrol) is the
                 key to the game and this is possible thanks to the mines. Once
                 the mines extract resources they are stored in their relevant
                 warehouse depending on the resource. The higher the level of
@@ -940,12 +901,6 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('overview')"
-              class="footer__nav--link go"
-              >OVERVIEW</a
-            >
-            <a
-              href="#"
               v-on:click.prevent="scrollPageTo('game')"
               class="footer__nav--link go"
               >GAME MECHANICS</a
@@ -1028,12 +983,6 @@
           class="header__nav--link go"
           v-on:click.prevent="scrollPageTo('landing')"
           >HOME</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('overview')"
-          >OVERVIEW</a
         >
         <a
           href="#"
@@ -1213,14 +1162,14 @@ export default defineComponent({
       {
         label: "What do I need to play SpaceRiders?",
         description: [
-          "You need a compatible wallet such as MetaMask and enough $SPR previously purchased in order to mint a planet and fill your energy.",
+          "You need a compatible wallet such as MetaMask and enough $BKM previously purchased in order to mint a planet and fill your energy.",
         ],
       },
       {
         label: "When will I be able to play SpaceRiders?",
         description: [
           "The MVP (Minimum Viable Product) is completed and is currently undergoing rigorous testing by the development team prior to rolling it out, to ensure that your first experience within the game is exceptional.",
-          "As stated in our roadmap, we anticipate launch of this version in Q3 2022.",
+          "As stated in our roadmap, we anticipate launch of this version in Q4 2022.",
         ],
       },
       {
