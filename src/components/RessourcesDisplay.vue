@@ -656,7 +656,7 @@ import { ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
 import SpaceRidersGameContract, {
-  EnergyDepositAttributes,
+  EnergyDepositAttributes, SignatureData
 } from "../service/contract/SpaceRidersGameContract";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
@@ -687,7 +687,7 @@ const energyAvailable = computed(() => {
 
 const bkmAvailable = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return $store.getters.activePlanet.resources.bkm;
+  return tc($store.getters.activePlanet.resources.bkm.toFixed(2), { digits: 2 });
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -1116,11 +1116,6 @@ async function depositBkm(amount) {
 
 async function withdrawBkm(amount) {
   const uuid = ObjectID().toHexString();
-  const energyDeposit = new EnergyDepositAttributes(
-    uuid,
-    amount.toString(),
-    $store.getters.activePlanet.id
-  );
 
   const notif = $q.notify($notification(
     "progress",
@@ -1128,7 +1123,26 @@ async function withdrawBkm(amount) {
   ))
 
   try {
-    const tx = await SpaceRidersGameContract.bkmWithdraw(energyDeposit);
+    const re = await ApiRequest.bkmWithdraw({
+      planetId: $store.getters.activePlanet.id,
+      guid: uuid,
+      type: "withdraw",
+      amount: amount.toString()
+    });
+
+    const sD = new SignatureData(
+      re.v,
+      re.r,
+      re.s
+    );
+
+    const energyDeposit = new EnergyDepositAttributes(
+      uuid,
+      re.amount,
+      $store.getters.activePlanet.id
+    );
+
+    const tx = await SpaceRidersGameContract.bkmWithdraw(energyDeposit, sD);
     await tx.wait();
 
     await ApiRequest.bkmTransaction({

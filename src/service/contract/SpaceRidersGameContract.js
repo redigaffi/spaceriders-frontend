@@ -151,7 +151,7 @@ class SpaceRidersGameContract extends Contract {
     );
   }
 
-  async bkmWithdraw(bkmDeposit) {
+  async bkmWithdraw(bkmDeposit, sD) {
     const contract = await this.getContract();
 
     const overrides = {
@@ -162,14 +162,11 @@ class SpaceRidersGameContract extends Contract {
       gasLimit: 1972197,
     };
 
-    const amountInWei = ethers.utils
-      .parseEther(bkmDeposit.amount)
-      .toString();
-
     return await contract.bkmWithdraw(
-      amountInWei,
+      bkmDeposit.amount,
       bkmDeposit.guid,
       bkmDeposit.planetId,
+      sD,
       overrides
     );
   }
@@ -198,26 +195,6 @@ class SpaceRidersGameContract extends Contract {
           tokenURI,
           overrides
       );
-    }
-
-    /**
-     * @param {string} planetGuid Planet GUID.
-     *
-     **/
-    async convertFromPrimaryResources(signatureData, attributes) {
-        const contract = await this.getContract();
-
-        const overrides = {
-          gasLimit: 721975,
-        };
-
-        return await contract.convertFromPrimaryResources(
-            signatureData,
-            attributes.id,
-            attributes.tokens,
-            attributes.forAddress,
-            overrides
-        );
     }
 
     async stakedLpAmount(planetId) {
