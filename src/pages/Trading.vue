@@ -248,7 +248,7 @@
                       class="q-mt-sm" v-model.number="sellAmount" dense prefix="Amount" :suffix="pair1" />
 
                     <q-input input-class="text-right q-mr-xs" standout="bg-secondary" class="q-mt-sm"
-                      v-model.number="sellTotal" dense prefix="Total" :suffix="pair2">
+                      v-model.number="sellTotal" dense prefix="Total" :suffix="pair1">
                       <template v-slot:append>
                         <q-btn @click="maxBalance('sell')" size="xs" color="black" class="" label="max" />
                       </template>
