@@ -36,7 +36,7 @@
           >
         </div>
 
-        <q-page-sticky position="bottom-right" :offset="[24, 24]">
+        <q-page-sticky :class="!openInboxModel ? 'z-top' : ''" position="bottom-right" :offset="[24, 24]">
           <q-btn
             size="sm"
             fab
