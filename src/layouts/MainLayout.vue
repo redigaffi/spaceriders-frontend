@@ -102,11 +102,10 @@
                     v-ripple
                     v-for="email in emails"
                     :key="email.id"
-                    @click="openEmail(email)"
                     class="q-mb-xs"
                     :class="{ unread_msg: !email.read }"
                   >
-                    <q-item-section>
+                    <q-item-section @click="openEmail(email)">
                       <q-item-label>{{ email.title }}</q-item-label>
                       <q-item-label caption lines="2">{{
                         email.subTitle
