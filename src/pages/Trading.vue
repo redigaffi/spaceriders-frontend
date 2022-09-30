@@ -310,7 +310,7 @@
 
 
     <div class="col-2 q-ml-lg">
-      
+
       <div class="row glass-element-darker" style="border-radius: 0px; font-size: 90%; height: 200px">
         <div class="col">
             <div class="row">
@@ -325,7 +325,7 @@
             </div>
 
             <q-separator class="q-mt-sm" />
-            
+
             <q-scroll-area class="q-mt-xs full-width full-height">
                 <div @click="changeMarket(market.market)" v-for="market in markets" :key="market.pair" class="row cursor-pointer">
                   <div class="col text-left">{{market.market}}</div>
@@ -398,6 +398,7 @@ const SYMBOLS = {
   "METAL": "mtl",
   "PETROL": "ptr",
   "CRYSTAL": "cry",
+  "BKM": "bkm",
 }
 
 const markets = ref([]);
@@ -553,7 +554,7 @@ const connect = () => {
       ws.send(JSON.stringify({
         use_case: "ping"
       }));
-    }, 5000);
+    }, 1500);
 
     // Initial data load
     ws.send(JSON.stringify({
@@ -566,7 +567,7 @@ const connect = () => {
 
 
     setInterval(() => {
-        
+
       ws.send(JSON.stringify({
         use_case: "trade_fetch_order_book_data",
         data: {
