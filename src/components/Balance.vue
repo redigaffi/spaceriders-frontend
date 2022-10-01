@@ -41,7 +41,7 @@ import {
   CONVERT_COMPLETED,
   STAKE,
   UNSTAKE,
-  ENERGY_DEPOSITED
+  ENERGY_DEPOSITED,
 } from "../constants/Events";
 import tc from "thousands-counter";
 import ApiRequest from "../service/http/ApiRequests";
@@ -81,10 +81,7 @@ onBeforeMount(() => {
 
 async function upateBalance() {
   try {
-    tokenAmount.value = await SpaceRiders.balanceOf(
-      $store.getters.address
-    );
-
+    tokenAmount.value = await SpaceRiders.balanceOf($store.getters.address);
   } catch (e) {
     console.log(e);
   }

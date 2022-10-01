@@ -111,54 +111,52 @@ const linksListInfo = {
     title: "Overview",
     link: "/overview",
     icon: "info",
-    attr: {}
-
+    attr: {},
   },
   planet: {
     title: "Planets",
     link: "/planet",
     icon: "fas fa-globe-europe",
-    attr: {}
+    attr: {},
   },
   resources: {
     title: "Resources",
     link: "/resources",
     icon: "widgets",
-    attr: {}
-
+    attr: {},
   },
   installations: {
     title: "Installations",
     link: "/installations",
     icon: "construction",
-    attr: {}
-
+    attr: {},
   },
   research: {
     title: "Research",
     link: "/research",
     icon: "travel_explore",
-    attr: {}
-
+    attr: {},
   },
   defense: {
     title: "Defense",
     link: "/defense",
     icon: "security",
-    attr: {}
-
+    attr: {},
   },
   explorer: {
     title: "Explorer",
     link: "/explorer",
     icon: "fa fa-satellite-dish",
-    attr: {}
+    attr: {},
   },
   gm: {
     title: "Game Manual",
     link: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
     icon: "auto_stories",
-    attr: { href:"https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro", target: '_blank' }
+    attr: {
+      href: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
+      target: "_blank",
+    },
   },
 };
 
@@ -177,27 +175,28 @@ let linksList = computed(() => {
     if (routeData.name === "overview") {
       const requieresAuth = routeData.meta.requiresAuth;
       const requiresPlanet = routeData.meta.requiresPlanet;
-      const notAdd =  (!loggedIn && requieresAuth) || (requiresPlanet && loggedIn && !hasPlanets);
+      const notAdd =
+        (!loggedIn && requieresAuth) ||
+        (requiresPlanet && loggedIn && !hasPlanets);
       if (!notAdd) {
         tmplinksList.push(linksListInfo[routeData.name]);
       }
 
       for (const childIdx in routeData.children) {
         const childInfo = routeData.children[childIdx];
-        if (childInfo.path === '') continue;
-
+        if (childInfo.path === "") continue;
 
         const childRequieresAuth = childInfo.meta.requiresAuth;
         const childRequiresPlanet = childInfo.meta.requiresPlanet;
 
-        const notAdd = (!loggedIn && childRequieresAuth) || (childRequiresPlanet && loggedIn && !hasPlanets);
+        const notAdd =
+          (!loggedIn && childRequieresAuth) ||
+          (childRequiresPlanet && loggedIn && !hasPlanets);
         if (!notAdd && childInfo.meta.menu) {
           tmplinksList.push(linksListInfo[childInfo.name]);
         }
 
-
         if (childInfo.name === "planet") {
-
           if (loggedIn) {
             tmplinksList.push(linksListInfo.explorer);
           }
@@ -212,8 +211,6 @@ let linksList = computed(() => {
   return tmplinksList;
 });
 
-
-
 const leftDrawerOpen = ref(false);
 const essentialLinks = linksList;
 
@@ -221,12 +218,9 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const hasActivePlanet = computed (() => {
+const hasActivePlanet = computed(() => {
   return $store.getters.activePlanet !== false;
 });
-
-
-
 </script>
 <style lang="scss">
 .bg-navbar {

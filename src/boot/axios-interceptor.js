@@ -1,9 +1,9 @@
 import { boot } from "quasar/wrappers";
-const Buffer = require('buffer/').Buffer 
+const Buffer = require("buffer/").Buffer;
 
 function parseJwt(token) {
-  var base64Payload = token.split('.')[1];
-  var payload = Buffer.from(base64Payload, 'base64');
+  var base64Payload = token.split(".")[1];
+  var payload = Buffer.from(base64Payload, "base64");
   return JSON.parse(payload.toString());
 }
 
@@ -18,17 +18,19 @@ export default boot(async ({ app, router, store }) => {
     (config) => {
       const loggedIn = store.getters.loggedIn;
       const jwt = store.getters.jwt;
-      
+
       if (loggedIn) {
         const payload = parseJwt(jwt);
         if (Math.floor(Date.now() / 1000) >= payload.exp) {
           store.commit("destroySession");
-          router.push({name: "nouser"});
+          router.push({ name: "nouser" });
           $q.loading.hide();
-          $q.notify($notification(
-            "failed",
-            "Authentication token expired, login again.",
-          ))
+          $q.notify(
+            $notification(
+              "failed",
+              "Authentication token expired, login again."
+            )
+          );
         }
 
         config.headers.Authorization = `Bearer ${jwt}`;
@@ -37,14 +39,13 @@ export default boot(async ({ app, router, store }) => {
         if (hasPlanets) {
           config.headers["X-Active-Planet"] = store.getters.activePlanet.id;
         }
-
       }
 
       return config;
     },
     function (err) {
-      alert("something failed, see console for error")
-      console.error(err)
+      alert("something failed, see console for error");
+      console.error(err);
       $q.loading.hide();
 
       return Promise.reject(err);
@@ -56,13 +57,12 @@ export default boot(async ({ app, router, store }) => {
       return response;
     },
     (error) => {
-      
       try {
         if (error.response !== undefined && error.response.status === 401) {
           store.commit("destroySession");
           const text = error.response.data.message;
-          router.push({name: "nouser"});
-          
+          router.push({ name: "nouser" });
+
           let msg = "";
           if (text !== undefined) {
             msg = text;
@@ -70,12 +70,12 @@ export default boot(async ({ app, router, store }) => {
             msg = "Authentication failed, please try again.";
           }
 
-          $q.loading.hide();          
+          $q.loading.hide();
           return Promise.reject(msg);
         }
-      } catch(ex) {
+      } catch (ex) {
         $q.notify($notification("failed", ex));
-        console.error(ex)
+        console.error(ex);
         $q.loading.hide();
         return;
       }

@@ -1,5 +1,5 @@
 <template>
-{{ body }}
+  {{ body }}
 </template>
 <script setup>
 import { defineProps, reactive, toRefs } from "vue";
@@ -9,5 +9,4 @@ const props = defineProps({
 });
 
 const { body } = toRefs(props);
-
 </script>

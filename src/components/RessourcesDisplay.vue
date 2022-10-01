@@ -6,7 +6,7 @@
       flat
       class="bg-transparent text-secondary text-center row justify-center"
     >
-      <div class="resource-box  ">
+      <div class="resource-box">
         <q-btn
           stack
           flat
@@ -15,7 +15,8 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
-            'btn-red-glass-element': isStorageFull('metalWarehouse') || energyAvailable <= 0,
+            'btn-red-glass-element':
+              isStorageFull('metalWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -42,11 +43,13 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right" :class="{
+                <q-item-section
+                  class="col-4 text-right"
+                  :class="{
                     'text-negative': isStorageFull('metalWarehouse'),
-                  }">{{
-                  metalAvailable
-                }}</q-item-section>
+                  }"
+                  >{{ metalAvailable }}</q-item-section
+                >
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
@@ -60,10 +63,14 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-8 text-right text-negative"
                   >0/min</q-item-section
                 >
-                <q-item-section v-else-if="metalReserve <= 0" class="col-8 text-right text-yellow-12"
+                <q-item-section
+                  v-else-if="metalReserve <= 0"
+                  class="col-8 text-right text-yellow-12"
                   >0/min</q-item-section
                 >
                 <q-item-section
@@ -83,7 +90,9 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-6 text-right"
                   >0/min</q-item-section
                 >
                 <q-item-section v-else class="col-6 text-right"
@@ -94,17 +103,21 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right" :class="{
+                <q-item-section
+                  class="col-6 text-right"
+                  :class="{
                     'text-yellow-12': metalReserve <= 0,
-                  }">{{metalReserveDisplay}}</q-item-section
+                  }"
+                  >{{ metalReserveDisplay }}</q-item-section
                 >
               </q-item>
               <q-item v-if="metalReserve > 0">
                 <q-item-section class="text-white">
                   <q-item-section caption>Time left</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right">{{metalReserveTimeLeft}}</q-item-section
-                >
+                <q-item-section class="col-6 text-right">{{
+                  metalReserveTimeLeft
+                }}</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -119,7 +132,8 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
-            'btn-red-glass-element': isStorageFull('crystalWarehouse') || energyAvailable <= 0,
+            'btn-red-glass-element':
+              isStorageFull('crystalWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -146,11 +160,13 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right" :class="{
+                <q-item-section
+                  class="col-4 text-right"
+                  :class="{
                     'text-negative': isStorageFull('crystalWarehouse'),
-                  }">{{
-                  crystalAvailable
-                }}</q-item-section>
+                  }"
+                  >{{ crystalAvailable }}</q-item-section
+                >
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
@@ -164,10 +180,14 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-8 text-right text-negative"
                   >0/min</q-item-section
                 >
-                <q-item-section v-else-if="crystalReserve <= 0" class="col-8 text-right text-yellow-12"
+                <q-item-section
+                  v-else-if="crystalReserve <= 0"
+                  class="col-8 text-right text-yellow-12"
                   >0/min</q-item-section
                 >
                 <q-item-section
@@ -187,7 +207,9 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-6 text-right"
                   >0/min</q-item-section
                 >
                 <q-item-section v-else class="col-6 text-right"
@@ -198,17 +220,21 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right" :class="{
+                <q-item-section
+                  class="col-6 text-right"
+                  :class="{
                     'text-yellow-12': crystalReserve <= 0,
-                  }">{{crystalReserveDisplay}}</q-item-section
+                  }"
+                  >{{ crystalReserveDisplay }}</q-item-section
                 >
               </q-item>
               <q-item v-if="crystalReserve > 0">
                 <q-item-section class="text-white">
                   <q-item-section caption>Time left</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right">{{crystalReserveTimeLeft}}</q-item-section
-                >
+                <q-item-section class="col-6 text-right">{{
+                  crystalReserveTimeLeft
+                }}</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -223,7 +249,8 @@
           :class="{
             'btn-yellow-glass-element':
               isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
-            'btn-red-glass-element': isStorageFull('petrolWarehouse') || energyAvailable <= 0,
+            'btn-red-glass-element':
+              isStorageFull('petrolWarehouse') || energyAvailable <= 0,
           }"
         >
           <img
@@ -250,11 +277,13 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-4 text-right" :class="{
+                <q-item-section
+                  class="col-4 text-right"
+                  :class="{
                     'text-negative': isStorageFull('petrolWarehouse'),
-                  }">{{
-                  petrolAvailable
-                }}</q-item-section>
+                  }"
+                  >{{ petrolAvailable }}</q-item-section
+                >
               </q-item>
               <q-item>
                 <q-item-section class="text-white">
@@ -268,10 +297,14 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Production</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-8 text-right text-negative"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-8 text-right text-negative"
                   >0/min</q-item-section
                 >
-                <q-item-section v-else-if="petrolReserve <= 0" class="col-8 text-right text-yellow-12"
+                <q-item-section
+                  v-else-if="petrolReserve <= 0"
+                  class="col-8 text-right text-yellow-12"
                   >0/min</q-item-section
                 >
                 <q-item-section
@@ -291,7 +324,9 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Energy usage</q-item-section>
                 </q-item-section>
-                <q-item-section v-if="energyAvailable <= 0" class="col-6 text-right"
+                <q-item-section
+                  v-if="energyAvailable <= 0"
+                  class="col-6 text-right"
                   >0/min</q-item-section
                 >
                 <q-item-section v-else class="col-6 text-right"
@@ -302,17 +337,21 @@
                 <q-item-section class="text-white">
                   <q-item-section caption>Reserve</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right" :class="{
+                <q-item-section
+                  class="col-6 text-right"
+                  :class="{
                     'text-yellow-12': petrolReserve <= 0,
-                  }">{{petrolReserveDisplay}}</q-item-section
+                  }"
+                  >{{ petrolReserveDisplay }}</q-item-section
                 >
               </q-item>
               <q-item v-if="petrolReserve > 0">
                 <q-item-section class="text-white">
                   <q-item-section caption>Time left</q-item-section>
                 </q-item-section>
-                <q-item-section class="col-6 text-right">{{petrolReserveTimeLeft}}</q-item-section
-                >
+                <q-item-section class="col-6 text-right">{{
+                  petrolReserveTimeLeft
+                }}</q-item-section>
               </q-item>
             </q-list>
           </q-tooltip>
@@ -393,9 +432,7 @@
             srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">
-            {{ bkmAvailable }} (+)
-          </p>
+          <p class="text-weight-bold text-body2">{{ bkmAvailable }} (+)</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -421,9 +458,7 @@
           </q-tooltip>
         </q-btn>
       </div>
-
     </q-card>
-
 
     <q-dialog v-model="bkmPopup">
       <q-card
@@ -444,18 +479,34 @@
           v-close-popup
         />
 
-
-          <div class="text-subtitle2">
-            <q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                    <q-btn color="amber" style="width: 150px;" glossy label="Deposit" @click="bkmDepositPopup = true; bkmPopup = false" />
-              </q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                    <q-btn color="amber" style="width: 150px;" glossy label="Withdraw" @click="bkmWithdrawPopup = true; bkmPopup = false"/>
-              </q-card-section>
+        <div class="text-subtitle2">
+          <q-card-section>
+            <q-card-section class="q-pt-none text-center">
+              <q-btn
+                color="amber"
+                style="width: 150px"
+                glossy
+                label="Deposit"
+                @click="
+                  bkmDepositPopup = true;
+                  bkmPopup = false;
+                "
+              />
             </q-card-section>
-          </div>
-
+            <q-card-section class="q-pt-none text-center">
+              <q-btn
+                color="amber"
+                style="width: 150px"
+                glossy
+                label="Withdraw"
+                @click="
+                  bkmWithdrawPopup = true;
+                  bkmPopup = false;
+                "
+              />
+            </q-card-section>
+          </q-card-section>
+        </div>
       </q-card>
     </q-dialog>
 
@@ -478,9 +529,7 @@
           v-close-popup
         />
 
-        <div
-          class="energy-popup"
-        >
+        <div class="energy-popup">
           <div class="text-subtitle2">
             <q-card-section>
               <q-card-section class="q-pt-none text-center">
@@ -510,9 +559,7 @@
                   no-caps
                   class="q-px-lg q-py-sm full-width"
                   @click="depositBkm(bkmDepositAmount)"
-                  style="
-                  max-width: 130px;
-                  "
+                  style="max-width: 130px"
                 />
               </q-card-section>
             </q-card-section>
@@ -520,7 +567,6 @@
         </div>
       </q-card>
     </q-dialog>
-
 
     <q-dialog v-model="bkmWithdrawPopup">
       <q-card
@@ -541,9 +587,7 @@
           v-close-popup
         />
 
-        <div
-          class="energy-popup"
-        >
+        <div class="energy-popup">
           <div class="text-subtitle2">
             <q-card-section>
               <q-card-section class="q-pt-none text-center">
@@ -566,9 +610,7 @@
                   no-caps
                   class="q-px-lg q-py-sm full-width"
                   @click="withdrawBkm(bkmWithdrawAmount)"
-                  style="
-                  max-width: 130px;
-                  "
+                  style="max-width: 130px"
                 />
               </q-card-section>
             </q-card-section>
@@ -596,9 +638,7 @@
           v-close-popup
         />
 
-        <div
-          class="energy-popup"
-        >
+        <div class="energy-popup">
           <div class="text-subtitle2">
             <q-card-section>
               <q-card-section class="q-pt-none text-center">
@@ -636,9 +676,7 @@
                   no-caps
                   class="q-px-lg q-py-sm full-width"
                   @click="depositEnergy(sprCost)"
-                  style="
-                  max-width: 130px;
-                  "
+                  style="max-width: 130px"
                 />
               </q-card-section>
             </q-card-section>
@@ -656,20 +694,25 @@ import { ref, computed, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import tc from "thousands-counter";
 import SpaceRidersGameContract, {
-  EnergyDepositAttributes, SignatureData
+  EnergyDepositAttributes,
+  SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
-import { ACTIVE_PLANET_CHANGED, UPDATED_ALL, ENERGY_DEPOSITED } from "../constants/Events";
-import { useQuasar } from 'quasar'
-
+import {
+  ACTIVE_PLANET_CHANGED,
+  UPDATED_ALL,
+  ENERGY_DEPOSITED,
+} from "../constants/Events";
+import { useQuasar } from "quasar";
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
-const $q = useQuasar()
+const $q = useQuasar();
 
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 const $store = useStore();
 
@@ -687,7 +730,9 @@ const energyAvailable = computed(() => {
 
 const bkmAvailable = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return tc($store.getters.activePlanet.resources.bkm.toFixed(2), { digits: 2 });
+  return tc($store.getters.activePlanet.resources.bkm.toFixed(2), {
+    digits: 2,
+  });
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -726,13 +771,12 @@ const metalReserve = computed(() => {
 const energyTimeLeft = computed(() => {
   if ($store.getters.activePlanet === false) return false;
   const availableEnergy = $store.getters.activePlanet.resources.energy;
-  const consumption = energyConsumption.value/60;
-  const minutesLeft = (availableEnergy / consumption);
+  const consumption = energyConsumption.value / 60;
+  const minutesLeft = availableEnergy / consumption;
   const tl = timeLeft(minutesLeft);
   if (tl === "") return "N/A";
   return tl;
 });
-
 
 const metalReserveDisplay = computed(() => {
   return tc($store.getters.activePlanet.reserves.metal.toFixed(1), {
@@ -788,7 +832,7 @@ const metalReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.metalMine === undefined) return;
   const production = metalProduction.value / 60;
   const reserve = metalReserve.value;
-  return timeLeft(reserve/production);
+  return timeLeft(reserve / production);
 });
 
 const metalMineEnergyUsage = computed(() => {
@@ -832,7 +876,7 @@ const petrolReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.petrolMine === undefined) return;
   const production = petrolProduction.value / 60;
   const reserve = petrolReserve.value;
-  return timeLeft(reserve/production);
+  return timeLeft(reserve / production);
 });
 
 const petrolProductionDisplay = computed(() => {
@@ -858,7 +902,7 @@ const crystalReserveTimeLeft = computed(() => {
   if ($store.getters.resourceData.crystalMine === undefined) return;
   const production = crystalProduction.value / 60;
   const reserve = crystalReserve.value;
-  return timeLeft(reserve/production);
+  return timeLeft(reserve / production);
 });
 
 const crystalProductionDisplay = computed(() => {
@@ -1009,7 +1053,7 @@ const isResourceAlert = (resourceType) => {
 
   const warehouse = rD[mappings[resourceType]["warehouse"]];
   const warehouseCurrentHealth = warehouse["health"];
-  let mineLvl = mine["level"]
+  let mineLvl = mine["level"];
   const warehouseMaxHealth = warehouse["upgrades"][mineLvl]["health"];
   const warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth < 1;
 
@@ -1035,7 +1079,9 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${depositAmount.value}$) - ${sprCost.value.toFixed(2)} $BKM`;
+  return `${depositAmount.value} $ENERGY (${
+    depositAmount.value
+  }$) - ${sprCost.value.toFixed(2)} $BKM`;
 });
 
 async function depositEnergy(amount) {
@@ -1046,10 +1092,9 @@ async function depositEnergy(amount) {
     $store.getters.activePlanet.id
   );
 
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
@@ -1060,20 +1105,13 @@ async function depositEnergy(amount) {
       guid: uuid,
     });
 
-    notif($notification(
-      "success",
-      "Energy deposited successfuly!",
-    ))
+    notif($notification("success", "Energy deposited successfuly!"));
 
     $store.commit("incrementEnergy", { energy: amount });
     energyDepositPopup.value = false;
   } catch (ex) {
-    notif($notification(
-      "failed",
-      ex,
-    ))
+    notif($notification("failed", ex));
   }
-
 }
 
 async function depositBkm(amount) {
@@ -1084,10 +1122,9 @@ async function depositBkm(amount) {
     $store.getters.activePlanet.id
   );
 
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const tx = await SpaceRidersGameContract.bkmDeposit(energyDeposit);
@@ -1096,45 +1133,34 @@ async function depositBkm(amount) {
     await ApiRequest.bkmTransaction({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
-      type: "deposit"
+      type: "deposit",
     });
 
-    notif($notification(
-      "success",
-      "$BKM deposited successfuly!",
-    ))
+    notif($notification("success", "$BKM deposited successfuly!"));
 
     $store.commit("incrementBkm", { bkm: amount });
     bkmDepositPopup.value = false;
   } catch (ex) {
-    notif($notification(
-      "failed",
-      ex,
-    ))
+    notif($notification("failed", ex));
   }
 }
 
 async function withdrawBkm(amount) {
   const uuid = ObjectID().toHexString();
 
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const re = await ApiRequest.bkmWithdraw({
       planetId: $store.getters.activePlanet.id,
       guid: uuid,
       type: "withdraw",
-      amount: amount.toString()
+      amount: amount.toString(),
     });
 
-    const sD = new SignatureData(
-      re.v,
-      re.r,
-      re.s
-    );
+    const sD = new SignatureData(re.v, re.r, re.s);
 
     const energyDeposit = new EnergyDepositAttributes(
       uuid,
@@ -1151,21 +1177,14 @@ async function withdrawBkm(amount) {
       type: "withdraw",
     });
 
-    notif($notification(
-      "success",
-      "$BKM withdrawed successfuly!",
-    ))
+    notif($notification("success", "$BKM withdrawed successfuly!"));
 
     $store.commit("decrementBkm", { bkm: amount });
     bkmDepositPopup.value = false;
   } catch (ex) {
-    notif($notification(
-      "failed",
-      ex,
-    ))
+    notif($notification("failed", ex));
   }
 }
-
 
 const maxEnergyDeposit = computed(() => {
   const planet = $store.getters.activePlanet;
@@ -1178,22 +1197,21 @@ function startEnergyTimer() {
 
   if ($store.getters.energyTimerId !== false) {
     clearInterval($store.getters.energyTimerId);
-    $store.commit('setEnergyTimerId', false);
+    $store.commit("setEnergyTimerId", false);
   }
 
   const intId = setInterval(() => {
     if (energyAvailable.value <= 0) {
-
       clearInterval($store.getters.energyTimerId);
-      $store.commit('setEnergyTimerId', false);
+      $store.commit("setEnergyTimerId", false);
       return;
     }
 
     const eC = $store.getters.activePlanet.resources.energy_usage;
-    $store.commit('decrementEnergy', {energy: eC/60})
+    $store.commit("decrementEnergy", { energy: eC / 60 });
   }, 1000);
 
-  $store.commit('setEnergyTimerId', intId);
+  $store.commit("setEnergyTimerId", intId);
 }
 
 function startMetalTimer() {
@@ -1201,23 +1219,24 @@ function startMetalTimer() {
 
   if ($store.getters.metalTimerId !== false) {
     clearInterval($store.getters.metalTimerId);
-    $store.commit('setMetalTimerId', false);
+    $store.commit("setMetalTimerId", false);
   }
 
   const intId = setInterval(() => {
     if (metalReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.metalTimerId);
-      $store.commit('setMetalTimerId', false);
+      $store.commit("setMetalTimerId", false);
       return;
     }
 
     const mP = metalProduction.value;
-    $store.commit('decrementReserve', {
+    $store.commit("decrementReserve", {
       ressource: "metal",
-      value: mP/60});
+      value: mP / 60,
+    });
   }, 1000);
 
-  $store.commit('setMetalTimerId', intId);
+  $store.commit("setMetalTimerId", intId);
 }
 
 function startCrystalTimer() {
@@ -1225,23 +1244,24 @@ function startCrystalTimer() {
 
   if ($store.getters.crystalTimerId !== false) {
     clearInterval($store.getters.crystalTimerId);
-    $store.commit('setCrystalTimerId', false);
+    $store.commit("setCrystalTimerId", false);
   }
 
   const intId = setInterval(() => {
     if (crystalReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.crystalTimerId);
-      $store.commit('setCrystalTimerId', false);
+      $store.commit("setCrystalTimerId", false);
       return;
     }
 
     const cP = crystalProduction.value;
-    $store.commit('decrementReserve', {
+    $store.commit("decrementReserve", {
       ressource: "crystal",
-      value: cP/60});
+      value: cP / 60,
+    });
   }, 1000);
 
-  $store.commit('setCrystalTimerId', intId);
+  $store.commit("setCrystalTimerId", intId);
 }
 
 function startPetrolTimer() {
@@ -1249,23 +1269,24 @@ function startPetrolTimer() {
 
   if ($store.getters.petrolTimerId !== false) {
     clearInterval($store.getters.petrolTimerId);
-    $store.commit('setPetrolTimerId', false);
+    $store.commit("setPetrolTimerId", false);
   }
 
   const intId = setInterval(() => {
     if (petrolReserve.value <= 0 || energyAvailable.value <= 0) {
       clearInterval($store.getters.petrolTimerId);
-      $store.commit('setPetrolTimerId', false);
+      $store.commit("setPetrolTimerId", false);
       return;
     }
 
     const pP = petrolProduction.value;
-    $store.commit('decrementReserve', {
+    $store.commit("decrementReserve", {
       ressource: "petrol",
-      value: pP/60});
+      value: pP / 60,
+    });
   }, 1000);
 
-  $store.commit('setPetrolTimerId', intId);
+  $store.commit("setPetrolTimerId", intId);
 }
 
 const startTimers = () => {
@@ -1273,7 +1294,7 @@ const startTimers = () => {
   startMetalTimer();
   startCrystalTimer();
   startPetrolTimer();
-}
+};
 
 $eventBus.on(ACTIVE_PLANET_CHANGED, () => {
   startTimers();
@@ -1284,13 +1305,14 @@ $eventBus.on(UPDATED_ALL, () => {
 });
 </script>
 <style lang="scss">
-.energy-popup{
-  background: linear-gradient(to top, rgba(0,0, 0, 0.3), rgba(0,0, 0, 0.3)), url(~assets/img/buyplanet_footer-scaled.webp);
+.energy-popup {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url(~assets/img/buyplanet_footer-scaled.webp);
   background-size: cover;
   background-position: center;
 }
 .resource-box {
-  width:110px;
+  width: 110px;
   height: 110px;
 }
 

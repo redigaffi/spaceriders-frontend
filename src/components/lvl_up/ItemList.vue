@@ -3,10 +3,7 @@
     <q-card class="glass-element text-white q-pa-md">
       <q-card-section class="row fit justify-between items-center">
         <div
-          class="
-            text-h6 text-center text-weight-bold text-secondary
-            absolute-center
-          "
+          class="text-h6 text-center text-weight-bold text-secondary absolute-center"
         >
           {{ listName }}
         </div>
@@ -25,27 +22,20 @@
             >
               <q-card-section class="q-pa-none">
                 <q-card flat class="bg-transparent text-dark cursor-pointer">
-                  <img :src="`data_img/${value.label}.webp`" style="height: 110px" />
+                  <img
+                    :src="`data_img/${value.label}.webp`"
+                    style="height: 110px"
+                  />
 
                   <q-card-section
                     v-if="itemType"
-                    class="
-                      q-pa-xs
-                      text-weight-bold text-secondary
-                      absolute-bottom
-                      tag-glass-element
-                    "
+                    class="q-pa-xs text-weight-bold text-secondary absolute-bottom tag-glass-element"
                   >
                     {{ value.available }}
                   </q-card-section>
                   <q-card-section
                     v-else
-                    class="
-                      q-pa-xs
-                      text-weight-bold text-secondary
-                      absolute-bottom
-                      tag-glass-element
-                    "
+                    class="q-pa-xs text-weight-bold text-secondary absolute-bottom tag-glass-element"
                   >
                     {{ value.level }}
                   </q-card-section>
@@ -89,10 +79,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    
-    return {
-      
-    };
+    return {};
   },
 });
 </script>

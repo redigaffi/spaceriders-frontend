@@ -299,7 +299,6 @@ export default class ApiRequests {
       deposit_id: data.guid,
       amount: data.amount,
       type: data.type,
-
     };
 
     return (await axios.post(path, body)).data;
@@ -310,7 +309,7 @@ export default class ApiRequests {
    * @param {object} data
    * @returns
    */
-   static async bkmWithdraw(data) {
+  static async bkmWithdraw(data) {
     const path = `${process.env.BASE_API_PATH}/planet/bkm/withdraw`;
 
     const body = {
@@ -318,7 +317,6 @@ export default class ApiRequests {
       deposit_id: data.guid,
       amount: data.amount,
       type: "withdraw",
-
     };
 
     return (await axios.post(path, body)).data;

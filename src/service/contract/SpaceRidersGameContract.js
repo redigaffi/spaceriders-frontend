@@ -38,18 +38,18 @@ class EnergyDepositAttributes {
 }
 
 class TokenExchangeAttributes {
-    /**
-     *
-     * @param {*} id
-     * @param {*} tokens
-     * @param {*} validTimeWindow
-     * @param {*} forAddress
-     */
-    constructor(id, tokens, forAddress) {
-        this.id = id;
-        this.tokens = tokens;
-        this.forAddress = forAddress;
-    }
+  /**
+   *
+   * @param {*} id
+   * @param {*} tokens
+   * @param {*} validTimeWindow
+   * @param {*} forAddress
+   */
+  constructor(id, tokens, forAddress) {
+    this.id = id;
+    this.tokens = tokens;
+    this.forAddress = forAddress;
+  }
 }
 
 class SpaceRidersGameContract extends Contract {
@@ -102,7 +102,7 @@ class SpaceRidersGameContract extends Contract {
 
   /**
    * @param {EnergyDepositAttributes} energyDeposit
-  **/
+   **/
   async energyDeposit(energyDeposit) {
     const contract = await this.getContract();
 
@@ -127,7 +127,7 @@ class SpaceRidersGameContract extends Contract {
 
   /**
    * @param {EnergyDepositAttributes} energyDeposit
-  **/
+   **/
   async bkmDeposit(bkmDeposit) {
     const contract = await this.getContract();
 
@@ -139,9 +139,7 @@ class SpaceRidersGameContract extends Contract {
       gasLimit: 1972197,
     };
 
-    const amountInWei = ethers.utils
-      .parseEther(bkmDeposit.amount)
-      .toString();
+    const amountInWei = ethers.utils.parseEther(bkmDeposit.amount).toString();
 
     return await contract.bkmDeposit(
       amountInWei,
@@ -170,38 +168,32 @@ class SpaceRidersGameContract extends Contract {
       overrides
     );
   }
-    /**
-     *
-     * @param {*} planetGuid
-     * @param {*} price
-     * @param {*} sD
-     * @param {*} tokenURI
-     * @returns
-     */
-    async buyPlanet(planetGuid, price, sD, tokenURI) {
-      const contract = await this.getContract();
+  /**
+   *
+   * @param {*} planetGuid
+   * @param {*} price
+   * @param {*} sD
+   * @param {*} tokenURI
+   * @returns
+   */
+  async buyPlanet(planetGuid, price, sD, tokenURI) {
+    const contract = await this.getContract();
 
-      const overrides = {
-          // To convert Ether to Wei:
-          //@todo: get price from smart contract
-          value: ethers.utils.parseEther("0.0025"),
-          gasLimit: 1972197,
-      };
+    const overrides = {
+      // To convert Ether to Wei:
+      //@todo: get price from smart contract
+      value: ethers.utils.parseEther("0.0025"),
+      gasLimit: 1972197,
+    };
 
-      return await contract.buyPlanet(
-          planetGuid,
-          price,
-          sD,
-          tokenURI,
-          overrides
-      );
-    }
+    return await contract.buyPlanet(planetGuid, price, sD, tokenURI, overrides);
+  }
 
-    async stakedLpAmount(planetId) {
-      const contract = await this.getContract();
-      const stakedLpAmount = (await contract.userStakingLpInfo(planetId))[1];
-      return parseFloat(ethers.utils.formatEther(stakedLpAmount));
-    }
+  async stakedLpAmount(planetId) {
+    const contract = await this.getContract();
+    const stakedLpAmount = (await contract.userStakingLpInfo(planetId))[1];
+    return parseFloat(ethers.utils.formatEther(stakedLpAmount));
+  }
 }
 
 export default new SpaceRidersGameContract();

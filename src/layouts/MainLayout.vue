@@ -36,7 +36,11 @@
           >
         </div>
 
-        <q-page-sticky :class="!openInboxModel ? 'z-top' : ''" position="bottom-right" :offset="[24, 24]">
+        <q-page-sticky
+          :class="!openInboxModel ? 'z-top' : ''"
+          position="bottom-right"
+          :offset="[24, 24]"
+        >
           <q-btn
             size="sm"
             fab
@@ -44,7 +48,12 @@
             color="primary"
             @click="openInboxModel = !openInboxModel"
           >
-            <q-badge class="animation absolute-top-right" v-if="anyUnreadMessage" color="info" rounded />
+            <q-badge
+              class="animation absolute-top-right"
+              v-if="anyUnreadMessage"
+              color="info"
+              rounded
+            />
           </q-btn>
         </q-page-sticky>
 
@@ -187,17 +196,22 @@ import SpacePirates from "../components/email_templates/SpacePirates.vue";
 import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
 import ApiRequest from "../service/http/ApiRequests";
-import { ACTIVE_PLANET_CHANGED, LOGGED_IN, UPDATED_ALL } from "../constants/Events";
+import {
+  ACTIVE_PLANET_CHANGED,
+  LOGGED_IN,
+  UPDATED_ALL,
+} from "../constants/Events";
 import { useQuasar } from "quasar";
 
 const $store = useStore();
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 let buildingQueueData = computed(() => {
   return {
     ...$store.getters.resourceData,
     ...$store.getters.installationData,
-  }
+  };
 });
 
 let researchQueueData = computed(() => {
@@ -285,7 +299,7 @@ $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
 });
 
 $eventBus.on(LOGGED_IN, async () => {
-  console.log("AS1D")
+  console.log("AS1D");
   await updateAll();
   await updateInterval();
 });
@@ -295,9 +309,9 @@ async function update(activePlanet) {
     $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
   });
 
-  const allPlanetInfoReq = (await ApiRequest.getAllInfoPlanet(activePlanet.id));
+  const allPlanetInfoReq = await ApiRequest.getAllInfoPlanet(activePlanet.id);
   const allPlanetInfo = allPlanetInfoReq.data;
-  
+
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
@@ -314,7 +328,7 @@ async function updateAll() {
     activePlanetId = $store.getters.activePlanet.id;
   }
 
-  const planets = (await ApiRequest.getAllPlanets());
+  const planets = await ApiRequest.getAllPlanets();
   $store.commit("setPlanets", planets);
 
   let activePlanet = false;
@@ -351,7 +365,7 @@ async function updateInterval() {
   }
 }
 
-async function init() {  
+async function init() {
   if ($store.getters.loggedIn) {
     $quasar.loading.show();
     // On page refresh reset all.
@@ -377,7 +391,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
 }
-
 
 body {
   margin: 0;
@@ -951,12 +964,21 @@ body {
 .unread_msg {
   border-left: 4px solid #2253f4;
 }
-.animation{
+.animation {
   animation: scaleUp 2s ease infinite;
 }
 @keyframes scaleUp {
-  0% {transform: scale(1); opacity: 0.5;}
-  50% {transform: scale(2); opacity: 1;}
-  100% {transform: scale(1); opacity: 0.5;}
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
 }
 </style>

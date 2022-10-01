@@ -24,7 +24,11 @@
 
           <div class="header__social--inner">
             <a href="#" class="header__social--link">
-              <img src="~assets/landing/img/m.svg" alt="М" class="header__social--icon" />
+              <img
+                src="~assets/landing/img/m.svg"
+                alt="М"
+                class="header__social--icon"
+              />
             </a>
             <a href="#" class="header__social--link">
               <img
@@ -259,7 +263,11 @@
       <div class="container">
         <div class="token__inner">
           <div class="token__img--inner wow animate__animated animate__fadeIn">
-            <img src="~assets/landing/img/anal.svg" alt="Диаграмма" class="token__img" />
+            <img
+              src="~assets/landing/img/anal.svg"
+              alt="Диаграмма"
+              class="token__img"
+            />
           </div>
 
           <div class="token__text--inner wow animate__animated animate__fadeIn">
@@ -672,7 +680,11 @@
 
           <div class="social__content wow animate__animated animate__fadeIn">
             <a href="#" class="social__link">
-              <img src="~assets/landing/img/m-white.svg" alt="М" class="social__link--icon" />
+              <img
+                src="~assets/landing/img/m-white.svg"
+                alt="М"
+                class="social__link--icon"
+              />
             </a>
 
             <a href="#" class="social__link">
@@ -697,7 +709,11 @@
 
     <footer class="footer">
       <div class="up__arrow wow animate__animated animate__fadeIn">
-        <img src="~assets/landing/img/arrow.svg" alt="Стрелка" class="up__img" />
+        <img
+          src="~assets/landing/img/arrow.svg"
+          alt="Стрелка"
+          class="up__img"
+        />
       </div>
 
       <div class="container wow animate__animated animate__fadeIn">

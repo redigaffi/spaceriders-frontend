@@ -22,22 +22,20 @@ import { UPDATED_ALL } from "../constants/Events";
 import { useQuasar } from "quasar";
 
 const $store = useStore();
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
-
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 // Main app features
 const $quasar = useQuasar();
-
-
 
 async function update(activePlanet) {
   ApiRequest.tokenPrice().then((tokenPrice) => {
     $store.commit("setTokenPrice", { tokenPrice: tokenPrice });
   });
 
-  const allPlanetInfoReq = (await ApiRequest.getAllInfoPlanet(activePlanet.id));
+  const allPlanetInfoReq = await ApiRequest.getAllInfoPlanet(activePlanet.id);
   const allPlanetInfo = allPlanetInfoReq.data;
-  
+
   $store.commit("setActivePlanet", allPlanetInfo.planet);
   $store.commit("setResourceData", allPlanetInfo.resources);
   $store.commit("setInstallationData", allPlanetInfo.installation);
@@ -54,7 +52,7 @@ async function updateAll() {
     activePlanetId = $store.getters.activePlanet.id;
   }
 
-  const planets = (await ApiRequest.getAllPlanets());
+  const planets = await ApiRequest.getAllPlanets();
   $store.commit("setPlanets", planets);
 
   let activePlanet = false;
@@ -75,7 +73,7 @@ async function updateAll() {
   $eventBus.emit(UPDATED_ALL);
 }
 
-async function init() {  
+async function init() {
   if ($store.getters.loggedIn) {
     $quasar.loading.show();
     // On page refresh reset all.
@@ -100,7 +98,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
 }
-
 
 body {
   margin: 0;
@@ -670,5 +667,4 @@ body {
     transform: translateY(-1000px);
   }
 }
-
 </style>

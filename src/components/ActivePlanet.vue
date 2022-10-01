@@ -38,9 +38,8 @@ import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
 export default {
   name: "ActivePlanet",
-  
-  async created() {
-  },
+
+  async created() {},
 
   methods: {
     changeActivePlanet: async function (p) {
@@ -56,9 +55,9 @@ export default {
     },
   },
   computed: {
-    planets: function() {
+    planets: function () {
       return this.$store.getters.planets.filter((p) => p.claimed);
-    }
+    },
   },
 };
 </script>
