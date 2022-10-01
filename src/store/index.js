@@ -73,6 +73,10 @@ const Store = createStore({
       state.emails.splice(eI, 1);
     },
 
+    deleteAllEmails(state) {
+      state.emails = [];
+    },
+
     login(state, payload) {
       state.jwt = payload.jwt;
       state.address = payload.address;
