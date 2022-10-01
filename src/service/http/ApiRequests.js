@@ -243,6 +243,12 @@ export default class ApiRequests {
     return (await axios.post(path, body)).data;
   }
 
+  static async deleteAllEmails(planetId) {
+    const path = `${process.env.BASE_API_PATH}/planet/${planetId}/email`;
+
+    return (await axios.delete(path)).data;
+  }
+
   /**
    * Get All planet info
    * @param {string} planetId

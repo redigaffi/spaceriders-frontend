@@ -140,6 +140,16 @@
               </q-list>
             </q-card-section>
           </q-card>
+          <div class="q-pa-md">
+            <q-btn
+              class="full-width"
+              color="red"
+              icon-right="delete"
+              label="Delete All"
+              @click="deleteAllEmails"
+              :disabled="emails.length === 0"
+            />
+          </div>
         </q-drawer>
 
         <q-dialog v-model="openInbox">
@@ -286,6 +296,11 @@ function deleteEmail(email) {
   ApiRequest.deleteEmail($store.getters.activePlanet.id, email.id);
 }
 
+function deleteAllEmails() {
+  $store.commit("deleteAllEmails");
+  ApiRequest.deleteAllEmails($store.getters.activePlanet.id);
+}
+
 const openInboxModel = ref(false);
 
 // Main app features
@@ -299,7 +314,6 @@ $eventBus.on(ACTIVE_PLANET_CHANGED, async () => {
 });
 
 $eventBus.on(LOGGED_IN, async () => {
-  console.log("AS1D");
   await updateAll();
   await updateInterval();
 });
