@@ -65,7 +65,6 @@
       flat
       style="width: 800px; max-width: 80vw; border-radius: 20px"
     >
-    
       <q-btn
         round
         class="absolute-top-right"
@@ -76,7 +75,7 @@
       />
       <q-card-section
         class="q-pa-none row q-col-gutter-sm"
-        style="padding: 50px 30px; padding-top: 0px; margin-top: 60px;"
+        style="padding: 50px 30px; padding-top: 0px; margin-top: 60px"
       >
         <div
           class="col"
@@ -225,7 +224,7 @@ export default defineComponent({
     ClaimPlanetList,
     BuyPlanet,
   },
-  
+
   data: function () {
     return {
       claimRefreshId: -1,

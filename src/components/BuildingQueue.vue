@@ -48,10 +48,11 @@
                     Status :
                     <span
                       v-if="!itemType"
-                      class="text-secondary text-weight-bold">
-                        <span v-if="bQ.repairing">Repairing...</span>
-                        <span v-else>Upgrading...</span>
-                      </span>
+                      class="text-secondary text-weight-bold"
+                    >
+                      <span v-if="bQ.repairing">Repairing...</span>
+                      <span v-else>Upgrading...</span>
+                    </span>
                     <span v-else class="text-secondary text-weight-bold"
                       >Building...</span
                     >
@@ -114,7 +115,7 @@ export default defineComponent({
 
     function calculateClaimDate(building) {
       const now = new Date();
-      
+
       let finish = new Date(building.finish * 1000);
       const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
       const s = Math.round(diffSeconds % 60);
@@ -130,7 +131,7 @@ export default defineComponent({
       if (s >= 0) str += ` ${s}s`;
 
       if (str === "") {
-        str = "Finishing..."
+        str = "Finishing...";
       }
       return str;
     }
@@ -140,13 +141,16 @@ export default defineComponent({
         const b = data[d];
         if (queueTimeoutIds[b.label] === undefined) {
           const now = new Date();
-          
+
           let finish = new Date(b.finish * 1000);
           const diffSeconds = finish.getTime() - now.getTime();
 
           queueTimeoutIds[b.label] = setTimeout(() => {
             if (b.building) {
-              $store.commit("upgradeFinished", { label: b.label, type: b.type });
+              $store.commit("upgradeFinished", {
+                label: b.label,
+                type: b.type,
+              });
             } else if (b.repairing) {
               $store.commit("repairFinished", { label: b.label, type: b.type });
             }
@@ -166,7 +170,7 @@ export default defineComponent({
           re.push(building);
         }
       }
-    
+
       return re;
     });
 

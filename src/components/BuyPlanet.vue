@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <q-btn
       icon="add"
       label="Buy Planet"
@@ -16,7 +15,7 @@
       @click="buyPlanetPopup = true"
     />
 
-  <q-dialog v-model="freePlanetPopup">
+    <q-dialog v-model="freePlanetPopup">
       <q-card
         class="bg-dark text-white q-pb-md"
         style="width: 600px; max-width: 70vw; border-radius: 20px"
@@ -176,12 +175,16 @@ import SpaceRidersGameContract, {
   SignatureData,
 } from "../service/contract/SpaceRidersGameContract";
 
-import { NEW_PLANET_PURCHASED, PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
+import {
+  NEW_PLANET_PURCHASED,
+  PLANET_CLAIMED,
+  ACTIVE_PLANET_CHANGED,
+} from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
-import { useQuasar } from 'quasar'
+import { useQuasar } from "quasar";
 
-const $q = useQuasar()
+const $q = useQuasar();
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -216,10 +219,9 @@ watchEffect(async () => {
 async function buyPlanet() {
   const planetGuid = ObjectID().toHexString();
 
-  const notif = $q.notify($notification(
-    "progress",
-    "Waiting for transaction to complete...",
-  ))
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
 
   try {
     const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
@@ -243,20 +245,12 @@ async function buyPlanet() {
     $store.commit("addPlanet", re.data);
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
 
-    notif($notification(
-      "success",
-      "Planet purchased successfully!",
-    ))
-
+    notif($notification("success", "Planet purchased successfully!"));
   } catch (e) {
-    notif($notification(
-      "failed",
-      e,
-    ));
+    notif($notification("failed", e));
 
     console.log("error");
     console.log(e);
   }
-
 }
 </script>

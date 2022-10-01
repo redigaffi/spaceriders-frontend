@@ -258,9 +258,9 @@
             <div class="game__item">
               <p class="game__item--title">Mines & Warehouses</p>
               <p class="game__item--text custom-font">
-                The extraction of resources (Metal, Crystal, Petrol) is the
-                key to the game and this is possible thanks to the mines. Once
-                the mines extract resources they are stored in their relevant
+                The extraction of resources (Metal, Crystal, Petrol) is the key
+                to the game and this is possible thanks to the mines. Once the
+                mines extract resources they are stored in their relevant
                 warehouse depending on the resource. The higher the level of
                 your mines, the higher the production, but also the higher the
                 energy consumption.

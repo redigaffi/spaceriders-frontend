@@ -16,10 +16,15 @@
         >
           <img
             src="~assets/img/planet_queue.webp"
-            style="height: auto; width: 100%; object-fit: cover;"
+            style="height: auto; width: 100%; object-fit: cover"
           />
           <q-card-section
-            style="overflow: hidden; text-overflow: ellipsis; font-family: headingFont, sans-serif; font-weight:bold;"
+            style="
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-family: headingFont, sans-serif;
+              font-weight: bold;
+            "
             class="text-center text-secondary bg-dark"
             >{{ p.name }}</q-card-section
           >
@@ -36,10 +41,14 @@
         <q-card flat class="bg-transparent text-dark claimable-cards">
           <img
             src="~assets/img/planet_claimable.webp"
-            style="height: auto; width: 100%; object-fit: cover;"
+            style="height: auto; width: 100%; object-fit: cover"
           />
           <q-card-section
-            style="overflow: hidden; text-overflow: ellipsis; font-family: headingFont, sans-serif;"
+            style="
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-family: headingFont, sans-serif;
+            "
             class="text-secondary absolute-top tag-glass-element"
             >{{ p.name }}</q-card-section
           >
@@ -140,5 +149,4 @@ function calculateClaimDate(planet) {
     height: 100px;
   }
 }
-
 </style>

@@ -17,10 +17,7 @@
           <!-- CARD -->
           <div class="col">
             <q-card-section
-              class="
-                text-h6 text-secondary text-weight-bold text-left
-                tag-glass-element
-              "
+              class="text-h6 text-secondary text-weight-bold text-left tag-glass-element"
             >
               {{ data.name }}
               <span v-if="!itemType" class="text-warning q-ml-md"
@@ -36,11 +33,7 @@
               </div>
             </q-card-section>
             <q-card-section
-              class="
-                bg-primary
-                text-subtitle1 text-left text-secondary
-                full-height
-              "
+              class="bg-primary text-subtitle1 text-left text-secondary full-height"
             >
               <q-list dense>
                 <q-item>
@@ -91,8 +84,14 @@
                       color="info"
                       track-color="dark"
                     >
-                      <q-icon name="health_and_safety" size="26px" color="info" />
-                      <q-tooltip v-model="showing"> {{ health }}% Health </q-tooltip>
+                      <q-icon
+                        name="health_and_safety"
+                        size="26px"
+                        color="info"
+                      />
+                      <q-tooltip v-model="showing">
+                        {{ health }}% Health
+                      </q-tooltip>
                     </q-circular-progress>
 
                     <q-circular-progress
@@ -330,7 +329,7 @@ import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
-import { useQuasar } from 'quasar'
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "InfoSlider",
@@ -351,7 +350,7 @@ export default defineComponent({
     const quantity = ref(1);
 
     const $store = useStore();
-    const $q = useQuasar()
+    const $q = useQuasar();
 
     const dataSource = (type) => {
       let data = {};
@@ -467,7 +466,7 @@ export default defineComponent({
         activePlanet.resources.crystal >= level.cost_crystal
       );
     };
-    
+
     const canRepair = (props, activePlanet) => {
       let data = dataSource(props.data.type);
       const level = data[props.data.label]["upgrades"][props.data.level];
@@ -485,10 +484,9 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canUpgrade(props, activePlanet)) {
-        $q.notify($notification(
-          "failed",
-          `Can't upgrade, not enough resources...`,
-        ))
+        $q.notify(
+          $notification("failed", `Can't upgrade, not enough resources...`)
+        );
         return;
       }
 
@@ -526,7 +524,7 @@ export default defineComponent({
         const re = await ApiRequests.build(data);
         let saveStore = {
           label: props.data.label,
-          upgradeFinish: re.data.finish
+          upgradeFinish: re.data.finish,
         };
 
         if (props.itemType) {
@@ -548,15 +546,9 @@ export default defineComponent({
           notificationMessage = `Addedd ${quantity.value} ${props.data.name} to the queue.`;
         }
 
-        $q.notify($notification(
-          "success",
-          notificationMessage,
-        ))
-      } catch(e) {
-        $q.notify($notification(
-          "failed",
-          e,
-        ))
+        $q.notify($notification("success", notificationMessage));
+      } catch (e) {
+        $q.notify($notification("failed", e));
       }
     };
 
@@ -564,9 +556,13 @@ export default defineComponent({
       if (props.data.level === 0) return false;
       if (props.data.health === undefined) return false;
 
-      const fullHealth = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level].health;
-      const healthPercentage = ((props.data.health/fullHealth)*100).toFixed(2)
-      
+      const fullHealth = dataSource(props.data.type)[props.data.label][
+        "upgrades"
+      ][props.data.level].health;
+      const healthPercentage = ((props.data.health / fullHealth) * 100).toFixed(
+        2
+      );
+
       return healthPercentage;
     });
 
@@ -589,7 +585,7 @@ export default defineComponent({
 
       let diffSeconds = (finish.getTime() - now.getTime()) / 1000;
       if (health.value !== false && health.value < 100) {
-        diffSeconds = diffSeconds - (diffSeconds*(health.value/100));
+        diffSeconds = diffSeconds - diffSeconds * (health.value / 100);
       }
 
       const s = Math.round(diffSeconds % 60);
@@ -620,11 +616,10 @@ export default defineComponent({
       if (health.value < 100) {
         metalCost = props.data.upgrades[props.data.level].cost_metal;
       }
-        
 
-      const h = 1-health.value/100;
-      
-      return (metalCost-(metalCost*h)).toFixed(1);
+      const h = 1 - health.value / 100;
+
+      return (metalCost - metalCost * h).toFixed(1);
     });
 
     const petrolCost = computed(() => {
@@ -643,11 +638,11 @@ export default defineComponent({
         petrolCost = props.data.upgrades[props.data.level].cost_petrol;
       }
 
-      const h = 1-health.value/100;
+      const h = 1 - health.value / 100;
 
-      return (petrolCost-(petrolCost*h)).toFixed(1);
+      return (petrolCost - petrolCost * h).toFixed(1);
     });
-    
+
     const crystalCost = computed(() => {
       if (!props.data) return 0;
 
@@ -656,51 +651,50 @@ export default defineComponent({
       }
 
       let crystalCost = props.data.upgrades[props.data.level + 1].cost_crystal;
-      
+
       if (health.value === false) {
         return crystalCost;
       }
-    
+
       if (health.value < 100) {
         crystalCost = props.data.upgrades[props.data.level].cost_crystal;
       }
 
-      const h = 1-health.value/100;
+      const h = 1 - health.value / 100;
 
-      return (crystalCost-(crystalCost*h)).toFixed(1);
+      return (crystalCost - crystalCost * h).toFixed(1);
     });
-    
+
     const repair = async (label) => {
       // This can only be called by resource items ATM.
       const activePlanet = $store.getters.activePlanet;
 
       if (!canRepair(props, activePlanet)) {
-        $q.notify($notification(
-          `Can't repair, not enough resources...`,
-          ex,
-        ))
+        $q.notify($notification(`Can't repair, not enough resources...`, ex));
         return;
       }
-      
+
       const data = {
         label: props.data.label,
         planetGuid: activePlanet.id,
       };
-      
+
       const re = await ApiRequests.repairResource(data);
 
       if (re.success) {
-        let prices = dataSource(props.data.type)[props.data.label]["upgrades"][props.data.level];
-        const h = 1 - (health.value/100);
+        let prices = dataSource(props.data.type)[props.data.label]["upgrades"][
+          props.data.level
+        ];
+        const h = 1 - health.value / 100;
 
-        const cost_metal  = Math.ceil(prices.cost_metal*h);
-        const cost_crystal =  Math.ceil(prices.cost_crystal*h);
-        const cost_petrol  = Math.ceil(prices.cost_petrol*h);
+        const cost_metal = Math.ceil(prices.cost_metal * h);
+        const cost_crystal = Math.ceil(prices.cost_crystal * h);
+        const cost_petrol = Math.ceil(prices.cost_petrol * h);
 
         $store.commit("restPlanetResources", {
-          metal:   cost_metal,
+          metal: cost_metal,
           crystal: cost_crystal,
-          petrol:  cost_petrol,
+          petrol: cost_petrol,
         });
 
         const saveStore = {
@@ -709,20 +703,13 @@ export default defineComponent({
         };
 
         $store.commit("repairRessourceData", saveStore);
-        $q.notify($notification(
-          "success",
-          "Repairing in progress...",
-        ))
+        $q.notify($notification("success", "Repairing in progress..."));
       } else {
-        $q.notify($notification(
-          "failed",
-          re.error,
-        ))
+        $q.notify($notification("failed", re.error));
       }
-    
     };
 
-    const actionConfirmLabel = computed (() => {
+    const actionConfirmLabel = computed(() => {
       if (props.itemType) {
         return "Build";
       } else {

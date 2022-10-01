@@ -76,10 +76,6 @@ div:not(.pufs, .particles) {
 /*-- Rocket Spinner Styles --*/
 /*---------------------------*/
 
-
-
-
-
 // New Loading icon
 .circle {
   position: absolute;
@@ -157,7 +153,6 @@ body {
   }
 }
 
-
 .q-loading__spinner {
   display: none;
 }
@@ -166,6 +161,6 @@ body {
   outline: 0;
   pointer-events: all;
   z-index: -1;
-  opacity: 0.85
+  opacity: 0.85;
 }
 </style>

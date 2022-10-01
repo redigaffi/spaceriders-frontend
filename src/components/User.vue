@@ -46,39 +46,46 @@
   </div>
 
   <q-dialog v-model="chooseLoginPopup">
-      <q-card
-        class="bg-dark text-white"
-        style="width: 350px; max-width: 80vw; border-radius: 20px"
-      >
-        <q-card-section class="q-pa-xs text-center">
-          <span class="q-ml-sm text-overline" style="font-size: 14px"
-            >Login</span
-          >
+    <q-card
+      class="bg-dark text-white"
+      style="width: 350px; max-width: 80vw; border-radius: 20px"
+    >
+      <q-card-section class="q-pa-xs text-center">
+        <span class="q-ml-sm text-overline" style="font-size: 14px">Login</span>
+      </q-card-section>
+      <q-btn
+        round
+        class="absolute-top-right"
+        flat
+        color="white"
+        icon="close"
+        v-close-popup
+      />
+
+      <div class="text-subtitle2">
+        <q-card-section>
+          <q-card-section class="q-pt-none text-center">
+            <q-btn
+              color="amber"
+              style="width: 150px"
+              glossy
+              label="Metamask"
+              @click="login"
+            />
+          </q-card-section>
+          <q-card-section class="q-pt-none text-center">
+            <q-btn
+              color="amber"
+              style="width: 150px"
+              glossy
+              label="Facewallet"
+              @click="alert('Integration in process...')"
+            />
+          </q-card-section>
         </q-card-section>
-        <q-btn
-          round
-          class="absolute-top-right"
-          flat
-          color="white"
-          icon="close"
-          v-close-popup
-        />
-
-
-          <div class="text-subtitle2">
-            <q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                    <q-btn color="amber" style="width: 150px;" glossy label="Metamask" @click="login"/>
-              </q-card-section>
-              <q-card-section class="q-pt-none text-center">
-                    <q-btn color="amber" style="width: 150px;" glossy label="Facewallet" @click="alert('Integration in process...')" />
-              </q-card-section>
-            </q-card-section>
-          </div>
-
-      </q-card>
-    </q-dialog>
-
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -88,12 +95,13 @@ import { LOGGED_IN } from "../constants/Events";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const $quasar = useQuasar()
+const $quasar = useQuasar();
 
 const $store = useStore();
-const $eventBus = getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 getCurrentInstance().appContext.config.globalProperties.$notification;
 const $notification =
@@ -134,7 +142,7 @@ onBeforeMount(async () => {
 const logout = () => {
   $store.commit("destroySession");
   router.push({
-    name: 'nouser'
+    name: "nouser",
   });
 };
 
@@ -190,8 +198,8 @@ const chooseLoginPopupFunc = async (e) => {
     return;
   }
 
-  chooseLoginPopup.value = true
-}
+  chooseLoginPopup.value = true;
+};
 const login = async (e) => {
   if (loggedIn.value) {
     userInfoPopup.value = true;
@@ -205,10 +213,9 @@ const login = async (e) => {
     error.value = true;
     $store.commit("destroySession");
     $quasar.loading.hide();
-    $quasar.notify($notification(
-      "failed",
-      "Checking metamask chain failed...",
-    ))
+    $quasar.notify(
+      $notification("failed", "Checking metamask chain failed...")
+    );
     return;
   }
 
@@ -230,20 +237,14 @@ const login = async (e) => {
     $eventBus.emit(LOGGED_IN);
 
     router.push({
-      name: 'planet'
+      name: "planet",
     });
 
     $quasar.loading.hide();
-
   } catch (ex) {
     $quasar.loading.hide();
-    $quasar.notify($notification(
-      "failed",
-      ex,
-    ))
+    $quasar.notify($notification("failed", ex));
   }
-
-
 };
 
 const chainData = computed(() => {
@@ -273,7 +274,9 @@ const logInButtonText = computed(() => {
 
 const shortAddress = computed(() => {
   const address = $store.getters.address;
-  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+  return `${address.substring(0, 4)}...${address.substring(
+    address.length - 4
+  )}`;
 });
 </script>
 <style lang="scss">
@@ -304,7 +307,8 @@ const shortAddress = computed(() => {
   background: black;
   overflow: hidden;
   top: 0;
-  animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
+  animation: noise-1 3s linear infinite alternate-reverse,
+    glitch 5s 5.05s infinite;
 }
 
 .glitch::after {

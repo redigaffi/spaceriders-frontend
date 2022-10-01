@@ -1,42 +1,37 @@
-import { boot } from 'quasar/wrappers'
-import { useQuasar } from "quasar"
+import { boot } from "quasar/wrappers";
+import { useQuasar } from "quasar";
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(({ app, router, store }) => {
-  
   app.config.globalProperties.$notification = (type, msg) => {
-    
-    
     let timeout = 0;
 
     switch (type) {
       case "success":
-        type =  'positive';
+        type = "positive";
         timeout = 2000;
 
         break;
       case "failed":
         if (msg === undefined || msg === null || msg === false || msg === "") {
-          msg = "Something unexpected happened..."
+          msg = "Something unexpected happened...";
         } else if (msg instanceof Error) {
           try {
-            msg = msg.response.data.message
-          } catch(e) {
-            msg = "Something unexpected happened..."
+            msg = msg.response.data.message;
+          } catch (e) {
+            msg = "Something unexpected happened...";
           }
         }
 
         timeout = 2000;
-        type = 'negative';
+        type = "negative";
         break;
       case "progress":
-        
         timeout = 0;
-        type = "ongoing"
+        type = "ongoing";
         break;
     }
-    
 
     return {
       classes: "notify",
@@ -46,7 +41,6 @@ export default boot(({ app, router, store }) => {
       timeout: timeout,
       //group: 'group', //force to delete previous msg
       actions: [{ label: "Close", color: "white", handler: () => {} }],
-    }
+    };
   };
-
-})
+});

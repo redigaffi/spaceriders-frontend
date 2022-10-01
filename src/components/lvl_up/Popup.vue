@@ -72,7 +72,6 @@
                         props.row.energy_usage
                       }}</q-item-section>
 
-
                       <q-item-section v-if="props.row.capacity">{{
                         props.row.capacity
                       }}</q-item-section>
@@ -201,7 +200,7 @@ let rows = [];
 
 for (let upgradeIdx in item.value.upgrades) {
   const upgrade = item.value.upgrades[upgradeIdx];
-  
+
   let row = {
     level: upgrade.level,
   };

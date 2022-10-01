@@ -31,17 +31,28 @@
               @click="changeActivatePlanet(props.row.planet)"
             >
               <div>
-                <img :src="props.row.image_url" style="height: 95px; width: 100%" />
+                <img
+                  :src="props.row.image_url"
+                  style="height: 95px; width: 100%"
+                />
               </div>
 
               <q-card-section class="q-pt-none" style="line-height: 1">
                 <div class>
-                  <q-badge :color="props.row.color">{{ props.row.rarity }}</q-badge>
+                  <q-badge :color="props.row.color">{{
+                    props.row.rarity
+                  }}</q-badge>
                 </div>
                 <br />
                 <div
-                  style="width: 120px;text-overflow: ellipsis; overflow: hidden;"
-                >{{ props.row.name }}</div>
+                  style="
+                    width: 120px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                  "
+                >
+                  {{ props.row.name }}
+                </div>
                 <br />
                 <span style="font-size: 12px">[{{ props.row.position }}]</span>
               </q-card-section>
@@ -51,7 +62,12 @@
       </template>
     </q-table>
     <div class="row justify-center q-my-md">
-      <q-pagination v-model="pagination.page" color="info" :max="pagesNumber" size="sm" />
+      <q-pagination
+        v-model="pagination.page"
+        color="info"
+        :max="pagesNumber"
+        size="sm"
+      />
     </div>
   </div>
 </template>
@@ -145,13 +161,13 @@ function changeActivatePlanet(planet) {
   pagination.value.page = 1;
 }
 
-const slide = ref("style")
-const filter = ref("")
+const slide = ref("style");
+const filter = ref("");
 
 let columns = [
   { name: "name", label: "Name", field: "name" },
   { name: "position", label: "Position", field: "position" },
-]
+];
 
 const cardContainerClass = computed(() => {
   return $q.screen.gt.xs
@@ -162,7 +178,6 @@ const cardContainerClass = computed(() => {
 const rowsPerPageOptions = computed(() => {
   return $q.screen.gt.xs ? ($q.screen.gt.sm ? [3, 6, 9] : [3, 6]) : [3];
 });
-
 
 const pagesNumber = computed(() =>
   Math.ceil(rows.value.length / pagination.value.rowsPerPage)
@@ -175,7 +190,7 @@ const myTweak = (offset) => {
 
   // this is actually what the default style-fn does in Quasar
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
-}
+};
 </script>
 
 <style lang="scss">

@@ -1,18 +1,21 @@
 <template>
   <div>
     <q-list dense class="text-subtitle2">
-      <q-item style="
+      <q-item
+        style="
           border: 1px solid #242930;
           border-radius: 5px;
           box-shadow: 0 0 5px #606060;
           color: #fff;
           font-size: 12px;
           padding: 7px 15px;
-        ">
+        "
+      >
         <q-item-section class="">
-          <q-item-label class="text-body1">Bad news Rider... An asteroid just arrived,
-            take a look at the
-            damages caused</q-item-label>
+          <q-item-label class="text-body1"
+            >Bad news Rider... An asteroid just arrived, take a look at the
+            damages caused</q-item-label
+          >
         </q-item-section>
       </q-item>
     </q-list>

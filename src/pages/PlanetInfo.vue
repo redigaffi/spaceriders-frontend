@@ -294,7 +294,7 @@
                   </div>
                   <div class="col-md-6">
                     <q-btn
-                      style="border-radius: 5px; height: 41px;"
+                      style="border-radius: 5px; height: 41px"
                       class="full-width"
                       color="warning"
                       label="Upgrade"
@@ -585,7 +585,6 @@ async function unstake() {
     notif($notification("failed", e));
   }
 }
-
 </script>
 <style lang="scss">
 .overview-card {

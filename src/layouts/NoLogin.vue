@@ -6,45 +6,37 @@
       <div id="stars2"></div>
       <div id="stars3"></div>
 
-     
       <q-page class="container">
         <div class="row">
           <!-- Router page Content -->
           <div class="col q-py-lg">
-            
-              <q-card class="glass-element text-white q-pa-md">
-    <q-card-section class="row fit justify-between items-center">
-      <div></div>
-      <div
-        class="text-h6 text-center text-weight-bold text-secondary absolute-center"
-      >
-        Connect with metamask
-      </div>
-    </q-card-section>
-      <q-card-section class="text-center">
-        <div>
-          <img
-            src="~assets/img/no-planet.webp"
-            alt=""
-            srcset=""
-            style="height: 230px"
-          />
-        </div>
-      </q-card-section>
+            <q-card class="glass-element text-white q-pa-md">
+              <q-card-section class="row fit justify-between items-center">
+                <div></div>
+                <div
+                  class="text-h6 text-center text-weight-bold text-secondary absolute-center"
+                >
+                  Connect with metamask
+                </div>
+              </q-card-section>
+              <q-card-section class="text-center">
+                <div>
+                  <img
+                    src="~assets/img/no-planet.webp"
+                    alt=""
+                    srcset=""
+                    style="height: 230px"
+                  />
+                </div>
+              </q-card-section>
 
-      <q-card-section
-        class="q-pb-none text-secondary text-subtitle1 text-weight-bolder text-center"
-      >
-      </q-card-section> 
-  </q-card>
-
+              <q-card-section
+                class="q-pb-none text-secondary text-subtitle1 text-weight-bolder text-center"
+              >
+              </q-card-section>
+            </q-card>
           </div>
-
         </div>
-      
-
-        
-
       </q-page>
     </q-page-container>
   </q-layout>
@@ -65,7 +57,6 @@ https://codepen.io/mattmarble/pen/qBdamQz
   background: radial-gradient(ellipse at bottom, #0b131d 0%, #000000 100%);
   overflow: hidden;
 }
-
 
 body {
   margin: 0;
@@ -639,6 +630,4 @@ body {
 .unread_msg {
   border-left: 4px solid #2253f4;
 }
-
-
 </style>
