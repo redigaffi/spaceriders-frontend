@@ -22,7 +22,7 @@
             <div v-show="currentTabComponent != 'DefaultSlider'">
               <InfoSlider
                 key="resourceSlider"
-                :data="ressourceInfo"
+                :data="resourceInfo"
                 type="resource"
                 @cancelled="cancelled"
               />
@@ -57,11 +57,11 @@ export default defineComponent({
   },
   setup() {
     const currentTab = ref("DefaultSlider");
-    const ressourceInfo = ref();
+    const resourceInfo = ref();
 
     function slideDiv(data) {
       currentTab.value = "ResourceSlider";
-      ressourceInfo.value = data;
+      resourceInfo.value = data;
     }
 
     const currentTabComponent = computed(() => {
@@ -77,7 +77,7 @@ export default defineComponent({
       slideDiv: slideDiv,
       cancelled: cancelled,
       currentTabComponent: currentTabComponent,
-      ressourceInfo: ressourceInfo,
+      resourceInfo: resourceInfo,
     };
   },
 });

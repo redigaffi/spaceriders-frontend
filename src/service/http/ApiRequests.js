@@ -100,7 +100,7 @@ export default class ApiRequests {
    * @returns
    */
   static async getResourceData(planetId) {
-    const path = `${process.env.BASE_API_PATH}/ressource/${planetId}`;
+    const path = `${process.env.BASE_API_PATH}/resource/${planetId}`;
     return (await axios.get(path)).data;
   }
 
@@ -265,7 +265,7 @@ export default class ApiRequests {
    * @returns
    */
   static async repairResource(data) {
-    const path = `${process.env.BASE_API_PATH}/ressource/repair`;
+    const path = `${process.env.BASE_API_PATH}/resource/repair`;
 
     const body = {
       label: data.label,

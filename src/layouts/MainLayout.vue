@@ -6,7 +6,7 @@
       <div id="stars2"></div>
       <div id="stars3"></div>
 
-      <RessourcesDisplay />
+      <ResourcesDisplay />
       <q-page class="container">
         <div class="row">
           <!-- Router page Content -->
@@ -199,7 +199,7 @@
 import { getCurrentInstance, defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
-import RessourcesDisplay from "../components/RessourcesDisplay.vue";
+import ResourcesDisplay from "../components/ResourcesDisplay.vue";
 import BuildingQueue from "../components/BuildingQueue.vue";
 import AsteroidCollision from "../components/email_templates/AsteroidCollision.vue";
 import SpacePirates from "../components/email_templates/SpacePirates.vue";
