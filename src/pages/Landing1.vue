@@ -320,29 +320,11 @@
       </div>
     </section>
 
-    <!-- ROADMAPS -->
+    <!-- ROADMAP V2 -->
+
     <div id="road"></div>
-    <section class="game">
-      <div :class="$q.screen.lt.md ? '' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="row fit wrap">
-            <div class="col-xs-12 col-sm-12 col-md-6">
-              <img
-                src="~assets/landing/img/gr_1.webp"
-                alt=""
-                style="width: 100%"
-              />
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6">
-              <img
-                src="~assets/landing/img/gr_2.webp"
-                alt=""
-                style="width: 100%"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+    <section class="roadmap">
+      <timeline mainTitle="ROADMAP" :timelineFeed="timelineFeed"></timeline>
     </section>
 
     <!-- FAQ -->
@@ -1120,6 +1102,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
+import Timeline from "src/components/Timeline.vue";
 //import PieChart from "../components/pieChart";
 
 export default defineComponent({
@@ -1128,7 +1111,6 @@ export default defineComponent({
   setup() {
     // const $q = useQuasar();
     // $q.loading.show();
-
     const headRef = ref(null); // obtain the reference
     onMounted(() => {
       window.addEventListener("scroll", () => {
@@ -1148,12 +1130,10 @@ export default defineComponent({
     const h = ref(0);
     const m = ref(0);
     const s = ref(0);
-
     const second = 1000,
       minute = second * 60,
       hour = minute * 60,
       day = hour * 24;
-
     //I'm adding this section so I don't have to keep updating this pen every year :-)
     //remove this if you don't need it
     let today = new Date(),
@@ -1163,32 +1143,26 @@ export default defineComponent({
       nextYear = yyyy,
       dayMonth = "11/22/",
       birthday = dayMonth + yyyy;
-
     today = mm + "/" + dd + "/" + yyyy;
     if (today > birthday) {
       birthday = dayMonth + nextYear;
     }
     //end
-
     const countDown = new Date(birthday).getTime(),
       x = setInterval(function () {
         const now = new Date().getTime(),
           distance = countDown - now;
-
         (d.value = Math.floor(distance / day)),
           (h.value = Math.floor(distance / (1000 * 60 * 60))),
           (m.value = Math.floor((distance % hour) / minute));
         s.value = Math.floor((distance % minute) / second);
-
         //do something later when date is reached
         //seconds
       }, 0);
-
     const scrollPosition = ref();
     const updateScroll = () => {
       scrollPosition.value = window.scrollY;
     };
-
     const openWhitepaper = ref(false);
     const faq_section = ref([
       {
@@ -1238,12 +1212,67 @@ export default defineComponent({
         ],
       },
     ]);
-
+    const timelineFeed = [
+      {
+        heading: "Q2 2022",
+        imgSrc: "research.webp",
+        content: [
+          "Launch of the Alpha Version of the first concept on Testnet.",
+          "Appearance in the main social networks.",
+          "Rethinking of the P2E model.",
+          "Migration from API V1 to API V2.",
+        ],
+      },
+      {
+        heading: "Q3 2022",
+        imgSrc: "missileLauncher.webp",
+        content: [
+          "Redesign of SpaceRiders to the models:",
+          "Play To Own.",
+          "Player Driven Economy.",
+          "Free To Play.",
+          "Definition of objectives and priorities under the new model.",
+          "Remodeling of documentation and web page.",
+          "Development and testing of the Intergalactic Stock Market (ISM).",
+        ],
+      },
+      {
+        heading: "Q4 2022",
+        imgSrc: "resources.webp",
+        content: [
+          "Development and implementation of the IG-Economy V1.",
+          "Official Launch of MVP in the Testnet.",
+          "Start of marketing campaign in collaboration with content creators.",
+          "Product validation, bug fixes and implementation of improvements.",
+          "Announcement of strategic partnerships.",
+        ],
+      },
+      {
+        heading: "Q1 2023",
+        imgSrc: "hangar.webp",
+        content: [
+          "Launch of the PVE version on the Binance Smart Chain Mainnet.",
+          "Launch of the token on the Binance Smart Chain.",
+          "Expansion of the SpaceRiders brand.",
+          "Strategic blockchain and gaming partners.",
+          "Development and testing of Refined Resources.",
+          "First exclusive NFTs.",
+        ],
+      },
+      {
+        heading: "Q2 2023",
+        imgSrc: "installations.webp",
+        content: [
+          "First face-to-face events focused on the expansion of the project.",
+          "Development and testing of the first PVP features.",
+          "Development and testing of the Items Marketplace.",
+        ],
+      },
+    ];
     function redirectTestnet() {
       window.location.href = "http://testnet.spaceriders.io/nouser";
       return;
     }
-
     return {
       redirectTestnet: redirectTestnet,
       d,
@@ -1259,13 +1288,21 @@ export default defineComponent({
       slide: ref(1),
       faq_section,
       headRef,
+      timelineFeed,
     };
   },
+  components: { Timeline },
 });
 </script>
 <style scoped>
 /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
+
+.roadmap {
+  padding: 0rem 0rem;
+  background-size: cover;
+  border-bottom: 1px solid #2253f4;
+}
 </style>
 <style lang="scss"></style>
