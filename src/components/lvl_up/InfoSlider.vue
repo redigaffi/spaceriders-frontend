@@ -120,7 +120,7 @@
                         icon="expand_more"
                         label="Tear Down"
                         no-caps
-                      /> 
+                      />
                     </div>
                   </q-item-section>-->
                   <q-item-section v-if="itemType" class="col-xs-6 col-sm-3">
@@ -330,6 +330,7 @@ import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
 import { useQuasar } from "quasar";
+import { exception } from "vue-gtag";
 
 export default defineComponent({
   name: "InfoSlider",
@@ -553,7 +554,6 @@ export default defineComponent({
     };
 
     const health = computed(() => {
-      if (props.data.level === 0) return false;
       if (props.data.health === undefined) return false;
 
       const fullHealth = dataSource(props.data.type)[props.data.label][
@@ -617,8 +617,7 @@ export default defineComponent({
         metalCost = props.data.upgrades[props.data.level].cost_metal;
       }
 
-      const h = 1 - health.value / 100;
-
+      const h = 1 - (100-health.value) / 100;
       return (metalCost - metalCost * h).toFixed(1);
     });
 
@@ -638,8 +637,7 @@ export default defineComponent({
         petrolCost = props.data.upgrades[props.data.level].cost_petrol;
       }
 
-      const h = 1 - health.value / 100;
-
+      const h = 1 - (100-health.value) / 100;
       return (petrolCost - petrolCost * h).toFixed(1);
     });
 
@@ -660,8 +658,7 @@ export default defineComponent({
         crystalCost = props.data.upgrades[props.data.level].cost_crystal;
       }
 
-      const h = 1 - health.value / 100;
-
+      const h = 1 - (100-health.value) / 100;
       return (crystalCost - crystalCost * h).toFixed(1);
     });
 
@@ -679,17 +676,12 @@ export default defineComponent({
         planetGuid: activePlanet.id,
       };
 
-      const re = await ApiRequests.repairResource(data);
+      try {
+        const re = await ApiRequests.repairResource(data);
 
-      if (re.success) {
-        let prices = dataSource(props.data.type)[props.data.label]["upgrades"][
-          props.data.level
-        ];
-        const h = 1 - health.value / 100;
-
-        const cost_metal = Math.ceil(prices.cost_metal * h);
-        const cost_crystal = Math.ceil(prices.cost_crystal * h);
-        const cost_petrol = Math.ceil(prices.cost_petrol * h);
+        const cost_metal = re.data.metal_paid;
+        const cost_crystal = re.data.crystal_paid;
+        const cost_petrol = re.data.petrol_paid;
 
         $store.commit("restPlanetResources", {
           metal: cost_metal,
@@ -698,14 +690,14 @@ export default defineComponent({
         });
 
         const saveStore = {
-          label: props.data.label,
-          repairFinish: re.data.repair_finish,
+          label: re.data.label,
+          finish: re.data.finish,
         };
 
         $store.commit("repairResourceData", saveStore);
         $q.notify($notification("success", "Repairing in progress..."));
-      } else {
-        $q.notify($notification("failed", re.error));
+      } catch (e) {
+        $q.notify($notification("failed", e));
       }
     };
 

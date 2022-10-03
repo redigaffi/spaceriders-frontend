@@ -265,14 +265,15 @@ export default class ApiRequests {
    * @returns
    */
   static async repairResource(data) {
-    const path = `${process.env.BASE_API_PATH}/resource/repair`;
+    const path = `${process.env.BASE_API_PATH}/planet/repair`;
 
     const body = {
+      type: "resources",
       label: data.label,
-      planetId: data.planetGuid,
+      planet_id: data.planetGuid,
     };
 
-    return (await axios.post(path, body)).data;
+    return (await axios.post(path, body));
   }
 
   /**

@@ -207,7 +207,8 @@ const Store = createStore({
       let resource = state.resourceData[label];
 
       resource.repairing = true;
-      resource.current_repair_time_left = payload.repairFinish;
+      resource.current_repair_time_left = payload.finish;
+      resource.finish = payload.finish;
 
       state.resourceData[label] = resource;
     },
