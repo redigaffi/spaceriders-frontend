@@ -427,7 +427,7 @@
           class="btn-glass-element"
         >
           <img
-            src="~assets/img/logo.webp"
+            src="~assets/img/bkm.webp"
             alt
             srcset
             class="q-pt-sm planet-icons"
