@@ -190,7 +190,7 @@ const Store = createStore({
       state.activePlanet = payload.planet;
     },
 
-    upgradeRessourceData(state, payload) {
+    upgradeResourceData(state, payload) {
       const label = payload.label;
       let resource = state.resourceData[label];
       resource.building = true;
@@ -202,7 +202,7 @@ const Store = createStore({
       //building.building = true;
       //building.finish = payload.upgradeFinish;
     },
-    repairRessourceData(state, payload) {
+    repairResourceData(state, payload) {
       const label = payload.label;
       let resource = state.resourceData[label];
 
@@ -308,12 +308,12 @@ const Store = createStore({
     },
 
     incrementResources(state, payload) {
-      const key = payload.ressource;
+      const key = payload.resource;
       state.activePlanet.resources[key] += payload.value;
     },
 
     decrementReserve(state, payload) {
-      const key = payload.ressource;
+      const key = payload.resource;
       state.activePlanet.reserves[key] -= payload.value;
     },
 

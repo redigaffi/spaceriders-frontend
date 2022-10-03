@@ -495,7 +495,7 @@ export default defineComponent({
       let storeUpdateMethod = "";
       switch (props.data.type) {
         case Types.RESOURCE_TYPE:
-          storeUpdateMethod = "upgradeRessourceData";
+          storeUpdateMethod = "upgradeResourceData";
           break;
         case Types.INSTALLATION_TYPE:
           storeUpdateMethod = "upgradeInstallationData";
@@ -702,7 +702,7 @@ export default defineComponent({
           repairFinish: re.data.repair_finish,
         };
 
-        $store.commit("repairRessourceData", saveStore);
+        $store.commit("repairResourceData", saveStore);
         $q.notify($notification("success", "Repairing in progress..."));
       } else {
         $q.notify($notification("failed", re.error));

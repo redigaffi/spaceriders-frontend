@@ -1232,7 +1232,7 @@ function startMetalTimer() {
 
     const mP = metalProduction.value;
     $store.commit("decrementReserve", {
-      ressource: "metal",
+      resource: "metal",
       value: mP / 60,
     });
   }, 1000);
@@ -1257,7 +1257,7 @@ function startCrystalTimer() {
 
     const cP = crystalProduction.value;
     $store.commit("decrementReserve", {
-      ressource: "crystal",
+      resource: "crystal",
       value: cP / 60,
     });
   }, 1000);
@@ -1282,7 +1282,7 @@ function startPetrolTimer() {
 
     const pP = petrolProduction.value;
     $store.commit("decrementReserve", {
-      ressource: "petrol",
+      resource: "petrol",
       value: pP / 60,
     });
   }, 1000);
