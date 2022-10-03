@@ -1127,6 +1127,7 @@ async function depositBkm(amount) {
   );
 
   try {
+    const fee = (amount * 1) / 100;
     const tx = await SpaceRidersGameContract.bkmDeposit(energyDeposit);
     await tx.wait();
 
@@ -1138,7 +1139,7 @@ async function depositBkm(amount) {
 
     notif($notification("success", "$BKM deposited successfuly!"));
 
-    $store.commit("incrementBkm", { bkm: amount });
+    $store.commit("incrementBkm", { bkm: amount - fee });
     bkmDepositPopup.value = false;
   } catch (ex) {
     notif($notification("failed", ex));
