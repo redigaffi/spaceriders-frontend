@@ -1229,10 +1229,7 @@ export default defineComponent({
         heading: "Q3 2022",
         imgSrc: "missileLauncher.webp",
         content: [
-          "Redesign of SpaceRiders to the models:",
-          "Play To Own.",
-          "Player Driven Economy.",
-          "Free To Play.",
+          "Redesign of SpaceRiders to Play To Own, Player Driven Economy & Free To Play models.",
           "Definition of objectives and priorities under the new model.",
           "Remodeling of documentation and web page.",
           "Development and testing of the Intergalactic Stock Market (ISM).",
