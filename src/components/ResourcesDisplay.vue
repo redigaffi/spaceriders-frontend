@@ -25,7 +25,7 @@
             srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">{{ metalAvailable }}</p>
+          <p class="text-weight-bold text-body2">{{ metalAvailableDisplay }}</p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -48,7 +48,7 @@
                   :class="{
                     'text-negative': isStorageFull('metalWarehouse'),
                   }"
-                  >{{ metalAvailable }}</q-item-section
+                  >{{ metalAvailableDisplay }}</q-item-section
                 >
               </q-item>
               <q-item>
@@ -142,7 +142,9 @@
             srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">{{ crystalAvailable }}</p>
+          <p class="text-weight-bold text-body2">
+            {{ crystalAvailableDisplay }}
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -165,7 +167,7 @@
                   :class="{
                     'text-negative': isStorageFull('crystalWarehouse'),
                   }"
-                  >{{ crystalAvailable }}</q-item-section
+                  >{{ crystalAvailableDisplay }}</q-item-section
                 >
               </q-item>
               <q-item>
@@ -259,7 +261,9 @@
             srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">{{ petrolAvailable }}</p>
+          <p class="text-weight-bold text-body2">
+            {{ petrolAvailableDisplay }}
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -282,7 +286,7 @@
                   :class="{
                     'text-negative': isStorageFull('petrolWarehouse'),
                   }"
-                  >{{ petrolAvailable }}</q-item-section
+                  >{{ petrolAvailableDisplay }}</q-item-section
                 >
               </q-item>
               <q-item>
@@ -432,7 +436,9 @@
             srcset
             class="q-pt-sm planet-icons"
           />
-          <p class="text-weight-bold text-body2">{{ bkmAvailable }} (+)</p>
+          <p class="text-weight-bold text-body2">
+            {{ bkmAvailableDisplay }} (+)
+          </p>
 
           <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
@@ -451,7 +457,7 @@
                   <q-item-section caption>Available</q-item-section>
                 </q-item-section>
                 <q-item-section class="col-4 text-right text-positive">{{
-                  bkmAvailable
+                  bkmAvailableDisplay
                 }}</q-item-section>
               </q-item>
             </q-list>
@@ -728,11 +734,16 @@ const energyAvailable = computed(() => {
   return $store.getters.activePlanet.resources.energy;
 });
 
-const bkmAvailable = computed(() => {
+const bkmAvailableDisplay = computed(() => {
   if ($store.getters.activePlanet === false) return false;
   return tc($store.getters.activePlanet.resources.bkm.toFixed(2), {
     digits: 2,
   });
+});
+
+const bkmAvailable = computed(() => {
+  if ($store.getters.activePlanet === false) return false;
+  return $store.getters.activePlanet.resources.bkm;
 });
 
 const energyAvailableDisplay = computed(() => {
@@ -784,10 +795,14 @@ const metalReserveDisplay = computed(() => {
   });
 });
 
-const metalAvailable = computed(() => {
+const metalAvailableDisplay = computed(() => {
   return tc($store.getters.activePlanet.resources.metal.toFixed(1), {
     digits: 1,
   });
+});
+
+const metalAvailable = computed(() => {
+  return $store.getters.activePlanet.resources.metal;
 });
 
 const crystalReserve = computed(() => {
@@ -800,10 +815,14 @@ const crystalReserveDisplay = computed(() => {
   });
 });
 
-const crystalAvailable = computed(() => {
+const crystalAvailableDisplay = computed(() => {
   return tc($store.getters.activePlanet.resources.crystal.toFixed(1), {
     digits: 1,
   });
+});
+
+const crystalAvailable = computed(() => {
+  return $store.getters.activePlanet.resources.crystal;
 });
 
 const petrolReserve = computed(() => {
@@ -816,10 +835,14 @@ const petrolReserveDisplay = computed(() => {
   });
 });
 
-const petrolAvailable = computed(() => {
+const petrolAvailableDisplay = computed(() => {
   return tc($store.getters.activePlanet.resources.petrol.toFixed(1), {
     digits: 1,
   });
+});
+
+const petrolAvailable = computed(() => {
+  return $store.getters.activePlanet.resources.petrol;
 });
 
 const metalProduction = computed(() => {
