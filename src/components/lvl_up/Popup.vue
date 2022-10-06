@@ -61,7 +61,7 @@
                         props.row.cost_crystal
                       }}</q-item-section>
                       <q-item-section>{{
-                        props.row.cost_crystal
+                        props.row.cost_petrol
                       }}</q-item-section>
 
                       <q-item-section v-if="props.row.production">{{
@@ -141,7 +141,7 @@ switch (item.value.type) {
     ) {
       columns.push({
         name: "production",
-        label: "Production/Min",
+        label: "Production / Min",
         align: "center",
         field: "production",
       });
