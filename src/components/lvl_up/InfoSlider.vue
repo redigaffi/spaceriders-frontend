@@ -616,10 +616,11 @@ export default defineComponent({
       }
       if (health.value < 100) {
         metalCost = props.data.upgrades[props.data.level].cost_metal;
+        const h = 100 - health.value;
+        return ((metalCost * h) / 100).toFixed(1);
       }
 
-      const h = 1 - (100 - health.value) / 100;
-      return (metalCost - metalCost * h).toFixed(1);
+      return metalCost;
     });
 
     const petrolCost = computed(() => {
@@ -636,10 +637,12 @@ export default defineComponent({
 
       if (health.value < 100) {
         petrolCost = props.data.upgrades[props.data.level].cost_petrol;
+        const h = 100 - health.value;
+        return ((petrolCost * h) / 100).toFixed(1);
       }
 
-      const h = 1 - (100 - health.value) / 100;
-      return (petrolCost - petrolCost * h).toFixed(1);
+      return petrolCost;
+
     });
 
     const crystalCost = computed(() => {
@@ -657,10 +660,11 @@ export default defineComponent({
 
       if (health.value < 100) {
         crystalCost = props.data.upgrades[props.data.level].cost_crystal;
+        const h = 100 - health.value;
+        return ((crystalCost * h) / 100).toFixed(1);
       }
 
-      const h = 1 - (100 - health.value) / 100;
-      return (crystalCost - crystalCost * h).toFixed(1);
+      return crystalCost;
     });
 
     const repair = async (label) => {
