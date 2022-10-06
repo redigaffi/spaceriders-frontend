@@ -64,15 +64,15 @@
                         props.row.cost_petrol
                       }}</q-item-section>
 
-                      <q-item-section v-if="props.row.production">{{
+                      <q-item-section v-if="props.row.production >= 0">{{
                         props.row.production
                       }}</q-item-section>
 
-                      <q-item-section v-if="props.row.energy_usage">{{
+                      <q-item-section v-if="props.row.energy_usage >= 0">{{
                         props.row.energy_usage
                       }}</q-item-section>
 
-                      <q-item-section v-if="props.row.capacity">{{
+                      <q-item-section v-if="props.row.capacity >= 0">{{
                         props.row.capacity
                       }}</q-item-section>
                     </q-item>
@@ -169,6 +169,7 @@ switch (item.value.type) {
 
       datafields.push("capacity");
 
+      /*
       columns.push({
         name: "energy",
         label: "Required energy",
@@ -176,6 +177,7 @@ switch (item.value.type) {
         field: "energy",
       });
       datafields.push("energy_usage");
+      */
     } else if ([ResourceType.SOLAR_PLANT].includes(item.value.label)) {
       columns.push({
         name: "production",
