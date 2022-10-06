@@ -736,8 +736,8 @@ const energyAvailable = computed(() => {
 
 const bkmAvailableDisplay = computed(() => {
   if ($store.getters.activePlanet === false) return false;
-  return tc($store.getters.activePlanet.resources.bkm.toFixed(2), {
-    digits: 2,
+  return tc($store.getters.activePlanet.resources.bkm.toFixed(3), {
+    digits: 3,
   });
 });
 
@@ -796,8 +796,8 @@ const metalReserveDisplay = computed(() => {
 });
 
 const metalAvailableDisplay = computed(() => {
-  return tc($store.getters.activePlanet.resources.metal.toFixed(1), {
-    digits: 1,
+  return tc($store.getters.activePlanet.resources.metal.toFixed(3), {
+    digits: 3,
   });
 });
 
@@ -816,8 +816,8 @@ const crystalReserveDisplay = computed(() => {
 });
 
 const crystalAvailableDisplay = computed(() => {
-  return tc($store.getters.activePlanet.resources.crystal.toFixed(1), {
-    digits: 1,
+  return tc($store.getters.activePlanet.resources.crystal.toFixed(3), {
+    digits: 3,
   });
 });
 
@@ -836,8 +836,8 @@ const petrolReserveDisplay = computed(() => {
 });
 
 const petrolAvailableDisplay = computed(() => {
-  return tc($store.getters.activePlanet.resources.petrol.toFixed(1), {
-    digits: 1,
+  return tc($store.getters.activePlanet.resources.petrol.toFixed(3), {
+    digits: 3,
   });
 });
 
