@@ -215,5 +215,4 @@ for (let upgradeIdx in item.value.upgrades) {
 
   rows.push(row);
 }
-console.log(rows);
 </script>

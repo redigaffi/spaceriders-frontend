@@ -302,6 +302,7 @@
           class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
         >
           <q-btn
+            v-if="data.type !== 'defense'"
             size="md"
             color="warning"
             class="text-white q-mr-md"
@@ -617,7 +618,7 @@ export default defineComponent({
         metalCost = props.data.upgrades[props.data.level].cost_metal;
       }
 
-      const h = 1 - (100-health.value) / 100;
+      const h = 1 - (100 - health.value) / 100;
       return (metalCost - metalCost * h).toFixed(1);
     });
 
@@ -637,7 +638,7 @@ export default defineComponent({
         petrolCost = props.data.upgrades[props.data.level].cost_petrol;
       }
 
-      const h = 1 - (100-health.value) / 100;
+      const h = 1 - (100 - health.value) / 100;
       return (petrolCost - petrolCost * h).toFixed(1);
     });
 
@@ -658,7 +659,7 @@ export default defineComponent({
         crystalCost = props.data.upgrades[props.data.level].cost_crystal;
       }
 
-      const h = 1 - (100-health.value) / 100;
+      const h = 1 - (100 - health.value) / 100;
       return (crystalCost - crystalCost * h).toFixed(1);
     });
 
