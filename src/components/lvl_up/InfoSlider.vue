@@ -638,7 +638,7 @@ export default defineComponent({
       }
 
       const h = 100 - health.value;
-      return (petrolCost - petrolCost * h).toFixed(0);
+      return (petrolCost - (petrolCost * h) / 100).toFixed(0);
     });
 
     const crystalCost = computed(() => {
@@ -659,7 +659,7 @@ export default defineComponent({
       }
 
       const h = 100 - health.value;
-      return (crystalCost - crystalCost * h).toFixed(0);
+      return (crystalCost - (crystalCost * h) / 100).toFixed(0);
     });
 
     const repair = async (label) => {
