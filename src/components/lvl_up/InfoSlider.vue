@@ -302,6 +302,7 @@
           class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
         >
           <q-btn
+            v-if="data.type !== 'defense'"
             size="md"
             color="warning"
             class="text-white q-mr-md"
@@ -641,6 +642,7 @@ export default defineComponent({
       }
 
       return petrolCost;
+
     });
 
     const crystalCost = computed(() => {
