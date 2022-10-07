@@ -66,22 +66,17 @@
       </div>
     </header>
 
-    <section class="main" id="particles-js">
+    <section class="main">
       <Particles
-        class="absolute-top"
-        id="tsparticles"
+        id="particles-js"
         :options="{
-          fpsLimit: 90,
+          fpsLimit: 60,
           interactivity: {
             detect_on: 'canvas',
             events: {
               onhover: {
-                enable: true,
-                mode: 'grab',
-              },
-              onclick: {
-                enable: true,
-                mode: 'push',
+                enable: false,
+                mode: 'repulse',
               },
               resize: true,
             },
@@ -115,7 +110,7 @@
               value: 200,
               density: {
                 enable: true,
-                value_area: 2000,
+                value_area: 2500,
               },
             },
             color: {
@@ -160,12 +155,12 @@
               enable: true,
               distance: 100,
               color: '#fff',
-              opacity: 1,
+              opacity: 0.5,
               width: 1,
             },
             move: {
               enable: true,
-              speed: 2,
+              speed: 1,
               direction: 'none',
               random: false,
               straight: false,
@@ -205,7 +200,7 @@
         </q-card>
       </div>
 
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+      <div id="overlay" :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="main__inner">
           <h2 class="footer__title wow animate__animated animate__fadeIn">
             <span class="blue">SPACE</span>RIDERS
@@ -228,13 +223,9 @@
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
-                Enter alpha version
+                Play the MVP!
               </button>
             </div>
-          </div>
-
-          <div class="main__coming--soon wow animate__animated animate__fadeIn">
-            <p class="main__coming--text">Coming Soon</p>
           </div>
         </div>
       </div>
@@ -1303,5 +1294,17 @@ export default defineComponent({
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
+
+#overlay {
+  position: relative;
+}
+
+#particles-js {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+}
 </style>
-<style lang="scss"></style>
