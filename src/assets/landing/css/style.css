@@ -953,6 +953,7 @@ input::-webkit-inner-spin-button {
   font-weight: 500;
   font-size: 3.6rem;
   text-align: center;
+  font-family: plantFont;
 }
 
 .subtitle {
