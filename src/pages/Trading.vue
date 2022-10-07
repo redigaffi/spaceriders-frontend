@@ -389,7 +389,7 @@
                       v-model.number="sellTotal"
                       dense
                       prefix="Total"
-                      :suffix="pair1"
+                      :suffix="pair2"
                     >
                       <template v-slot:append>
                         <q-btn
