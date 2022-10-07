@@ -1,6 +1,6 @@
 <template>
   <section class="timeline">
-    <h3 class="main-title z-top">{{ props.mainTitle }}</h3>
+    <h3 class="main-title">{{ props.mainTitle }}</h3>
 
     <div
       class="timeline-item"
@@ -62,6 +62,7 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   left: 50%;
   transform: translate(-50%, 0);
   margin-top: 2rem;
+  z-index: 1;
 }
 
 .timeline-item {
