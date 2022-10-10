@@ -81,12 +81,23 @@
     <q-drawer
       id="side-menu"
       v-model="drawer"
-      :width="200"
+      :width="210"
       :breakpoint="500"
       bordered
+      overlay
+      elevated
+      behavior="desktop"
       class="primary"
     >
-      <q-scroll-area class="fit">
+      <q-scroll-area
+        class="fit"
+        :visible="true"
+        :vertical-thumb-style="{
+          width: '25px',
+          background: '#2253f4',
+          opacity: '1',
+        }"
+      >
         <q-list dark separator>
           <!--
           <template v-for="(menuItem, index) in menuList" :key="index">
@@ -101,6 +112,12 @@
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
           </template>
         -->
+          <q-item class="menu-item" clickable v-ripple @click="drawer = false">
+            <q-item-section avatar>
+              <q-icon name="close" />
+            </q-item-section>
+            <q-item-section>Close</q-item-section>
+          </q-item>
           <q-item
             class="menu-item"
             clickable
@@ -1171,19 +1188,29 @@ export default defineComponent({
           headerTransparency.value = true;
         }
       });
+      document
+        .querySelector("body")
+        .addEventListener("touchmove", preventScroll, { passive: false });
       window.addEventListener("resize", () => {
         setBodyOffset();
       });
       setBodyOffset();
     });
+    const preventScroll = (e) => {
+      if (drawer.value === true) {
+        e.preventDefault();
+      }
+
+      return false;
+    };
     const setBodyOffset = () => {
-      const bodyElement = document.body;
+      const bodyElement = document.querySelector("body");
       if ($q.screen.lt.md) {
         bodyElement.classList.add("md-offset");
         bodyElement.classList.remove("lg-offset");
       } else {
         bodyElement.classList.add("lg-offset");
-        bodyElement.classList.add("md-offset");
+        bodyElement.classList.remove("md-offset");
         drawer.value = false;
       }
     };
