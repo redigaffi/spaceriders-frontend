@@ -79,6 +79,7 @@
     </q-header>
 
     <q-drawer
+      id="side-menu"
       v-model="drawer"
       :width="200"
       :breakpoint="500"
@@ -100,56 +101,96 @@
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
           </template>
         -->
-          <q-item clickable v-ripple @click="scrollPageTo('landing')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('landing')"
+          >
             <q-item-section avatar>
               <q-icon name="public" />
             </q-item-section>
             <q-item-section>Home</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="scrollPageTo('game')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('game')"
+          >
             <q-item-section avatar>
               <q-icon name="sports_esports" />
             </q-item-section>
             <q-item-section>Game Mechanics</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="scrollPageTo('road')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('road')"
+          >
             <q-item-section avatar>
               <q-icon name="satellite_alt" />
             </q-item-section>
             <q-item-section>Roadmap</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="scrollPageTo('faq')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('faq')"
+          >
             <q-item-section avatar>
               <q-icon name="psychology_alt" />
             </q-item-section>
             <q-item-section>FAQ</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="scrollPageTo('team')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('team')"
+          >
             <q-item-section avatar>
               <q-icon name="diversity_3" />
             </q-item-section>
             <q-item-section>Team</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="scrollPageTo('social')">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('social')"
+          >
             <q-item-section avatar>
               <q-icon name="share" />
             </q-item-section>
             <q-item-section>Social Media</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="openDisclaimer = true">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="openDisclaimer = true"
+          >
             <q-item-section avatar>
               <q-icon name="info" />
             </q-item-section>
             <q-item-section>Disclaimer</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple @click="openDarkpaper = true">
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="openDarkpaper = true"
+          >
             <q-item-section avatar>
               <q-icon name="pages" />
             </q-item-section>
@@ -1317,6 +1358,10 @@ export default defineComponent({
 /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
+
+#side-menu .menu-item {
+  min-height: 54px;
+}
 
 #disclaimer-modal ol li {
   list-style-type: upper-roman;
