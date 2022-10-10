@@ -231,9 +231,11 @@
       </div>
     </section>
 
+    <div id="game"></div>
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">GAME MECHANICS</div>
           <div class="game__content">
             <div class="game__item">
               <p class="game__item--title">Play to Own</p>
@@ -633,7 +635,7 @@
     </section> -->
 
     <!-- TOKENOMICS -->
-    <div id="game"></div>
+
     <!--<section class="game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
@@ -854,7 +856,6 @@
     </section>
 
     <!-- DISCLAIMER -->
-    <div id="game"></div>
     <section class="game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
