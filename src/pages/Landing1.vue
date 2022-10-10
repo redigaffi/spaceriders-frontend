@@ -1075,7 +1075,7 @@
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/"
               target="_blank"
             >
-              <q-avatar class="q-m-md" size="150px">
+              <q-avatar class="q-m-md" size="120px">
                 <img
                   src="~assets/landing/img/usa.png"
                   style="cursor: pointer"
@@ -1088,7 +1088,7 @@
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/"
               target="_blank"
             >
-              <q-avatar size="150px">
+              <q-avatar size="120px">
                 <img
                   src="~assets/landing/img/spain.png"
                   style="cursor: pointer"
@@ -1141,8 +1141,8 @@
 
         <q-separator />
 
-        <q-card-actions align="right">
-          <q-btn label="Ok, I understand" color="primary" v-close-popup />
+        <q-card-actions align="center">
+          <q-btn label="Ok, I understand" color="info" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
