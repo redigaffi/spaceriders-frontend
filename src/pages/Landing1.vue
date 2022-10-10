@@ -394,8 +394,7 @@
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-h5">
-                  <div>Principle Software Engineer</div>
-                  <div>Blockchain Enthusiast</div>
+                  <div>Principal Software Engineer</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn
@@ -451,7 +450,6 @@
                 <q-card-section class="text-h5">
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
-                  <div>Blockchain & Crypto Enthusiast</div>
                   <div>System & Graphics Analyst</div>
                   <div>NFT Games Player</div>
                 </q-card-section>
@@ -533,7 +531,6 @@
                   <div>Business Analysis</div>
                   <div>Marketing Operations</div>
                   <div>Social Media Lead</div>
-                  <div>Blockchain & Crypto Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn
