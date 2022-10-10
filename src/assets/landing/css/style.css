@@ -93,18 +93,23 @@ input::-webkit-inner-spin-button {
   margin: 0 auto;
 }
 
+.md-offset {
+  margin-top: -60px;
+}
+
+.lg-offset {
+  margin-top: -100px;
+}
+
 /* Шапка */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 2rem 0;
   border-bottom: 1px solid #484848;
-  z-index: 15;
-  transition: 0.2s linear;
+  background: rgba(0, 0, 0, 0);
   backdrop-filter: blur(5px);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
+
 .header.header-bg {
   background: rgba(0, 0, 0, 0.75);
 }
@@ -1166,8 +1171,7 @@ input::-webkit-inner-spin-button {
   }
 
   .header__nav,
-  .header__button,
-  .logo {
+  .header__button {
     display: none;
   }
 

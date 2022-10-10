@@ -1,9 +1,21 @@
 <template>
   <div id="landing">
-    <header class="header" ref="headRef">
+    <q-header
+      class="header"
+      :class="{
+        'header-bg': !headerTransparency,
+      }"
+    >
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="header__inner">
-          <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
+          <q-btn
+            v-if="$q.screen.lt.md"
+            flat
+            @click="drawer = !drawer"
+            round
+            dense
+            icon="menu"
+          />
 
           <a href="#" class="logo" v-on:click.prevent="scrollPageTo('landing')">
             SPACERIDERS
@@ -33,7 +45,7 @@
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('faq')"
-              >FAQs</a
+              >FAQ</a
             >
 
             <a
@@ -45,13 +57,7 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('social')"
-              >SOCIAL MEDIA</a
-            >
-            <a
-              style="cursor: pointer"
-              class="header__nav--link go"
-              @click="openDisclaimer = true"
+              @click.prevent="openDisclaimer = true"
               >DISCLAIMER</a
             >
 
@@ -63,14 +69,95 @@
                 box-shadow: 0 0 20px rgb(34 83 244 / 76%);
                 color: #fff;
               "
-              @click="openWhitepaper = true"
+              @click="openDarkpaper = true"
             >
               DARKPAPER
             </button>
           </div>
         </div>
       </div>
-    </header>
+    </q-header>
+
+    <q-drawer
+      v-model="drawer"
+      :width="200"
+      :breakpoint="500"
+      bordered
+      class="primary"
+    >
+      <q-scroll-area class="fit">
+        <q-list dark separator>
+          <!--
+          <template v-for="(menuItem, index) in menuList" :key="index">
+            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+              <q-item-section avatar>
+                <q-icon :name="menuItem.icon" />
+              </q-item-section>
+              <q-item-section>
+                {{ menuItem.label }}
+              </q-item-section>
+            </q-item>
+            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+          </template>
+        -->
+          <q-item clickable v-ripple @click="scrollPageTo('landing')">
+            <q-item-section avatar>
+              <q-icon name="public" />
+            </q-item-section>
+            <q-item-section>Home</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="scrollPageTo('game')">
+            <q-item-section avatar>
+              <q-icon name="sports_esports" />
+            </q-item-section>
+            <q-item-section>Game Mechanics</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="scrollPageTo('road')">
+            <q-item-section avatar>
+              <q-icon name="satellite_alt" />
+            </q-item-section>
+            <q-item-section>Roadmap</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="scrollPageTo('faq')">
+            <q-item-section avatar>
+              <q-icon name="psychology_alt" />
+            </q-item-section>
+            <q-item-section>FAQ</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="scrollPageTo('team')">
+            <q-item-section avatar>
+              <q-icon name="diversity_3" />
+            </q-item-section>
+            <q-item-section>Team</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="scrollPageTo('social')">
+            <q-item-section avatar>
+              <q-icon name="share" />
+            </q-item-section>
+            <q-item-section>Social Media</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="openDisclaimer = true">
+            <q-item-section avatar>
+              <q-icon name="info" />
+            </q-item-section>
+            <q-item-section>Disclaimer</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple @click="openDarkpaper = true">
+            <q-item-section avatar>
+              <q-icon name="pages" />
+            </q-item-section>
+            <q-item-section>Darkpaper</q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
 
     <section class="main">
       <Particles
@@ -183,13 +270,14 @@
           detectRetina: true,
         }"
       />
+      <!--
       <div class="main__timer" style="display: none">
         <q-card class="bg-transparent">
           <div class="row q-col-gutter-lg text-center">
-            <!-- <div class="col">
+            <div class="col">
               <div class="text-h2 text-weight-bolder">{{ d }}</div>
               <div class="text-h4 q-pt-md text-weight-bolder">Days</div>
-            </div> -->
+            </div>
             <div class="col">
               <div class="text-h2 text-weight-bolder">{{ h }}</div>
               <div class="text-h4 q-pt-md text-weight-bolder">Hours</div>
@@ -205,6 +293,7 @@
           </div>
         </q-card>
       </div>
+      -->
 
       <div id="overlay" :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="main__inner">
@@ -736,127 +825,131 @@
       </div>
     </section>-->
 
-    <!-- SOCIAL -->
-    <div id="social"></div>
-    <section class="social">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="social__inner">
-          <h2 class="title social__title wow animate__animated animate__fadeIn">
-            SOCIAL MEDIA
-          </h2>
+    <template v-if="$q.screen.lt.md">
+      <!-- SOCIAL -->
+      <div id="social"></div>
+      <section class="social">
+        <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+          <div class="social__inner">
+            <h2
+              class="title social__title wow animate__animated animate__fadeIn"
+            >
+              SOCIAL MEDIA
+            </h2>
 
-          <div class="social__content wow animate__animated animate__fadeIn">
-            <a
-              href="https://medium.com/@spaceriders.io"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/m-white.svg"
-                alt="М"
-                class="social__link--icon"
-              />
-            </a>
+            <div class="social__content wow animate__animated animate__fadeIn">
+              <a
+                href="https://medium.com/@spaceriders.io"
+                target="_blank"
+                class="social__link"
+              >
+                <img
+                  src="~assets/landing/img/m-white.svg"
+                  alt="М"
+                  class="social__link--icon"
+                />
+              </a>
 
-            <a
-              href="https://twitter.com/spaceriders_io"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/twitter-white.svg"
-                alt="Твитер"
-                class="social__link--icon"
-              />
-            </a>
+              <a
+                href="https://twitter.com/spaceriders_io"
+                target="_blank"
+                class="social__link"
+              >
+                <img
+                  src="~assets/landing/img/twitter-white.svg"
+                  alt="Твитер"
+                  class="social__link--icon"
+                />
+              </a>
 
-            <a
-              href="https://t.me/SpaceRidersENChat"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/telegram-white.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
+              <a
+                href="https://t.me/SpaceRidersENChat"
+                target="_blank"
+                class="social__link"
+              >
+                <img
+                  src="~assets/landing/img/telegram-white.svg"
+                  alt="Телеграм"
+                  class="social__link--icon"
+                />
+              </a>
 
-            <a
-              href="https://discord.gg/h733Kh6XTn"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/discord.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
+              <a
+                href="https://discord.gg/h733Kh6XTn"
+                target="_blank"
+                class="social__link"
+              >
+                <img
+                  src="~assets/landing/img/discord.svg"
+                  alt="Телеграм"
+                  class="social__link--icon"
+                />
+              </a>
 
-            <a
-              href="https://www.instagram.com/spaceriders.io/"
-              target="_blank"
-              class="social__link"
-            >
-              <q-icon
-                name="fab fa-instagram"
-                :size="$q.screen.lt.md ? '40px' : '80px'"
-                color="white"
-              />
-            </a>
+              <a
+                href="https://www.instagram.com/spaceriders.io/"
+                target="_blank"
+                class="social__link"
+              >
+                <q-icon
+                  name="fab fa-instagram"
+                  :size="$q.screen.lt.md ? '40px' : '80px'"
+                  color="white"
+                />
+              </a>
 
-            <a
-              href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
-              class="social__link"
-              target="_blank"
-            >
-              <q-icon
-                name="fab fa-youtube"
-                :size="$q.screen.lt.md ? '40px' : '80px'"
-                color="white"
-              />
-            </a>
+              <a
+                href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
+                class="social__link"
+                target="_blank"
+              >
+                <q-icon
+                  name="fab fa-youtube"
+                  :size="$q.screen.lt.md ? '40px' : '80px'"
+                  color="white"
+                />
+              </a>
 
-            <a
-              v-if="$q.screen.gt.sm"
-              href="https://linktr.ee/SpaceRiders.io"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/linktreee.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
-          </div>
-          <div v-if="!$q.screen.gt.sm" class="text-center">
-            <q-btn
-              type="a"
-              style="border-radius: 10px"
-              href="https://linktr.ee/SpaceRiders.io"
-              target="_blank"
-              dense
-              class="bg-warning text-white q-mr-sm"
-            >
-              <img
-                src="~assets/landing/img/linktreee.svg"
-                alt="Телеграм"
-                style="height: 50px"
-              />
-            </q-btn>
-            <!-- <a
+              <a
+                v-if="$q.screen.gt.sm"
+                href="https://linktr.ee/SpaceRiders.io"
+                target="_blank"
+                class="social__link"
+              >
+                <img
+                  src="~assets/landing/img/linktreee.svg"
+                  alt="Телеграм"
+                  class="social__link--icon"
+                />
+              </a>
+            </div>
+            <div v-if="!$q.screen.gt.sm" class="text-center">
+              <q-btn
+                type="a"
+                style="border-radius: 10px"
+                href="https://linktr.ee/SpaceRiders.io"
+                target="_blank"
+                dense
+                class="bg-warning text-white q-mr-sm"
+              >
+                <img
+                  src="~assets/landing/img/linktreee.svg"
+                  alt="Телеграм"
+                  style="height: 50px"
+                />
+              </q-btn>
+              <!-- <a
               href="https://linktr.ee/SpaceRiders.io"
               target="_blank"
               style="display: flex; background: #2253f4; border-radius: 10px"
             >
               <div class="text-center"></div>
             </a> -->
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </template>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -896,9 +989,9 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('landing')"
+              v-on:click.prevent="scrollPageTo('faq')"
               class="footer__nav--link go"
-              >WHITEPAPER</a
+              >FAQ</a
             >
             <a
               href="#"
@@ -908,15 +1001,15 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('social')"
-              class="footer__nav--link go"
-              >SOCIAL MEDIA</a
+              class="header__nav--link go"
+              @click.prevent="openDisclaimer = true"
+              >DISCLAIMER</a
             >
             <a
-              style="cursor: pointer"
-              class="header__nav--link go"
-              @click="openDisclaimer = true"
-              >DISCLAIMER</a
+              href="#"
+              class="footer__nav--link go"
+              @click.prevent="openDarkpaper = true"
+              >DARKPAPER</a
             >
           </div>
 
@@ -925,111 +1018,7 @@
       </div>
     </footer>
 
-    <div class="modal">
-      <svg
-        class="cross"
-        version="1.1"
-        id="Capa_1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        viewBox="0 0 512.001 512.001"
-        style="enable-background: new 0 0 512.001 512.001"
-        xml:space="preserve"
-      >
-        <g>
-          <g>
-            <path
-              d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717
-					L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859
-					c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287
-					l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285
-					L284.286,256.002z"
-            />
-          </g>
-        </g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-      </svg>
-
-      <div class="modal__nav">
-        <a
-          href="#"
-          class="header__nav--link go"
-          v-on:click.prevent="scrollPageTo('landing')"
-          >HOME</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('game')"
-          >GAME MECHANICS</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('road')"
-          >ROADMAP</a
-        >
-
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('faq')"
-          >FAQs</a
-        >
-
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('team')"
-          >TEAM</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('social')"
-          >SOCIAL MEDIA</a
-        >
-        <a
-          style="cursor: pointer"
-          class="header__nav--link go"
-          @click="openDisclaimer = true"
-          >DISCLAIMER</a
-        >
-
-        <div class="q-pt-md">
-          <button
-            class="button q-pa-md q-mr-xs"
-            style="
-              border: 3px solid #2253f4;
-              border-radius: 5px;
-              box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-              color: #fff;
-            "
-            @click="openWhitepaper = true"
-          >
-            WHITEPAPER
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <q-dialog v-model="openWhitepaper">
+    <q-dialog v-model="openDarkpaper">
       <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
@@ -1117,25 +1106,40 @@
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
+import { useQuasar } from "quasar";
 //import PieChart from "../components/pieChart";
 
 export default defineComponent({
   name: "PageLanding",
   //components: { PieChart },
   setup() {
-    // const $q = useQuasar();
+    const $q = useQuasar();
     // $q.loading.show();
-    const headRef = ref(null); // obtain the reference
+    const headerTransparency = ref(true); // obtain the reference
     onMounted(() => {
       window.addEventListener("scroll", () => {
-        var curr = window.pageYOffset;
-        if (curr >= 100) {
-          headRef.value.classList.add("header-bg");
+        if (window.pageYOffset >= 100) {
+          headerTransparency.value = false;
         } else {
-          headRef.value.classList.remove("header-bg");
+          headerTransparency.value = true;
         }
       });
+      window.addEventListener("resize", () => {
+        setBodyOffset();
+      });
+      setBodyOffset();
     });
+    const setBodyOffset = () => {
+      const bodyElement = document.body;
+      if ($q.screen.lt.md) {
+        bodyElement.classList.add("md-offset");
+        bodyElement.classList.remove("lg-offset");
+      } else {
+        bodyElement.classList.add("lg-offset");
+        bodyElement.classList.add("md-offset");
+        drawer.value = false;
+      }
+    };
     const scrollPageTo = (navEl) => {
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
@@ -1177,8 +1181,9 @@ export default defineComponent({
     const updateScroll = () => {
       scrollPosition.value = window.scrollY;
     };
-    const openWhitepaper = ref(false);
+    const openDarkpaper = ref(false);
     const openDisclaimer = ref(false);
+    const drawer = ref(false);
     const faq_section = ref([
       {
         label: "What is SpaceRiders?",
@@ -1296,11 +1301,12 @@ export default defineComponent({
       scrollPageTo,
       options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
-      openWhitepaper,
+      openDarkpaper,
       openDisclaimer,
+      drawer,
       slide: ref(1),
       faq_section,
-      headRef,
+      headerTransparency,
       timelineFeed,
     };
   },
