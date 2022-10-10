@@ -226,11 +226,12 @@
                         }}
                         &nbsp;
                         <img
-                          src="~assets/img/logo.webp"
+                          src="~assets/img/bkm.webp"
                           alt=""
                           style="
-                            height: 20px;
-                            width: 20px;
+                            margin-left: -40px;
+                            height: 60px;
+                            width: 60px;
                             vertical-align: middle;
                           "
                         />)</span
