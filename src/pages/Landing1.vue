@@ -359,7 +359,7 @@
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
-                Play the MVP!
+                Access SpaceRiders Alpha
               </button>
             </div>
           </div>
@@ -1060,20 +1060,27 @@
     </footer>
 
     <q-dialog v-model="openDarkpaper">
-      <q-card style="border-radius: 30px; max-width: 80vw">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <q-icon name="pages" size="lg" />
+          <q-space />
+          <div class="text-h3">Darkpaper</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <a
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/"
               target="_blank"
             >
-              <img
-                src="~assets/landing/img/usa.png"
-                style="cursor: pointer; width: 100%"
-                :style="
-                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-                "
-              />
+              <q-avatar class="q-m-md" size="150px">
+                <img
+                  src="~assets/landing/img/usa.png"
+                  style="cursor: pointer"
+                />
+              </q-avatar>
             </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
@@ -1081,13 +1088,12 @@
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/"
               target="_blank"
             >
-              <img
-                src="~assets/landing/img/spain.png"
-                style="cursor: pointer; width: 100%"
-                :style="
-                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-                "
-              />
+              <q-avatar size="150px">
+                <img
+                  src="~assets/landing/img/spain.png"
+                  style="cursor: pointer"
+                />
+              </q-avatar>
             </a>
           </div>
         </q-card-section>
