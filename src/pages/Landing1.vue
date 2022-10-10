@@ -48,6 +48,12 @@
               v-on:click.prevent="scrollPageTo('social')"
               >SOCIAL MEDIA</a
             >
+            <a
+              style="cursor: pointer"
+              class="header__nav--link go"
+              @click="openDisclaimer = true"
+              >DISCLAIMER</a
+            >
 
             <button
               class="button q-pa-md q-mr-xs"
@@ -855,48 +861,6 @@
       </div>
     </section>
 
-    <!-- DISCLAIMER -->
-    <section class="game">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">DISCLAIMER</div>
-
-          <div
-            class="q-mt-xl q-pa-lg text-h5"
-            style="
-              border: 2px solid #2253f4;
-              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-              height: 100%;
-            "
-          >
-            <p>
-              The information provided on this website does not constitute
-              investment advice, financial advice, trading advice, or any other
-              sort of advice and you should not treat any of the website's
-              content as such. SpaceRiders team does not recommend and is not
-              responsible for any cryptocurrency that is bought, sold, or held
-              by you. Do conduct your own due diligence and consult your
-              financial advisor before making any investment decisions.
-            </p>
-            <p>
-              SpaceRiders team expressly disclaims any and all responsibility
-              for any direct or consequential loss or damage of any kind
-              whatsoever arising directly or indirectly from
-            </p>
-            <p>(i) reliance on any information produced by SpaceRiders</p>
-            <p>
-              (ii) any error, omission or inaccuracy in any such information
-            </p>
-            <p>(iii) any action resulting therefrom,</p>
-            <p>
-              (iv) usage or acquisition of products, available through the
-              website.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- FOOTER -->
     <footer class="footer">
       <div
@@ -950,6 +914,12 @@
               v-on:click.prevent="scrollPageTo('social')"
               class="footer__nav--link go"
               >SOCIAL MEDIA</a
+            >
+            <a
+              style="cursor: pointer"
+              class="header__nav--link go"
+              @click="openDisclaimer = true"
+              >DISCLAIMER</a
             >
           </div>
 
@@ -1038,6 +1008,12 @@
           v-on:click.prevent="scrollPageTo('social')"
           >SOCIAL MEDIA</a
         >
+        <a
+          style="cursor: pointer"
+          class="header__nav--link go"
+          @click="openDisclaimer = true"
+          >DISCLAIMER</a
+        >
 
         <div class="q-pt-md">
           <button
@@ -1088,6 +1064,53 @@
             </a>
           </div>
         </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog id="disclaimer-modal" v-model="openDisclaimer">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <q-icon name="error" size="lg" />
+          <q-space />
+          <div class="text-h3">Disclaimer</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section
+          style="max-height: 50vh; overflow-y: scroll"
+          class="scroll"
+        >
+          <p>
+            The information provided on this website does not constitute
+            investment advice, financial advice, trading advice, or any other
+            sort of advice and you should not treat any of the website's content
+            as such. SpaceRiders team does not recommend and is not responsible
+            for any cryptocurrency that is bought, sold, or held by you. Do
+            conduct your own due diligence and consult your financial advisor
+            before making any investment decisions.
+          </p>
+          <br />
+          <p>
+            SpaceRiders team expressly disclaims any and all responsibility for
+            any direct or consequential loss or damage of any kind whatsoever
+            arising directly or indirectly from:
+          </p>
+          <ol>
+            <li>Reliance on any information produced by SpaceRiders.</li>
+            <li>Any error, omission or inaccuracy in any such information.</li>
+            <li>Any action resulting therefrom.</li>
+            <li>
+              Usage or acquisition of products, available through the website.
+            </li>
+          </ol>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn label="Ok, I understand" color="primary" v-close-popup />
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -1158,6 +1181,7 @@ export default defineComponent({
       scrollPosition.value = window.scrollY;
     };
     const openWhitepaper = ref(false);
+    const openDisclaimer = ref(false);
     const faq_section = ref([
       {
         label: "What is SpaceRiders?",
@@ -1276,6 +1300,7 @@ export default defineComponent({
       options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
       openWhitepaper,
+      openDisclaimer,
       slide: ref(1),
       faq_section,
       headRef,
@@ -1289,6 +1314,10 @@ export default defineComponent({
 /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
+
+#disclaimer-modal ol li {
+  list-style-type: upper-roman;
+}
 
 .roadmap {
   padding: 0rem 0rem;
