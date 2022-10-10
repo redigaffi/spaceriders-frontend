@@ -618,6 +618,50 @@
       </div>
     </section>
 
+    <!-- PARTNERS -->
+    <!--
+    <div id="partners"></div>
+    <section class="custom-game">
+      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">PARTNERS</div>
+
+          <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://images.ctfassets.net/xts27qnup0jr/373RVCYydODUjY5KqyKoTf/293e55e69fdbddbddd0d4af249e63653/cocacolalogo.png" alt="Coca-Cola">
+                </q-img>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://sabiogroup.com/sites/default/files/2021-08/computacenter_white.png" alt="Computacenter">
+                </q-img>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://images.ctfassets.net/xts27qnup0jr/DIhbSZZ7PAPPt5QUUcJOi/25e44d06b71067cba9b63ee945f9be9f/vodafone-business-white.png" alt="Vodafone">
+                </q-img>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Docker">
+                </q-img>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/625eb54bba1f7951f802c34c_Discord-Logo%2BWordmark-White (2).png" alt="Discord">
+                </q-img>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <q-img src="https://www.tailorbrands.com/wp-content/uploads/2020/03/Tailor-brands-White-transparent.png" alt="Tailor">
+                </q-img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
     <!-- TROUBLESHOOTING
     <div id="game"></div>
     <section class="game">
