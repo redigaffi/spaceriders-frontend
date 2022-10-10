@@ -194,7 +194,10 @@
             class="menu-item"
             clickable
             v-ripple
-            @click="openDisclaimer = true"
+            @click="
+              drawer = false;
+              openDisclaimer = true;
+            "
           >
             <q-item-section avatar>
               <q-icon name="info" />
@@ -206,7 +209,10 @@
             class="menu-item"
             clickable
             v-ripple
-            @click="openDarkpaper = true"
+            @click="
+              drawer = false;
+              openDarkpaper = true;
+            "
           >
             <q-item-section avatar>
               <q-icon name="pages" />
@@ -1237,6 +1243,7 @@ export default defineComponent({
       }
     };
     const scrollPageTo = (navEl) => {
+      drawer.value = false;
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
     };
