@@ -1,6 +1,6 @@
 <template>
   <section class="timeline">
-    <h3 class="main-title z-top">{{ props.mainTitle }}</h3>
+    <h3 class="main-title">{{ props.mainTitle }}</h3>
 
     <div
       class="timeline-item"
@@ -17,7 +17,7 @@
       <div class="timeline-content">
         <ul>
           <li v-for="(line, index) in item['content']" :key="index">
-            {{ line }}
+            <q-icon name="fas fa-check" /> {{ line }}
           </li>
         </ul>
       </div>
@@ -62,6 +62,7 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   left: 50%;
   transform: translate(-50%, 0);
   margin-top: 2rem;
+  z-index: 1;
 }
 
 .timeline-item {
@@ -137,18 +138,13 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   transform: translate3d(0, 0, 0) translateY(25px);
   position: relative;
   z-index: 1;
-  text-align: center;
-  margin: 0 1.618em;
+  padding: 0 3em;
   top: 30%;
   opacity: 0;
-  font-size: 1.3vmax !important;
+  font-size: 1.25vmax !important;
 
   li {
-    list-style-type: disc;
-  }
-
-  ul > ul > li {
-    list-style-type: circle;
+    list-style-type: none;
   }
 }
 

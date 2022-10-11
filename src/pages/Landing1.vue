@@ -1,9 +1,21 @@
 <template>
   <div id="landing">
-    <header class="header" ref="headRef">
+    <q-header
+      class="header"
+      :class="{
+        'header-bg': !headerTransparency,
+      }"
+    >
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="header__inner">
-          <img src="~assets/landing/img/menu.svg" alt="Меню" class="menu" />
+          <q-btn
+            v-if="$q.screen.lt.md"
+            flat
+            @click="drawer = !drawer"
+            round
+            dense
+            icon="menu"
+          />
 
           <a href="#" class="logo" v-on:click.prevent="scrollPageTo('landing')">
             SPACERIDERS
@@ -33,7 +45,7 @@
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('faq')"
-              >FAQs</a
+              >FAQ</a
             >
 
             <a
@@ -45,8 +57,8 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('social')"
-              >SOCIAL MEDIA</a
+              @click.prevent="openDisclaimer = true"
+              >DISCLAIMER</a
             >
 
             <button
@@ -57,31 +69,171 @@
                 box-shadow: 0 0 20px rgb(34 83 244 / 76%);
                 color: #fff;
               "
-              @click="openWhitepaper = true"
+              @click="openDarkpaper = true"
             >
               DARKPAPER
             </button>
           </div>
         </div>
       </div>
-    </header>
+    </q-header>
 
-    <section class="main" id="particles-js">
+    <q-drawer
+      id="side-menu"
+      v-model="drawer"
+      :width="210"
+      :breakpoint="500"
+      bordered
+      overlay
+      elevated
+      behavior="desktop"
+      class="primary"
+    >
+      <q-scroll-area
+        class="fit"
+        :visible="true"
+        :vertical-thumb-style="{
+          width: '25px',
+          background: '#2253f4',
+          opacity: '1',
+        }"
+      >
+        <q-list dark separator>
+          <!--
+          <template v-for="(menuItem, index) in menuList" :key="index">
+            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+              <q-item-section avatar>
+                <q-icon :name="menuItem.icon" />
+              </q-item-section>
+              <q-item-section>
+                {{ menuItem.label }}
+              </q-item-section>
+            </q-item>
+            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+          </template>
+        -->
+          <q-item class="menu-item" clickable v-ripple @click="drawer = false">
+            <q-item-section avatar>
+              <q-icon name="close" />
+            </q-item-section>
+            <q-item-section>Close</q-item-section>
+          </q-item>
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('landing')"
+          >
+            <q-item-section avatar>
+              <q-icon name="public" />
+            </q-item-section>
+            <q-item-section>Home</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('game')"
+          >
+            <q-item-section avatar>
+              <q-icon name="sports_esports" />
+            </q-item-section>
+            <q-item-section>Game Mechanics</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('road')"
+          >
+            <q-item-section avatar>
+              <q-icon name="satellite_alt" />
+            </q-item-section>
+            <q-item-section>Roadmap</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('faq')"
+          >
+            <q-item-section avatar>
+              <q-icon name="psychology_alt" />
+            </q-item-section>
+            <q-item-section>FAQ</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('team')"
+          >
+            <q-item-section avatar>
+              <q-icon name="diversity_3" />
+            </q-item-section>
+            <q-item-section>Team</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('social')"
+          >
+            <q-item-section avatar>
+              <q-icon name="share" />
+            </q-item-section>
+            <q-item-section>Social Media</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="
+              drawer = false;
+              openDisclaimer = true;
+            "
+          >
+            <q-item-section avatar>
+              <q-icon name="info" />
+            </q-item-section>
+            <q-item-section>Disclaimer</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="
+              drawer = false;
+              openDarkpaper = true;
+            "
+          >
+            <q-item-section avatar>
+              <q-icon name="pages" />
+            </q-item-section>
+            <q-item-section>Darkpaper</q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
+
+    <section class="main">
       <Particles
-        class="absolute-top"
-        id="tsparticles"
+        id="particles-js"
         :options="{
-          fpsLimit: 90,
+          fpsLimit: 60,
           interactivity: {
             detect_on: 'canvas',
             events: {
               onhover: {
-                enable: true,
-                mode: 'grab',
-              },
-              onclick: {
-                enable: true,
-                mode: 'push',
+                enable: false,
+                mode: 'repulse',
               },
               resize: true,
             },
@@ -115,7 +267,7 @@
               value: 200,
               density: {
                 enable: true,
-                value_area: 2000,
+                value_area: 2500,
               },
             },
             color: {
@@ -160,12 +312,12 @@
               enable: true,
               distance: 100,
               color: '#fff',
-              opacity: 1,
+              opacity: 0.5,
               width: 1,
             },
             move: {
               enable: true,
-              speed: 2,
+              speed: 1,
               direction: 'none',
               random: false,
               straight: false,
@@ -182,13 +334,14 @@
           detectRetina: true,
         }"
       />
+      <!--
       <div class="main__timer" style="display: none">
         <q-card class="bg-transparent">
           <div class="row q-col-gutter-lg text-center">
-            <!-- <div class="col">
+            <div class="col">
               <div class="text-h2 text-weight-bolder">{{ d }}</div>
               <div class="text-h4 q-pt-md text-weight-bolder">Days</div>
-            </div> -->
+            </div>
             <div class="col">
               <div class="text-h2 text-weight-bolder">{{ h }}</div>
               <div class="text-h4 q-pt-md text-weight-bolder">Hours</div>
@@ -204,8 +357,9 @@
           </div>
         </q-card>
       </div>
+      -->
 
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+      <div id="overlay" :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="main__inner">
           <h2 class="footer__title wow animate__animated animate__fadeIn">
             <span class="blue">SPACE</span>RIDERS
@@ -228,21 +382,187 @@
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
-                Enter alpha version
+                Access SpaceRiders Alpha
               </button>
             </div>
-          </div>
-
-          <div class="main__coming--soon wow animate__animated animate__fadeIn">
-            <p class="main__coming--text">Coming Soon</p>
           </div>
         </div>
       </div>
     </section>
 
+    <div
+      v-if="!$q.screen.lt.md"
+      id="social-bar"
+      class="z-top fixed-center full-width"
+    >
+      <div class="column items-end">
+        <div class="col">
+          <a href="https://discord.gg/h733Kh6XTn" target="_blank">
+            <q-avatar
+              icon="fab fa-discord"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Discord
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://www.instagram.com/spaceriders.io/" target="_blank">
+            <q-avatar
+              icon="fab fa-instagram"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Instagram
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://medium.com/@spaceriders.io" target="_blank">
+            <q-avatar
+              icon="fab fa-medium-m"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Medium
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://t.me/SpaceRidersENChat" target="_blank">
+            <q-avatar
+              icon="fab fa-telegram-plane"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Telegram
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://twitter.com/spaceriders_io" target="_blank">
+            <q-avatar
+              icon="fab fa-twitter"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Twitter
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a
+            href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
+            target="_blank"
+          >
+            <q-avatar
+              icon="fab fa-youtube"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                YouTube
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
+            <q-avatar
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-img
+                src="~assets/landing/img/linktreee.svg"
+                style="width: 38px"
+              />
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Linktree
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="game"></div>
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">GAME MECHANICS</div>
           <div class="game__content">
             <div class="game__item">
               <p class="game__item--title">Play to Own</p>
@@ -395,8 +715,7 @@
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-h5">
-                  <div>Principle Software Engineer</div>
-                  <div>Blockchain Enthusiast</div>
+                  <div>Principal Software Engineer</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn
@@ -452,7 +771,6 @@
                 <q-card-section class="text-h5">
                   <div>Financial Operations Lead</div>
                   <div>Content Creator</div>
-                  <div>Blockchain & Crypto Enthusiast</div>
                   <div>System & Graphics Analyst</div>
                   <div>NFT Games Player</div>
                 </q-card-section>
@@ -534,7 +852,6 @@
                   <div>Business Analysis</div>
                   <div>Marketing Operations</div>
                   <div>Social Media Lead</div>
-                  <div>Blockchain & Crypto Enthusiast</div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
                   <q-btn
@@ -619,7 +936,7 @@
     </section>
 
     <!-- PARTNERS -->
-    <!--
+
     <div id="partners"></div>
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
@@ -627,40 +944,36 @@
           <div class="text-2 title game__title">PARTNERS</div>
 
           <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://images.ctfassets.net/xts27qnup0jr/373RVCYydODUjY5KqyKoTf/293e55e69fdbddbddd0d4af249e63653/cocacolalogo.png" alt="Coca-Cola">
+            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a href="https://datacryptonft.com" target="_blank">
+                <q-img src="~assets/landing/img/partners/data.png" alt="Data">
                 </q-img>
+              </a>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://sabiogroup.com/sites/default/files/2021-08/computacenter_white.png" alt="Computacenter">
+            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a href="https://haechi.io/?lang=en" target="_blank">
+                <q-img
+                  src="~assets/landing/img/partners/face_wallet.png"
+                  alt="Face Wallet"
+                >
                 </q-img>
+              </a>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://images.ctfassets.net/xts27qnup0jr/DIhbSZZ7PAPPt5QUUcJOi/25e44d06b71067cba9b63ee945f9be9f/vodafone-business-white.png" alt="Vodafone">
+            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a href="https://haechi.io/?lang=en" target="_blank">
+                <q-img
+                  src="~assets/landing/img/partners/haechi.png"
+                  alt="Haechi Labs"
+                >
                 </q-img>
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Docker">
-                </q-img>
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/625eb54bba1f7951f802c34c_Discord-Logo%2BWordmark-White (2).png" alt="Discord">
-                </q-img>
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-img src="https://www.tailorbrands.com/wp-content/uploads/2020/03/Tailor-brands-White-transparent.png" alt="Tailor">
-                </q-img>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
-    -->
 
     <!-- TROUBLESHOOTING
     <div id="game"></div>
@@ -686,7 +999,7 @@
     </section> -->
 
     <!-- TOKENOMICS -->
-    <div id="game"></div>
+
     <!--<section class="game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
@@ -785,169 +1098,127 @@
     </section>-->
 
     <!-- SOCIAL -->
-    <div id="social"></div>
-    <section class="social">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="social__inner">
-          <h2 class="title social__title wow animate__animated animate__fadeIn">
-            SOCIAL MEDIA
-          </h2>
+    <template v-if="$q.screen.lt.md">
+      <div id="social"></div>
+      <section class="social">
+        <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+          <div class="social__inner wow animate__animated animate__fadeIn">
+            <div class="text-2 title game__title">SOCIAL MEDIA</div>
 
-          <div class="social__content wow animate__animated animate__fadeIn">
-            <a
-              href="https://medium.com/@spaceriders.io"
-              target="_blank"
-              class="social__link"
+            <div
+              class="q-mt-lg row justify-around items-center q-col-gutter-xl"
             >
-              <img
-                src="~assets/landing/img/m-white.svg"
-                alt="М"
-                class="social__link--icon"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://discord.gg/h733Kh6XTn" target="_blank">
+                  <q-avatar
+                    icon="fab fa-discord"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Discord </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              href="https://twitter.com/spaceriders_io"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/twitter-white.svg"
-                alt="Твитер"
-                class="social__link--icon"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a
+                  href="https://www.instagram.com/spaceriders.io/"
+                  target="_blank"
+                >
+                  <q-avatar
+                    icon="fab fa-instagram"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Instagram </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              href="https://t.me/SpaceRidersENChat"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/telegram-white.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://medium.com/@spaceriders.io" target="_blank">
+                  <q-avatar
+                    icon="fab fa-medium-m"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Medium </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              href="https://discord.gg/h733Kh6XTn"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/discord.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://t.me/SpaceRidersENChat" target="_blank">
+                  <q-avatar
+                    icon="fab fa-telegram-plane"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Telegram </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              href="https://www.instagram.com/spaceriders.io/"
-              target="_blank"
-              class="social__link"
-            >
-              <q-icon
-                name="fab fa-instagram"
-                :size="$q.screen.lt.md ? '40px' : '80px'"
-                color="white"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://twitter.com/spaceriders_io" target="_blank">
+                  <q-avatar
+                    icon="fab fa-twitter"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Twitter </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
-              class="social__link"
-              target="_blank"
-            >
-              <q-icon
-                name="fab fa-youtube"
-                :size="$q.screen.lt.md ? '40px' : '80px'"
-                color="white"
-              />
-            </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a
+                  href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
+                  target="_blank"
+                >
+                  <q-avatar
+                    icon="fab fa-youtube"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> YouTube </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <a
-              v-if="$q.screen.gt.sm"
-              href="https://linktr.ee/SpaceRiders.io"
-              target="_blank"
-              class="social__link"
-            >
-              <img
-                src="~assets/landing/img/linktreee.svg"
-                alt="Телеграм"
-                class="social__link--icon"
-              />
-            </a>
-          </div>
-          <div v-if="!$q.screen.gt.sm" class="text-center">
-            <q-btn
-              type="a"
-              style="border-radius: 10px"
-              href="https://linktr.ee/SpaceRiders.io"
-              target="_blank"
-              dense
-              class="bg-warning text-white q-mr-sm"
-            >
-              <img
-                src="~assets/landing/img/linktreee.svg"
-                alt="Телеграм"
-                style="height: 50px"
-              />
-            </q-btn>
-            <!-- <a
-              href="https://linktr.ee/SpaceRiders.io"
-              target="_blank"
-              style="display: flex; background: #2253f4; border-radius: 10px"
-            >
-              <div class="text-center"></div>
-            </a> -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DISCLAIMER -->
-    <div id="game"></div>
-    <section class="game">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">DISCLAIMER</div>
-
-          <div
-            class="q-mt-xl q-pa-lg text-h5"
-            style="
-              border: 2px solid #2253f4;
-              box-shadow: 0 0 20px rgba(34, 83, 244, 0.76);
-              height: 100%;
-            "
-          >
-            <p>
-              The information provided on this website does not constitute
-              investment advice, financial advice, trading advice, or any other
-              sort of advice and you should not treat any of the website's
-              content as such. SpaceRiders team does not recommend and is not
-              responsible for any cryptocurrency that is bought, sold, or held
-              by you. Do conduct your own due diligence and consult your
-              financial advisor before making any investment decisions.
-            </p>
-            <p>
-              SpaceRiders team expressly disclaims any and all responsibility
-              for any direct or consequential loss or damage of any kind
-              whatsoever arising directly or indirectly from
-            </p>
-            <p>(i) reliance on any information produced by SpaceRiders</p>
-            <p>
-              (ii) any error, omission or inaccuracy in any such information
-            </p>
-            <p>(iii) any action resulting therefrom,</p>
-            <p>
-              (iv) usage or acquisition of products, available through the
-              website.
-            </p>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
+                  <q-avatar
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-img
+                      src="~assets/landing/img/linktreee.svg"
+                      style="width: 64px"
+                    />
+                    <q-tooltip class="bg-info"> Linktree </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </template>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -987,9 +1258,9 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('landing')"
+              v-on:click.prevent="scrollPageTo('faq')"
               class="footer__nav--link go"
-              >WHITEPAPER</a
+              >FAQ</a
             >
             <a
               href="#"
@@ -999,9 +1270,15 @@
             >
             <a
               href="#"
-              v-on:click.prevent="scrollPageTo('social')"
+              class="header__nav--link go"
+              @click.prevent="openDisclaimer = true"
+              >DISCLAIMER</a
+            >
+            <a
+              href="#"
               class="footer__nav--link go"
-              >SOCIAL MEDIA</a
+              @click.prevent="openDarkpaper = true"
+              >DARKPAPER</a
             >
           </div>
 
@@ -1010,119 +1287,28 @@
       </div>
     </footer>
 
-    <div class="modal">
-      <svg
-        class="cross"
-        version="1.1"
-        id="Capa_1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        viewBox="0 0 512.001 512.001"
-        style="enable-background: new 0 0 512.001 512.001"
-        xml:space="preserve"
-      >
-        <g>
-          <g>
-            <path
-              d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717
-					L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859
-					c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287
-					l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285
-					L284.286,256.002z"
-            />
-          </g>
-        </g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-        <g></g>
-      </svg>
+    <q-dialog v-model="openDarkpaper">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <q-icon name="pages" size="lg" />
+          <q-space />
+          <div class="text-h3">Darkpaper</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
 
-      <div class="modal__nav">
-        <a
-          href="#"
-          class="header__nav--link go"
-          v-on:click.prevent="scrollPageTo('landing')"
-          >HOME</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('game')"
-          >GAME MECHANICS</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('road')"
-          >ROADMAP</a
-        >
-
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('faq')"
-          >FAQs</a
-        >
-
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('team')"
-          >TEAM</a
-        >
-        <a
-          href="#"
-          class="header__nav--link go q-pt-sm"
-          v-on:click.prevent="scrollPageTo('social')"
-          >SOCIAL MEDIA</a
-        >
-
-        <div class="q-pt-md">
-          <button
-            class="button q-pa-md q-mr-xs"
-            style="
-              border: 3px solid #2253f4;
-              border-radius: 5px;
-              box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-              color: #fff;
-            "
-            @click="openWhitepaper = true"
-          >
-            WHITEPAPER
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <q-dialog v-model="openWhitepaper">
-      <q-card style="border-radius: 30px; max-width: 80vw">
         <q-card-section class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
             <a
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/"
               target="_blank"
             >
-              <img
-                src="~assets/landing/img/usa.png"
-                style="cursor: pointer; width: 100%"
-                :style="
-                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-                "
-              />
+              <q-avatar class="q-m-md" size="120px">
+                <img
+                  src="~assets/landing/img/usa.png"
+                  style="cursor: pointer"
+                />
+              </q-avatar>
             </a>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center">
@@ -1130,16 +1316,62 @@
               href="https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/"
               target="_blank"
             >
-              <img
-                src="~assets/landing/img/spain.png"
-                style="cursor: pointer; width: 100%"
-                :style="
-                  $q.screen.lt.md ? { height: '150px' } : { height: '200px' }
-                "
-              />
+              <q-avatar size="120px">
+                <img
+                  src="~assets/landing/img/spain.png"
+                  style="cursor: pointer"
+                />
+              </q-avatar>
             </a>
           </div>
         </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog id="disclaimer-modal" v-model="openDisclaimer">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <q-icon name="error" size="lg" />
+          <q-space />
+          <div class="text-h3">Disclaimer</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section
+          style="max-height: 50vh; overflow-y: scroll"
+          class="scroll"
+        >
+          <p>
+            The information provided on this website does not constitute
+            investment advice, financial advice, trading advice, or any other
+            sort of advice and you should not treat any of the website's content
+            as such. SpaceRiders team does not recommend and is not responsible
+            for any cryptocurrency that is bought, sold, or held by you. Do
+            conduct your own due diligence and consult your financial advisor
+            before making any investment decisions.
+          </p>
+          <br />
+          <p>
+            SpaceRiders team expressly disclaims any and all responsibility for
+            any direct or consequential loss or damage of any kind whatsoever
+            arising directly or indirectly from:
+          </p>
+          <ol>
+            <li>Reliance on any information produced by SpaceRiders.</li>
+            <li>Any error, omission or inaccuracy in any such information.</li>
+            <li>Any action resulting therefrom.</li>
+            <li>
+              Usage or acquisition of products, available through the website.
+            </li>
+          </ol>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="center">
+          <q-btn label="Ok, I understand" color="info" v-close-popup />
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -1149,26 +1381,52 @@
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
+import { useQuasar } from "quasar";
 //import PieChart from "../components/pieChart";
 
 export default defineComponent({
   name: "PageLanding",
   //components: { PieChart },
   setup() {
-    // const $q = useQuasar();
+    const $q = useQuasar();
     // $q.loading.show();
-    const headRef = ref(null); // obtain the reference
+    const headerTransparency = ref(true); // obtain the reference
     onMounted(() => {
       window.addEventListener("scroll", () => {
-        var curr = window.pageYOffset;
-        if (curr >= 100) {
-          headRef.value.classList.add("header-bg");
+        if (window.pageYOffset >= 100) {
+          headerTransparency.value = false;
         } else {
-          headRef.value.classList.remove("header-bg");
+          headerTransparency.value = true;
         }
       });
+      document
+        .querySelector("body")
+        .addEventListener("touchmove", preventScroll, { passive: false });
+      window.addEventListener("resize", () => {
+        setBodyOffset();
+      });
+      setBodyOffset();
     });
+    const preventScroll = (e) => {
+      if (drawer.value === true) {
+        e.preventDefault();
+      }
+
+      return false;
+    };
+    const setBodyOffset = () => {
+      const bodyElement = document.querySelector("body");
+      if ($q.screen.lt.md) {
+        bodyElement.classList.add("md-offset");
+        bodyElement.classList.remove("lg-offset");
+      } else {
+        bodyElement.classList.add("lg-offset");
+        bodyElement.classList.remove("md-offset");
+        drawer.value = false;
+      }
+    };
     const scrollPageTo = (navEl) => {
+      drawer.value = false;
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
     };
@@ -1209,7 +1467,9 @@ export default defineComponent({
     const updateScroll = () => {
       scrollPosition.value = window.scrollY;
     };
-    const openWhitepaper = ref(false);
+    const openDarkpaper = ref(false);
+    const openDisclaimer = ref(false);
+    const drawer = ref(false);
     const faq_section = ref([
       {
         label: "What is SpaceRiders?",
@@ -1327,25 +1587,75 @@ export default defineComponent({
       scrollPageTo,
       options: ["GLMR", "Facebook", "Twitter", "Apple", "Oracle"],
       model: ref("GLMR"),
-      openWhitepaper,
+      openDarkpaper,
+      openDisclaimer,
+      drawer,
       slide: ref(1),
       faq_section,
-      headRef,
+      headerTransparency,
       timelineFeed,
     };
   },
   components: { Timeline },
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Orbitron:wght@400;500;600;700;900&display=swap"; */
 @import "~assets/landing/css/style.css";
 @import "~assets/landing/css/animate.min.css";
+
+#side-menu .menu-item {
+  min-height: 54px;
+}
+
+#disclaimer-modal ol li {
+  list-style-type: upper-roman;
+}
 
 .roadmap {
   padding: 0rem 0rem;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
+
+#overlay {
+  position: relative;
+}
+
+#social-bar {
+  .column {
+    .col:first-of-type .social-item {
+      border-top-left-radius: 12px;
+    }
+
+    .col:last-of-type .social-item {
+      border-bottom-left-radius: 12px;
+    }
+  }
+}
+
+.zoom-item {
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.to-left-item {
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateX(-10px);
+  }
+}
+
+#particles-js {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+}
 </style>
-<style lang="scss"></style>
