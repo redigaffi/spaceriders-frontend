@@ -70,7 +70,7 @@
               style="width: 150px"
               glossy
               label="Metamask"
-              @click="login"
+              @click="login('metamask')"
             />
           </q-card-section>
           <q-card-section class="q-pt-none text-center">
@@ -79,7 +79,7 @@
               style="width: 150px"
               glossy
               label="Facewallet"
-              @click="alert('Integration in process...')"
+              @click="login('facewallet')"
             />
           </q-card-section>
         </q-card-section>
@@ -96,6 +96,7 @@ import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import { Face, Network } from '@haechi-labs/face-sdk';
 
 const $quasar = useQuasar();
 
@@ -183,13 +184,9 @@ const checkChain = async () => {
       }
       return false;
     }
-  } else {
-    // if no window.ethereum then MetaMask is not installed
-    alert(
-      "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html"
-    );
-    return false;
   }
+
+  return false;
 };
 
 const chooseLoginPopupFunc = async (e) => {
@@ -200,7 +197,8 @@ const chooseLoginPopupFunc = async (e) => {
 
   chooseLoginPopup.value = true;
 };
-const login = async (e) => {
+
+const login = async (providerName) => {
   if (loggedIn.value) {
     userInfoPopup.value = true;
     return;
@@ -208,7 +206,7 @@ const login = async (e) => {
 
   $quasar.loading.show();
 
-  const chain = await checkChain();
+  /*const chain = await checkChain();
   if (!chain) {
     error.value = true;
     $store.commit("destroySession");
@@ -217,7 +215,7 @@ const login = async (e) => {
       $notification("failed", "Checking metamask chain failed...")
     );
     return;
-  }
+  }*/
 
   error.value = false;
 
@@ -225,8 +223,23 @@ const login = async (e) => {
   let address = false;
 
   try {
-    await window.ethereum.enable();
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let provider = false;
+
+    if (providerName === "metamask") {
+      await window.ethereum.enable();
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    } else if(providerName === "facewallet") {
+      const face = new Face({
+        network: Network.BNB_SMART_CHAIN_TESTNET,
+        apiKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB'
+      });
+
+      provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
+      await face.auth.login();
+
+    }
+
     const signer = await provider.getSigner();
 
     address = await signer.getAddress();
