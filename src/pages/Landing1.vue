@@ -390,6 +390,174 @@
       </div>
     </section>
 
+    <div
+      v-if="!$q.screen.lt.md"
+      id="social-bar"
+      class="z-top fixed-center full-width"
+    >
+      <div class="column items-end">
+        <div class="col">
+          <a href="https://discord.gg/h733Kh6XTn" target="_blank">
+            <q-avatar
+              icon="fab fa-discord"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Discord
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://www.instagram.com/spaceriders.io/" target="_blank">
+            <q-avatar
+              icon="fab fa-instagram"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Instagram
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://medium.com/@spaceriders.io" target="_blank">
+            <q-avatar
+              icon="fab fa-medium-m"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Medium
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://t.me/SpaceRidersENChat" target="_blank">
+            <q-avatar
+              icon="fab fa-telegram-plane"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Telegram
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://twitter.com/spaceriders_io" target="_blank">
+            <q-avatar
+              icon="fab fa-twitter"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Twitter
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a
+            href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
+            target="_blank"
+          >
+            <q-avatar
+              icon="fab fa-youtube"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                YouTube
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
+            <q-avatar
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-img
+                src="~assets/landing/img/linktreee.svg"
+                style="width: 38px"
+              />
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Linktree
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <div id="game"></div>
     <section class="custom-game">
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
@@ -930,123 +1098,127 @@
     </section>-->
 
     <!-- SOCIAL -->
-    <div id="social"></div>
-    <section class="social">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="social__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">SOCIAL MEDIA</div>
+    <template v-if="$q.screen.lt.md">
+      <div id="social"></div>
+      <section class="social">
+        <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+          <div class="social__inner wow animate__animated animate__fadeIn">
+            <div class="text-2 title game__title">SOCIAL MEDIA</div>
 
-          <div class="q-mt-lg row justify-around items-center q-col-gutter-xl">
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a href="https://discord.gg/h733Kh6XTn" target="_blank">
-                <q-avatar
-                  icon="fab fa-discord"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
-                >
-                  <q-tooltip class="bg-info"> Discord </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+            <div
+              class="q-mt-lg row justify-around items-center q-col-gutter-xl"
+            >
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://discord.gg/h733Kh6XTn" target="_blank">
+                  <q-avatar
+                    icon="fab fa-discord"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Discord </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a
-                href="https://www.instagram.com/spaceriders.io/"
-                target="_blank"
-              >
-                <q-avatar
-                  icon="fab fa-instagram"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a
+                  href="https://www.instagram.com/spaceriders.io/"
+                  target="_blank"
                 >
-                  <q-tooltip class="bg-info"> Instagram </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+                  <q-avatar
+                    icon="fab fa-instagram"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Instagram </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a href="https://medium.com/@spaceriders.io" target="_blank">
-                <q-avatar
-                  icon="fab fa-medium-m"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
-                >
-                  <q-tooltip class="bg-info"> Medium </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://medium.com/@spaceriders.io" target="_blank">
+                  <q-avatar
+                    icon="fab fa-medium-m"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Medium </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a href="https://t.me/SpaceRidersENChat" target="_blank">
-                <q-avatar
-                  icon="fab fa-telegram-plane"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
-                >
-                  <q-tooltip class="bg-info"> Telegram </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://t.me/SpaceRidersENChat" target="_blank">
+                  <q-avatar
+                    icon="fab fa-telegram-plane"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Telegram </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a href="https://twitter.com/spaceriders_io" target="_blank">
-                <q-avatar
-                  icon="fab fa-twitter"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
-                >
-                  <q-tooltip class="bg-info"> Twitter </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://twitter.com/spaceriders_io" target="_blank">
+                  <q-avatar
+                    icon="fab fa-twitter"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Twitter </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a
-                href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
-                target="_blank"
-              >
-                <q-avatar
-                  icon="fab fa-youtube"
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a
+                  href="https://www.youtube.com/channel/UCWJTk_2vaE7FahONZpGp-0A"
+                  target="_blank"
                 >
-                  <q-tooltip class="bg-info"> YouTube </q-tooltip>
-                </q-avatar>
-              </a>
-            </div>
+                  <q-avatar
+                    icon="fab fa-youtube"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> YouTube </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
 
-            <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
-              <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
-                <q-avatar
-                  color="info"
-                  text-color="white"
-                  size="96px"
-                  class="zoom-item"
-                >
-                  <q-img
-                    src="~assets/landing/img/linktreee.svg"
-                    style="width: 64px"
-                  />
-                  <q-tooltip class="bg-info"> Linktree </q-tooltip>
-                </q-avatar>
-              </a>
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
+                  <q-avatar
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-img
+                      src="~assets/landing/img/linktreee.svg"
+                      style="width: 64px"
+                    />
+                    <q-tooltip class="bg-info"> Linktree </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </template>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -1450,11 +1622,31 @@ export default defineComponent({
   position: relative;
 }
 
+#social-bar {
+  .column {
+    .col:first-of-type .social-item {
+      border-top-left-radius: 12px;
+    }
+
+    .col:last-of-type .social-item {
+      border-bottom-left-radius: 12px;
+    }
+  }
+}
+
 .zoom-item {
   transition: transform 0.2s;
 
   &:hover {
     transform: scale(1.1);
+  }
+}
+
+.to-left-item {
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateX(-10px);
   }
 }
 
