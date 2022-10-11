@@ -390,12 +390,8 @@
       </div>
     </section>
 
-    <div
-      v-if="!$q.screen.lt.md"
-      id="social-bar"
-      class="z-top fixed-center full-width"
-    >
-      <div class="column items-end">
+    <div v-if="!$q.screen.lt.md" id="social-bar" class="z-top">
+      <div class="column">
         <div class="col">
           <a href="https://discord.gg/h733Kh6XTn" target="_blank">
             <q-avatar
@@ -1623,6 +1619,11 @@ export default defineComponent({
 }
 
 #social-bar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
   .column {
     .col:first-of-type .social-item {
       border-top-left-radius: 12px;
