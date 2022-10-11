@@ -783,14 +783,25 @@
               </a>
             </div>
 
-            <!--
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
               <a href="https://haechi.io/?lang=en" target="_blank">
-                <q-img src="~assets/landing/img/partners/haechi.png" alt="Haechi Labs">
+                <q-img
+                  src="~assets/landing/img/partners/face_wallet.png"
+                  alt="Face Wallet"
+                >
                 </q-img>
               </a>
             </div>
-            -->
+
+            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a href="https://haechi.io/?lang=en" target="_blank">
+                <q-img
+                  src="~assets/landing/img/partners/haechi.png"
+                  alt="Haechi Labs"
+                >
+                </q-img>
+              </a>
+            </div>
           </div>
         </div>
       </div>
