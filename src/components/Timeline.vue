@@ -184,6 +184,9 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
     font-size: 1em;
     line-height: 3;
 
+    @media only screen and (max-width: 400px) {
+      font-size: 0.9em;
+    }
     @media only screen and (min-width: 1300px) {
       font-size: 1.3em;
     }
