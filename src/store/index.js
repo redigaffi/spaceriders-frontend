@@ -40,15 +40,6 @@ const Store = createStore({
     setEnergyTimerId(state, payload) {
       state.intervals.energyTimerId = payload;
     },
-    setMetalTimerId(state, payload) {
-      state.intervals.metalTimerId = payload;
-    },
-    setCrystalTimerId(state, payload) {
-      state.intervals.crystalTimerId = payload;
-    },
-    setPetrolTimerId(state, payload) {
-      state.intervals.petrolTimerId = payload;
-    },
     setUpdateIntervalId(state, payload) {
       state.intervals.updateIntervalId = payload.updateIntervalId;
     },
@@ -311,11 +302,6 @@ const Store = createStore({
     incrementResources(state, payload) {
       const key = payload.resource;
       state.activePlanet.resources[key] += payload.value;
-    },
-
-    decrementReserve(state, payload) {
-      const key = payload.resource;
-      state.activePlanet.reserves[key] -= payload.value;
     },
 
     incrementEnergy(state, payload) {
