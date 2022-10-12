@@ -31,6 +31,12 @@
             <a
               href="#"
               class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('token')"
+              >TOKEN</a
+            >
+            <a
+              href="#"
+              class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('game')"
               >GAME MECHANICS</a
             >
@@ -128,6 +134,18 @@
               <q-icon name="public" />
             </q-item-section>
             <q-item-section>Home</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('token')"
+          >
+            <q-item-section avatar>
+              <q-icon name="token" />
+            </q-item-section>
+            <q-item-section>Token</q-item-section>
           </q-item>
 
           <q-item
@@ -553,6 +571,115 @@
         </div>
       </div>
     </div>
+
+    <!-- TOKEN -->
+
+    <div id="token"></div>
+    <section id="token-section" class="custom-game">
+      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
+        <div class="game__inner wow animate__animated animate__fadeIn">
+          <div class="text-2 title game__title">TOKEN INFORMATION</div>
+          <div class="content">
+            <div class="q-pt-xl row flex-center">
+              <div class="col-xs-12 col-md-6 text-center">
+                <q-img src="~assets/img/bkm.webp" alt="$BKM logo" fit />
+              </div>
+
+              <div class="col-xs-12 col-sm-6">
+                <p>
+                  <q-chip color="secondary" size="md" outline dense>
+                    $BKM
+                  </q-chip>
+                  is a cryptocurrency (which means you can use it both in and
+                  out of the game), the utility token of SpaceRiders and its
+                  present and future ecosystem. Therefore it has the following
+                  key points:
+                </p>
+                <br />
+                <div class="q-gutter-sm">
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="account_balance_wallet"
+                      color="info"
+                      text-color="white"
+                    />
+                    Ownership Payment
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="currency_exchange"
+                      color="info"
+                      text-color="white"
+                    />
+                    Trading Pair
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="shopping_cart_checkout"
+                      color="info"
+                      text-color="white"
+                    />
+                    In-game Purchases
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="settings_suggest"
+                      color="info"
+                      text-color="white"
+                    />
+                    Ecosystem Usage
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="storefront"
+                      color="info"
+                      text-color="white"
+                    />
+                    1000M Total Supply
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="extension"
+                      color="info"
+                      text-color="white"
+                    />
+                    Gamified Token
+                  </q-chip>
+
+                  <q-chip size="lg">
+                    <q-avatar icon="savings" color="info" text-color="white" />
+                    No Buy / Sell Tax
+                  </q-chip>
+                </div>
+                <br />
+                <div class="q-gutter-sm">
+                  <q-chip size="lg">
+                    <q-avatar
+                      icon="switch_access_shortcut_add"
+                      color="info"
+                      text-color="white"
+                    />
+                    And much more...
+                  </q-chip>
+                </div>
+
+                <br />
+                <p>
+                  Thanks to the number of uses of the token and its future
+                  additions incorporated into our ecosystem we foresee its
+                  adoption growing over time as our project does.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div id="game"></div>
     <section class="custom-game">
@@ -1219,7 +1346,7 @@
     <!-- FOOTER -->
     <footer class="footer">
       <div
-        class="up__arrow wow animate__animated animate__fadeIn"
+        class="zoom-item up__arrow wow animate__animated animate__fadeIn"
         @click.prevent="scrollPageTo('landing')"
       >
         <img
@@ -1239,6 +1366,12 @@
               v-on:click.prevent="scrollPageTo('landing')"
               class="footer__nav--link go"
               >HOME</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('token')"
+              class="footer__nav--link go"
+              >TOKEN</a
             >
             <a
               href="#"
@@ -1606,6 +1739,10 @@ export default defineComponent({
 
 #disclaimer-modal ol li {
   list-style-type: upper-roman;
+}
+
+#token-section ul li {
+  list-style-type: default;
 }
 
 .roadmap {
