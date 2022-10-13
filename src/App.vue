@@ -14,12 +14,14 @@ async function getChainData() {
 }
 
 if (window.face === undefined) {
-    window.face = new Face({
-        network: Network.BNB_SMART_CHAIN_TESTNET,
-        apiKey:
-          "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB",
-      });
-
+  let network = Network.BNB_SMART_CHAIN_TESTNET;
+  if (process.env.ENV === "mainnet") {
+    network = Network.BNB_SMART_CHAIN;
+  }
+  window.face = new Face({
+    network: network,
+    apiKey: process.env.FACE_WALLET_API_KEY
+  });
 }
 
 getChainData();
