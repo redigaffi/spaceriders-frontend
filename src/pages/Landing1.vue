@@ -29,6 +29,13 @@
               >HOME</a
             >
             <a
+              v-if="mediumFeed.length > 0"
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('blog')"
+              >BLOG</a
+            >
+            <a
               href="#"
               class="header__nav--link go"
               v-on:click.prevent="scrollPageTo('token')"
@@ -134,6 +141,19 @@
               <q-icon name="public" />
             </q-item-section>
             <q-item-section>Home</q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="mediumFeed.length > 0"
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('blog')"
+          >
+            <q-item-section avatar>
+              <q-icon name="rss_feed" />
+            </q-item-section>
+            <q-item-section>Blog</q-item-section>
           </q-item>
 
           <q-item
@@ -572,6 +592,59 @@
       </div>
     </div>
 
+    <!-- BLOG -->
+    <template v-if="mediumFeed.length > 0">
+      <div id="blog"></div>
+      <section class="game">
+        <div :class="$q.screen.lt.md ? '' : 'container'">
+          <div class="game__inner wow animate__animated animate__fadeIn">
+            <div class="text-2 title game__title">LATEST ARTICLES</div>
+            <div
+              class="q-px-md q-mt-lg row justify-center items-start q-col-gutter-xl"
+            >
+              <div
+                v-for="(article, index) in mediumFeed"
+                :key="index"
+                class="col-xs-12 col-sm-12 col-md-4"
+              >
+                <q-card class="custom-card">
+                  <q-img
+                    :src="`${filterArticleImage(article['content:encoded'])}`"
+                    height="200px"
+                  />
+
+                  <q-card-section>
+                    <div class="text-h3">{{ article.title }}</div>
+                    <div class="text-subtitle3 text-grey">
+                      <q-icon name="calendar_month" /> {{ article.pubDate }}
+                    </div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    {{ truncate(article["content:encodedSnippet"], 240) }}
+                  </q-card-section>
+
+                  <q-separator dark inset />
+
+                  <q-card-actions vertical align="center">
+                    <q-btn
+                      type="a"
+                      :href="article.guid"
+                      target="_blank"
+                      icon="bookmark"
+                      color="info"
+                    >
+                      Read article
+                    </q-btn>
+                  </q-card-actions>
+                </q-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
+
     <!-- TOKEN -->
 
     <div id="token"></div>
@@ -580,9 +653,13 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">TOKEN INFORMATION</div>
           <div class="content">
-            <div class="q-pt-xl row flex-center">
+            <div class="q-mt-lg row flex-center">
               <div class="col-xs-12 col-md-6 text-center">
-                <q-img src="~assets/img/bkm.webp" alt="$BKM logo" fit />
+                <q-img
+                  src="~assets/img/bkm.webp"
+                  alt="$BKM logo"
+                  fit="contain"
+                />
               </div>
 
               <div class="col-xs-12 col-sm-6">
@@ -777,7 +854,7 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">FAQ</div>
 
-          <div class="q-mt-lg">
+          <div class="q-mt-xl">
             <div
               class="q-pb-xl"
               :class="$q.screen.lt.md ? 'q-px-xs' : 'container'"
@@ -1368,6 +1445,13 @@
               >HOME</a
             >
             <a
+              v-if="mediumFeed.length > 0"
+              href="#"
+              class="header__nav--link go"
+              v-on:click.prevent="scrollPageTo('blog')"
+              >BLOG</a
+            >
+            <a
               href="#"
               v-on:click.prevent="scrollPageTo('token')"
               class="footer__nav--link go"
@@ -1511,6 +1595,9 @@ import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
 import { useQuasar } from "quasar";
+import RSSParser from "rss-parser";
+import _ from "lodash";
+
 //import PieChart from "../components/pieChart";
 
 export default defineComponent({
@@ -1518,6 +1605,10 @@ export default defineComponent({
   //components: { PieChart },
   setup() {
     const $q = useQuasar();
+    const parserRSS = new RSSParser();
+    const mediumUsername = "spaceriders.io";
+    const mediumRssUrl = `https://medium.com/feed/@${mediumUsername}`;
+    const mediumFeed = ref(new Array());
     // $q.loading.show();
     const headerTransparency = ref(true); // obtain the reference
     onMounted(() => {
@@ -1535,6 +1626,7 @@ export default defineComponent({
         setBodyOffset();
       });
       setBodyOffset();
+      getMediumFeed();
     });
     const preventScroll = (e) => {
       if (drawer.value === true) {
@@ -1558,6 +1650,30 @@ export default defineComponent({
       drawer.value = false;
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
+    };
+    const getMediumFeed = async () => {
+      const filteredFeed = new Array();
+      /*
+       * For local testing use:
+       * "https://cors-anywhere.herokuapp.com/" + mediumRssUrl
+       */
+      const data = await parserRSS.parseURL(mediumRssUrl);
+
+      data["items"].find((item) => {
+        if (item["categories"].includes("english")) {
+          filteredFeed.push(item);
+        }
+      });
+
+      mediumFeed.value = filteredFeed.slice(0, 3);
+    };
+    const truncate = (str, len) => {
+      return _.truncate(str, { length: len });
+    };
+    const filterArticleImage = (str) => {
+      const re = /src="([^"]+(png|jpg|jpeg|webp))"/;
+      const result = re.exec(str);
+      return result !== null ? result[1] : "img/article_default_thumbnail.jpg";
     };
     const d = ref(0);
     const h = ref(0);
@@ -1723,6 +1839,9 @@ export default defineComponent({
       faq_section,
       headerTransparency,
       timelineFeed,
+      mediumFeed,
+      truncate,
+      filterArticleImage,
     };
   },
   components: { Timeline },
@@ -1743,6 +1862,12 @@ export default defineComponent({
 
 #token-section ul li {
   list-style-type: default;
+}
+
+.custom-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid $info;
+  border-radius: 10px;
 }
 
 .roadmap {
