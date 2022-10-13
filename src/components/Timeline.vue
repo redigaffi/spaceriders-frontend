@@ -69,8 +69,7 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   transform: translate3d(0, 0, 0);
   position: relative;
   width: 25%;
-  height: 70vh;
-  max-height: 600px;
+  height: 500px;
   color: #fff;
   overflow: hidden;
   transition: width 0.5s ease;
@@ -118,13 +117,15 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
     }
 
     .timeline-date {
-      transform: translateX(-50%) translateY(-300%);
+      top: 10%;
+      transform: translateX(-50%);
       transition: all 0.5s ease 0.5s;
     }
 
     .timeline-content {
       opacity: 1;
-      transform: translateY(0);
+      top: 50%;
+      transform: translateY(-60%);
       transition: all 0.5s ease 0.5s;
     }
 
@@ -138,10 +139,32 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   transform: translate3d(0, 0, 0) translateY(25px);
   position: relative;
   z-index: 1;
-  padding: 0 3em;
+  padding: 0 2em;
   top: 30%;
   opacity: 0;
-  font-size: 1.25vmax !important;
+
+  @media only screen and (max-width: 375px) {
+    padding: 0 0.75em;
+    font-size: 0.8em;
+  }
+  @media only screen and (min-width: 376px) {
+    padding: 0 1em;
+    font-size: 0.8em;
+  }
+  @media only screen and (min-width: 500px) {
+    font-size: 0.9em;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 1em;
+  }
+  @media only screen and (min-width: 900px) {
+    padding: 0 2.5em;
+    font-size: 1.1em;
+  }
+  @media only screen and (min-width: 1300px) {
+    padding: 0 3em;
+    font-size: 1.3em;
+  }
 
   li {
     list-style-type: none;
@@ -153,12 +176,20 @@ const props = defineProps(["mainTitle", "timelineFeed"]);
   z-index: 1;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
+  transition: all 0.2s;
 
   p {
     text-transform: uppercase;
     font-family: plantFont;
-    font-size: 1.5vmax;
+    font-size: 1em;
     line-height: 3;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 0.9em;
+    }
+    @media only screen and (min-width: 1300px) {
+      font-size: 1.3em;
+    }
   }
 }
 
