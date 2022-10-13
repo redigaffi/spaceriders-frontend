@@ -14,8 +14,12 @@ async function getChainData() {
 }
 
 if (window.face === undefined) {
+  let network = Network.BNB_SMART_CHAIN_TESTNET;
+  if (process.env.ENV === "mainnet") {
+    network = Network.BNB_SMART_CHAIN;
+  }
   window.face = new Face({
-    network: Network.BNB_SMART_CHAIN_TESTNET,
+    network: network,
     apiKey: process.env.FACE_WALLET_API_KEY
   });
 }
