@@ -28,7 +28,7 @@ module.exports = configure(function (ctx) {
       "notification-helper",
       "axios-interceptor",
       "particlesv3",
-      "google-analytics"
+      "google-analytics",
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -51,7 +51,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: "history", // available values: 'hash', 'history'
-      devtool: 'source-map',
+      devtool: "source-map",
       env: ctx.dev
         ? require("dotenv").config({ path: ".env.dev" }).parsed
         : process.env,
@@ -77,6 +77,10 @@ module.exports = configure(function (ctx) {
         chain
           .plugin("eslint-webpack-plugin")
           .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+      },
+      chainWebpack(chain) {
+        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin");
+        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin);
       },
     },
 
