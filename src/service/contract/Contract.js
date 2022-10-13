@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import Store from "../../store/index";
 const Buffer = require("buffer/").Buffer;
+import { Face, Network } from "@haechi-labs/face-sdk";
 
 function parseJwt(token) {
   var base64Payload = token.split(".")[1];
@@ -10,8 +11,21 @@ function parseJwt(token) {
 
 export default class Contract {
   constructor() {
+    const provider = Store.getters.provider;
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    if (provider === "metamask") {
+      this.provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    } else if(provider === "facewallet") {
+      console.log("facewallet")
+      const face = Store.getters.face;
+
+      this.provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
+    }
+
     this.signer = this.provider.getSigner();
+
   }
 
   async getTransactionReceipt(hash) {

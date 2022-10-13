@@ -10,6 +10,8 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@haechi-labs/face-sdk": "^1.1.0",
+    "@haechi-labs/face-types": "^1.1.0",
     "@quasar/extras": "^1.14.0",
     "axios": "^0.21.1",
     "bson-objectid": "^2.0.3",
