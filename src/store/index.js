@@ -16,7 +16,6 @@ const Store = createStore({
       jwt: false,
       address: false,
       provider: false,
-      face: false,
       planets: [],
       activePlanet: false,
       resourceData: false,
@@ -74,7 +73,6 @@ const Store = createStore({
       state.jwt = payload.jwt;
       state.address = payload.address;
       state.provider = payload.provider;
-      state.face = payload.face;
     },
 
     destroySession(state) {
@@ -328,9 +326,6 @@ const Store = createStore({
   getters: {
     provider: (state) => {
       return state.provider;
-    },
-    face: (state) => {
-      return state.face;
     },
     energyTimerId: (state) => {
       return state.intervals.energyTimerId;

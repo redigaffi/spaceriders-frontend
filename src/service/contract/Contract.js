@@ -10,30 +10,29 @@ function parseJwt(token) {
 }
 
 export default class Contract {
-  constructor() {
-    const provider = Store.getters.provider;
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    if (provider === "metamask") {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    } else if(provider === "facewallet") {
-      console.log("facewallet")
-      const face = Store.getters.face;
-
-      this.provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
-    }
-
-    this.signer = this.provider.getSigner();
-
-  }
+  constructor() {}
 
   async getTransactionReceipt(hash) {
     return await this.provider.getTransactionReceipt(hash);
   }
 
   getProvider() {
-    return this.provider;
+    const providerName = Store.getters.provider;
+
+    let provider = false;
+
+    if (providerName === "metamask") {
+      provider = window.ethereum;
+    } else if (providerName === "facewallet") {
+      provider = window.face.getEthLikeProvider();
+    }
+
+    return new ethers.providers.Web3Provider(provider);
+  }
+
+  getSigner() {
+    const provider = this.getProvider();
+    return provider.getSigner();
   }
 
   buildContract(address, abi) {
@@ -43,8 +42,8 @@ export default class Contract {
       Store.commit("destroySession");
     }
 
-    const contract = new ethers.Contract(address, abi, this.provider);
+    const contract = new ethers.Contract(address, abi, this.getProvider());
 
-    return contract.connect(this.signer);
+    return contract.connect(this.getSigner());
   }
 }
