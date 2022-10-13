@@ -96,7 +96,6 @@ import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { Face, Network } from "@haechi-labs/face-sdk";
 
 const $quasar = useQuasar();
 
@@ -205,18 +204,6 @@ const login = async (providerName) => {
   }
 
   $quasar.loading.show();
-
-  /*const chain = await checkChain();
-  if (!chain) {
-    error.value = true;
-    $store.commit("destroySession");
-    $quasar.loading.hide();
-    $quasar.notify(
-      $notification("failed", "Checking metamask chain failed...")
-    );
-    return;
-  }*/
-
   error.value = false;
 
   let re = false;
@@ -224,19 +211,26 @@ const login = async (providerName) => {
 
   try {
     let provider = false;
-    let face = false;
+
     if (providerName === "metamask") {
+      const chain = await checkChain();
+      if (!chain) {
+        error.value = true;
+        $store.commit("destroySession");
+        $quasar.loading.hide();
+        $quasar.notify(
+          $notification("failed", "Checking metamask chain failed...")
+        );
+        return;
+      }
+
       await window.ethereum.enable();
       provider = new ethers.providers.Web3Provider(window.ethereum);
     } else if (providerName === "facewallet") {
-      face = new Face({
-        network: Network.BNB_SMART_CHAIN_TESTNET,
-        apiKey:
-          "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB",
-      });
-
-      await face.auth.login();
-      provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
+      await window.face.auth.login();
+      provider = new ethers.providers.Web3Provider(
+        window.face.getEthLikeProvider()
+      );
     }
 
     const signer = await provider.getSigner();
@@ -246,7 +240,6 @@ const login = async (providerName) => {
 
     re = await ApiRequest.authenticate(address, signature);
     $store.commit("login", {
-      face: face,
       provider: providerName,
       jwt: re.data.jwt,
       address: address,
@@ -259,6 +252,8 @@ const login = async (providerName) => {
 
     $quasar.loading.hide();
   } catch (ex) {
+    console.log("exc");
+    console.log(ex);
     $quasar.loading.hide();
     $quasar.notify($notification("failed", ex));
   }

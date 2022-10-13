@@ -4,16 +4,22 @@
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
-
-if (!window.ethereum) {
-  alert("No Web3 wallet detected, please install metamask to play the game.");
-}
+import { Face, Network } from "@haechi-labs/face-sdk";
 
 const $store = useStore();
 
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit("setChainInfo", { chainInfo: data });
+}
+
+if (window.face === undefined) {
+    window.face = new Face({
+        network: Network.BNB_SMART_CHAIN_TESTNET,
+        apiKey:
+          "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB",
+      });
+
 }
 
 getChainData();
