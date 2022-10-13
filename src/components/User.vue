@@ -96,7 +96,7 @@ import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { Face, Network } from '@haechi-labs/face-sdk';
+import { Face, Network } from "@haechi-labs/face-sdk";
 
 const $quasar = useQuasar();
 
@@ -224,20 +224,19 @@ const login = async (providerName) => {
 
   try {
     let provider = false;
-
+    let face = false;
     if (providerName === "metamask") {
       await window.ethereum.enable();
       provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    } else if(providerName === "facewallet") {
-      const face = new Face({
+    } else if (providerName === "facewallet") {
+      face = new Face({
         network: Network.BNB_SMART_CHAIN_TESTNET,
-        apiKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB'
+        apiKey:
+          "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcvnhTF-1PTlWAkwewlBesX5sdoiwRisLWi7TIVUFY895dh1NwzR7BpfmEBNbi7aHU_xtWs0tpM-R6Ah9hH4Wcts2IgnzGxrKokyqrqr4ymoUmJLKerf843D32CUJNXOGX4LJHZrfyjHIHDQzZRyMSav9DLjjJSfH4G53bOwnkkQIDAQAB",
       });
 
-      provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
       await face.auth.login();
-
+      provider = new ethers.providers.Web3Provider(face.getEthLikeProvider());
     }
 
     const signer = await provider.getSigner();
@@ -246,7 +245,12 @@ const login = async (providerName) => {
     const signature = await signer.signMessage(`its me:${address}`);
 
     re = await ApiRequest.authenticate(address, signature);
-    $store.commit("login", { jwt: re.data.jwt, address: address });
+    $store.commit("login", {
+      face: face,
+      provider: providerName,
+      jwt: re.data.jwt,
+      address: address,
+    });
     $eventBus.emit(LOGGED_IN);
 
     router.push({
