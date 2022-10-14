@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import Store from "../../store/index";
 const Buffer = require("buffer/").Buffer;
+import { Face, Network } from "@haechi-labs/face-sdk";
 
 function parseJwt(token) {
   var base64Payload = token.split(".")[1];
@@ -9,17 +10,29 @@ function parseJwt(token) {
 }
 
 export default class Contract {
-  constructor() {
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    this.signer = this.provider.getSigner();
-  }
+  constructor() {}
 
   async getTransactionReceipt(hash) {
     return await this.provider.getTransactionReceipt(hash);
   }
 
   getProvider() {
-    return this.provider;
+    const providerName = Store.getters.provider;
+
+    let provider = false;
+
+    if (providerName === "metamask") {
+      provider = window.ethereum;
+    } else if (providerName === "facewallet") {
+      provider = window.face.getEthLikeProvider();
+    }
+
+    return new ethers.providers.Web3Provider(provider);
+  }
+
+  getSigner() {
+    const provider = this.getProvider();
+    return provider.getSigner();
   }
 
   buildContract(address, abi) {
@@ -29,8 +42,8 @@ export default class Contract {
       Store.commit("destroySession");
     }
 
-    const contract = new ethers.Contract(address, abi, this.provider);
+    const contract = new ethers.Contract(address, abi, this.getProvider());
 
-    return contract.connect(this.signer);
+    return contract.connect(this.getSigner());
   }
 }

@@ -40,7 +40,6 @@ class SpaceRidersContract extends Contract {
    **/
   async balanceOf(address) {
     const contract = await this.getContract();
-
     const balance = await contract.balanceOf(address);
 
     return parseFloat(ethers.utils.formatEther(balance)).toFixed(2);

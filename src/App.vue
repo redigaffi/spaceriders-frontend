@@ -4,16 +4,24 @@
 <script setup>
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
-
-if (!window.ethereum) {
-  alert("No Web3 wallet detected, please install metamask to play the game.");
-}
+import { Face, Network } from "@haechi-labs/face-sdk";
 
 const $store = useStore();
 
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit("setChainInfo", { chainInfo: data });
+}
+
+if (window.face === undefined) {
+  let network = Network.BNB_SMART_CHAIN_TESTNET;
+  if (process.env.ENV === "mainnet") {
+    network = Network.BNB_SMART_CHAIN;
+  }
+  window.face = new Face({
+    network: network,
+    apiKey: process.env.FACE_WALLET_API_KEY
+  });
 }
 
 getChainData();

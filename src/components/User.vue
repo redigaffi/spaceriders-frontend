@@ -70,7 +70,7 @@
               style="width: 150px"
               glossy
               label="Metamask"
-              @click="login"
+              @click="login('metamask')"
             />
           </q-card-section>
           <q-card-section class="q-pt-none text-center">
@@ -79,7 +79,7 @@
               style="width: 150px"
               glossy
               label="Facewallet"
-              @click="alert('Integration in process...')"
+              @click="login('facewallet')"
             />
           </q-card-section>
         </q-card-section>
@@ -183,13 +183,9 @@ const checkChain = async () => {
       }
       return false;
     }
-  } else {
-    // if no window.ethereum then MetaMask is not installed
-    alert(
-      "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html"
-    );
-    return false;
   }
+
+  return false;
 };
 
 const chooseLoginPopupFunc = async (e) => {
@@ -200,40 +196,54 @@ const chooseLoginPopupFunc = async (e) => {
 
   chooseLoginPopup.value = true;
 };
-const login = async (e) => {
+
+const login = async (providerName) => {
   if (loggedIn.value) {
     userInfoPopup.value = true;
     return;
   }
 
   $quasar.loading.show();
-
-  const chain = await checkChain();
-  if (!chain) {
-    error.value = true;
-    $store.commit("destroySession");
-    $quasar.loading.hide();
-    $quasar.notify(
-      $notification("failed", "Checking metamask chain failed...")
-    );
-    return;
-  }
-
   error.value = false;
 
   let re = false;
   let address = false;
 
   try {
-    await window.ethereum.enable();
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let provider = false;
+
+    if (providerName === "metamask") {
+      const chain = await checkChain();
+      if (!chain) {
+        error.value = true;
+        $store.commit("destroySession");
+        $quasar.loading.hide();
+        $quasar.notify(
+          $notification("failed", "Checking metamask chain failed...")
+        );
+        return;
+      }
+
+      await window.ethereum.enable();
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+    } else if (providerName === "facewallet") {
+      await window.face.auth.login();
+      provider = new ethers.providers.Web3Provider(
+        window.face.getEthLikeProvider()
+      );
+    }
+
     const signer = await provider.getSigner();
 
     address = await signer.getAddress();
     const signature = await signer.signMessage(`its me:${address}`);
 
     re = await ApiRequest.authenticate(address, signature);
-    $store.commit("login", { jwt: re.data.jwt, address: address });
+    $store.commit("login", {
+      provider: providerName,
+      jwt: re.data.jwt,
+      address: address,
+    });
     $eventBus.emit(LOGGED_IN);
 
     router.push({
@@ -242,6 +252,8 @@ const login = async (e) => {
 
     $quasar.loading.hide();
   } catch (ex) {
+    console.log("exc");
+    console.log(ex);
     $quasar.loading.hide();
     $quasar.notify($notification("failed", ex));
   }

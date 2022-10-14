@@ -15,6 +15,7 @@ const Store = createStore({
       tokenPrice: false,
       jwt: false,
       address: false,
+      provider: false,
       planets: [],
       activePlanet: false,
       resourceData: false,
@@ -39,15 +40,6 @@ const Store = createStore({
     },
     setEnergyTimerId(state, payload) {
       state.intervals.energyTimerId = payload;
-    },
-    setMetalTimerId(state, payload) {
-      state.intervals.metalTimerId = payload;
-    },
-    setCrystalTimerId(state, payload) {
-      state.intervals.crystalTimerId = payload;
-    },
-    setPetrolTimerId(state, payload) {
-      state.intervals.petrolTimerId = payload;
     },
     setUpdateIntervalId(state, payload) {
       state.intervals.updateIntervalId = payload.updateIntervalId;
@@ -80,6 +72,7 @@ const Store = createStore({
     login(state, payload) {
       state.jwt = payload.jwt;
       state.address = payload.address;
+      state.provider = payload.provider;
     },
 
     destroySession(state) {
@@ -313,11 +306,6 @@ const Store = createStore({
       state.activePlanet.resources[key] += payload.value;
     },
 
-    decrementReserve(state, payload) {
-      const key = payload.resource;
-      state.activePlanet.reserves[key] -= payload.value;
-    },
-
     incrementEnergy(state, payload) {
       state.activePlanet.resources.energy += payload.energy;
     },
@@ -336,6 +324,9 @@ const Store = createStore({
   },
 
   getters: {
+    provider: (state) => {
+      return state.provider;
+    },
     energyTimerId: (state) => {
       return state.intervals.energyTimerId;
     },
