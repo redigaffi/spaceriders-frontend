@@ -608,10 +608,7 @@
                 class="col-xs-12 col-sm-12 col-md-4"
               >
                 <q-card class="custom-card">
-                  <q-img
-                    :src="`${filterArticleImage(article['content:encoded'])}`"
-                    height="200px"
-                  />
+                  <q-img :src="article.img" height="200px" />
 
                   <q-card-section>
                     <div class="text-h3">{{ article.title }}</div>
@@ -621,7 +618,7 @@
                   </q-card-section>
 
                   <q-card-section class="q-pt-none">
-                    {{ truncate(article["content:encodedSnippet"], 240) }}
+                    {{ truncate(article.content, 240) }}
                   </q-card-section>
 
                   <q-separator dark inset />
@@ -1595,7 +1592,7 @@ import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
 import { useQuasar } from "quasar";
-import RSSParser from "rss-parser";
+import ApiRequest from "../service/http/ApiRequests";
 import _ from "lodash";
 
 //import PieChart from "../components/pieChart";
@@ -1605,9 +1602,6 @@ export default defineComponent({
   //components: { PieChart },
   setup() {
     const $q = useQuasar();
-    const parserRSS = new RSSParser();
-    const mediumUsername = "spaceriders.io";
-    const mediumRssUrl = `https://medium.com/feed/@${mediumUsername}`;
     const mediumFeed = ref(new Array());
     // $q.loading.show();
     const headerTransparency = ref(true); // obtain the reference
@@ -1652,28 +1646,10 @@ export default defineComponent({
       element.scrollIntoView({ behavior: "smooth" });
     };
     const getMediumFeed = async () => {
-      const filteredFeed = new Array();
-      /*
-       * For local testing use:
-       * "https://cors-anywhere.herokuapp.com/" + mediumRssUrl
-       */
-      const data = await parserRSS.parseURL(mediumRssUrl);
-
-      data["items"].find((item) => {
-        if (item["categories"].includes("english")) {
-          filteredFeed.push(item);
-        }
-      });
-
-      mediumFeed.value = filteredFeed.slice(0, 3);
+      mediumFeed.value = await ApiRequest.getMediumFeed();
     };
     const truncate = (str, len) => {
       return _.truncate(str, { length: len });
-    };
-    const filterArticleImage = (str) => {
-      const re = /src="([^"]+(png|jpg|jpeg|webp))"/;
-      const result = re.exec(str);
-      return result !== null ? result[1] : "img/article_default_thumbnail.jpg";
     };
     const d = ref(0);
     const h = ref(0);
@@ -1841,7 +1817,6 @@ export default defineComponent({
       timelineFeed,
       mediumFeed,
       truncate,
-      filterArticleImage,
     };
   },
   components: { Timeline },

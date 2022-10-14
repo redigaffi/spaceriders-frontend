@@ -273,7 +273,7 @@ export default class ApiRequests {
       planet_id: data.planetGuid,
     };
 
-    return (await axios.post(path, body));
+    return await axios.post(path, body);
   }
 
   /**
@@ -432,5 +432,16 @@ export default class ApiRequests {
   static async getAllCurrencyMarketInfo() {
     const path = `${process.env.BASE_API_PATH}/currency_market/all`;
     return await axios.get(path);
+  }
+
+  /**
+   * @param {int} posts_to_retrieve
+   * @returns
+   */
+  static async getMediumFeed(posts_to_retrieve) {
+    const response = await fetch(`${process.env.BASE_API_PATH}/medium_feed`);
+    const data = await response.json();
+
+    return data.slice(0, 3);
   }
 }

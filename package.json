@@ -21,17 +21,14 @@
     "ethers": "^5.4.6",
     "lightweight-charts": "^3.8.0",
     "mitt": "^3.0.0",
-    "net": "^1.0.2",
     "particles.vue3": "^1.18.2",
     "quasar": "^2.0.0",
-    "rss-parser": "^3.12.0",
     "thousands-counter": "^2.1.0",
     "uuid": "^8.3.2",
     "vue-chartjs": "^4.0.4",
     "vue-gtag": "^2.0.1",
     "vue-gtag-next": "^1.14.0",
-    "vuex": "^4.0.1",
-    "xml2json": "^0.12.0"
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
@@ -43,7 +40,6 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.0.0",
     "eslint-webpack-plugin": "^2.4.0",
-    "node-polyfill-webpack-plugin": "^2.0.1",
     "strip-ansi": "=3.0.1"
   },
   "browserslist": [
