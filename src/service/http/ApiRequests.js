@@ -435,13 +435,11 @@ export default class ApiRequests {
   }
 
   /**
-   * @param {int} posts_to_retrieve
+   * @param {object} data
    * @returns
    */
-  static async getMediumFeed(posts_to_retrieve) {
-    const response = await fetch(`${process.env.BASE_API_PATH}/medium_feed`);
-    const data = await response.json();
-
-    return data.slice(0, 3);
+  static async getMediumFeed() {
+    const path = `${process.env.BASE_API_PATH}/feed`;
+    return await axios.get(path);
   }
 }
