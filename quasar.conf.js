@@ -78,10 +78,12 @@ module.exports = configure(function (ctx) {
           .plugin("eslint-webpack-plugin")
           .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       },
+      /*
       chainWebpack(chain) {
         const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin");
         chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin);
       },
+      */
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
