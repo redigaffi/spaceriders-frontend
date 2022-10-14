@@ -621,6 +621,16 @@
                     {{ truncate(article.content, 240) }}
                   </q-card-section>
 
+                  <q-card-section class="q-pt-none">
+                    <q-chip
+                      v-for="(hashtag, index) in article.tags"
+                      :key="index"
+                      color="primary"
+                    >
+                      #{{ hashtag }}
+                    </q-chip>
+                  </q-card-section>
+
                   <q-separator dark inset />
 
                   <q-card-actions vertical align="center">
@@ -1620,7 +1630,7 @@ export default defineComponent({
         setBodyOffset();
       });
       setBodyOffset();
-      getMediumFeed();
+      getMediumFeed(3);
     });
     const preventScroll = (e) => {
       if (drawer.value === true) {
@@ -1645,8 +1655,12 @@ export default defineComponent({
       let element = document.querySelector(`#${navEl}`);
       element.scrollIntoView({ behavior: "smooth" });
     };
-    const getMediumFeed = async () => {
-      mediumFeed.value = await ApiRequest.getMediumFeed();
+    const getMediumFeed = async (posts_to_retrieve) => {
+      const response = await ApiRequest.getMediumFeed();
+
+      if (response.status != 200) return;
+
+      mediumFeed.value = response.data.slice(0, posts_to_retrieve);
     };
     const truncate = (str, len) => {
       return _.truncate(str, { length: len });
