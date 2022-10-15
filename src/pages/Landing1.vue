@@ -608,7 +608,14 @@
                 class="col-xs-12 col-sm-12 col-md-4"
               >
                 <q-card class="custom-card">
-                  <q-img :src="article.img" height="200px" />
+                  <q-img
+                    :src="`${
+                      article.img
+                        ? article.img
+                        : 'img/article_default_thumbnail.jpg'
+                    }`"
+                    height="200px"
+                  />
 
                   <q-card-section>
                     <div class="text-h3">{{ article.title }}</div>
