@@ -566,6 +566,28 @@
         </div>
 
         <div class="col">
+          <a href="mailto:contact@spaceriders.io" target="_blank">
+            <q-avatar
+              icon="fas fa-envelope"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Email
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
           <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
             <q-avatar
               color="info"
@@ -1416,6 +1438,20 @@
                     class="zoom-item"
                   >
                     <q-tooltip class="bg-info"> YouTube </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
+
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="mailto:contact@spaceriders.io" target="_blank">
+                  <q-avatar
+                    icon="fas fa-envelope"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Email </q-tooltip>
                   </q-avatar>
                 </a>
               </div>
