@@ -566,6 +566,28 @@
         </div>
 
         <div class="col">
+          <a href="mailto:contact@spaceriders.io" target="_blank">
+            <q-avatar
+              icon="fas fa-envelope"
+              color="info"
+              text-color="white"
+              size="64px"
+              class="to-left-item social-item"
+              square
+            >
+              <q-tooltip
+                class="bg-info"
+                anchor="center left"
+                self="center right"
+                :offset="[15, 10]"
+              >
+                Email
+              </q-tooltip>
+            </q-avatar>
+          </a>
+        </div>
+
+        <div class="col">
           <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
             <q-avatar
               color="info"
@@ -600,57 +622,65 @@
           <div class="game__inner wow animate__animated animate__fadeIn">
             <div class="text-2 title game__title">LATEST ARTICLES</div>
             <div
-              class="q-px-md q-mt-lg row justify-center items-start q-col-gutter-xl"
+              class="q-px-md q-mt-lg row justify-center items-stretch q-col-gutter-xl"
             >
               <div
                 v-for="(article, index) in mediumFeed"
                 :key="index"
                 class="col-xs-12 col-sm-12 col-md-4"
               >
-                <q-card class="custom-card">
-                  <q-img
-                    :src="`${
-                      article.img
-                        ? article.img
-                        : 'img/article_default_thumbnail.jpg'
-                    }`"
-                    height="200px"
-                  />
+                <q-card class="custom-card full-height column justify-between">
+                  <div>
+                    <q-img
+                      :src="`${
+                        article.img
+                          ? article.img
+                          : 'img/article_default_thumbnail.jpg'
+                      }`"
+                      height="200px"
+                    />
 
-                  <q-card-section>
-                    <div class="text-h3">{{ article.title }}</div>
-                    <div class="text-subtitle3 text-grey">
-                      <q-icon name="calendar_month" /> {{ article.pubDate }}
-                    </div>
-                  </q-card-section>
+                    <q-card-section>
+                      <div class="text-h3">{{ article.title }}</div>
+                      <div class="text-subtitle3 text-grey">
+                        <q-icon name="calendar_month" /> {{ article.pubDate }}
+                      </div>
+                    </q-card-section>
 
-                  <q-card-section class="q-pt-none">
-                    {{ truncate(article.content, 240) }}
-                  </q-card-section>
+                    <q-card-section v-if="article.subtitle">
+                      <div class="text-h4">{{ article.subtitle }}</div>
+                    </q-card-section>
 
-                  <q-card-section class="q-pt-none">
-                    <q-chip
-                      v-for="(hashtag, index) in article.tags"
-                      :key="index"
-                      color="primary"
-                    >
-                      #{{ hashtag }}
-                    </q-chip>
-                  </q-card-section>
+                    <q-card-section class="q-pt-none text-justify">
+                      {{ truncate(article.content, 240) }}
+                    </q-card-section>
 
-                  <q-separator dark inset />
+                    <q-card-section class="q-pt-none">
+                      <q-chip
+                        v-for="(hashtag, index) in article.tags"
+                        :key="index"
+                        color="primary"
+                      >
+                        #{{ hashtag }}
+                      </q-chip>
+                    </q-card-section>
+                  </div>
 
-                  <q-card-actions vertical align="center">
-                    <q-btn
-                      type="a"
-                      :href="article.guid"
-                      target="_blank"
-                      icon="bookmark"
-                      color="info"
-                    >
-                      Read article
-                    </q-btn>
-                  </q-card-actions>
+                  <div>
+                    <q-separator dark inset />
+
+                    <q-card-actions vertical align="center">
+                      <q-btn
+                        type="a"
+                        :href="article.guid"
+                        target="_blank"
+                        icon="bookmark"
+                        color="info"
+                      >
+                        Read article
+                      </q-btn>
+                    </q-card-actions>
+                  </div>
                 </q-card>
               </div>
             </div>
@@ -1413,6 +1443,20 @@
               </div>
 
               <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
+                <a href="mailto:contact@spaceriders.io" target="_blank">
+                  <q-avatar
+                    icon="fas fa-envelope"
+                    color="info"
+                    text-color="white"
+                    size="96px"
+                    class="zoom-item"
+                  >
+                    <q-tooltip class="bg-info"> Email </q-tooltip>
+                  </q-avatar>
+                </a>
+              </div>
+
+              <div class="q-mb-lg col-xs-6 col-sm-3 text-center">
                 <a href="https://linktr.ee/SpaceRiders.io" target="_blank">
                   <q-avatar
                     color="info"
@@ -1670,7 +1714,7 @@ export default defineComponent({
       mediumFeed.value = response.data.slice(0, posts_to_retrieve);
     };
     const truncate = (str, len) => {
-      return _.truncate(str, { length: len });
+      return _.truncate(str, { length: len, separator: " " });
     };
     const d = ref(0);
     const h = ref(0);
