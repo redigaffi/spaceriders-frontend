@@ -654,16 +654,6 @@
                     <q-card-section class="q-pt-none text-justify">
                       {{ truncate(article.content, 240) }}
                     </q-card-section>
-
-                    <q-card-section class="q-pt-none">
-                      <q-chip
-                        v-for="(hashtag, index) in article.tags"
-                        :key="index"
-                        color="primary"
-                      >
-                        #{{ hashtag }}
-                      </q-chip>
-                    </q-card-section>
                   </div>
 
                   <div>
