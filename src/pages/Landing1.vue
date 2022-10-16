@@ -38,14 +38,14 @@
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('token')"
-              >TOKEN</a
+              v-on:click.prevent="scrollPageTo('game')"
+              >GAME MECHANICS</a
             >
             <a
               href="#"
               class="header__nav--link go"
-              v-on:click.prevent="scrollPageTo('game')"
-              >GAME MECHANICS</a
+              v-on:click.prevent="scrollPageTo('token')"
+              >TOKEN</a
             >
             <a
               href="#"
@@ -160,24 +160,24 @@
             class="menu-item"
             clickable
             v-ripple
-            @click="scrollPageTo('token')"
-          >
-            <q-item-section avatar>
-              <q-icon name="token" />
-            </q-item-section>
-            <q-item-section>Token</q-item-section>
-          </q-item>
-
-          <q-item
-            class="menu-item"
-            clickable
-            v-ripple
             @click="scrollPageTo('game')"
           >
             <q-item-section avatar>
               <q-icon name="sports_esports" />
             </q-item-section>
             <q-item-section>Game Mechanics</q-item-section>
+          </q-item>
+
+          <q-item
+            class="menu-item"
+            clickable
+            v-ripple
+            @click="scrollPageTo('token')"
+          >
+            <q-item-section avatar>
+              <q-icon name="token" />
+            </q-item-section>
+            <q-item-section>Token</q-item-section>
           </q-item>
 
           <q-item
@@ -681,6 +681,11 @@
       </section>
     </template>
 
+    <!-- GAME MECHANICS -->
+
+    <div id="game"></div>
+    <GameMechanics></GameMechanics>
+
     <!-- TOKEN -->
 
     <div id="token"></div>
@@ -793,11 +798,6 @@
         </div>
       </div>
     </section>
-
-    <!-- GAME MECHANICS -->
-
-    <div id="game"></div>
-    <GameMechanics></GameMechanics>
 
     <!-- ROADMAP V2 -->
 
@@ -1424,17 +1424,18 @@
               v-on:click.prevent="scrollPageTo('blog')"
               >BLOG</a
             >
-            <a
-              href="#"
-              v-on:click.prevent="scrollPageTo('token')"
-              class="footer__nav--link go"
-              >TOKEN</a
-            >
+
             <a
               href="#"
               v-on:click.prevent="scrollPageTo('game')"
               class="footer__nav--link go"
               >GAME MECHANICS</a
+            >
+            <a
+              href="#"
+              v-on:click.prevent="scrollPageTo('token')"
+              class="footer__nav--link go"
+              >TOKEN</a
             >
             <a
               href="#"
