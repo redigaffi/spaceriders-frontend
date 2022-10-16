@@ -635,15 +635,17 @@
                       :src="`${
                         article.img
                           ? article.img
-                          : 'img/article_default_thumbnail.jpg'
+                          : 'landing/article_default_thumbnail.jpg'
                       }`"
                       height="200px"
                     />
 
                     <q-card-section>
-                      <div class="text-h3">{{ article.title }}</div>
                       <div class="text-subtitle3 text-grey">
                         <q-icon name="calendar_month" /> {{ article.pubDate }}
+                      </div>
+                      <div class="text-h3">
+                        {{ article.title }}
                       </div>
                     </q-card-section>
 
@@ -792,87 +794,10 @@
       </div>
     </section>
 
+    <!-- GAME MECHANICS -->
+
     <div id="game"></div>
-    <section class="custom-game">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">GAME MECHANICS</div>
-          <div class="game__content">
-            <div class="game__item">
-              <p class="game__item--title">Play to Own</p>
-              <p class="game__item--text custom-font">
-                SpaceRiders defines itself as a Play to Own. This game model
-                integrates blockchain technology, through which NFTs are
-                implemented. Thanks to both integrations, you as a player have
-                total ownership of all your in-game assets as well as complete
-                freedom to do with them anything that you want.
-              </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Mines & Warehouses</p>
-              <p class="game__item--text custom-font">
-                The extraction of resources (Metal, Crystal, Petrol) is the key
-                to the game and this is possible thanks to the mines. Once the
-                mines extract resources they are stored in their relevant
-                warehouse depending on the resource. The higher the level of
-                your mines, the higher the production, but also the higher the
-                energy consumption.
-              </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Player Driven Economy</p>
-              <p class="game__item--text custom-font">
-                Users have total control over the game economy through offer and
-                demand. Thanks to the Intergalactic Stock Market we give
-                absolute power to the gamers which decide the value and price of
-                each resource. This trading platform allows users to trade any
-                resource in parity with $BKM or other resources.
-              </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Player vs Environment (PVE)</p>
-
-              <p class="game__item--text custom-font">
-                Space is a dangerous and outlaw territory, throughout its vast
-                galaxies and solar systems you’ll have to fight for survival and
-                growth of your planet. Asteroids can damage your planet's
-                buildings and Space Pirates might steal your resources if you’re
-                not prepared. To prevent this from happening, build up your
-                Laser Launchers and Missile Launchers!
-              </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Free to Play</p>
-
-              <p class="game__item--text custom-font">
-                SpaceRiders has a Free to Play version, where entry is not
-                limited to those who pay. This version is an exact copy of the
-                Full Version, but is found on the Binance Smart Chain Testnet.
-                This Free to Play version will be opened in special events
-                during a few weeks so that everyone can access SpaceRiders for
-                free.
-              </p>
-            </div>
-
-            <div class="game__item">
-              <p class="game__item--title">Installations</p>
-              <p class="game__item--text custom-font">
-                Installations play a key role in any planets’ growth and
-                expansion throughout the solar system. Hangar permits the
-                construction of defensive structures and, in the near future,
-                spaceships to conquer the universe. The Investigation Laboratory
-                opens the door to innovation and progress by researching
-                necessary technologies for your benefit.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <GameMechanics></GameMechanics>
 
     <!-- ROADMAP V2 -->
 
@@ -1642,6 +1567,7 @@
 import { defineComponent, ref } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
+import GameMechanics from "src/components/GameMechanics.vue";
 import { useQuasar } from "quasar";
 import ApiRequest from "../service/http/ApiRequests";
 import _ from "lodash";
@@ -1874,7 +1800,7 @@ export default defineComponent({
       truncate,
     };
   },
-  components: { Timeline },
+  components: { Timeline, GameMechanics },
 });
 </script>
 <style lang="scss" scoped>
@@ -1892,12 +1818,6 @@ export default defineComponent({
 
 #token-section ul li {
   list-style-type: default;
-}
-
-.custom-card {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid $info;
-  border-radius: 10px;
 }
 
 .roadmap {
