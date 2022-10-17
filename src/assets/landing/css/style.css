@@ -285,6 +285,12 @@ input::-webkit-inner-spin-button {
   padding: 26rem 0rem 35rem 0;
 }
 
+.custom-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid $info;
+  border-radius: 10px;
+}
+
 /* Ico */
 .ico {
   padding: 9rem 0;
