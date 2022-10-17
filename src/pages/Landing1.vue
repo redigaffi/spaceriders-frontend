@@ -1105,7 +1105,7 @@
           <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
             <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
               <a href="https://datacryptonft.com" target="_blank">
-                <q-img src="~assets/landing/img/partners/data.png" alt="Data">
+                <q-img src="~assets/landing/img/partners/data.webp" alt="Data">
                 </q-img>
               </a>
             </div>
@@ -1113,7 +1113,7 @@
             <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
               <a href="https://haechi.io/?lang=en" target="_blank">
                 <q-img
-                  src="~assets/landing/img/partners/face_wallet.png"
+                  src="~assets/landing/img/partners/face_wallet.webp"
                   alt="Face Wallet"
                 >
                 </q-img>
@@ -1123,7 +1123,7 @@
             <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
               <a href="https://haechi.io/?lang=en" target="_blank">
                 <q-img
-                  src="~assets/landing/img/partners/haechi.png"
+                  src="~assets/landing/img/partners/haechi.webp"
                   alt="Haechi Labs"
                 >
                 </q-img>
@@ -1492,7 +1492,7 @@
             >
               <q-avatar class="q-m-md" size="120px">
                 <img
-                  src="~assets/landing/img/usa.png"
+                  src="~assets/landing/img/usa.webp"
                   style="cursor: pointer"
                 />
               </q-avatar>
@@ -1505,7 +1505,7 @@
             >
               <q-avatar size="120px">
                 <img
-                  src="~assets/landing/img/spain.png"
+                  src="~assets/landing/img/spain.webp"
                   style="cursor: pointer"
                 />
               </q-avatar>
