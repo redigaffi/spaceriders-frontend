@@ -206,6 +206,17 @@
             >
               1h
             </div>
+
+            <div
+              class="col-3 cursor-pointer"
+              :class="{
+                'text-blue': candleTimeFrame == '1d',
+              }"
+              @click="changeCandleTimeframe('1d')"
+            >
+              1d
+            </div>
+
           </div>
         </div>
       </div>
