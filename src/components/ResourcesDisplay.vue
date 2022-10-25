@@ -990,6 +990,8 @@ async function depositEnergy(amount) {
     notif($notification("success", "Energy deposited successfully!"));
 
     $store.commit("incrementEnergy", { energy: ( (amount-(amount*0.1))*10000) });
+    $store.commit("decrementBkm", { bkm:  amount });
+
     energyDepositPopup.value = false;
   } catch (ex) {
     notif($notification("failed", ex));
