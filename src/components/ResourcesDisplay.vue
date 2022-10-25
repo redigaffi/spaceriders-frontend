@@ -558,7 +558,7 @@
       >
         <q-card-section class="q-pa-xs text-center">
           <span class="q-ml-sm text-overline" style="font-size: 14px"
-            >BUY ENERGY</span
+            >Convert $BKM To ENERGY</span
           >
         </q-card-section>
         <q-btn
@@ -595,19 +595,12 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance
-                  v-if="!$store.getters.activePlanet.free_planet"
-                  :address="ContractAddress.getSpaceRidersGameAddress()"
-                  :amount="sprCost"
-                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-                  customWidth
-                />
                 <q-btn
                   label="Deposit"
                   color="warning"
                   no-caps
                   class="q-px-lg q-py-sm full-width"
-                  @click="depositEnergy(sprCost)"
+                  @click="depositEnergy(depositAmount)"
                   style="max-width: 130px"
                 />
               </q-card-section>
@@ -978,35 +971,25 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${
-    depositAmount.value
-  }$) - ${sprCost.value.toFixed(2)} $BKM`;
+  const amount = depositAmount.value.toFixed(2) - (depositAmount.value.toFixed(2)*0.1);
+  return `${amount} $BKM - ${amount*10000} Energy (-10% $BKM Fee)`;
 });
 
 async function depositEnergy(amount) {
-  const uuid = ObjectID().toHexString();
-  const energyDeposit = new EnergyDepositAttributes(
-    uuid,
-    amount.toString(),
-    $store.getters.activePlanet.id
-  );
-
   const notif = $q.notify(
     $notification("progress", "Waiting for transaction to complete...")
   );
 
   try {
-    const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
-    await tx.wait();
 
     await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
-      guid: uuid,
+      amount: amount.toFixed(2)
     });
 
-    notif($notification("success", "Energy deposited successfuly!"));
+    notif($notification("success", "Energy deposited successfully!"));
 
-    $store.commit("incrementEnergy", { energy: amount });
+    $store.commit("incrementEnergy", { energy: ( (amount-(amount*0.1))*10000) });
     energyDepositPopup.value = false;
   } catch (ex) {
     notif($notification("failed", ex));
