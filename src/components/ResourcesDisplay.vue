@@ -675,12 +675,18 @@ function timeLeft(minLeft) {
 
   const diffSeconds = (end.getTime() - now.getTime()) / 1000;
   const s = Math.round(diffSeconds % 60);
-  const minutes = Math.round((diffSeconds - s) / 60);
 
+  const minutes = Math.round((diffSeconds - s) / 60);
   const m = minutes % 60;
-  const h = Math.round(minutes - m) / 60;
+
+  const hours = Math.round(minutes - m) / 60;
+  const h = hours % 24;
+
+  const days = Math.round(hours - h) / 24;
+
 
   let str = "";
+  if (days > 0) str += `${days} (D) `;
   if (h > 0) str += `${h} (h)`;
   if (m > 0) str += ` ${m} (m)`;
   if (s >= 0) str += ` ${s} (s)`;
@@ -990,6 +996,8 @@ async function depositEnergy(amount) {
     notif($notification("success", "Energy deposited successfully!"));
 
     $store.commit("incrementEnergy", { energy: ( (amount-(amount*0.1))*10000) });
+    $store.commit("decrementBkm", { bkm:  amount });
+
     energyDepositPopup.value = false;
   } catch (ex) {
     notif($notification("failed", ex));
