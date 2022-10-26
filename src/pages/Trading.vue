@@ -339,7 +339,7 @@
                   </div>
 
                   <div class="row q-col-gutter-md">
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-md-6">
                       <div class="row justify-between">
                         <div class="col-6">Buy {{ pair1 }}</div>
                         <div class="col-6 text-right">
@@ -413,7 +413,7 @@
                       />
                     </div>
 
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-md-6">
                       <div class="row justify-between">
                         <div class="col-6">Sell {{ pair1 }}</div>
                         <div class="col-6 text-right">
@@ -828,7 +828,7 @@ function initiateChart() {
 
   chartObj = createChart(chartElement, {
     width: chartContainer.offsetWidth - 8,
-    height: "540",
+    height: $q.screen.lt.md ? "400" : "540",
   });
 
   chartObj.applyOptions({
@@ -847,6 +847,12 @@ function initiateChart() {
     timeScale: {
       timeVisible: true,
       secondsVisible: true,
+    },
+    rightPriceScale: {
+      visible: false,
+    },
+    leftPriceScale: {
+      visible: true,
     },
     watermark: {
       visible: true,
