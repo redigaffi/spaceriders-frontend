@@ -853,8 +853,8 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">TEAM</div>
 
-          <div class="q-pt-xl row q-col-gutter-sm">
-            <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="q-pt-xl row q-col-gutter-sm justify-center">
+            <div class="col-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -908,7 +908,7 @@
               </q-card>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -987,7 +987,7 @@
               </q-card>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -1044,7 +1044,7 @@
               </q-card>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-4">
               <q-card
                 flat
                 class="bg-transparent text-center"
@@ -1085,6 +1085,42 @@
                     type="a"
                     target="_blank"
                     href="https://t.me/thewisdomwarrior"
+                  />
+                </q-card-section>
+              </q-card>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <q-card
+                flat
+                class="bg-transparent text-center"
+                style="height: 100%"
+              >
+                <div class="text-center">
+                  <img
+                    src="~assets/landing/img/ast/erika_ast.webp"
+                    style="width: 100px"
+                  />
+                </div>
+
+                <q-card-section>
+                  <div class="text-h5">Erika</div>
+                  <div class="text-h6">Intern</div>
+                </q-card-section>
+
+                <hr class="bg-white" style="width: 100px; height: 3px" />
+                <q-card-section class="text-h5">
+                  <div>Junior Frontend Developer</div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 q-gutter-md">
+                  <q-btn
+                    flat
+                    round
+                    color="white"
+                    icon="fab fa-linkedin-in"
+                    type="a"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/minerikart/"
                   />
                 </q-card-section>
               </q-card>
