@@ -854,274 +854,63 @@
           <div class="text-2 title game__title">TEAM</div>
 
           <div class="q-pt-xl row q-col-gutter-sm justify-center">
-            <div class="col-12 col-sm-6 col-md-4">
+            <div
+              v-for="(member, index) in teamMembers"
+              :key="index"
+              class="col-12 col-sm-6 col-md-4"
+            >
               <q-card
                 flat
                 class="bg-transparent text-center"
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/jordi_ast.webp"
-                    style="width: 100px"
-                  />
+                  <img :src="member.img" style="width: 100px" />
                 </div>
 
                 <q-card-section>
-                  <div class="text-h5">Jordi</div>
-                  <div class="text-h6">CEO</div>
+                  <div class="text-h5">{{ member.name }}</div>
+                  <div class="text-h6">{{ member.title }}</div>
                 </q-card-section>
 
                 <hr class="bg-white" style="width: 100px; height: 3px" />
                 <q-card-section class="text-h5">
-                  <div>Principal Software Engineer</div>
+                  <div v-for="(role, index) in member.roles" :key="index">
+                    {{ role }}
+                  </div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/jordi-walter-hoock-castro-10105696/"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-telegram-plane"
-                    type="a"
-                    target="_blank"
-                    href="https://t.me/SpaceRidersENChat"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-discord"
-                    type="a"
-                    target="_blank"
-                    href="https://discord.gg/h733Kh6XTn"
-                  />
-                </q-card-section>
-              </q-card>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-              <q-card
-                flat
-                class="bg-transparent text-center"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/iniaki_ast.webp"
-                    style="width: 100px"
-                  />
-                </div>
-
-                <q-card-section>
-                  <div class="text-h5">Iñaki</div>
-                  <div class="text-h6">CFO</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div>Financial Operations Lead</div>
-                  <div>Content Creator</div>
-                  <div>System & Graphics Analyst</div>
-                  <div>NFT Games Player</div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/inaki-marzo-d%C3%ADaz/"
-                  />
-                  <!-- <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-telegram-plane"
-                    type="a" target="_blank" href="https://t.me/SpaceRidersENChat"
-                  /> -->
-                  <!-- <q-btn flat round color="white" icon="fab fa-discord" type="a" target="_blank" href="https://discord.gg/h733Kh6XTn" /> -->
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-youtube"
-                    type="a"
-                    target="_blank"
-                    href="https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    type="a"
-                    target="_blank"
-                    href="https://linktr.ee/MundoLast"
+                  <template
+                    v-for="(social, index) in member.socialMedia"
+                    :key="index"
                   >
-                    <img
-                      src="~assets/landing/img/linktreee.svg"
-                      alt="Телеграм"
-                      style="height: 30px"
+                    <q-btn
+                      v-if="social.isNotFontIcon"
+                      flat
+                      round
+                      color="white"
+                      type="a"
+                      target="_blank"
+                      :href="social.link"
+                    >
+                      <img
+                        :src="social.icon"
+                        alt="Телеграм"
+                        :style="{ height: social.height + 'px' }"
+                      />
+                    </q-btn>
+
+                    <q-btn
+                      v-else
+                      flat
+                      round
+                      color="white"
+                      :icon="social.icon"
+                      type="a"
+                      target="_blank"
+                      :href="social.link"
                     />
-                  </q-btn>
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-twitch"
-                    type="a"
-                    target="_blank"
-                    href="https://www.twitch.tv/cryptolast"
-                  />
-                </q-card-section>
-              </q-card>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-              <q-card
-                flat
-                class="bg-transparent text-center"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/max_ast.webp"
-                    style="width: 100px"
-                  />
-                </div>
-
-                <q-card-section>
-                  <div class="text-h5">Max</div>
-                  <div class="text-h6">CPO</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div>Product Lead</div>
-                  <div>Business Analysis</div>
-                  <div>Marketing Operations</div>
-                  <div>Social Media Lead</div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/max-pamies-i-del-campo-b2591921a"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-telegram-plane"
-                    type="a"
-                    target="_blank"
-                    href="https://t.me/atopikoin"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-discord"
-                    type="a"
-                    target="_blank"
-                    href="https://discordapp.com/users/838028729884213248"
-                  />
-                </q-card-section>
-              </q-card>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-              <q-card
-                flat
-                class="bg-transparent text-center"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/jose_ast.webp"
-                    style="width: 100px"
-                  />
-                </div>
-
-                <q-card-section>
-                  <div class="text-h5">José</div>
-                  <div class="text-h6">CTO</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div>Fullstack Engineer</div>
-                  <div>C# / Unity Developer</div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/joseruizdev/"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-telegram-plane"
-                    type="a"
-                    target="_blank"
-                    href="https://t.me/thewisdomwarrior"
-                  />
-                </q-card-section>
-              </q-card>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-              <q-card
-                flat
-                class="bg-transparent text-center"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <img
-                    src="~assets/landing/img/ast/erika_ast.webp"
-                    style="width: 100px"
-                  />
-                </div>
-
-                <q-card-section>
-                  <div class="text-h5">Erika</div>
-                  <div class="text-h6">Intern</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div>Junior Frontend Developer</div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <q-btn
-                    flat
-                    round
-                    color="white"
-                    icon="fab fa-linkedin-in"
-                    type="a"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/minerikart/"
-                  />
+                  </template>
                 </q-card-section>
               </q-card>
             </div>
@@ -1757,6 +1546,114 @@ export default defineComponent({
         ],
       },
     ]);
+
+    const teamMembers = [
+      {
+        name: "Jordi",
+        title: "CEO",
+        roles: ["Principal Software Engineer"],
+        img: "landing/ast/jordi_ast.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/jordi-walter-hoock-castro-10105696/",
+          },
+          {
+            icon: "fab fa-telegram-plane",
+            link: "https://t.me/SpaceRidersENChat",
+          },
+          {
+            icon: "fab fa-discord",
+            link: "https://discord.gg/h733Kh6XTn",
+          },
+        ],
+      },
+      {
+        name: "Iñaki",
+        title: "CFO",
+        roles: [
+          "Financial Operations Lead",
+          "Content Creator",
+          "System & Graphics Analyst",
+          "NFT Games Player",
+        ],
+        img: "landing/ast/iniaki_ast.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/inaki-marzo-d%C3%ADaz/",
+          },
+          {
+            icon: "fab fa-youtube",
+            link: "https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA",
+          },
+          {
+            icon: "landing/linktreee.svg",
+            isNotFontIcon: true,
+            height: 30,
+            link: "https://linktr.ee/MundoLast",
+          },
+          {
+            icon: "fab fa-twitch",
+            link: "https://www.twitch.tv/cryptolast",
+          },
+        ],
+      },
+      {
+        name: "Max",
+        title: "CPO",
+        roles: [
+          "Product Lead",
+          "Business Analysis",
+          "Marketing Operations",
+          "Social Media Lead",
+        ],
+        img: "landing/ast/max_ast.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/max-pamies-i-del-campo-b2591921a",
+          },
+          {
+            icon: "fab fa-telegram-plane",
+            link: "https://t.me/atopikoin",
+          },
+          {
+            icon: "fab fa-discord",
+            link: "https://discordapp.com/users/838028729884213248",
+          },
+        ],
+      },
+      {
+        name: "José",
+        title: "CTO",
+        roles: ["Fullstack Engineer", "C# / Unity Developer"],
+        img: "landing/ast/jose_ast.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/joseruizdev/",
+          },
+          {
+            icon: "fab fa-telegram-plane",
+            link: "https://t.me/thewisdomwarrior",
+          },
+        ],
+      },
+      {
+        name: "Erika",
+        title: "Intern",
+        roles: ["Junior Frontend Developer"],
+        img: "landing/ast/erika_ast.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/minerikart/",
+          },
+        ],
+      },
+    ];
+
     const timelineFeed = [
       {
         heading: "Q2 2022",
@@ -1833,6 +1730,7 @@ export default defineComponent({
       faq_section,
       headerTransparency,
       timelineFeed,
+      teamMembers,
       mediumFeed,
       truncate,
     };
