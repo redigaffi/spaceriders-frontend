@@ -1,558 +1,694 @@
 <template>
-  <div class="row q-ml-xl">
-    <div
-      class="col-2 q-mr-lg glass-element-darker"
-      style="border-radius: 0px; height: 650px"
-    >
-      <div class="row q-mb-sm">
-        <div class="col text-center">
-          Order book
-          <q-separator dark class="q-mt-sm" />
-        </div>
+  <div :class="'q-px-' + ($q.screen.lt.md ? 'sm' : 'lg')">
+    <div class="row">
+      <div v-if="$q.screen.lt.md" class="col-12">
+        <q-toolbar class="bg-primary">
+          <q-space />
+
+          <q-item>
+            <q-item-section>
+              <q-item-label class="text-caption text-accent"
+                >24h Max</q-item-label
+              >
+              <q-item-label>{{ toFixedNoRound(max24HourPrice) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-separator dark vertical inset />
+
+          <q-item>
+            <q-item-section>
+              <q-item-label class="text-caption text-accent"
+                >24h Min</q-item-label
+              >
+              <q-item-label>{{ toFixedNoRound(min24HourPrice) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-separator dark vertical inset />
+
+          <q-item>
+            <q-item-section>
+              <q-item-label class="text-caption text-accent"
+                >24h Vol. ({{ SYMBOLS[pair1] }})</q-item-label
+              >
+              <q-item-label>{{ toFixedNoRound(pair1Volume) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-separator dark vertical inset />
+
+          <q-item>
+            <q-item-section>
+              <q-item-label class="text-caption text-accent"
+                >24h Vol. ({{ SYMBOLS[pair2] }})</q-item-label
+              >
+              <q-item-label>{{ toFixedNoRound(pair2Volume) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-space />
+        </q-toolbar>
       </div>
 
-      <div class="row q-mb-sm">
-        <div class="col text-left" style="font-size: 12px">
-          PRICE ({{ SYMBOLS[pair2] }})
-        </div>
-        <div class="col text-center" style="font-size: 12px">
-          Qty ({{ SYMBOLS[pair1] }})
-        </div>
-        <div class="col text-right" style="font-size: 12px">
-          Total ({{ SYMBOLS[pair2] }})
-        </div>
-      </div>
+      <div class="col-12">
+        <q-toolbar class="bg-primary">
+          <q-space />
 
-      <q-separator dark />
+          <q-item>
+            <q-item-section>
+              <q-item-label>{{ pair1 }} / {{ pair2 }}</q-item-label>
+            </q-item-section>
+          </q-item>
 
-      <div class="row q-mt-xs" style="height: 240px; overflow: hidden">
-        <div class="col">
-          <transition-group name="bounce">
-            <div
-              v-for="order in orderBook['sell']"
-              :key="order.grouped_price"
-              class="row full-width q-py-xs"
-              style="height: 30px"
-              :style="{
-                background: `linear-gradient(to left, rgba(247, 21, 21, 0.15) ${order['amount_width']}%, transparent 0)`,
-              }"
-            >
-              <div class="col text-left price-text-negative">
-                {{ order.grouped_price }}
-              </div>
-              <div class="col text-center">{{ order.sum_to_be_filled }}</div>
-              <div class="col text-right">{{ order.total_price }}</div>
-            </div>
-          </transition-group>
-        </div>
-      </div>
+          <q-separator dark vertical inset />
 
-      <div class="row" style="height: 35px">
-        <div class="full-width full-height q-mt-xs">
-          <q-separator class="q-mt-xs" />
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                :class="
+                  'text-' + getPriceHighlightColor(currentPriceData.priceAction)
+                "
+                >{{ currentPriceData.price }}
+                <q-icon
+                  v-if="currentPriceData.priceAction == 'positive'"
+                  name="fas fa-arrow-up" />
+                <q-icon v-else name="fas fa-arrow-down"
+              /></q-item-label>
+              <q-item-label class="text-caption">{{
+                previousPriceData.price
+              }}</q-item-label>
+            </q-item-section>
+          </q-item>
 
-          <div
-            style="font-size: 18px; display: inline"
-            :class="{
-              'price-text-positive': currentPriceData.priceAction == 'positive',
-              'price-text-negative': currentPriceData.priceAction == 'negative',
-            }"
-          >
-            {{ currentPriceData.price }}
-            <q-icon
-              v-if="currentPriceData.priceAction == 'positive'"
-              name="fas fa-arrow-up"
-            />
-            <q-icon v-else name="fas fa-arrow-down" />
-          </div>
-          <span
-            class="q-ml-lg"
-            style="color: #aeb0af"
-            v-if="previousPriceData.price"
-            >{{ previousPriceData.price }}</span
-          >
-          <q-separator class="q-mt-xs" dark />
-        </div>
-      </div>
+          <q-separator dark vertical inset />
 
-      <div class="row" style="margin-top: 6px; height: 240px; overflow: hidden">
-        <div class="col">
-          <transition-group name="bounce">
-            <div
-              v-for="order in orderBook['buy']"
-              :key="order.grouped_price"
-              class="row full-width q-py-xs"
-              style="height: 30px"
-              :style="{
-                background: `linear-gradient(to left, rgba(5, 245, 49, 0.15) ${order['amount_width']}%, transparent 0)`,
-              }"
-            >
-              <div class="col text-left price-text-positive">
-                {{ order.grouped_price }}
-              </div>
-              <div class="col text-center">{{ order.sum_to_be_filled }}</div>
-              <div class="col text-right">{{ order.total_price }}</div>
-            </div>
-          </transition-group>
-        </div>
+          <template v-if="!$q.screen.lt.md">
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-caption text-accent"
+                  >24h Max</q-item-label
+                >
+                <q-item-label>{{
+                  toFixedNoRound(max24HourPrice)
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-separator dark vertical inset />
+
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-caption text-accent"
+                  >24h Min</q-item-label
+                >
+                <q-item-label>{{
+                  toFixedNoRound(min24HourPrice)
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-separator dark vertical inset />
+
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-caption text-accent"
+                  >24h Vol. ({{ SYMBOLS[pair1] }})</q-item-label
+                >
+                <q-item-label>{{ toFixedNoRound(pair1Volume) }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-separator dark vertical inset />
+
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-caption text-accent"
+                  >24h Vol. ({{ SYMBOLS[pair2] }})</q-item-label
+                >
+                <q-item-label>{{ toFixedNoRound(pair2Volume) }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+
+          <q-separator v-if="!$q.screen.lt.md" dark vertical inset />
+
+          <q-btn-toggle
+            class="q-mx-sm"
+            flat
+            stretch
+            dense
+            toggle-color="info"
+            v-model="candleTimeFrame"
+            :options="candleTimeToggleOptions"
+            @click="changeCandleTimeframe()"
+          />
+
+          <q-space />
+        </q-toolbar>
       </div>
     </div>
 
-    <div class="col-6">
-      <div
-        class="row glass-element-darker"
-        style="border-radius: 0px; height: 50px"
-      >
-        <div class="col-2 q-mt-sm">
-          <div style="font-size: 13px">{{ pair1 }}/{{ pair2 }}</div>
-        </div>
+    <div class="row q-col-gutter-sm">
+      <div class="col-12 col-md-6 col-lg-3">
+        <q-card flat square dark>
+          <q-card-section>
+            <div class="text-center">Order Book</div>
+          </q-card-section>
 
-        <q-separator vertical />
+          <q-separator dark inset />
 
-        <div class="col-1 q-ml-xs text-center">
-          <div class="row">
-            <div
-              class="q-ml-sm"
-              :class="{
-                'price-text-positive':
-                  currentPriceData.priceAction == 'positive',
-                'price-text-negative':
-                  currentPriceData.priceAction == 'negative',
-              }"
-            >
-              {{ currentPriceData.price }}
-              <q-icon
-                v-if="currentPriceData.priceAction == 'positive'"
-                name="fas fa-arrow-up"
-              />
-              <q-icon v-else name="fas fa-arrow-down" />
-            </div>
-          </div>
-          <div class="row q-ml-sm" style="font-size: 10px">
-            {{ previousPriceData.price }}
-          </div>
-        </div>
-
-        <q-separator vertical />
-
-        <div class="col-1 q-ml-sm">
-          <div class="row" style="font-size: 10px; color: #aeb0af">24h Max</div>
-          <div class="row" style="font-size: 10px">
-            {{ max24HourPrice }}
-          </div>
-        </div>
-
-        <q-separator vertical />
-
-        <div class="col-1 q-ml-sm">
-          <div class="row" style="font-size: 10px; color: #aeb0af">24h Min</div>
-          <div class="row" style="font-size: 10px">
-            {{ min24HourPrice }}
-          </div>
-        </div>
-
-        <q-separator vertical />
-
-        <div class="col-2 q-ml-sm">
-          <div class="row" style="font-size: 10px; color: #aeb0af">
-            24h Vol. ({{ SYMBOLS[pair1] }})
-          </div>
-          <div class="row" style="font-size: 10px">
-            {{ pair1Volume }}
-          </div>
-        </div>
-
-        <q-separator vertical />
-
-        <div class="col-2 q-ml-sm">
-          <div class="row" style="font-size: 10px; color: #aeb0af">
-            24h Vol. ({{ SYMBOLS[pair2] }})
-          </div>
-          <div class="row" style="font-size: 10px">
-            {{ pair2Volume }}
-          </div>
-        </div>
-
-        <q-separator vertical />
-
-        <div class="col-2 q-mt-sm q-ml-sm">
-          <div class="row" style="font-size: 11px">
-            <div
-              class="col-2 cursor-pointer"
-              :class="{
-                'text-blue': candleTimeFrame == '1m',
-              }"
-              @click="changeCandleTimeframe('1m')"
-            >
-              1m
-            </div>
-
-            <div
-              class="col-3 cursor-pointer"
-              :class="{
-                'text-blue': candleTimeFrame == '15m',
-              }"
-              @click="changeCandleTimeframe('15m')"
-            >
-              15m
-            </div>
-
-            <div
-              class="col-3 cursor-pointer"
-              :class="{
-                'text-blue': candleTimeFrame == '1h',
-              }"
-              @click="changeCandleTimeframe('1h')"
-            >
-              1h
-            </div>
-
-            <div
-              class="col-3 cursor-pointer"
-              :class="{
-                'text-blue': candleTimeFrame == '1d',
-              }"
-              @click="changeCandleTimeframe('1d')"
-            >
-              1d
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div id="chart" class="row q-mt-lg" style="height: 550px">
-        <!-- chart -->
-      </div>
-
-      <div class="row q-mt-sm" style="height: 350px">
-        <q-card style="width: 100%">
-          <q-tabs
-            v-model="userActionTab"
-            inline-label
-            style="height: 47px; width: 100%"
-            class="bg-dark text-white shadow-2"
-          >
-            <q-tab
-              name="spotTrading"
-              icon="fas fa-exchange-alt"
-              label="Trading"
-            />
-            <q-tab
-              name="openTrades"
-              icon="fa fa-book-open"
-              label="Open Trades"
-            />
-            <q-tab
-              name="closedTrades"
-              icon="fa fa-book"
-              label="Closed Trades"
-            />
-          </q-tabs>
-
-          <q-separator dark />
-
-          <q-tab-panels v-model="userActionTab" animated>
-            <q-tab-panel name="spotTrading">
-              <div class="row full-width q-mt-xs">
-                <div class="col-6 flex flex-center">
-                  <div class="justify-center centers" style="width: 90%">
-                    <q-btn
-                      size="sm"
-                      :color="tradeType == 'limit' ? 'blue' : 'black'"
-                      label="Limit"
-                      @click="tradeType = 'limit'"
-                    />
-                    <q-btn
-                      size="sm"
-                      class="q-ml-xs"
-                      :color="tradeType == 'market' ? 'blue' : 'black'"
-                      label="Market"
-                      @click="tradeType = 'market'"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="row full-width justify-center centers"
-                style="margin-top: 20px"
-              >
-                <div class="col-6 flex flex-center">
-                  <div class="justify-center centers" style="width: 90%">
-                    <div class="row">
-                      <div class="col-6 text-left">Buy {{ pair1 }}</div>
-                      <div class="col-6 text-right">
-                        <q-icon name="fas fa-wallet" />
-                        {{ activePlanet.resources[pair2.toLowerCase()] }}
-                        {{ pair2 }}
-                      </div>
-                    </div>
-
-                    <q-input
-                      v-if="tradeType == 'limit'"
-                      input-class="text-right q-mr-xs"
-                      standout="bg-secondary"
-                      class="q-mt-xs"
-                      v-model.number="buyPrice"
-                      dense
-                      prefix="Price"
-                      :suffix="pair2"
-                    >
-                      <template v-slot:append>
-                        <q-btn
-                          @click="getLastPrice('buy')"
-                          size="xs"
-                          color="black"
-                          class=""
-                          label="last"
-                        />
-                      </template>
-                    </q-input>
-
-                    <q-input
-                      standout="bg-secondary"
-                      v-if="tradeType == 'limit'"
-                      input-class="text-right q-mr-xs"
-                      class="q-mt-sm"
-                      v-model.number="buyAmount"
-                      dense
-                      prefix="Amount"
-                      :suffix="pair1"
-                    />
-
-                    <q-input
-                      input-class="text-right q-mr-xs"
-                      standout="bg-secondary"
-                      class="q-mt-sm"
-                      v-model.number="buyTotal"
-                      dense
-                      prefix="Total"
-                      :suffix="pair2"
-                    >
-                      <template v-slot:append>
-                        <q-btn
-                          @click="maxBalance('buy')"
-                          size="xs"
-                          color="black"
-                          class=""
-                          label="max"
-                        />
-                      </template>
-                    </q-input>
-
-                    <q-btn
-                      @click="buySpot"
-                      color="green"
-                      class="full-width q-mt-sm"
-                      label="Buy"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-6 flex flex-center">
-                  <div class="justify-center centers" style="width: 90%">
-                    <div class="row">
-                      <div class="col-6 text-left">Sell {{ pair1 }}</div>
-                      <div class="col-6 text-right">
-                        <q-icon name="fas fa-wallet" />
-                        {{ activePlanet.resources[pair1.toLowerCase()] }}
-                        {{ pair1 }}
-                      </div>
-                    </div>
-
-                    <q-input
-                      v-if="tradeType == 'limit'"
-                      input-class="text-right q-mr-xs"
-                      standout="bg-secondary"
-                      class="q-mt-xs"
-                      v-model.number="sellPrice"
-                      dense
-                      prefix="Price"
-                      :suffix="pair2"
-                    >
-                      <template v-slot:append>
-                        <q-btn
-                          @click="getLastPrice('sell')"
-                          size="xs"
-                          color="black"
-                          class=""
-                          label="last"
-                        />
-                      </template>
-                    </q-input>
-
-                    <q-input
-                      standout="bg-secondary"
-                      v-if="tradeType == 'limit'"
-                      input-class="text-right q-mr-xs"
-                      class="q-mt-sm"
-                      v-model.number="sellAmount"
-                      dense
-                      prefix="Amount"
-                      :suffix="pair1"
-                    />
-
-                    <q-input
-                      input-class="text-right q-mr-xs"
-                      standout="bg-secondary"
-                      class="q-mt-sm"
-                      v-model.number="sellTotal"
-                      dense
-                      prefix="Total"
-                      :suffix="pair2"
-                    >
-                      <template v-slot:append>
-                        <q-btn
-                          @click="maxBalance('sell')"
-                          size="xs"
-                          color="black"
-                          class=""
-                          label="max"
-                        />
-                      </template>
-                    </q-input>
-
-                    <q-btn
-                      @click="sellSpot"
-                      color="red"
-                      class="full-width q-mt-sm"
-                      label="Sell"
-                    />
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="openTrades">
-              <!--<div class="text-h6">Open Trades</div>-->
-              <div class="row full-width q-mt-xs" style="height: 270px">
-                <q-scroll-area class="full-width full-height">
-                  <div class="row text-center">
-                    <div class="col">created</div>
-                    <div class="col">type</div>
-                    <div class="col">amount</div>
-                    <div class="col">filled</div>
-                    <div class="col">price</div>
-                    <div class="col"></div>
-                  </div>
-
-                  <q-separator dark class="q-mt-sm" />
-
-                  <div
-                    v-for="myOpenOrder in myOpenOrders"
-                    :key="myOpenOrder"
-                    class="row text-center q-mt-sm"
+          <q-card-section class="q-py-none">
+            <q-list dark dense>
+              <q-item>
+                <q-item-section>
+                  <q-item-label class="text-caption"
+                    >PRICE ({{ SYMBOLS[pair2] }})</q-item-label
                   >
-                    <div class="col">{{ myOpenOrder.created_date }}</div>
-                    <div
-                      class="col"
-                      :class="{
-                        'price-text-negative': myOpenOrder.type == 'sell',
-                        'price-text-positive': myOpenOrder.type == 'buy',
-                      }"
-                    >
-                      {{ myOpenOrder.type }}
-                    </div>
-                    <div class="col">{{ myOpenOrder.amount }}</div>
-                    <div class="col">{{ myOpenOrder.amount_filled }}</div>
-                    <div class="col">{{ myOpenOrder.price }}</div>
-                    <div class="col">
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label class="text-caption"
+                    >QTY ({{ SYMBOLS[pair1] }})</q-item-label
+                  >
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label class="text-caption text-white"
+                    >TOTAL ({{ SYMBOLS[pair2] }})</q-item-label
+                  >
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-table
+              hide-bottom
+              dense
+              dark
+              flat
+              table-header-style="display: none"
+              :pagination="{ rowsPerPage: 0 }"
+              separator="none"
+              :rows="orderBook['sell']"
+              :columns="[
+                {
+                  name: 'grouped_price',
+                  align: 'left',
+                  field: (row) => toFixedNoRound(row.grouped_price),
+                  classes: 'text-red',
+                },
+                {
+                  name: 'sum_to_be_filled',
+                  align: 'right',
+                  field: (row) => toFixedNoRound(row.sum_to_be_filled),
+                },
+                {
+                  name: 'total_price',
+                  align: 'right',
+                  field: (row) => toFixedNoRound(row.total_price),
+                },
+              ]"
+              row-key="grouped_price"
+            />
+          </q-card-section>
+
+          <q-separator dark inset />
+
+          <q-card-section class="q-py-none">
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-caption">STATUS</q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label
+                  :class="
+                    'text-' +
+                    getPriceHighlightColor(currentPriceData.priceAction)
+                  "
+                  >{{ currentPriceData.price }}
+                  <q-icon
+                    v-if="currentPriceData.priceAction == 'positive'"
+                    name="fas fa-arrow-up" />
+                  <q-icon v-else name="fas fa-arrow-down"
+                /></q-item-label>
+              </q-item-section>
+
+              <q-item-section side>
+                <q-item-label class="text-caption text-white">{{
+                  previousPriceData.price
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-card-section>
+
+          <q-separator dark inset />
+
+          <q-card-section>
+            <q-table
+              hide-bottom
+              dense
+              dark
+              flat
+              table-header-style="display: none"
+              :pagination="{ rowsPerPage: 0 }"
+              separator="none"
+              :rows="orderBook['buy']"
+              :columns="[
+                {
+                  name: 'grouped_price',
+                  align: 'left',
+                  field: (row) => toFixedNoRound(row.grouped_price),
+                  classes: 'text-green',
+                },
+                {
+                  name: 'sum_to_be_filled',
+                  align: 'right',
+                  field: (row) => toFixedNoRound(row.sum_to_be_filled),
+                },
+                {
+                  name: 'total_price',
+                  align: 'right',
+                  field: (row) => toFixedNoRound(row.total_price),
+                },
+              ]"
+              row-key="grouped_price"
+            />
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <div
+        class="col-12 col-md-12 col-lg-6"
+        style="z-index: 0"
+        :class="{ 'order-first': $q.screen.lt.lg }"
+      >
+        <div class="row q-col-gutter-sm">
+          <div class="col-12">
+            <div id="chart"></div>
+          </div>
+
+          <div class="col-12">
+            <q-card flat square dark>
+              <q-tabs
+                v-model="userActionTab"
+                inline-label
+                dense
+                align="center"
+                class="bg-dark text-white"
+              >
+                <q-tab
+                  name="spotTrading"
+                  icon="fas fa-exchange-alt"
+                  label="Trading"
+                />
+                <q-tab
+                  name="openTrades"
+                  icon="fa fa-book-open"
+                  label="Open Trades"
+                />
+                <!--
+                <q-tab
+                  name="closedTrades"
+                  icon="fa fa-book"
+                  label="Closed Trades"
+                />
+                -->
+              </q-tabs>
+
+              <q-tab-panels v-model="userActionTab" animated>
+                <q-tab-panel name="spotTrading">
+                  <div class="row q-my-sm">
+                    <div class="col-12">
                       <q-btn
                         size="sm"
-                        color="red"
-                        label="Cancel"
-                        @click="cancelOrder(myOpenOrder.id)"
+                        :color="tradeType == 'limit' ? 'blue' : 'black'"
+                        label="Limit"
+                        @click="tradeType = 'limit'"
+                      />
+                      <q-btn
+                        size="sm"
+                        class="q-ml-xs"
+                        :color="tradeType == 'market' ? 'blue' : 'black'"
+                        label="Market"
+                        @click="tradeType = 'market'"
                       />
                     </div>
                   </div>
-                </q-scroll-area>
-              </div>
-            </q-tab-panel>
 
-            <q-tab-panel name="closedTrades">
-              <div class="text-h6">Closed trades</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
-          </q-tab-panels>
-        </q-card>
-      </div>
-    </div>
+                  <div class="row q-col-gutter-md">
+                    <div class="col-12 col-lg-6">
+                      <div class="row justify-between">
+                        <div class="col-6">Buy {{ pair1 }}</div>
+                        <div class="col-6 text-right">
+                          <q-icon name="fas fa-wallet" />
+                          {{
+                            toFixedNoRound(
+                              activePlanet.resources[pair2.toLowerCase()]
+                            )
+                          }}
+                          {{ pair2 }}
+                        </div>
+                      </div>
 
-    <div class="col-2 q-ml-lg">
-      <div
-        class="row glass-element-darker"
-        style="border-radius: 0px; font-size: 90%; height: 200px"
-      >
-        <div class="col">
-          <div class="row">
-            <div class="col text-center">Markets</div>
+                      <q-input
+                        v-if="tradeType == 'limit'"
+                        input-class="text-right q-mr-xs"
+                        standout="bg-secondary"
+                        class="q-mt-xs"
+                        v-model.number="buyPrice"
+                        dense
+                        prefix="Price"
+                        :suffix="pair2"
+                      >
+                        <template v-slot:append>
+                          <q-btn
+                            @click="getLastPrice('buy')"
+                            size="xs"
+                            color="black"
+                            class=""
+                            label="last"
+                          />
+                        </template>
+                      </q-input>
+
+                      <q-input
+                        standout="bg-secondary"
+                        v-if="tradeType == 'limit'"
+                        input-class="text-right q-mr-xs"
+                        class="q-mt-sm"
+                        v-model.number="buyAmount"
+                        dense
+                        prefix="Amount"
+                        :suffix="pair1"
+                      />
+
+                      <q-input
+                        input-class="text-right q-mr-xs"
+                        standout="bg-secondary"
+                        class="q-mt-sm"
+                        v-model.number="buyTotal"
+                        dense
+                        prefix="Total"
+                        :suffix="pair2"
+                      >
+                        <template v-slot:append>
+                          <q-btn
+                            @click="maxBalance('buy')"
+                            size="xs"
+                            color="black"
+                            class=""
+                            label="max"
+                          />
+                        </template>
+                      </q-input>
+
+                      <q-btn
+                        @click="buySpot"
+                        color="green"
+                        class="full-width q-mt-sm"
+                        label="Buy"
+                      />
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <div class="row justify-between">
+                        <div class="col-6">Sell {{ pair1 }}</div>
+                        <div class="col-6 text-right">
+                          <q-icon name="fas fa-wallet" />
+                          {{
+                            toFixedNoRound(
+                              activePlanet.resources[pair1.toLowerCase()]
+                            )
+                          }}
+                          {{ pair1 }}
+                        </div>
+                      </div>
+
+                      <q-input
+                        v-if="tradeType == 'limit'"
+                        input-class="text-right q-mr-xs"
+                        standout="bg-secondary"
+                        class="q-mt-xs"
+                        v-model.number="sellPrice"
+                        dense
+                        prefix="Price"
+                        :suffix="pair2"
+                      >
+                        <template v-slot:append>
+                          <q-btn
+                            @click="getLastPrice('sell')"
+                            size="xs"
+                            color="black"
+                            class=""
+                            label="last"
+                          />
+                        </template>
+                      </q-input>
+
+                      <q-input
+                        standout="bg-secondary"
+                        v-if="tradeType == 'limit'"
+                        input-class="text-right q-mr-xs"
+                        class="q-mt-sm"
+                        v-model.number="sellAmount"
+                        dense
+                        prefix="Amount"
+                        :suffix="pair1"
+                      />
+
+                      <q-input
+                        input-class="text-right q-mr-xs"
+                        standout="bg-secondary"
+                        class="q-mt-sm"
+                        v-model.number="sellTotal"
+                        dense
+                        prefix="Total"
+                        :suffix="pair2"
+                      >
+                        <template v-slot:append>
+                          <q-btn
+                            @click="maxBalance('sell')"
+                            size="xs"
+                            color="black"
+                            class=""
+                            label="max"
+                          />
+                        </template>
+                      </q-input>
+
+                      <q-btn
+                        @click="sellSpot"
+                        color="red"
+                        class="full-width q-mt-sm"
+                        label="Sell"
+                      />
+                    </div>
+                  </div>
+                </q-tab-panel>
+
+                <q-tab-panel name="openTrades">
+                  <q-table
+                    style="height: 260px"
+                    dense
+                    dark
+                    flat
+                    virtual-scroll
+                    hide-bottom
+                    :pagination="{ rowsPerPage: 0 }"
+                    separator="none"
+                    :rows="myOpenOrders"
+                    :columns="[
+                      {
+                        name: 'type',
+                        align: 'center',
+                        label: 'Type',
+                        field: 'type',
+                        classes: (row) => {
+                          return row.type === 'sell'
+                            ? 'text-red'
+                            : 'text-green';
+                        },
+                      },
+                      {
+                        name: 'amount',
+                        align: 'right',
+                        label: 'Amount',
+                        field: (row) => toFixedNoRound(row.amount),
+                      },
+                      {
+                        name: 'amount_filled',
+                        align: 'right',
+                        label: 'Filled',
+                        field: (row) => toFixedNoRound(row.amount_filled),
+                      },
+                      {
+                        name: 'price',
+                        align: 'right',
+                        label: 'Price',
+                        field: (row) => toFixedNoRound(row.price),
+                      },
+                      {
+                        name: 'created_date',
+                        align: 'center',
+                        label: 'Created',
+                        field: 'created_date',
+                      },
+                      {
+                        name: 'id',
+                        align: 'right',
+                        label: 'ID',
+                        field: 'id',
+                      },
+                    ]"
+                    :visible-columns="[
+                      'created_date',
+                      'type',
+                      'amount',
+                      'amount_filled',
+                      'price',
+                    ]"
+                  >
+                    <template v-slot:header="props">
+                      <q-tr :props="props">
+                        <q-th auto-width />
+                        <q-th
+                          v-for="col in props.cols"
+                          :key="col.name"
+                          :props="props"
+                        >
+                          {{ col.label }}
+                        </q-th>
+                      </q-tr>
+                    </template>
+
+                    <template v-slot:body="props">
+                      <q-tr :props="props">
+                        <q-td auto-width>
+                          <q-btn
+                            size="sm"
+                            color="red"
+                            label="Cancel"
+                            @click="cancelOrder(props.key)"
+                          />
+                        </q-td>
+                        <q-td
+                          v-for="col in props.cols"
+                          :key="col.name"
+                          :props="props"
+                        >
+                          {{ col.value }}
+                        </q-td>
+                      </q-tr>
+                    </template>
+                  </q-table>
+                </q-tab-panel>
+
+                <!--
+                <q-tab-panel name="closedTrades">
+                  <div class="text-h6">Closed trades</div>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </q-tab-panel>
+                -->
+              </q-tab-panels>
+            </q-card>
           </div>
-
-          <q-separator class="q-mt-sm" />
-
-          <div class="row q-mt-sm full-width">
-            <div class="col text-left">Pair</div>
-            <div class="col text-right">Price</div>
-          </div>
-
-          <q-separator class="q-mt-sm" />
-
-          <q-scroll-area class="q-mt-xs full-width full-height">
-            <div
-              @click="changeMarket(market.market)"
-              v-for="market in markets"
-              :key="market.pair"
-              class="row cursor-pointer"
-            >
-              <div class="col text-left">{{ market.market }}</div>
-              <div class="col text-right">{{ market.last_price }}</div>
-            </div>
-          </q-scroll-area>
         </div>
       </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="row q-col-gutter-sm">
+          <div class="col-12">
+            <q-card flat square dark>
+              <q-card-section>
+                <div class="text-center">Markets</div>
+              </q-card-section>
 
-      <div
-        class="row q-mt-lg glass-element-darker"
-        style="border-radius: 0px; font-size: 90%; height: 500px"
-      >
-        <div class="col">
-          <div class="row q-mb-sm">
-            <div class="col text-center">
-              Market Orders (last 24H)
-              <q-separator dark class="q-mt-sm" />
-            </div>
-          </div>
-          <div class="row q-mb-sm">
-            <div class="col text-left" style="font-size: 12px">
-              PRICE ({{ SYMBOLS[pair2] }})
-            </div>
-            <div class="col text-center" style="font-size: 12px">
-              Qty ({{ SYMBOLS[pair1] }})
-            </div>
-            <div class="col text-right" style="font-size: 12px">Time</div>
+              <q-separator dark inset />
+
+              <q-card-section class="q-pt-none">
+                <q-list dark dense>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label class="text-caption">PAIR</q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-item-label class="text-caption text-white"
+                        >PRICE</q-item-label
+                      >
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item
+                    v-for="(market, index) in markets"
+                    :key="index"
+                    clickable
+                    v-ripple
+                    @click="changeMarket(market.market)"
+                  >
+                    <q-item-section>
+                      <q-item-label class="text-caption">{{
+                        mapMarketPair(market.market)
+                      }}</q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-item-label class="text-caption text-white">{{
+                        toFixedNoRound(market.last_price)
+                      }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card-section>
+            </q-card>
           </div>
 
-          <q-scroll-area class="full-width full-height q-mt-sm">
-            <q-separator dark class="q-mt-xs" />
-            <transition-group name="bounce">
-              <div
-                v-for="trade in reverseOrderedTrades"
-                :key="trade"
-                class="row market-order-entry q-mt-xs"
-                :class="{
-                  'market-order-price-positive':
-                    trade.priceAction === 'positive',
-                  'market-order-price-negative':
-                    trade.priceAction === 'negative',
-                }"
-              >
-                <div class="col text-left">{{ trade.price }}</div>
-                <div class="col text-center">{{ trade.amount }}</div>
-                <div class="col text-right">{{ trade.time }}</div>
-              </div>
-            </transition-group>
-          </q-scroll-area>
+          <div class="col-12">
+            <q-card flat square dark>
+              <q-card-section>
+                <div class="text-center">Market Orders (Last 24h)</div>
+              </q-card-section>
+
+              <q-separator dark inset />
+
+              <q-card-section>
+                <q-table
+                  hide-bottom
+                  dense
+                  dark
+                  flat
+                  :pagination="{ rowsPerPage: 0 }"
+                  separator="none"
+                  :rows="reverseOrderedTrades"
+                  :columns="[
+                    {
+                      name: 'price',
+                      align: 'left',
+                      label: `PRICE (${SYMBOLS[pair2]})`,
+                      classes: (row) =>
+                        'text-' + getPriceHighlightColor(row.priceAction),
+                      field: (row) => toFixedNoRound(row.price),
+                    },
+                    {
+                      name: 'amount',
+                      align: 'right',
+                      label: `AMOUNT (${SYMBOLS[pair1]})`,
+                      field: (row) => toFixedNoRound(row.amount),
+                    },
+                    {
+                      name: 'time',
+                      align: 'right',
+                      label: `TIME (UTC)`,
+                      field: 'time',
+                    },
+                  ]"
+                  row-key="trade"
+                />
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
       </div>
     </div>
@@ -571,10 +707,11 @@ import {
 } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { useQuasar } from "quasar";
+import { useQuasar, useMeta, colors, getCssVar } from "quasar";
 import ApiRequest from "../service/http/ApiRequests";
 
 const $q = useQuasar();
+const { getPaletteColor } = colors;
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -591,6 +728,11 @@ const SYMBOLS = {
 };
 
 const markets = ref([]);
+const title = ref("Trading");
+let chartContainer;
+let chartElement;
+let chartCanvas;
+let chartObj;
 
 // https://github.com/tradingview/lightweight-charts/issues/383
 let candlestickSeries = false;
@@ -598,41 +740,18 @@ onMounted(async () => {
   const re = await ApiRequest.getAllCurrencyMarketInfo();
   markets.value = re.data;
 
-  const chart = createChart(document.getElementById("chart"), {
-    height: "540",
-  });
-
-  chart.applyOptions({
-    layout: {
-      backgroundColor: "#181c23",
-      textColor: "#D9D9D9",
-    },
-    grid: {
-      vertLines: {
-        color: "#181c23",
-      },
-      horzLines: {
-        color: "#363C4E",
-      },
-    },
-    timeScale: {
-      timeVisible: true,
-      secondsVisible: true,
-    },
-  });
-
-  candlestickSeries = chart.addCandlestickSeries({
-    upColor: "#26a69a",
-    downColor: "#ef5350",
-    borderVisible: false,
-    wickUpColor: "#26a69a",
-    wickDownColor: "#ef5350",
-  });
+  setTimeout(function () {
+    initiateChart();
+  }, 500);
 
   //const data = [{ open: 10, high: 10.63, low: 9.49, close: 9.55, time: 1642427876 },  { open: 9.94, high: 10.17, low: 9.92, close: 9.78, time: 1642600676 }, { open: 9.78, high: 10.59, low: 9.18, close: 9.51, time: 1642687076 }, { open: 9.51, high: 10.46, low: 9.10, close: 10.17, time: 1642773476 }, { open: 10.17, high: 10.96, low: 10.16, close: 10.47, time: 1642859876 }, { open: 10.47, high: 11.39, low: 10.40, close: 10.81, time: 1642946276 }, { open: 10.81, high: 11.60, low: 10.30, close: 10.75, time: 1643032676 }, { open: 10.75, high: 11.60, low: 10.49, close: 10.93, time: 1643119076 }, { open: 10.93, high: 11.53, low: 10.76, close: 10.96, time: 1643205476 }];
   //candlestickSeries.setData(data);
 
-  chart.timeScale().fitContent();
+  window.addEventListener("resize", () => {
+    setTimeout(function () {
+      redrawChart();
+    }, 500);
+  });
 });
 
 const $store = useStore();
@@ -695,6 +814,92 @@ const max24HourPrice = ref(-1);
 const min24HourPrice = ref(-1);
 const pair1Volume = ref(-1);
 const pair2Volume = ref(-1);
+
+const candleTimeToggleOptions = [
+  { label: "1M", value: "1m" },
+  { label: "15M", value: "15m" },
+  { label: "1H", value: "1h" },
+  { label: "1D", value: "1d" },
+];
+
+function initiateChart() {
+  chartElement = document.getElementById("chart");
+  chartContainer = chartElement.parentElement;
+
+  chartObj = createChart(chartElement, {
+    width: chartContainer.offsetWidth - 8,
+    height: "540",
+  });
+
+  chartObj.applyOptions({
+    layout: {
+      backgroundColor: getCssVar("dark"),
+      textColor: "white",
+    },
+    grid: {
+      vertLines: {
+        color: "#181c23",
+      },
+      horzLines: {
+        color: "#363C4E",
+      },
+    },
+    timeScale: {
+      timeVisible: true,
+      secondsVisible: true,
+    },
+    watermark: {
+      visible: true,
+      fontSize: 48,
+      horzAlign: "center",
+      vertAlign: "center",
+      color: "rgba(41, 51, 62, 0.5)",
+      text: "SPACERIDERS",
+      fontFamily: "plantFont",
+    },
+  });
+
+  candlestickSeries = chartObj.addCandlestickSeries({
+    upColor: getPaletteColor("green"),
+    downColor: getPaletteColor("red"),
+    borderVisible: false,
+    wickUpColor: getPaletteColor("green"),
+    wickDownColor: getPaletteColor("red"),
+  });
+
+  //chartCanvas = document.querySelector("#chart > div > table");
+
+  chartObj.timeScale().fitContent();
+  changeCandleTimeframe();
+  //chartCanvas.style.width = chartContainer.offsetWidth - 8 + "px";
+}
+
+function redrawChart() {
+  chartContainer.innerHTML = '<div id="chart"></div>';
+  initiateChart();
+}
+
+function mapMarketPair(pair) {
+  const splittedPair = pair.split("/");
+
+  const firstPair = SYMBOLS[splittedPair[0]];
+  const secondPair = SYMBOLS[splittedPair[1]];
+
+  return `${firstPair} / ${secondPair}`;
+}
+
+function toFixedNoRound(number, precision = 2) {
+  const factor = Math.pow(10, precision);
+  return Math.floor(number * factor) / factor;
+}
+
+function getPriceHighlightColor(priceAction) {
+  return priceAction === "positive"
+    ? "green"
+    : priceAction === "negative"
+    ? "red"
+    : "";
+}
 
 function getLastPrice(action) {
   if (trades.value.length > 0) {
@@ -861,17 +1066,18 @@ const connect = () => {
     ws.close();
   });
 
+  /*
   window.addEventListener("unload", () => {
     //console.log("Closing websocket... 1")
     //ws.close()
   });
+  */
 };
 
 connect();
 
-function changeCandleTimeframe(time) {
+function changeCandleTimeframe() {
   trades.value = [];
-  candleTimeFrame.value = time;
 
   // Initial data load (will reset current candles)
   ws.send(
@@ -972,6 +1178,10 @@ function buySpot() {
   };
 
   ws.send(JSON.stringify(req));
+
+  buyPrice.value = 0;
+  buyAmount.value = 0;
+  buyTotal.value = 0;
 }
 
 function sellSpot() {
@@ -992,6 +1202,10 @@ function sellSpot() {
   };
 
   ws.send(JSON.stringify(req));
+
+  sellPrice.value = 0;
+  sellAmount.value = 0;
+  sellTotal.value = 0;
 }
 
 const cancelOrder = async (orderId) => {
@@ -1017,6 +1231,21 @@ const changeMarket = async (marketCode) => {
   });
   $router.go(0);
 };
+
+useMeta(() => {
+  title.value = "";
+
+  if (currentPriceData.value.price !== undefined) {
+    title.value += `${currentPriceData.value.price} (${SYMBOLS[
+      pair2
+    ].toUpperCase()}) | `;
+  }
+
+  title.value += `${SYMBOLS[pair1]}${SYMBOLS[pair2]} | `.toUpperCase();
+  title.value += "SpaceRiders - Trading";
+
+  return { title: title.value };
+});
 </script>
 
 <style lang="scss">
