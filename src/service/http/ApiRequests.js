@@ -286,7 +286,6 @@ export default class ApiRequests {
 
     const body = {
       planet_id: data.planetId,
-      deposit_id: data.guid,
       amount: data.amount,
     };
 

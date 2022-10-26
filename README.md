@@ -1,30 +1,51 @@
-# Spaceriders (frontend)
+# SPACERIDERS FRONTEND
 
-A Quasar Framework app
+## ⚠️ REQUIREMENTS
 
-## Install the dependencies
+- NodeJS v16
+- Yarn
+- Quasar CLI.
+
+## ⚙️ INSTALLATION
+
+Before you start with this installation, you need to have running [spaceriders-smartcontracts](https://github.com/redigaffi/spaceriders-smartcontracts) and [spaceriders-apiv2](https://github.com/redigaffi/spaceriders-apiv2) projects.
+
+Install Quasar globally.
+
 ```bash
-yarn install or npm install
+yarn global add @quasar/cli
 ```
 
-### Replace .env.example with .env.dev and add the following content:
-```
-BASE_API_PATH=http://api.spaceriders.io:81
-ENV=testnet
-```
+Clone the project's repository.
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev or node_modules/.bin/quasar dev
+git clone git@github.com:redigaffi/spaceriders-frontend.git
 ```
 
-### Request ticket NFT (to be able to access the game)
-1. Have metamask installed
-2. Have an address ready
-3. Have BSC Testnet network configured in metamask, follow instructions: https://medium.com/spartanprotocol/how-to-connect-metamask-to-bsc-testnet-7d89c111ab2
-4. Get some testnet BNB (needed to do transactions), put in the field your metamask address: https://testnet.binance.org/faucet-smart, click: "Give me BNB"
-5. Ask main devs to give you a ticket NFT - send your address to main dev and he will mint you a ticket
-6. At this point, once you have the ticket, you should be able to access the game.
+Inside the project's folder, install dependencies.
 
+```bash
+yarn install
+```
 
+Copy the env vars file `.env.example` to another one called `.env.dev`.
 
+```bash
+cp .env.example .env.dev
+```
+
+Change `BASE_API_PATH` in `.env` to point your local instance of the API.
+
+```env
+BASE_API_PATH=http://127.0.0.1:8010
+```
+
+In order to be able to testing at Testnet, have [BSC Testnet network configured in Metamask](https://medium.com/spartanprotocol/how-to-connect-metamask-to-bsc-testnet-7d89c111ab2). Also [get some Testnet BNB](https://testnet.binance.org/faucet-smart) (needed to do transactions). Put in the field your Metamask address and click "Give me BNB".
+
+## 🚀 USAGE
+
+Execute the project.
+
+```bash
+quasar dev
+```

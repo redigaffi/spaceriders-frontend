@@ -558,7 +558,7 @@
       >
         <q-card-section class="q-pa-xs text-center">
           <span class="q-ml-sm text-overline" style="font-size: 14px"
-            >BUY ENERGY</span
+            >Convert $BKM To ENERGY</span
           >
         </q-card-section>
         <q-btn
@@ -595,19 +595,12 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center">
-                <IncreaseAllowance
-                  v-if="!$store.getters.activePlanet.free_planet"
-                  :address="ContractAddress.getSpaceRidersGameAddress()"
-                  :amount="sprCost"
-                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-                  customWidth
-                />
                 <q-btn
                   label="Deposit"
                   color="warning"
                   no-caps
                   class="q-px-lg q-py-sm full-width"
-                  @click="depositEnergy(sprCost)"
+                  @click="depositEnergy(depositAmount)"
                   style="max-width: 130px"
                 />
               </q-card-section>
@@ -682,12 +675,18 @@ function timeLeft(minLeft) {
 
   const diffSeconds = (end.getTime() - now.getTime()) / 1000;
   const s = Math.round(diffSeconds % 60);
-  const minutes = Math.round((diffSeconds - s) / 60);
 
+  const minutes = Math.round((diffSeconds - s) / 60);
   const m = minutes % 60;
-  const h = Math.round(minutes - m) / 60;
+
+  const hours = Math.round(minutes - m) / 60;
+  const h = hours % 24;
+
+  const days = Math.round(hours - h) / 24;
+
 
   let str = "";
+  if (days > 0) str += `${days} (D) `;
   if (h > 0) str += `${h} (h)`;
   if (m > 0) str += ` ${m} (m)`;
   if (s >= 0) str += ` ${s} (s)`;
@@ -978,35 +977,27 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  return `${depositAmount.value} $ENERGY (${
-    depositAmount.value
-  }$) - ${sprCost.value.toFixed(2)} $BKM`;
+  const amount = depositAmount.value.toFixed(2) - (depositAmount.value.toFixed(2)*0.1);
+  return `${amount} $BKM - ${amount*10000} Energy (-10% $BKM Fee)`;
 });
 
 async function depositEnergy(amount) {
-  const uuid = ObjectID().toHexString();
-  const energyDeposit = new EnergyDepositAttributes(
-    uuid,
-    amount.toString(),
-    $store.getters.activePlanet.id
-  );
-
   const notif = $q.notify(
     $notification("progress", "Waiting for transaction to complete...")
   );
 
   try {
-    const tx = await SpaceRidersGameContract.energyDeposit(energyDeposit);
-    await tx.wait();
 
     await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
-      guid: uuid,
+      amount: amount.toFixed(2)
     });
 
-    notif($notification("success", "Energy deposited successfuly!"));
+    notif($notification("success", "Energy deposited successfully!"));
 
-    $store.commit("incrementEnergy", { energy: amount });
+    $store.commit("incrementEnergy", { energy: ( (amount-(amount*0.1))*10000) });
+    $store.commit("decrementBkm", { bkm:  amount });
+
     energyDepositPopup.value = false;
   } catch (ex) {
     notif($notification("failed", ex));
