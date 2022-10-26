@@ -1038,7 +1038,7 @@
                     icon="fab fa-discord"
                     type="a"
                     target="_blank"
-                    href="#AtopiKoin2676"
+                    href="https://discordapp.com/users/838028729884213248"
                   />
                 </q-card-section>
               </q-card>
