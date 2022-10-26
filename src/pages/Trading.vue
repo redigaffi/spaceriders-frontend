@@ -848,6 +848,12 @@ function initiateChart() {
       timeVisible: true,
       secondsVisible: true,
     },
+    rightPriceScale: {
+      visible: false,
+    },
+    leftPriceScale: {
+      visible: true,
+    },
     watermark: {
       visible: true,
       fontSize: 48,
