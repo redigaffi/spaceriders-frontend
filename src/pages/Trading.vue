@@ -655,10 +655,12 @@
 
               <q-card-section>
                 <q-table
+                  style="height: 468px"
                   hide-bottom
                   dense
                   dark
                   flat
+                  virtual-scroll
                   :pagination="{ rowsPerPage: 0 }"
                   separator="none"
                   :rows="reverseOrderedTrades"
