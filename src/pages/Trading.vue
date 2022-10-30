@@ -188,6 +188,7 @@
               dense
               dark
               flat
+              square
               table-header-style="display: none"
               :pagination="{ rowsPerPage: 0 }"
               separator="none"
@@ -211,7 +212,36 @@
                 },
               ]"
               row-key="grouped_price"
-            />
+            >
+              <template v-slot:body="props">
+                <q-tr
+                  :props="props"
+                  :style="{
+                    background: `linear-gradient(to left, ${
+                      getPaletteColor('red') + '1a'
+                    } ${
+                      getColorBarPercentage(
+                        orderBook.maxSellValue,
+                        props.cols[2].value
+                      ) + '%'
+                    } , ${getCssVar('dark') + 'ff'} ${
+                      getColorBarPercentage(
+                        orderBook.maxSellValue,
+                        props.cols[2].value
+                      ) + '%'
+                    })`,
+                  }"
+                >
+                  <q-td
+                    v-for="col in props.cols"
+                    :key="col.name"
+                    :props="props"
+                  >
+                    {{ col.value }}
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
           </q-card-section>
 
           <q-separator dark inset />
@@ -252,6 +282,7 @@
               dense
               dark
               flat
+              square
               table-header-style="display: none"
               :pagination="{ rowsPerPage: 0 }"
               separator="none"
@@ -275,7 +306,36 @@
                 },
               ]"
               row-key="grouped_price"
-            />
+            >
+              <template v-slot:body="props">
+                <q-tr
+                  :props="props"
+                  :style="{
+                    background: `linear-gradient(to left, ${
+                      getPaletteColor('green') + '1a'
+                    } ${
+                      getColorBarPercentage(
+                        orderBook.maxBuyValue,
+                        props.cols[2].value
+                      ) + '%'
+                    } , ${getCssVar('dark') + 'ff'} ${
+                      getColorBarPercentage(
+                        orderBook.maxBuyValue,
+                        props.cols[2].value
+                      ) + '%'
+                    })`,
+                  }"
+                >
+                  <q-td
+                    v-for="col in props.cols"
+                    :key="col.name"
+                    :props="props"
+                  >
+                    {{ col.value }}
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
           </q-card-section>
         </q-card>
       </div>
@@ -655,10 +715,12 @@
 
               <q-card-section>
                 <q-table
+                  style="height: 468px"
                   hide-bottom
                   dense
                   dark
                   flat
+                  virtual-scroll
                   :pagination="{ rowsPerPage: 0 }"
                   separator="none"
                   :rows="reverseOrderedTrades"
@@ -800,6 +862,8 @@ watchEffect(() => {
 });
 
 const orderBook = ref({
+  maxBuyValue: 0,
+  maxSellValue: 0,
   buy: [],
   sell: [],
 });
@@ -905,6 +969,10 @@ function getPriceHighlightColor(priceAction) {
     : priceAction === "negative"
     ? "red"
     : "";
+}
+
+function getColorBarPercentage(maxReferenceValue, currentValue) {
+  return (70 * currentValue) / maxReferenceValue;
 }
 
 function getLastPrice(action) {
@@ -1127,14 +1195,28 @@ function initialCandlePriceDataLoad(candles) {
 }
 
 function addOrderBook(orderType, orders) {
-  const bigOrder = 50;
+  //const bigOrder = 50;
+  let maxTotalValue = 0;
 
   for (const orderId in orders) {
     const order = orders[orderId];
     // this is just a treshold for the background bar.
     // so people can distinguish big orders from smaller ones easier.
-    order["amount_width"] = (order.sum_to_be_filled / bigOrder) * 100;
+    //order["amount_width"] = (order.sum_to_be_filled / bigOrder) * 100;
     orderBook.value[orderType].push(order);
+
+    if (maxTotalValue < order.total_price) {
+      maxTotalValue = order.total_price;
+    }
+  }
+
+  switch (orderType) {
+    case "buy":
+      orderBook.value.maxBuyValue = maxTotalValue;
+      break;
+    case "sell":
+      orderBook.value.maxSellValue = maxTotalValue;
+      break;
   }
 }
 
