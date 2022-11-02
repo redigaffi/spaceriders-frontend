@@ -1709,7 +1709,19 @@ export default defineComponent({
       },
     ];
     function redirectTestnet() {
-      window.location.href = "http://testnet.spaceriders.io/nouser";
+      const environment = process.env.ENV;
+
+      let url = "http://";
+
+      if (environment === "mainnet") {
+        url += "spiceriders.io";
+      } else if (environment === "testnet") {
+        url += "testnet.spiceriders.io";
+      } else {
+        url = "";
+      }
+
+      window.location.href = `${url}/nouser`;
       return;
     }
     return {
