@@ -534,6 +534,7 @@ export default defineComponent({
         }
 
         $store.commit(storeUpdateMethod, saveStore);
+        $store.commit("appendBuildingQueue", re.data.queue_item_info);
 
         $store.commit("restPlanetResources", {
           metal: re.data.metal_paid,
@@ -700,6 +701,8 @@ export default defineComponent({
         };
 
         $store.commit("repairResourceData", saveStore);
+        $store.commit("appendBuildingQueue", re.data.queue_item_info);
+
         $q.notify($notification("success", "Repairing in progress..."));
       } catch (e) {
         $q.notify($notification("failed", e));

@@ -41,20 +41,6 @@ export default class ApiRequests {
     return await axios.post(path, body);
   }
 
-  /**
-   * @param {string} txHash Hash which claims the planet
-   * @param {string} planetGuid Planet GUID.
-   */
-  static async confirmClaimPlanet(txHash, planetGuid) {
-    const path = `${process.env.BASE_API_PATH}/planet/claim/confirm`;
-
-    const body = {
-      claimTx: txHash,
-      planetId: planetGuid,
-    };
-
-    return (await axios.post(path, body)).data;
-  }
 
   static async fetchPlanetCost() {
     const path = `${process.env.BASE_API_PATH}/planet/cost`;
@@ -83,28 +69,6 @@ export default class ApiRequests {
   }
 
   /**
-   * Gets defense data for a given planet
-   *
-   * @param {string} planetId
-   * @returns
-   */
-  static async getDefenseData(planetId) {
-    const path = `${process.env.BASE_API_PATH}/defense/${planetId}`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
-   * Gets all resources for a given planet
-   *
-   * @param {string} planetId
-   * @returns
-   */
-  static async getResourceData(planetId) {
-    const path = `${process.env.BASE_API_PATH}/resource/${planetId}`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
    * @param {string} label
    * @param {string} planetGuid
    * @returns
@@ -117,47 +81,6 @@ export default class ApiRequests {
       label: data.label,
       planet_id: data.planetGuid,
       quantity: data.quantity,
-    };
-
-    return await axios.post(path, body);
-  }
-
-  /**
-   * Gets all installations for a given planet
-   *
-   * @param {string} planetId
-   * @returns
-   */
-  static async getInstallationData(planetId) {
-    const path = `${process.env.BASE_API_PATH}/installation/${planetId}`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
-   * Gets all research data for a given planet
-   *
-   * @param {string} planetId
-   * @returns
-   */
-  static async getResearchData(planetId) {
-    const path = `${process.env.BASE_API_PATH}/research/${planetId}`;
-    return (await axios.get(path)).data;
-  }
-
-  /**
-   * Conversion Request.
-   * @param {string} label
-   * @param {string} planetGuid
-   * @returns
-   */
-  static async conversionRequest(data) {
-    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/sign`;
-
-    const body = {
-      planet_id: data.planetId,
-      metal: data.metal,
-      crystal: data.crystal,
-      petrol: data.petrol,
     };
 
     return await axios.post(path, body);
@@ -348,56 +271,6 @@ export default class ApiRequests {
   }
 
   /**
-   * Conversion preview
-   * @returns
-   */
-  static async getPreviewConversion(planetId) {
-    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/preview`;
-    return await axios.get(path);
-  }
-
-  /**
-   * Confirm conversion
-   * @param {object} data
-   * @returns
-   */
-  static async confirmConversion(data) {
-    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/confirm`;
-
-    const body = {
-      planet_id: data.planetId,
-      token_conversion_id: data.guid,
-    };
-
-    return await axios.post(path, body);
-  }
-
-  /**
-   * Conversion preview
-   * @returns
-   */
-  static async getPendingConversions(planetId) {
-    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/${planetId}/pending`;
-    return await axios.get(path);
-  }
-
-  /**
-   * Confirm conversion
-   * @param {object} data
-   * @returns
-   */
-  static async retryConversion(data) {
-    const path = `${process.env.BASE_API_PATH}/planet/resources/convert/retry`;
-
-    const body = {
-      planet_id: data.planetId,
-      token_conversion_id: data.guid,
-    };
-
-    return await axios.post(path, body);
-  }
-
-  /**
    * @param {object} data
    * @returns
    */
@@ -440,5 +313,20 @@ export default class ApiRequests {
   static async getMediumFeed() {
     const path = `${process.env.BASE_API_PATH}/feed`;
     return await axios.get(path);
+  }
+
+  /**
+   * Repair Resource
+   * @param {object} data
+   * @returns
+   */
+  static async payQueue(data) {
+    const path = `${process.env.BASE_API_PATH}/planet/queue/clear`;
+
+    const body = {
+      planet_id: data.planetGuid,
+    };
+
+    return await axios.post(path, body);
   }
 }
