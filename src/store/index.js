@@ -22,6 +22,7 @@ const Store = createStore({
       installationData: false,
       researchData: false,
       defenseData: false,
+      buildingQueue: {items:[]},
       emails: [],
     };
   },
@@ -102,6 +103,10 @@ const Store = createStore({
       state.activePlanet = payload;
     },
 
+    setBuildingQueue(state, payload) {
+      state.buildingQueue = payload;
+    },
+
     setResourceData(state, payload) {
       state.resourceData = payload;
     },
@@ -148,6 +153,7 @@ const Store = createStore({
       state.installationData = { ...state.installationData };
       state.researchData = { ...state.researchData };
       state.defenseData = { ...state.defenseData };
+      state.buildingQueue.items = [ ...state.buildingQueue.items ]
     },
 
     restPlanetResources(state, payload) {
@@ -240,6 +246,7 @@ const Store = createStore({
       dataSource.finish = false;
 
       state.resourceData[label] = dataSource;
+      state.buildingQueue.items.shift();
     },
 
     upgradeFinished(state, payload) {
@@ -295,6 +302,8 @@ const Store = createStore({
           state.defenseData[label] = dataSource;
           break;
       }
+
+      state.buildingQueue.items.shift();
     },
 
     claimPendingLvlUp(state, payload) {
@@ -321,6 +330,10 @@ const Store = createStore({
     decrementEnergy(state, payload) {
       state.activePlanet.resources.energy -= payload.energy;
     },
+
+    appendBuildingQueue(state, payload) {
+      state.buildingQueue.items.push(payload)
+    }
   },
 
   getters: {
@@ -357,6 +370,10 @@ const Store = createStore({
 
     planets: (state) => {
       return state.planets;
+    },
+
+    buildingQueue: (state) => {
+      return state.buildingQueue;
     },
 
     resourceData: (state) => {

@@ -1,69 +1,85 @@
 <template>
   <div v-if="this.$store.getters.activePlanet !== false" class="q-py-sm">
     <q-card class="glass-element text-white queue-buildings">
-      <glass-element-heading class="text-overline"
-        ><slot></slot
-      ></glass-element-heading>
-      <div v-if="buildingsInQueue.length > 0">
-        <div
-          class="col-12 q-pa-sm text-center"
-          v-for="bQ in buildingsInQueue"
-          :key="`${bQ.name}`"
-        >
-          <div class="text-center c-subscribe-box">
-            <q-list rounded class="rainbow bg-dark q-pa-none">
-              <div class="text-warning q-pa-sm text-subtitle2">
-                {{ bQ.name }}
-              </div>
+      <glass-element-heading class="text-overline">Queue</glass-element-heading>
 
-              <q-item class="q-pa-none">
-                <q-item-section avatar>
-                  <img
-                    :src="`data_img/${bQ.label}.webp`"
-                    style="width: 70px; height: 70px"
-                    alt=""
-                  />
-                </q-item-section>
+<!--      <q-btn-->
+<!--        v-if="buildingsInQueue.length > 0"-->
+<!--        dense-->
+<!--        class="q-px-sm q-mt-sm full-width"-->
+<!--        color="warning"-->
+<!--        :label="`Pay ${clearQueueCost} $BKM to clear`"-->
+<!--        no-caps-->
+<!--        push-->
+<!--        @click="clearQueue"-->
+<!--      />-->
 
-                <q-item-label caption class="text-left">
-                  <div v-if="!itemType && !bQ.repairing" class="text-body2">
-                    Upgrade to :
-                    <span class="text-secondary text-weight-bold">{{
-                      bQ.level + 1
+      <div
+        class="col-12 q-pa-sm text-center"
+        v-for="bQ in buildingsInQueue"
+        :key="`${bQ.label}`"
+      >
+        <div class="text-center c-subscribe-box">
+          <q-list rounded class="rainbow bg-dark q-pa-none">
+            <div class="text-warning q-pa-sm text-subtitle2">
+              {{ Types.MAPPING[bQ.type].NAME_MAPPING.get(bQ.label) }}
+            </div>
+
+            <q-item class="q-pa-none">
+              <q-item-section avatar>
+                <img
+                  :src="`data_img/${bQ.label}.webp`"
+                  style="width: 70px; height: 70px"
+                  alt=""
+                />
+              </q-item-section>
+
+              <q-item-label caption class="text-left">
+                <div v-if="bQ.next_level !== null && bQ.action !== 'REPAIRING'" class="text-body2">
+                  Upgrade to :
+                  <span class="text-secondary text-weight-bold">{{
+                      bQ.next_level
                     }}</span>
-                  </div>
-                  <div v-if="itemType" class="text-body2">
-                    Quantity:
-                    <span class="text-secondary text-weight-bold">{{
-                      bQ.quantity_building
+                </div>
+                <div v-if="bQ.quantity !== null" class="text-body2">
+                  Quantity:
+                  <span class="text-secondary text-weight-bold">{{
+                      bQ.quantity
                     }}</span>
-                  </div>
-                  <div class="text-body2">
+                </div>
+                <div class="text-body2">
+                  <div v-if="bQ.start_at <= timestamp">
                     Time left :
                     <span class="text-secondary text-weight-bold">{{
-                      calculateClaimDate(bQ)
-                    }}</span>
+                        calculateRelativeTime(bQ.start_at + bQ.time_to_finish)
+                      }}</span>
                   </div>
-                  <div class="text-body2">
-                    Status :
-                    <span
-                      v-if="!itemType"
-                      class="text-secondary text-weight-bold"
-                    >
-                      <span v-if="bQ.repairing">Repairing...</span>
-                      <span v-else>Upgrading...</span>
+                  <div v-if="bQ.start_at > timestamp">
+                    Starts in :
+                    <span class="text-secondary text-weight-bold">{{
+                        calculateRelativeTime(bQ.start_at)
+                      }}</span>
+                  </div>
+
+                </div>
+                <div class="text-body2">
+                  Status :
+                  <span v-if="bQ.start_at <= timestamp">
+                      <span class="text-weight-bold" v-if="bQ.action === 'REPAIRING'">Repairing...</span>
+                      <span v-else class="text-weight-bold">Building...</span>
                     </span>
-                    <span v-else class="text-secondary text-weight-bold"
-                      >Building...</span
-                    >
-                  </div>
-                </q-item-label>
-              </q-item>
-            </q-list>
-          </div>
+                  <span v-else>
+                        <span class="text-weight-bold">In Queue...</span>
+                    </span>
+
+                </div>
+              </q-item-label>
+            </q-item>
+          </q-list>
         </div>
       </div>
-      <div v-else class="text-center">
+
+      <div v-if="buildingsInQueue.length <= 0" class="text-center">
         <div>
           <img
             src="~assets/img/stack-svgrepo-com.svg"
@@ -77,9 +93,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {
-  defineComponent,
   ref,
   reactive,
   watchEffect,
@@ -87,125 +102,156 @@ import {
   getCurrentInstance,
 } from "vue";
 import GlassElementHeading from "components/GlassElementHeading";
-import { useStore } from "vuex";
-import { BUILDING_UPGRADED } from "../constants/Events";
+import {useStore} from "vuex";
+import Types from "src/constants/Types";
+import ApiRequests from "src/service/http/ApiRequests";
+import {useQuasar} from "quasar";
 
-export default defineComponent({
-  name: "BuildingQueue",
-  components: {
-    GlassElementHeading,
-  },
-  props: {
-    data: {
-      type: Object,
-      default: undefined,
-    },
-    itemType: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
-    const $store = useStore();
-    const $eventBus =
-      getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $store = useStore();
+const $eventBus =
+  getCurrentInstance().appContext.config.globalProperties.$eventBus;
+const $q = useQuasar();
 
-    let refreshTimerId = ref(-1);
-    let queueTimeoutIds = reactive({});
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
-    function calculateClaimDate(building) {
+let refreshTimerId = ref(-1);
+let queueTimeoutIds = reactive({});
+
+function calculateRelativeTime(finishTimestamp) {
+  const now = new Date();
+
+  let finish = new Date(finishTimestamp * 1000);
+  const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
+  const s = Math.round(diffSeconds % 60);
+  const minutes = Math.round((diffSeconds - s) / 60);
+
+  const m = minutes % 60;
+  const h = Math.round(minutes - m) / 60;
+
+  let str = "";
+
+  if (h > 0) str += `${h} (h)`;
+  if (m > 0) str += ` ${m} (m)`;
+  if (s >= 0) str += ` ${s} (s)`;
+
+  if (str === "") {
+    str = "Finishing...";
+  }
+
+  return str;
+}
+
+function startTimers(data) {
+
+  for (let d in data) {
+    const b = data[d];
+    if (queueTimeoutIds[b.label] === undefined) {
       const now = new Date();
+      let finish = new Date((b.start_at + b.time_to_finish) * 1000);
+      const diffSeconds = finish.getTime() - now.getTime();
 
-      let finish = new Date(building.finish * 1000);
-      const diffSeconds = (finish.getTime() - now.getTime()) / 1000;
-      const s = Math.round(diffSeconds % 60);
-      const minutes = Math.round((diffSeconds - s) / 60);
-
-      const m = minutes % 60;
-      const h = Math.round(minutes - m) / 60;
-
-      let str = "";
-
-      if (h > 0) str += `${h}h`;
-      if (m > 0) str += ` ${m}m`;
-      if (s >= 0) str += ` ${s}s`;
-
-      if (str === "") {
-        str = "Finishing...";
-      }
-      return str;
-    }
-
-    function startTimers(data) {
-      for (let d in data) {
-        const b = data[d];
-        if (queueTimeoutIds[b.label] === undefined) {
-          const now = new Date();
-
-          let finish = new Date(b.finish * 1000);
-          const diffSeconds = finish.getTime() - now.getTime();
-
-          queueTimeoutIds[b.label] = setTimeout(() => {
-            if (b.building) {
-              $store.commit("upgradeFinished", {
-                label: b.label,
-                type: b.type,
-              });
-            } else if (b.repairing) {
-              $store.commit("repairFinished", { label: b.label, type: b.type });
-            }
-            queueTimeoutIds[b.label] = undefined;
-          }, diffSeconds);
+      queueTimeoutIds[b.label] = setTimeout(() => {
+        if (b.action === "BUILDING") {
+          $store.commit("upgradeFinished", {
+            label: b.label,
+            type: b.type,
+          });
+        } else if (b.action === "REPAIRING") {
+          $store.commit("repairFinished", {
+            label: b.label,
+            type: b.type
+          });
         }
-      }
+        queueTimeoutIds[b.label] = undefined;
+      }, diffSeconds);
     }
+  }
+}
 
-    const buildingsInQueue = computed(() => {
-      const data = props.data;
+let timestamp = ref(Date.now() / 1000);
 
-      let re = [];
-      for (let key in data) {
-        const building = data[key];
-        if (building.building || building.repairing) {
-          re.push(building);
-        }
-      }
-
-      return re;
-    });
-
-    /* $eventBus.on(BUILDING_UPGRADED, () => {
-      startTimers(buildingsInQueue.value);
-    }); */
-
-    //startTimers(buildingsInQueue.value);
-    function refreshAll() {
-      if (refreshTimerId.value !== -1) {
-        return;
-      }
-
-      refreshTimerId.value = setInterval(() => {
-        $store.commit("refreshAllData");
-        if (buildingsInQueue.value.length === 0) {
-          clearInterval(refreshTimerId.value);
-          refreshTimerId.value = -1;
-        }
-      }, 1000);
-    }
-
-    watchEffect(() => {
-      if (buildingsInQueue.value.length > 0) {
-        startTimers(buildingsInQueue.value);
-        refreshAll();
-      }
-    });
-
-    return {
-      buildingsInQueue: buildingsInQueue,
-      calculateClaimDate: calculateClaimDate,
-    };
-  },
+const buildingsInQueue = computed(() => {
+  return $store.getters.buildingQueue.items;
 });
+
+function refreshAll() {
+  if (refreshTimerId.value !== -1) {
+    return;
+  }
+
+  refreshTimerId.value = setInterval(() => {
+    timestamp.value = Date.now() / 1000;
+    $store.commit("refreshAllData");
+    if (buildingsInQueue.value.length === 0) {
+      clearInterval(refreshTimerId.value);
+      refreshTimerId.value = -1;
+    }
+  }, 1000);
+}
+
+watchEffect(() => {
+  if (buildingsInQueue.value.length > 0) {
+    startTimers(buildingsInQueue.value);
+    refreshAll();
+  }
+});
+
+const clearQueueCost = computed(() => {
+  let totalCost = 0;
+
+  buildingsInQueue.value.forEach((bQ) => {
+    let diffSeconds = bQ.start_at + bQ.time_to_finish - timestamp.value;
+    let minutes = diffSeconds / 60;
+
+    totalCost += minutes * 2;
+  });
+
+  return totalCost.toFixed(2);
+});
+
+async function clearQueue() {
+  let totalCost = 0;
+
+  if ($store.getters.activePlanet.resources.bkm <= clearQueueCost.value) {
+    $q.notify($notification("failed", "Not enough $BKM to clear queue"));
+    return;
+  }
+
+  try {
+    const re = await ApiRequests.payQueue({
+      planetGuid: $store.getters.activePlanet.id,
+    });
+
+    const paid = re.data.total_cost;
+
+    for (let idx in buildingsInQueue.value) {
+      const item = buildingsInQueue.value[idx];
+
+      if (item.action === "BUILDING") {
+        $store.commit("upgradeFinished", {
+          label: item.label,
+          type: item.type,
+        });
+      } else if (item.action === "REPAIRING") {
+        $store.commit("repairFinished", {
+          label: item.label,
+          type: item.type
+        });
+      }
+
+      clearTimeout(queueTimeoutIds[item.label]);
+      queueTimeoutIds[item.label] = undefined;
+    }
+
+    $store.commit("decrementBkm", {bkm: paid});
+    $q.notify($notification("success", "Cleared queue successfully"));
+  } catch (e) {
+    $q.notify($notification("failed", e));
+  }
+
+
+}
 </script>
 <style lang="scss">
 .queue-buildings {
@@ -245,8 +291,8 @@ export default defineComponent({
     background-size: 50% 50%, 50% 50%;
     background-position: 0 0, 100% 0, 100% 100%, 0 100%;
     background-image: linear-gradient(#373945, #1a1923),
-      linear-gradient(#223147, #2e141b), linear-gradient(#111916, #1a1923),
-      linear-gradient(#280133, #2e1832);
+    linear-gradient(#223147, #2e141b), linear-gradient(#111916, #1a1923),
+    linear-gradient(#280133, #2e1832);
     animation: rotate 4s linear infinite;
   }
 

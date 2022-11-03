@@ -19,20 +19,8 @@
 
         <div class="row q-col-gutter-md">
           <BuildingQueue
-            :data="buildingQueueData"
             class="col-xs-12 col-sm-6 col-md-4"
-            >Buildings</BuildingQueue
-          >
-          <BuildingQueue
-            :data="researchQueueData"
-            class="col-xs-12 col-sm-6 col-md-4"
-            >Research</BuildingQueue
-          >
-          <BuildingQueue
-            itemType
-            :data="defenseFleetQueueData"
-            class="col-xs-12 col-sm-6 col-md-4"
-            >Spaceships/Defense</BuildingQueue
+            />
           >
         </div>
 
@@ -196,7 +184,7 @@
 </template>
 <script setup>
 // window.location.reload();
-import { getCurrentInstance, defineComponent, ref, computed } from "vue";
+import { getCurrentInstance, ref, computed } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import ResourcesDisplay from "../components/ResourcesDisplay.vue";
@@ -216,21 +204,6 @@ import { useQuasar } from "quasar";
 const $store = useStore();
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
-
-let buildingQueueData = computed(() => {
-  return {
-    ...$store.getters.resourceData,
-    ...$store.getters.installationData,
-  };
-});
-
-let researchQueueData = computed(() => {
-  return $store.getters.activePlanet.research_level;
-});
-
-let defenseFleetQueueData = computed(() => {
-  return $store.getters.activePlanet.defense_items;
-});
 
 const anyUnreadMessage = computed(() => {
   const emails = $store.getters.emails;
@@ -331,6 +304,8 @@ async function update(activePlanet) {
   $store.commit("setInstallationData", allPlanetInfo.installation);
   $store.commit("setResearchData", allPlanetInfo.research);
   $store.commit("setDefenseData", allPlanetInfo.defense);
+  $store.commit("setBuildingQueue", allPlanetInfo.building_queue);
+
   $store.commit("addEmails", { emails: allPlanetInfo.emails });
 }
 

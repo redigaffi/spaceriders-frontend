@@ -10,6 +10,16 @@ class ResourceType {
   CRYSTAL_WAREHOUSE = "crystalWarehouse";
   PETROL_WAREHOUSE = "petrolWarehouse";
   TYPE = "resources";
+
+  NAME_MAPPING = new Map([
+    [this.METAL_MINE, "Metal Mine"],
+    [this.CRYSTAL_MINE, "Crystal Mine"],
+    [this.PETROL_MINE, "Petrol Mine"],
+    [this.METAL_WAREHOUSE, "Metal Warehouse"],
+    [this.CRYSTAL_WAREHOUSE, "Crystal Warehouse"],
+    [this.PETROL_WAREHOUSE, "Petrol Warehouse"],
+  ]);
+
   RESOURCE_TYPES = [
     this.METAL_MINE,
     this.CRYSTAL_MINE,
