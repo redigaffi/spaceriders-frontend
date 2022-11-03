@@ -157,7 +157,7 @@ const buyMetadata = ref({
     image: "https://cryptologos.cc/logos/binance-usd-busd-logo.svg?v=022",
   },
   bkm: {
-    image: "logo.webp",
+    image: "bkm.webp",
   },
 });
 
