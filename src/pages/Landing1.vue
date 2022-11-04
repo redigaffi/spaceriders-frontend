@@ -1714,9 +1714,9 @@ export default defineComponent({
       let url = "http://";
 
       if (environment === "mainnet") {
-        url += "spiceriders.io";
+        url += "spaceriders.io";
       } else if (environment === "testnet") {
-        url += "testnet.spiceriders.io";
+        url += "testnet.spaceriders.io";
       } else {
         url = "";
       }
