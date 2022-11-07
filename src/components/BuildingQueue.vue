@@ -1,7 +1,5 @@
 <template>
-  1asd1
   <div v-if="$store.getters.activePlanet !== false" class="q-py-sm">
-    haha
     <q-card class="glass-element text-white queue-buildings">
       <glass-element-heading class="text-overline">Queue</glass-element-heading>
 

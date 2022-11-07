@@ -18,11 +18,9 @@
         </div>
 
         <div class="row q-col-gutter-md">
-          asdsad
           <BuildingQueue
             class="col-xs-12 col-sm-6 col-md-4"
             />
-          lkel
         </div>
 
         <q-page-sticky
