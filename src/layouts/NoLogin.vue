@@ -21,17 +21,20 @@
               value: 100,
               density: {
                 enable: true,
-                value_area: 1000,
+                value_area: 1200,
               },
             },
             color: {
               value: '#ffffff',
             },
             shape: {
-              type: 'circle',
+              type: 'star',
               stroke: {
                 width: 0,
                 color: '#000000',
+              },
+              polygon: {
+                nb_sides: 4,
               },
               image: {
                 src: '',
@@ -63,7 +66,7 @@
               enable: true,
               speed: 0.5,
               direction: 'bottom',
-              random: false,
+              random: true,
               straight: true,
               out_mode: 'out',
               bounce: false,
