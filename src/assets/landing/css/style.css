@@ -11,7 +11,7 @@
   font-family: headingFont;
   src: url(/src/assets/font/TrueBlue-PhiloLogicXP-ExpandedRegular.otf);
 } */
-/*   
+/*
   body {
 	font-family: OrbitronFont;
 	border: 1px solid black;
@@ -287,7 +287,7 @@ input::-webkit-inner-spin-button {
 
 .custom-card {
   background: rgba(0, 0, 0, 0.5);
-  border: 1px solid $info;
+  border: 1px solid #2253f4;
   border-radius: 10px;
 }
 

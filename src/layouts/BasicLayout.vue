@@ -154,7 +154,7 @@ async function init() {
 init();
 </script>
 
-<style>
+<style scoped>
 /*
 https://codepen.io/mattmarble/pen/qBdamQz
 */

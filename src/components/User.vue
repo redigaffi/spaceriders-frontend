@@ -142,7 +142,7 @@ onBeforeMount(async () => {
 const logout = () => {
   $store.commit("destroySession");
   router.push({
-    name: "nouser",
+    path: "/nouser",
   });
 };
 

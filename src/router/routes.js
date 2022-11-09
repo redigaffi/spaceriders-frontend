@@ -17,6 +17,7 @@ const planetExplorer = () => import("pages/PlanetExplorer.vue");
 const tradingPage = () => import("pages/Trading.vue");
 
 const landingPage = () => import("src/pages/Landing1.vue");
+const loginPage = () => import("pages/Login.vue");
 
 // ROUTES
 const routes = [
@@ -178,6 +179,14 @@ const routes = [
       menu: false,
       title: "Login",
     },
+    children: [
+      {
+        path: "",
+        component: loginPage,
+        name: "nouser",
+        meta: { title: "Login" },
+      },
+    ],
   },
 
   // Always leave this as last one,
