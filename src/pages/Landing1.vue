@@ -264,6 +264,7 @@
     <section class="main">
       <Particles
         id="particles-js"
+        class="particles-header"
         :options="{
           fpsLimit: 60,
           interactivity: {
@@ -1810,7 +1811,7 @@ export default defineComponent({
   }
 }
 
-#particles-js {
+.particles-header {
   position: absolute;
   top: 0;
   right: 0;
