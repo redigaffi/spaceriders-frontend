@@ -197,7 +197,7 @@ let linksList = computed(() => {
         }
 
         if (childInfo.name === "planet") {
-          if (loggedIn) {
+          if (loggedIn && hasPlanets) {
             tmplinksList.push(linksListInfo.explorer);
           }
         }

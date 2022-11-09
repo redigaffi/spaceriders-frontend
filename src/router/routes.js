@@ -51,7 +51,7 @@ const routes = [
         name: "explorer",
         meta: {
           requiresAuth: true,
-          requiresPlanet: false,
+          requiresPlanet: true,
           menu: false,
           title: "Planet Explorer",
         },
@@ -69,7 +69,7 @@ const routes = [
         name: "explorer-exact-position",
         meta: {
           requiresAuth: true,
-          requiresPlanet: false,
+          requiresPlanet: true,
           menu: false,
           title: "Planet Explorer",
         },
