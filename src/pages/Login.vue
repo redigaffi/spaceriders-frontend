@@ -6,7 +6,7 @@
           <div class="text-h6 text-center">Welcome to SpaceRiders</div>
         </q-card-section>
 
-        <img src="img/no-planet.webp" />
+        <img src="~assets/img/no-planet.webp" />
 
         <q-separator dark />
 
