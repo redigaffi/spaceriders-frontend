@@ -62,7 +62,7 @@
             },
             move: {
               enable: true,
-              speed: 3,
+              speed: 0.5,
               direction: 'bottom',
               random: false,
               straight: true,

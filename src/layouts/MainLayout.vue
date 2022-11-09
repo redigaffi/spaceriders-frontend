@@ -62,7 +62,7 @@
             },
             move: {
               enable: true,
-              speed: 3,
+              speed: 0.5,
               direction: 'bottom',
               random: false,
               straight: true,
@@ -87,9 +87,7 @@
         </div>
 
         <div class="row q-col-gutter-md">
-          <BuildingQueue
-            class="col-xs-12 col-sm-6 col-md-4"
-            />
+          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4" />
         </div>
 
         <q-page-sticky
