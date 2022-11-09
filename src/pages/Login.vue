@@ -1,5 +1,5 @@
 <template>
-  <div class="row window-height justify-center items-center q-px-md">
+  <div class="row window-height justify-center items-center">
     <div class="col-12 col-md-6 col-lg-4">
       <q-card dark>
         <q-card-section>
