@@ -6,7 +6,7 @@
         <glass-element-heading
           class="text-h6 text-center text-weight-bold text-secondary"
         >
-          DEFENSE
+          DEFENSES
         </glass-element-heading>
 
         <div>
@@ -35,7 +35,7 @@
     </div>
     <ItemList
       itemType
-      listName="Defense"
+      listName="Defenses"
       :data="this.$store.getters.defenseData"
       @change="slideDiv"
     />
