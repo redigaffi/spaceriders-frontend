@@ -157,7 +157,7 @@ const login = async (providerName) => {
     $eventBus.emit(LOGGED_IN);
 
     router.push({
-      name: "planet",
+      name: "planets",
     });
 
     $quasar.loading.hide();

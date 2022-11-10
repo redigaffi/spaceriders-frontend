@@ -45,16 +45,16 @@ export default route(function (/* { store, ssrContext } */) {
     const hasPlanets = Store.getters.activePlanet;
 
     if (loggedIn && to.name == "nouser") {
-      next({ name: "planet" });
+      next({ name: "planets" });
     } else if (!loggedIn && requieresAuth && to.name != "nouser") {
       next({ name: "nouser" });
     } else if (
       requiresPlanet &&
       loggedIn &&
       !hasPlanets &&
-      to.name != "planet"
+      to.name != "planets"
     ) {
-      next({ name: "planet" });
+      next({ name: "planets" });
     } else {
       next();
     }
