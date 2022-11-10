@@ -113,9 +113,9 @@ const linksListInfo = {
     icon: "info",
     attr: {},
   },
-  planet: {
+  planets: {
     title: "Planets",
-    link: "/planet",
+    link: "/planets",
     icon: "fas fa-globe-europe",
     attr: {},
   },
@@ -137,9 +137,9 @@ const linksListInfo = {
     icon: "travel_explore",
     attr: {},
   },
-  defense: {
-    title: "Defense",
-    link: "/defense",
+  defenses: {
+    title: "Defenses",
+    link: "/defenses",
     icon: "security",
     attr: {},
   },
@@ -197,7 +197,7 @@ let linksList = computed(() => {
         }
 
         if (childInfo.name === "planet") {
-          if (loggedIn) {
+          if (loggedIn && hasPlanets) {
             tmplinksList.push(linksListInfo.explorer);
           }
         }

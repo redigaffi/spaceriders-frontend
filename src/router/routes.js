@@ -51,7 +51,7 @@ const routes = [
         name: "explorer",
         meta: {
           requiresAuth: true,
-          requiresPlanet: false,
+          requiresPlanet: true,
           menu: false,
           title: "Planet Explorer",
         },
@@ -69,7 +69,7 @@ const routes = [
         name: "explorer-exact-position",
         meta: {
           requiresAuth: true,
-          requiresPlanet: false,
+          requiresPlanet: true,
           menu: false,
           title: "Planet Explorer",
         },
@@ -113,14 +113,14 @@ const routes = [
     children: [
       { path: "", component: planetInfoPage, meta: { title: "Overview" } },
       {
-        path: "/planet",
+        path: "/planets",
         component: planetPage,
-        name: "planet",
+        name: "planets",
         meta: {
           menu: true,
           requiresAuth: true,
           requiresPlanet: false,
-          title: "Planet",
+          title: "Planets",
         },
       },
       {
@@ -157,14 +157,14 @@ const routes = [
         },
       },
       {
-        path: "/defense",
+        path: "/defenses",
         component: defensePage,
-        name: "defense",
+        name: "defenses",
         meta: {
           menu: true,
           requiresAuth: true,
           requiresPlanet: true,
-          title: "Defense",
+          title: "Defenses",
         },
       },
     ],
