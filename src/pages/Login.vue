@@ -1,12 +1,12 @@
 <template>
-  <div class="row window-height justify-center items-center q-px-md">
+  <div class="row window-height justify-center items-center">
     <div class="col-12 col-md-6 col-lg-4">
       <q-card dark>
         <q-card-section>
           <div class="text-h6 text-center">Welcome to SpaceRiders</div>
         </q-card-section>
 
-        <img src="img/no-planet.webp" />
+        <img src="~assets/img/no-planet.webp" />
 
         <q-separator dark />
 
