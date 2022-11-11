@@ -937,7 +937,7 @@
             </div>
 
             <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
-              <a href="https://haechi.io/?lang=en" target="_blank">
+              <a href="https://facewallet.xyz/" target="_blank">
                 <q-img
                   src="~assets/landing/img/partners/face_wallet.webp"
                   alt="Face Wallet"
