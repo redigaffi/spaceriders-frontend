@@ -188,6 +188,18 @@
                       <q-item>
                         <q-item-section>
                           <q-item-label
+                            ><q-icon name="savings" /> Balance:</q-item-label
+                          >
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <Balance />
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label
                             ><q-icon name="fas fa-solar-panel" />
                             Dominion:</q-item-label
                           >
@@ -385,6 +397,7 @@ import AsteroidCollision from "../components/email_templates/AsteroidCollision.v
 import SpacePirates from "../components/email_templates/SpacePirates.vue";
 import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
+import Balance from "../components/Balance.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import {
   ACTIVE_PLANET_CHANGED,
