@@ -89,9 +89,30 @@
           <PlanetList />
         </div>
 
-        <div class="row q-col-gutter-md">
-          <BuildingQueue class="col-xs-12 col-sm-6 col-md-4" />
-        </div>
+        <q-page-sticky
+          :class="
+            !$store.getters.drawerLeft && !$store.getters.drawerRight
+              ? 'z-top'
+              : ''
+          "
+          position="bottom-right"
+          :offset="[24, 96]"
+        >
+          <q-btn
+            size="sm"
+            fab
+            icon="handyman"
+            color="primary"
+            @click="changeTabPanel('queue')"
+          >
+            <q-badge
+              class="animation absolute-top-right"
+              v-if="buildingsInQueue.length"
+              color="info"
+              rounded
+            />
+          </q-btn>
+        </q-page-sticky>
 
         <q-page-sticky
           :class="
@@ -107,10 +128,7 @@
             fab
             icon="mail"
             color="primary"
-            @click="
-              $store.commit('setTabPanel', 'inbox');
-              $store.commit('toggleDrawerRight');
-            "
+            @click="changeTabPanel('inbox')"
           >
             <q-badge
               class="animation absolute-top-right"
@@ -122,7 +140,7 @@
         </q-page-sticky>
 
         <q-drawer
-          v-model="toggleDrawer"
+          v-model="drawer"
           :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
           :breakpoint="500"
           overlay
@@ -143,7 +161,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="$store.commit('toggleDrawerRight')"
+                          @click="drawer = !drawer"
                         />
                       </div>
                     </div>
@@ -255,6 +273,52 @@
                       narrow-indicator
                     >
                       <q-tab name="profile" label="Profile" />
+                      <q-tab name="queue" label="Queue" />
+                      <q-tab name="inbox" label="Inbox" />
+                    </q-tabs>
+                  </q-card-section>
+                </div>
+              </q-card>
+            </q-tab-panel>
+
+            <q-tab-panel name="queue" class="q-pa-none">
+              <q-card flat class="column full-height justify-between">
+                <div>
+                  <q-card-section class="text-h6 text-weight-bold">
+                    <div class="row justify-between">
+                      <div>QUEUE</div>
+                      <div>
+                        <q-btn
+                          flat
+                          round
+                          size="sm"
+                          color="white"
+                          icon="close"
+                          @click="drawer = !drawer"
+                        />
+                      </div>
+                    </div>
+                  </q-card-section>
+
+                  <q-separator dark />
+
+                  <q-card-section class="q-px-none">
+                    <q-scroll-area style="height: 70vh">
+                      <building-queue />
+                    </q-scroll-area>
+                  </q-card-section>
+                </div>
+
+                <div>
+                  <q-card-section class="q-pa-none">
+                    <q-tabs
+                      v-model="tabPanel"
+                      dense
+                      align="justify"
+                      narrow-indicator
+                    >
+                      <q-tab name="profile" label="Profile" />
+                      <q-tab name="queue" label="Queue" />
                       <q-tab name="inbox" label="Inbox" />
                     </q-tabs>
                   </q-card-section>
@@ -275,7 +339,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="$store.commit('toggleDrawerRight')"
+                          @click="drawer = !drawer"
                         />
                       </div>
                     </div>
@@ -286,6 +350,13 @@
                   <q-card-section class="q-px-none">
                     <q-scroll-area style="height: 60vh">
                       <q-list>
+                        <q-item v-if="emails.length === 0">
+                          <q-item-section class="text-center">
+                            <q-item-label
+                              >There are no messages...</q-item-label
+                            >
+                          </q-item-section>
+                        </q-item>
                         <q-item
                           clickable
                           v-ripple
@@ -339,6 +410,7 @@
                       narrow-indicator
                     >
                       <q-tab name="profile" label="Profile" />
+                      <q-tab name="queue" label="Queue" />
                       <q-tab name="inbox" label="Inbox" />
                     </q-tabs>
                   </q-card-section>
@@ -427,14 +499,26 @@ const tabPanel = computed({
   },
 });
 
-const toggleDrawer = computed({
+const drawer = computed({
   get: () => {
     return $store.getters.drawerRight;
   },
   set: (value) => {
-    $store.commit("toggleDrawerRight");
+    $store.commit("setDrawerRight", value);
   },
 });
+
+const changeTabPanel = (tab) => {
+  if (drawer.value && tabPanel.value === tab) {
+    drawer.value = !drawer.value;
+  } else {
+    tabPanel.value = tab;
+
+    if (!drawer.value) {
+      drawer.value = !drawer.value;
+    }
+  }
+};
 
 const avatar = jdenticon.toSvg($store.getters.address, 200);
 
@@ -457,6 +541,10 @@ const logout = () => {
     path: "/nouser",
   });
 };
+
+const buildingsInQueue = computed(() => {
+  return $store.getters.buildingQueue.items;
+});
 
 const anyUnreadMessage = computed(() => {
   const emails = $store.getters.emails;

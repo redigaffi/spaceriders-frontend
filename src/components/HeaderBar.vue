@@ -7,13 +7,7 @@
   >
     <div :class="$q.screen.lt.md ? 'q-px-lg' : 'container'">
       <div class="header__inner">
-        <q-btn
-          flat
-          @click="$store.commit('toggleDrawerLeft')"
-          round
-          dense
-          icon="menu"
-        />
+        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
 
         <q-toolbar-title>
           <span class="blue">SPACE</span>RIDERS
@@ -21,19 +15,13 @@
 
         <div class="header__nav">
           <Swap v-if="$store.getters.loggedIn">
-            <button
-              class="button q-pa-md q-mr-xs"
-              style="
-                border: 3px solid #2253f4;
-                border-radius: 5px;
-                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-                color: #fff;
-                font-size: 12px;
-                padding: 7px 15px;
-              "
-            >
-              SWAP
-            </button>
+            <q-btn
+              icon="currency_exchange"
+              label="SWAP"
+              color="info"
+              dark
+              class="q-mr-sm"
+            />
           </Swap>
 
           <User />
@@ -43,7 +31,7 @@
   </q-header>
 
   <q-drawer
-    v-model="toggleDrawer"
+    v-model="drawer"
     :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
     :breakpoint="500"
     elevated
@@ -61,7 +49,7 @@
               size="sm"
               color="white"
               icon="close"
-              @click="$store.commit('toggleDrawerLeft')"
+              @click="drawer = !drawer"
             />
           </div>
         </div>
@@ -91,10 +79,7 @@
             clickable
             exact
             exact-active-class="bg-primary text-white"
-            @click="
-              $store.commit('setTabPanel', 'profile');
-              $store.commit('toggleDrawerRight');
-            "
+            @click="changeTabPanel('profile')"
           >
             <q-item-section>
               <q-item-label>
@@ -265,14 +250,28 @@ const linksListInfo = {
 const $store = useStore();
 const $quasar = useQuasar();
 
-const toggleDrawer = computed({
+const tabPanel = computed({
+  get: () => {
+    return $store.getters.tabPanel;
+  },
+  set: (value) => {
+    $store.commit("setTabPanel", value);
+  },
+});
+
+const drawer = computed({
   get: () => {
     return $store.getters.drawerLeft;
   },
   set: (value) => {
-    $store.commit("toggleDrawerLeft");
+    $store.commit("setDrawerLeft", value);
   },
 });
+
+const changeTabPanel = (tab) => {
+  tabPanel.value = tab;
+  $store.commit("setDrawerRight", !$store.getters.drawerRight);
+};
 
 //@TODO: refactor this way of constructing menu.
 let linksList = computed(() => {
@@ -323,12 +322,7 @@ let linksList = computed(() => {
   return tmplinksList;
 });
 
-const leftDrawerOpen = ref(false);
 const essentialLinks = linksList;
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
 
 const hasActivePlanet = computed(() => {
   return $store.getters.activePlanet !== false;

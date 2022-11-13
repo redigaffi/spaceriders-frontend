@@ -57,12 +57,12 @@ const Store = createStore({
       state.tabPanel = payload;
     },
 
-    toggleDrawerLeft(state) {
+    setDrawerLeft(state, payload) {
       state.drawerRight = false;
       state.drawerLeft = !state.drawerLeft;
     },
 
-    toggleDrawerRight(state) {
+    setDrawerRight(state, payload) {
       state.drawerLeft = false;
       state.drawerRight = !state.drawerRight;
     },
