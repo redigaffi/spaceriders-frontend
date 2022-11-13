@@ -25,6 +25,8 @@ const Store = createStore({
       buildingQueue: { items: [] },
       emails: [],
       tabPanel: "profile",
+      drawerLeft: false,
+      drawerRight: false,
     };
   },
   mutations: {
@@ -53,6 +55,16 @@ const Store = createStore({
 
     setTabPanel(state, payload) {
       state.tabPanel = payload;
+    },
+
+    toggleDrawerLeft(state) {
+      state.drawerRight = false;
+      state.drawerLeft = !state.drawerLeft;
+    },
+
+    toggleDrawerRight(state) {
+      state.drawerLeft = false;
+      state.drawerRight = !state.drawerRight;
     },
 
     addEmails(state, payload) {
@@ -403,6 +415,14 @@ const Store = createStore({
 
     tabPanel: (state) => {
       return state.tabPanel;
+    },
+
+    drawerLeft: (state) => {
+      return state.drawerLeft;
+    },
+
+    drawerRight: (state) => {
+      return state.drawerRight;
     },
 
     address: (state) => {

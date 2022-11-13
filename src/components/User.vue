@@ -4,14 +4,18 @@
     <div class="row">
       <div class>
         <q-btn
-          rounded
           v-if="!error"
-          :label="logInButtonText"
-          class="glossy q-mr-sm"
-          color="primary"
-          icon="person"
-          @click="chooseLoginPopupFunc"
-        />
+          color="info"
+          @click="
+            $store.commit('setTabPanel', 'profile');
+            $store.commit('toggleDrawerRight');
+          "
+        >
+          <q-avatar class="q-mr-xs" color="secondary" size="24px">
+            <q-img v-html="avatar" />
+          </q-avatar>
+          Profile
+        </q-btn>
         <q-btn
           v-else
           label="Incorrect Network"
@@ -22,11 +26,14 @@
         />
       </div>
 
+      <!--
       <div :class="tier != 'TIER 0' ? 'glitch' : 'boring'" :data-text="tier">
         {{ tier }}
       </div>
+      -->
     </div>
 
+    <!--
     <q-dialog v-model="userInfoPopup">
       <q-card>
         <q-card-section>
@@ -43,8 +50,10 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    -->
   </div>
 
+  <!--
   <q-dialog v-model="chooseLoginPopup">
     <q-card
       class="bg-dark text-white"
@@ -86,6 +95,7 @@
       </div>
     </q-card>
   </q-dialog>
+  -->
 </template>
 
 <script setup>
@@ -96,6 +106,7 @@ import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import jdenticon from "jdenticon/standalone";
 
 const $quasar = useQuasar();
 
@@ -111,6 +122,8 @@ const userInfoPopup = ref(false);
 const chooseLoginPopup = ref(false);
 const error = ref(false);
 const router = useRouter();
+
+const avatar = jdenticon.toSvg($store.getters.address, 24);
 
 onBeforeMount(async () => {
   if (chainData.value !== false) {

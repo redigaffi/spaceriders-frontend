@@ -94,7 +94,11 @@
         </div>
 
         <q-page-sticky
-          :class="!openInboxModel ? 'z-top' : ''"
+          :class="
+            !$store.getters.drawerLeft && !$store.getters.drawerRight
+              ? 'z-top'
+              : ''
+          "
           position="bottom-right"
           :offset="[24, 24]"
         >
@@ -105,7 +109,7 @@
             color="primary"
             @click="
               $store.commit('setTabPanel', 'inbox');
-              openInboxModel = !openInboxModel;
+              $store.commit('toggleDrawerRight');
             "
           >
             <q-badge
@@ -118,7 +122,7 @@
         </q-page-sticky>
 
         <q-drawer
-          v-model="openInboxModel"
+          v-model="toggleDrawer"
           :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
           :breakpoint="500"
           overlay
@@ -139,7 +143,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="openInboxModel = !openInboxModel"
+                          @click="$store.commit('toggleDrawerRight')"
                         />
                       </div>
                     </div>
@@ -271,7 +275,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="openInboxModel = !openInboxModel"
+                          @click="$store.commit('toggleDrawerRight')"
                         />
                       </div>
                     </div>
@@ -280,7 +284,7 @@
                   <q-separator dark />
 
                   <q-card-section class="q-px-none">
-                    <q-scroll-area style="height: 70vh">
+                    <q-scroll-area style="height: 60vh">
                       <q-list>
                         <q-item
                           clickable
@@ -407,6 +411,7 @@ import {
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import jdenticon from "jdenticon/standalone";
+import { onMounted } from "@vue/runtime-core";
 
 const $store = useStore();
 const router = useRouter();
@@ -419,6 +424,15 @@ const tabPanel = computed({
   },
   set: (value) => {
     $store.commit("setTabPanel", value);
+  },
+});
+
+const toggleDrawer = computed({
+  get: () => {
+    return $store.getters.drawerRight;
+  },
+  set: (value) => {
+    $store.commit("toggleDrawerRight");
   },
 });
 
