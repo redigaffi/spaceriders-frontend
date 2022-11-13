@@ -1,5 +1,5 @@
 <template>
-  <div :class="'q-px-' + ($q.screen.lt.md ? 'sm' : 'lg')">
+  <div :class="'q-pa-' + ($q.screen.lt.md ? 'sm' : 'lg')">
     <div class="row">
       <div v-if="$q.screen.lt.md" class="col-12">
         <q-toolbar class="bg-primary">
