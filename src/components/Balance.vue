@@ -4,18 +4,16 @@
       rounded
       v-if="showTokenAmount"
       @click="toggleValue"
-      class="glossy"
       color="primary"
       text-color="white"
     >
-      <img src="logo.webp" style="width: 22px; height: 22px" />
+      <img src="bkm.webp" style="width: 28px; height: 28px" />
       <div class="q-ml-sm">{{ tokenBalance }}</div>
     </q-btn>
     <q-btn
       rounded
       v-else
       @click="toggleValue"
-      class="glossy"
       color="primary"
       text-color="white"
     >
