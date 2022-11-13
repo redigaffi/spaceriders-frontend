@@ -1,4 +1,114 @@
 <template>
+  <q-header
+    class="header"
+    :class="{
+      'header-bg': !headerTransparency,
+    }"
+  >
+    <div :class="$q.screen.lt.md ? 'q-px-lg' : 'container'">
+      <div class="header__inner">
+        <q-btn
+          flat
+          @click="$store.commit('toggleDrawerLeft')"
+          round
+          dense
+          icon="menu"
+        />
+
+        <q-toolbar-title>
+          <span class="blue">SPACE</span>RIDERS
+        </q-toolbar-title>
+
+        <div class="header__nav">
+          <Swap v-if="$store.getters.loggedIn">
+            <button
+              class="button q-pa-md q-mr-xs"
+              style="
+                border: 3px solid #2253f4;
+                border-radius: 5px;
+                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+                color: #fff;
+                font-size: 12px;
+                padding: 7px 15px;
+              "
+            >
+              SWAP
+            </button>
+          </Swap>
+
+          <User />
+        </div>
+      </div>
+    </div>
+  </q-header>
+
+  <q-drawer
+    v-model="toggleDrawer"
+    :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
+    :breakpoint="500"
+    elevated
+    overlay
+    class="bg-dark-3"
+  >
+    <q-card flat class="full-height">
+      <q-card-section class="text-h6 text-weight-bold">
+        <div class="row justify-between">
+          <div>Navigation</div>
+          <div>
+            <q-btn
+              flat
+              round
+              size="sm"
+              color="white"
+              icon="close"
+              @click="$store.commit('toggleDrawerLeft')"
+            />
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section class="q-pa-none">
+        <q-list>
+          <NavLinks
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+            :icon="link.icon"
+          />
+
+          <Swap v-if="$store.getters.loggedIn">
+            <q-item clickable exact exact-active-class="bg-primary text-white">
+              <q-item-section>
+                <q-item-label>
+                  <q-icon name="currency_exchange" />
+                  SWAP
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </Swap>
+
+          <q-item
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="
+              $store.commit('setTabPanel', 'profile');
+              $store.commit('toggleDrawerRight');
+            "
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="fas fa-user-circle" />
+                Profile
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+  </q-drawer>
+
+  <!--
   <q-header elevated class="bg-navbar q-py-xs">
     <q-toolbar>
       <q-btn
@@ -49,7 +159,7 @@
         </q-menu>
       </button>
 
-      <!-- <button
+      <button
         class="button q-pa-md q-mr-xs"
         style="
           border: 3px solid #2253f4;
@@ -61,7 +171,7 @@
         "
       >
         GAME MANUAL
-      </button> -->
+      </button>
       <q-space />
 
       <Swap v-if="$store.getters.loggedIn">
@@ -83,18 +193,8 @@
       <Balance />
       <User />
     </q-toolbar>
-    <q-drawer v-model="leftDrawerOpen" bordered overlay>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <NavLinks
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
   </q-header>
+  -->
 </template>
 
 <script setup>
@@ -102,9 +202,11 @@ import User from "./User.vue";
 import Balance from "./Balance.vue";
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
 import routes from "../router/routes.js";
+import { onMounted } from "@vue/runtime-core";
 
 const linksListInfo = {
   overview: {
@@ -161,6 +263,16 @@ const linksListInfo = {
 };
 
 const $store = useStore();
+const $quasar = useQuasar();
+
+const toggleDrawer = computed({
+  get: () => {
+    return $store.getters.drawerLeft;
+  },
+  set: (value) => {
+    $store.commit("toggleDrawerLeft");
+  },
+});
 
 //@TODO: refactor this way of constructing menu.
 let linksList = computed(() => {

@@ -1,7 +1,10 @@
 <template>
   <q-item clickable :to="link" exact exact-active-class="bg-primary text-white">
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label>
+        <q-icon :name="icon" />
+        {{ title }}</q-item-label
+      >
     </q-item-section>
   </q-item>
 </template>
@@ -20,6 +23,11 @@ export default defineComponent({
     link: {
       type: String,
       default: "#",
+    },
+
+    icon: {
+      type: String,
+      default: "",
     },
   },
 });
