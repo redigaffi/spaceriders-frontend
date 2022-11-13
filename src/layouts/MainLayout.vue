@@ -103,7 +103,10 @@
             fab
             icon="mail"
             color="primary"
-            @click="openInboxModel = !openInboxModel"
+            @click="
+              $store.commit('setTabPanel', 'inbox');
+              openInboxModel = !openInboxModel;
+            "
           >
             <q-badge
               class="animation absolute-top-right"
@@ -116,97 +119,217 @@
 
         <q-drawer
           v-model="openInboxModel"
-          :width="400"
+          :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
           :breakpoint="500"
           overlay
           side="right"
           class="bg-dark-3"
         >
-          <q-card>
-            <q-card-section class="text-h6 text-weight-bold">
-              <div class="row justify-between">
-                <div>NOTIFICATIONS</div>
+          <q-tab-panels v-model="tabPanel" class="full-height" animated>
+            <q-tab-panel name="profile" class="q-pa-none">
+              <q-card flat class="column full-height justify-between">
                 <div>
-                  <q-btn
-                    flat
-                    round
-                    size="sm"
-                    color="white"
-                    icon="close"
-                    @click="openInboxModel = !openInboxModel"
-                  />
+                  <q-card-section class="text-h6 text-weight-bold">
+                    <div class="row justify-between">
+                      <div>PROFILE</div>
+                      <div>
+                        <q-btn
+                          flat
+                          round
+                          size="sm"
+                          color="white"
+                          icon="close"
+                          @click="openInboxModel = !openInboxModel"
+                        />
+                      </div>
+                    </div>
+                  </q-card-section>
+
+                  <q-separator dark />
+
+                  <q-img src="~assets/img/cardpopup.webp" height="250px">
+                    <q-avatar
+                      color="secondary"
+                      class="absolute-center"
+                      size="215px"
+                      circle
+                    >
+                      <object v-html="avatar" class="absolute-center" />
+                    </q-avatar>
+                  </q-img>
+
+                  <q-card-section class="q-px-none">
+                    <q-list>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label
+                            ><q-icon name="wallet" /> Address:</q-item-label
+                          >
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label>{{ shortAddress }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label
+                            ><q-icon name="fas fa-user-astronaut" />
+                            Faction:</q-item-label
+                          >
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label>Free Worlds</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label
+                            ><q-icon name="fas fa-solar-panel" />
+                            Dominion:</q-item-label
+                          >
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label
+                            >{{ dominionPercentage }}% of the
+                            galaxy</q-item-label
+                          >
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label
+                            ><q-icon name="fas fa-certificate" />
+                            Medals:</q-item-label
+                          >
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label
+                            ><q-icon name="military_tech" />
+                            Pioneer</q-item-label
+                          >
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-card-section>
                 </div>
-              </div>
-            </q-card-section>
-            <q-card-section class="q-pa-none">
-              <div class="text-h6 q-pa-sm">
-                <!--<q-input
-                  dark
-                  dense
-                  standout
-                  v-model="text"
-                  placeholder="Search"
-                >
-                  <template v-slot:append>
-                    <q-icon v-if="text === ''" name="search" />
-                    <q-icon
-                      v-else
-                      name="clear"
-                      class="cursor-pointer"
-                      @click="text = ''"
+
+                <div>
+                  <q-card-section>
+                    <q-btn
+                      class="full-width"
+                      color="red"
+                      icon-right="logout"
+                      label="Log Out"
+                      @click="logout()"
                     />
-                  </template>
-                </q-input>-->
-              </div>
-            </q-card-section>
+                  </q-card-section>
 
-            <q-card-section class="q-px-none">
-              <q-list>
-                <q-scroll-area style="height: 70vh">
-                  <q-item
-                    clickable
-                    v-ripple
-                    v-for="email in emails"
-                    :key="email.id"
-                    class="q-mb-xs"
-                    :class="{ unread_msg: !email.read }"
-                  >
-                    <q-item-section @click="openEmail(email)">
-                      <q-item-label>{{ email.title }}</q-item-label>
-                      <q-item-label caption lines="2">{{
-                        email.subTitle
-                      }}</q-item-label>
-                    </q-item-section>
+                  <q-card-section class="q-pa-none">
+                    <q-tabs
+                      v-model="tabPanel"
+                      dense
+                      align="justify"
+                      narrow-indicator
+                    >
+                      <q-tab name="profile" label="Profile" />
+                      <q-tab name="inbox" label="Inbox" />
+                    </q-tabs>
+                  </q-card-section>
+                </div>
+              </q-card>
+            </q-tab-panel>
 
-                    <q-item-section side>
-                      <q-btn
-                        @click="deleteEmail(email)"
-                        round
-                        flat
-                        size="sm"
-                        color="red"
-                        icon="delete"
-                      >
-                        <q-tooltip> Delete Message </q-tooltip>
-                      </q-btn>
-                    </q-item-section>
-                  </q-item>
+            <q-tab-panel name="inbox" class="q-pa-none">
+              <q-card class="column full-height justify-between" flat>
+                <div>
+                  <q-card-section class="text-h6 text-weight-bold">
+                    <div class="row justify-between">
+                      <div>INBOX</div>
+                      <div>
+                        <q-btn
+                          flat
+                          round
+                          size="sm"
+                          color="white"
+                          icon="close"
+                          @click="openInboxModel = !openInboxModel"
+                        />
+                      </div>
+                    </div>
+                  </q-card-section>
 
-                  <q-separator spaced inset />
-                </q-scroll-area>
-              </q-list>
-            </q-card-section>
-          </q-card>
-          <div class="q-pa-md">
-            <q-btn
-              class="full-width"
-              color="red"
-              icon-right="delete"
-              label="Delete All"
-              @click="deleteAllEmails"
-              :disabled="emails.length === 0"
-            />
-          </div>
+                  <q-separator dark />
+
+                  <q-card-section class="q-px-none">
+                    <q-scroll-area style="height: 70vh">
+                      <q-list>
+                        <q-item
+                          clickable
+                          v-ripple
+                          v-for="email in emails"
+                          :key="email.id"
+                          class="q-mb-xs"
+                          :class="{ unread_msg: !email.read }"
+                        >
+                          <q-item-section @click="openEmail(email)">
+                            <q-item-label>{{ email.title }}</q-item-label>
+                            <q-item-label caption lines="2">{{
+                              email.subTitle
+                            }}</q-item-label>
+                          </q-item-section>
+
+                          <q-item-section side>
+                            <q-btn
+                              @click="deleteEmail(email)"
+                              round
+                              flat
+                              size="sm"
+                              color="red"
+                              icon="delete"
+                            >
+                              <q-tooltip> Delete Message </q-tooltip>
+                            </q-btn>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-scroll-area>
+                  </q-card-section>
+                </div>
+
+                <div>
+                  <q-card-section>
+                    <q-btn
+                      class="full-width"
+                      color="red"
+                      icon-right="delete"
+                      label="Delete All"
+                      @click="deleteAllEmails"
+                      :disabled="emails.length === 0"
+                    />
+                  </q-card-section>
+
+                  <q-card-section class="q-pa-none">
+                    <q-tabs
+                      v-model="tabPanel"
+                      dense
+                      align="justify"
+                      narrow-indicator
+                    >
+                      <q-tab name="profile" label="Profile" />
+                      <q-tab name="inbox" label="Inbox" />
+                    </q-tabs>
+                  </q-card-section>
+                </div>
+              </q-card>
+            </q-tab-panel>
+          </q-tab-panels>
         </q-drawer>
 
         <q-dialog v-model="openInbox">
@@ -269,10 +392,44 @@ import {
   UPDATED_ALL,
 } from "../constants/Events";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
+import jdenticon from "jdenticon/standalone";
 
 const $store = useStore();
+const router = useRouter();
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
+
+const tabPanel = computed({
+  get: () => {
+    return $store.getters.tabPanel;
+  },
+  set: (value) => {
+    $store.commit("setTabPanel", value);
+  },
+});
+
+const avatar = jdenticon.toSvg($store.getters.address, 200);
+
+const shortAddress = computed(() => {
+  const address = $store.getters.address;
+  return `${address.substring(0, 6)}...${address.substring(
+    address.length - 6
+  )}`;
+});
+
+const dominionPercentage = computed(() => {
+  const planetsOwned = $store.getters.planets.length;
+
+  return (planetsOwned * 100) / 1000;
+});
+
+const logout = () => {
+  $store.commit("destroySession");
+  router.push({
+    path: "/nouser",
+  });
+};
 
 const anyUnreadMessage = computed(() => {
   const emails = $store.getters.emails;

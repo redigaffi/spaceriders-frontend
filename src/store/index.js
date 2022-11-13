@@ -22,8 +22,9 @@ const Store = createStore({
       installationData: false,
       researchData: false,
       defenseData: false,
-      buildingQueue: {items:[]},
+      buildingQueue: { items: [] },
       emails: [],
+      tabPanel: "profile",
     };
   },
   mutations: {
@@ -48,6 +49,10 @@ const Store = createStore({
 
     setTokenPrice(state, payload) {
       state.tokenPrice = payload.tokenPrice;
+    },
+
+    setTabPanel(state, payload) {
+      state.tabPanel = payload;
     },
 
     addEmails(state, payload) {
@@ -153,7 +158,7 @@ const Store = createStore({
       state.installationData = { ...state.installationData };
       state.researchData = { ...state.researchData };
       state.defenseData = { ...state.defenseData };
-      state.buildingQueue.items = [ ...state.buildingQueue.items ]
+      state.buildingQueue.items = [...state.buildingQueue.items];
     },
 
     restPlanetResources(state, payload) {
@@ -332,8 +337,8 @@ const Store = createStore({
     },
 
     appendBuildingQueue(state, payload) {
-      state.buildingQueue.items.push(payload)
-    }
+      state.buildingQueue.items.push(payload);
+    },
   },
 
   getters: {
@@ -394,6 +399,10 @@ const Store = createStore({
 
     activePlanet: (state) => {
       return state.activePlanet;
+    },
+
+    tabPanel: (state) => {
+      return state.tabPanel;
     },
 
     address: (state) => {
