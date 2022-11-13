@@ -103,10 +103,7 @@
             fab
             icon="handyman"
             color="primary"
-            @click="
-              $store.commit('setTabPanel', 'queue');
-              $store.commit('toggleDrawerRight');
-            "
+            @click="changeTabPanel('queue')"
           >
             <q-badge
               class="animation absolute-top-right"
@@ -131,10 +128,7 @@
             fab
             icon="mail"
             color="primary"
-            @click="
-              $store.commit('setTabPanel', 'inbox');
-              $store.commit('toggleDrawerRight');
-            "
+            @click="changeTabPanel('inbox')"
           >
             <q-badge
               class="animation absolute-top-right"
@@ -146,7 +140,7 @@
         </q-page-sticky>
 
         <q-drawer
-          v-model="toggleDrawer"
+          v-model="drawer"
           :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
           :breakpoint="500"
           overlay
@@ -167,7 +161,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="$store.commit('toggleDrawerRight')"
+                          @click="drawer = !drawer"
                         />
                       </div>
                     </div>
@@ -300,7 +294,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="$store.commit('toggleDrawerRight')"
+                          @click="drawer = !drawer"
                         />
                       </div>
                     </div>
@@ -345,7 +339,7 @@
                           size="sm"
                           color="white"
                           icon="close"
-                          @click="$store.commit('toggleDrawerRight')"
+                          @click="drawer = !drawer"
                         />
                       </div>
                     </div>
@@ -505,14 +499,26 @@ const tabPanel = computed({
   },
 });
 
-const toggleDrawer = computed({
+const drawer = computed({
   get: () => {
     return $store.getters.drawerRight;
   },
   set: (value) => {
-    $store.commit("toggleDrawerRight");
+    $store.commit("setDrawerRight", value);
   },
 });
+
+const changeTabPanel = (tab) => {
+  if (drawer.value && tabPanel.value === tab) {
+    drawer.value = !drawer.value;
+  } else {
+    tabPanel.value = tab;
+
+    if (!drawer.value) {
+      drawer.value = !drawer.value;
+    }
+  }
+};
 
 const avatar = jdenticon.toSvg($store.getters.address, 200);
 
