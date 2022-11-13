@@ -538,7 +538,7 @@ const dominionPercentage = computed(() => {
 const logout = () => {
   $store.commit("destroySession");
   router.push({
-    path: "/nouser",
+    name: "nouser",
   });
 };
 
