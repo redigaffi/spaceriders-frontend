@@ -11,11 +11,12 @@
             $store.commit('toggleDrawerRight');
           "
         >
-          <q-avatar class="q-mr-xs" color="secondary" size="24px">
+          <q-avatar class="q-mr-sm" color="secondary" size="24px">
             <q-img v-html="avatar" />
           </q-avatar>
           Profile
         </q-btn>
+
         <q-btn
           v-else
           label="Incorrect Network"

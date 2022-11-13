@@ -21,19 +21,13 @@
 
         <div class="header__nav">
           <Swap v-if="$store.getters.loggedIn">
-            <button
-              class="button q-pa-md q-mr-xs"
-              style="
-                border: 3px solid #2253f4;
-                border-radius: 5px;
-                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-                color: #fff;
-                font-size: 12px;
-                padding: 7px 15px;
-              "
-            >
-              SWAP
-            </button>
+            <q-btn
+              icon="currency_exchange"
+              label="SWAP"
+              color="info"
+              dark
+              class="q-mr-sm"
+            />
           </Swap>
 
           <User />
