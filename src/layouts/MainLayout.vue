@@ -78,21 +78,21 @@
         }"
       />
 
+      <!--
       <ResourcesDisplay />
-      <q-page class="container">
-        <div class="row">
-          <!-- Router page Content -->
-          <div class="col q-py-lg">
-            <router-view />
-          </div>
+      -->
 
-          <PlanetList />
-        </div>
+      <q-page class="container">
+        <router-view />
+
+        <!--
+        <PlanetList />
+        -->
 
         <q-page-sticky
-          :class="
+          :style="
             !$store.getters.drawerLeft && !$store.getters.drawerRight
-              ? 'z-top'
+              ? 'z-index: 1'
               : ''
           "
           position="bottom-right"
@@ -115,9 +115,9 @@
         </q-page-sticky>
 
         <q-page-sticky
-          :class="
+          :style="
             !$store.getters.drawerLeft && !$store.getters.drawerRight
-              ? 'z-top'
+              ? 'z-index: 1'
               : ''
           "
           position="bottom-right"

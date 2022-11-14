@@ -4,16 +4,17 @@
       icon="add"
       label="Buy Planet"
       color="warning"
-      v-if="!$q.screen.xs"
       @click="buyPlanetPopup = true"
     />
 
+    <!--
     <q-btn
       icon="add"
       v-if="$q.screen.xs"
       color="warning"
       @click="buyPlanetPopup = true"
     />
+    -->
 
     <q-dialog v-model="freePlanetPopup">
       <q-card
@@ -56,23 +57,24 @@
     </q-dialog>
 
     <q-dialog v-model="buyPlanetPopup">
-      <q-card
-        class="bg-dark text-white q-pb-md"
-        style="width: 600px; max-width: 70vw; border-radius: 20px"
-      >
-        <q-btn
-          round
-          class="absolute-top-right"
-          flat
-          color="warning"
-          icon="close"
-          v-close-popup
-        />
-        <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
-        <q-card-section class="text-center">
+      <q-card class="bg-dark text-white q-pb-md">
+        <q-card-section class="row justify-between">
           <div class="text-h6">BUY A PLANET</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
         </q-card-section>
-        <q-card-section class="q-gutter-sm q-pt-none">
+
+        <q-separator />
+
+        <img src="~assets/landing/img/header_bg.jpeg" style="height: 200px" />
+
+        <q-card-section class="q-gutter-sm q-py-sm">
           <q-input
             label-color="white"
             v-model="planetCostDisplay"
@@ -103,7 +105,6 @@
           />
           <q-input
             label-color="white"
-            standout="bg-secondary"
             v-model="planetName"
             label="Planet Name"
             hide-bottom-space
@@ -121,7 +122,7 @@
           />
         </q-card-section>
 
-        <q-card-actions class="row q-col-gutter-md q-px-md">
+        <q-card-actions vertical class="justify-between q-gutter-y-sm q-px-md">
           <!-- <q-btn
             class="full-width"
             style="background: #18121e"
@@ -132,30 +133,24 @@
         </q-card-section>
 
           /> -->
-          <div class="col">
-            <IncreaseAllowance
-              :address="ContractAddress.getSpaceRidersGameAddress()"
-              :amount="planetCost.token_cost"
-              :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-            />
-          </div>
-          <div class="col">
-            <button
-              class="button q-py-sm full-width"
-              style="
-                border: 2px solid #2253f4;
-                border-radius: 5px;
-                font-size: 14px;
-                box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-                color: #fff;
-              "
-              @click="buyPlanet"
-              :disabled="planetName.length < 4 || planetName.length > 14"
-              v-close-popup
-            >
-              Buy Planet
-            </button>
-          </div>
+
+          <IncreaseAllowance
+            class="full-width"
+            :address="ContractAddress.getSpaceRidersGameAddress()"
+            :amount="planetCost.token_cost"
+            :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+          />
+
+          <q-btn
+            color="info"
+            class="full-width"
+            @click="buyPlanet"
+            :disabled="planetName.length < 4 || planetName.length > 14"
+            v-close-popup
+          >
+            Buy Planet
+          </q-btn>
+
           <q-inner-loading :showing="visible">
             <q-spinner size="70px" color="warning" />
           </q-inner-loading>

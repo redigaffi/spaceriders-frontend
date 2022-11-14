@@ -78,7 +78,7 @@
         }"
       />
 
-      <q-page class="full-width full-height q-py-lg">
+      <q-page>
         <router-view />
       </q-page>
     </q-page-container>

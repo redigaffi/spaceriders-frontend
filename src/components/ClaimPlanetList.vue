@@ -1,60 +1,38 @@
 <template>
   <div>
-    <q-card-section
-      v-if="!claimeable"
-      class="row q-col-gutter-sm text-center custom-font-style neonText"
-    >
-      <div
-        class="col-xs-6 col-sm-4 col-md-3 q-pa-sm"
-        v-for="p in planets"
-        :key="p.id"
-      >
+    <div v-if="!claimeable">
+      <div v-for="p in planets" :key="p.id">
         <q-card
           flat
           class="bg-transparent text-dark image"
           :data-content="calculateClaimDate(p)"
         >
-          <img
-            src="~assets/img/planet_queue.webp"
-            style="height: auto; width: 100%; object-fit: cover"
-          />
+          <img src="~assets/img/planet_queue.webp" />
+
           <q-card-section
-            style="
-              overflow: hidden;
-              text-overflow: ellipsis;
-              font-family: headingFont, sans-serif;
-              font-weight: bold;
-            "
+            style="overflow: hidden; text-overflow: ellipsis"
             class="text-center text-secondary bg-dark"
             >{{ p.name }}</q-card-section
           >
         </q-card>
       </div>
-    </q-card-section>
+    </div>
 
-    <q-card-section v-else class="row q-col-gutter-sm text-center">
-      <div
-        class="col-xs-6 col-sm-4 col-md-3 q-pa-sm"
-        v-for="p in planets"
-        :key="p.id"
-      >
+    <q-card-section v-else>
+      <div v-for="p in planets" :key="p.id">
         <q-card flat class="bg-transparent text-dark claimable-cards">
-          <img
-            src="~assets/img/planet_claimable.webp"
-            style="height: auto; width: 100%; object-fit: cover"
-          />
+          <img src="~assets/img/planet_claimable.webp" />
           <q-card-section
-            style="
-              overflow: hidden;
-              text-overflow: ellipsis;
-              font-family: headingFont, sans-serif;
-            "
-            class="text-secondary absolute-top tag-glass-element"
-            >{{ p.name }}</q-card-section
-          >
-          <q-card-section class="bg-dark">
-            <ClaimPlanet :planet="p" />
+            style="overflow: hidden; text-overflow: ellipsis"
+            class="text-secondary absolute-top tag-glass-element text-center"
+            >{{ p.name }}
           </q-card-section>
+
+          <ClaimPlanet
+            :planet="p"
+            class="full-width"
+            style="border-top-left-radius: 0; border-top-right-radius: 0"
+          />
         </q-card>
       </div>
     </q-card-section>
@@ -84,9 +62,9 @@ function calculateClaimDate(planet) {
   const h = Math.round(minutes - m) / 60;
 
   let str = "";
-  if (h > 0) str += `${h}h`;
-  if (m > 0) str += ` ${m}m`;
-  if (s >= 0) str += ` ${s}s`;
+  if (h > 0) str += `${h} (h)`;
+  if (m > 0) str += ` ${m} (m)`;
+  if (s >= 0) str += ` ${s} (s)`;
 
   return str;
 }
