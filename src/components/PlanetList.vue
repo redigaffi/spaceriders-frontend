@@ -16,7 +16,7 @@
     </q-img>
 
     <q-card-section class="q-px-none">
-      <q-scroll-area style="height: 60vh">
+      <q-scroll-area style="height: 50vh">
         <div class="row q-col-gutter-sm">
           <template v-for="(row, index) in rows" :key="index">
             <div class="col-12 col-md-6">
