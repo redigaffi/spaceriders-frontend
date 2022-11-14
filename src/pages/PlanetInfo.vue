@@ -1,7 +1,7 @@
 <template>
   <q-card dark class="q-my-md">
     <q-item>
-      <q-item-section class="text-center">
+      <q-item-section class="text-center text-h6">
         <q-item-label>Overview</q-item-label>
       </q-item-section>
     </q-item>
