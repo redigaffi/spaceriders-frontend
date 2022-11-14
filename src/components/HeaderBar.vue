@@ -24,7 +24,7 @@
             />
           </Swap>
 
-          <User />
+          <User v-if="$route.name !== 'trading'" />
         </div>
       </div>
     </div>
@@ -76,6 +76,7 @@
           </Swap>
 
           <q-item
+            v-if="$route.name !== 'trading'"
             clickable
             exact
             exact-active-class="bg-primary text-white"
@@ -192,6 +193,7 @@ import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
 import routes from "../router/routes.js";
 import { onMounted } from "@vue/runtime-core";
+import { useRoute } from "vue-router";
 
 const linksListInfo = {
   overview: {
@@ -249,6 +251,7 @@ const linksListInfo = {
 
 const $store = useStore();
 const $quasar = useQuasar();
+const $route = useRoute();
 
 const tabPanel = computed({
   get: () => {

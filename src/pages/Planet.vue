@@ -1,62 +1,63 @@
 <template>
-  <q-card class="glass-element text-white q-pa-md">
-    <q-card-section class="row fit justify-between items-center">
-      <div></div>
-      <div
-        class="text-h6 text-center text-weight-bold text-secondary absolute-center"
-      >
-        Buy Planets
+  <q-card dark class="q-my-md">
+    <q-item>
+      <q-item-section class="text-center text-h6">
+        <q-item-label>Buy planets</q-item-label>
+      </q-item-section>
+    </q-item>
+
+    <q-separator />
+
+    <q-img
+      src="~assets/img/buyplanet_footer-scaled.webp"
+      style="height: 350px; width: 100%"
+    />
+
+    <q-card-section
+      v-if="!anyUnClaimedPlanet"
+      class="column items-center q-col-gutter-y-md"
+    >
+      <div class="col-12">
+        <img
+          src="~assets/img/no-planet.webp"
+          style="max-height: 200px; width: 100%"
+        />
+      </div>
+
+      <div class="col-12">No planets in queue</div>
+
+      <div class="col-12">
+        <BuyPlanet />
       </div>
     </q-card-section>
 
-    <div v-if="anyUnClaimedPlanet">
-      <q-card-section
-        class="q-pb-none text-secondary text-subtitle1 text-weight-bolder"
-      >
+    <q-card-section
+      v-if="anyUnClaimedPlanet"
+      class="column items-center q-col-gutter-y-md"
+    >
+      <div class="col-12" v-if="this.unClaimedNotReadyPlanets.length">
         In queue
-      </q-card-section>
+      </div>
 
-      <ClaimPlanetList
-        ref="claimPlanetList"
-        :planets="this.unClaimedNotReadyPlanets"
-      />
+      <div class="col-12" v-if="this.unClaimedNotReadyPlanets.length">
+        <ClaimPlanetList
+          ref="claimPlanetList"
+          :planets="this.unClaimedNotReadyPlanets"
+        />
+      </div>
 
-      <q-card-section
-        class="q-pb-none text-secondary text-subtitle1 text-weight-bolder"
-      >
+      <div class="col-12" v-if="this.unClaimedReadyPlanets.length">
         Claimable
-      </q-card-section>
+      </div>
 
-      <ClaimPlanetList
-        ref="claimPlanetList"
-        :planets="this.unClaimedReadyPlanets"
-        claimeable
-      />
-    </div>
-
-    <div v-if="!anyUnClaimedPlanet">
-      <q-card-section class="text-center">
-        <div>
-          <img
-            src="~assets/img/no-planet.webp"
-            alt=""
-            srcset=""
-            style="height: 230px"
-          />
-        </div>
-      </q-card-section>
-
-      <q-card-section
-        class="q-pb-none text-secondary text-subtitle1 text-weight-bolder text-center"
-      >
-        No planets in queue
-      </q-card-section>
-      <q-card-section
-        class="q-pb-none text-secondary text-subtitle1 text-weight-bolder text-center"
-      >
-        <BuyPlanet />
-      </q-card-section>
-    </div>
+      <div class="col-12" v-if="this.unClaimedReadyPlanets.length">
+        <ClaimPlanetList
+          ref="claimPlanetList"
+          :planets="this.unClaimedReadyPlanets"
+          claimeable
+        />
+      </div>
+    </q-card-section>
   </q-card>
 
   <q-dialog v-model="planetCongratulationsPopup">

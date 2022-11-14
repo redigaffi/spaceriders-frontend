@@ -3,22 +3,13 @@
     v-if="$store.getters.activePlanet !== false"
     class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm"
   >
-    <!-- style="max-height: 750px" -->
-    <q-card>
-      <q-card-section class="q-pa-xs text-center">
-        <div class="text-overline text-weight-bold">My Planets</div>
-      </q-card-section>
-    </q-card>
     <q-table
       grid
-      :card-container-class="cardContainerClass"
       :rows="rows"
       :columns="columns"
       row-key="name"
       :filter="filter"
       v-model:pagination="pagination"
-      rows-per-page-label=" "
-      hide-bottom
     >
       <template v-slot:item="props">
         <div class="col-xs-12 text-center">

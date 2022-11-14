@@ -1,61 +1,58 @@
 <template>
-  <div>
-    <!-- CONTENT PANEL -->
-    <div>
-      <q-card class="glass-element text-white">
-        <glass-element-heading
-          class="text-h6 text-center text-weight-bold text-secondary"
-        >
-          DEFENSES
-        </glass-element-heading>
+  <q-card dark class="q-my-md">
+    <q-item>
+      <q-item-section class="text-center text-h6">
+        <q-item-label>Defenses</q-item-label>
+      </q-item-section>
+    </q-item>
 
-        <div>
-          <q-slide-transition>
-            <div v-show="currentTabComponent == 'DefaultSlider'">
-              <DefaultSlider
-                keyName="defense"
-                :name="`Research - ${this.$store.getters.activePlanet.name}`"
-                key="defaultSlider"
-              ></DefaultSlider>
-            </div>
-          </q-slide-transition>
-          <q-slide-transition duration="1000">
-            <div v-show="currentTabComponent != 'DefaultSlider'">
-              <InfoSlider
-                itemType
-                :data="researchInfo"
-                type="installation"
-                key="defenseSlider"
-                @cancelled="cancelled"
-              />
-            </div>
-          </q-slide-transition>
+    <q-separator />
+
+    <q-img src="data_img/defense.webp" style="height: 350px; width: 100%">
+      <ResourcesDisplay class="absolute-bottom" />
+    </q-img>
+
+    <q-card-section class="q-pa-none">
+      <q-slide-transition>
+        <div v-show="currentTabComponent == 'DefaultSlider'"></div>
+      </q-slide-transition>
+      <q-slide-transition :duration="duration">
+        <div v-show="currentTabComponent != 'DefaultSlider'">
+          <InfoSlider
+            itemType
+            :data="researchInfo"
+            type="installation"
+            key="defenseSlider"
+            @cancelled="cancelled"
+          />
         </div>
-      </q-card>
-    </div>
-    <ItemList
-      itemType
-      listName="Defenses"
-      :data="this.$store.getters.defenseData"
-      @change="slideDiv"
-    />
-  </div>
+      </q-slide-transition>
+    </q-card-section>
+
+    <q-card-section class="q-pt-none">
+      <ItemList
+        itemType
+        listName="Defense Buildings"
+        :data="this.$store.getters.defenseData"
+        @change="slideDiv"
+      />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
 import { defineComponent, ref, computed } from "vue";
 import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
-import GlassElementHeading from "components/GlassElementHeading";
+import ResourcesDisplay from "src/components/ResourcesDisplay.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
 
 export default defineComponent({
   name: "Research",
   components: {
     InfoSlider,
-    DefaultSlider,
-    GlassElementHeading,
     ItemList,
+    ResourcesDisplay,
   },
   setup() {
     const currentTab = ref("DefaultSlider");
@@ -75,6 +72,7 @@ export default defineComponent({
     }
 
     return {
+      duration: 500,
       slideDiv: slideDiv,
       cancelled: cancelled,
       currentTabComponent: currentTabComponent,

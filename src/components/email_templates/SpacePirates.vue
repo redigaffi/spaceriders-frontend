@@ -196,7 +196,7 @@ import { useStore } from "vuex";
 const $store = useStore();
 const props = defineProps({ body: Object });
 const { body } = toRefs(props);
-console.log(body.value);
+
 const defenseColumns = [
   { name: "name", align: "center", label: "Name", field: "name" },
   { name: "quantity", align: "center", label: "Quantity", field: "quantity" },

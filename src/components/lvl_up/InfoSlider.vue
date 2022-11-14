@@ -1,9 +1,6 @@
 <template>
-  <q-card-section
-    v-if="data !== undefined"
-    class="row q-col-gutter-sm text-center"
-  >
-    <div class="col-12 q-pa-sm">
+  <q-card-section v-if="data !== undefined" class="row text-center q-pb-none">
+    <div class="col-12">
       <q-card flat class="bg-transparent text-dark">
         <div class="row text-center">
           <!-- IMAGE -->
@@ -643,7 +640,6 @@ export default defineComponent({
       }
 
       return petrolCost;
-
     });
 
     const crystalCost = computed(() => {

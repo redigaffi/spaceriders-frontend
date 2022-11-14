@@ -1,5 +1,5 @@
 <template>
-  <q-btn @click="claimPlanet" color="warning" class="q-px-lg" label="Claim" />
+  <q-btn square @click="claimPlanet" color="info" label="Claim" />
 </template>
 
 <script setup>
