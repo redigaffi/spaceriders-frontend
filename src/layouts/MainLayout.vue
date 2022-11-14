@@ -78,16 +78,8 @@
         }"
       />
 
-      <!--
-      <ResourcesDisplay />
-      -->
-
       <q-page class="container">
         <router-view />
-
-        <!--
-        <PlanetList />
-        -->
 
         <q-page-sticky
           :style="
