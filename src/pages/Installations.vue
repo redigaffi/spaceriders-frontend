@@ -1,44 +1,39 @@
 <template>
-  <div>
-    <!-- CONTENT PANEL -->
-    <div>
-      <q-card class="glass-element text-white">
-        <glass-element-heading
-          class="text-h6 text-center text-weight-bold text-secondary"
-        >
-          INSTALLATIONS
-        </glass-element-heading>
+  <q-card dark class="q-my-md">
+    <q-item>
+      <q-item-section class="text-center text-h6">
+        <q-item-label>Installations</q-item-label>
+      </q-item-section>
+    </q-item>
 
-        <div>
-          <q-slide-transition>
-            <div v-show="currentTabComponent == 'DefaultSlider'">
-              <DefaultSlider
-                keyName="installations"
-                :name="`Installations - ${this.$store.getters.activePlanet.name}`"
-                key="defaultSlider"
-              ></DefaultSlider>
-            </div>
-          </q-slide-transition>
-          <q-slide-transition :duration="duration">
-            <div v-show="currentTabComponent != 'DefaultSlider'">
-              <InfoSlider
-                key="infoSlider"
-                :data="installationInfo"
-                type="installation"
-                @cancelled="cancelled"
-              />
-            </div>
-          </q-slide-transition>
+    <q-separator />
+
+    <q-img src="data_img/resources.webp" style="height: 300px; width: 100%" />
+
+    <q-card-section class="q-pa-none">
+      <q-slide-transition>
+        <div v-show="currentTabComponent == 'DefaultSlider'"></div>
+      </q-slide-transition>
+      <q-slide-transition :duration="duration">
+        <div v-show="currentTabComponent != 'DefaultSlider'">
+          <InfoSlider
+            key="infoSlider"
+            :data="installationInfo"
+            type="installation"
+            @cancelled="cancelled"
+          />
         </div>
-      </q-card>
-    </div>
+      </q-slide-transition>
+    </q-card-section>
 
-    <ItemList
-      listName="Installations"
-      :data="this.$store.getters.installationData"
-      @change="slideDiv"
-    />
-  </div>
+    <q-card-section class="q-pt-none">
+      <ItemList
+        listName="Installation Buildings"
+        :data="this.$store.getters.installationData"
+        @change="slideDiv"
+      />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
@@ -52,9 +47,7 @@ export default defineComponent({
   name: "Installations",
   components: {
     InfoSlider,
-    DefaultSlider,
     ItemList,
-    GlassElementHeading,
   },
   setup() {
     const currentTab = ref("DefaultSlider");
