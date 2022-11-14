@@ -8,7 +8,9 @@
 
     <q-separator />
 
-    <q-img src="data_img/resources.webp" style="height: 300px; width: 100%" />
+    <q-img src="data_img/defense.webp" style="height: 350px; width: 100%">
+      <ResourcesDisplay class="absolute-bottom" />
+    </q-img>
 
     <q-card-section class="q-pa-none">
       <q-slide-transition>
@@ -42,7 +44,7 @@
 import { defineComponent, ref, computed } from "vue";
 import InfoSlider from "src/components/lvl_up/InfoSlider.vue";
 import DefaultSlider from "src/components/lvl_up/Defaultslider.vue";
-import GlassElementHeading from "components/GlassElementHeading";
+import ResourcesDisplay from "src/components/ResourcesDisplay.vue";
 import ItemList from "src/components/lvl_up/ItemList.vue";
 
 export default defineComponent({
@@ -50,6 +52,7 @@ export default defineComponent({
   components: {
     InfoSlider,
     ItemList,
+    ResourcesDisplay,
   },
   setup() {
     const currentTab = ref("DefaultSlider");

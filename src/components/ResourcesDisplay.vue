@@ -1,6 +1,164 @@
 <template>
+  <div class="row justify-center glossy glass-element no-border-radius">
+    <q-list
+      class="col"
+      :class="{
+        'btn-yellow-glass-element':
+          isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
+        'btn-red-glass-element':
+          isStorageFull('metalWarehouse') || energyAvailable <= 0,
+      }"
+    >
+      <q-item clickable v-ripple class="q-pa-none">
+        <q-item-section
+          class="justify-center"
+          :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
+        >
+          <q-avatar color="accent">
+            <q-img
+              src="~assets/img/resources/RES_ic_Metal.webp"
+              style="max-height: 48px; max-width: 48px"
+              fit
+            />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section
+          class="justify-center items-start"
+          v-if="$q.screen.gt.md"
+        >
+          <q-item-label>
+            {{ metalAvailableDisplay }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <q-list
+      class="col"
+      :class="{
+        'btn-yellow-glass-element':
+          isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
+        'btn-red-glass-element':
+          isStorageFull('crystalWarehouse') || energyAvailable <= 0,
+      }"
+    >
+      <q-item clickable v-ripple class="q-pa-none">
+        <q-item-section
+          class="justify-center"
+          :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
+        >
+          <q-avatar color="accent">
+            <q-img
+              src="~assets/img/resources/RES_ic_CRYSTAL.webp"
+              style="max-height: 48px; max-width: 48px"
+              fit
+            />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section
+          class="justify-center items-start"
+          v-if="$q.screen.gt.md"
+        >
+          <q-item-label>
+            {{ crystalAvailableDisplay }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <q-list
+      class="col"
+      :class="{
+        'btn-yellow-glass-element':
+          isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
+        'btn-red-glass-element':
+          isStorageFull('petrolWarehouse') || energyAvailable <= 0,
+      }"
+    >
+      <q-item clickable v-ripple class="q-pa-none">
+        <q-item-section
+          class="justify-center"
+          :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
+        >
+          <q-avatar color="accent">
+            <q-img
+              src="~assets/img/resources/RES_ic_FUEL5.webp"
+              style="max-height: 48px; max-width: 48px"
+              fit
+            />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section
+          class="justify-center items-start"
+          v-if="$q.screen.gt.md"
+        >
+          <q-item-label>
+            {{ petrolAvailableDisplay }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <q-list
+      class="col"
+      :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
+    >
+      <q-item clickable v-ripple class="q-pa-none">
+        <q-item-section
+          class="justify-center"
+          :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
+        >
+          <q-avatar color="accent">
+            <q-img
+              src="~assets/img/resources/RES_ic_ENERGY.webp"
+              style="max-height: 48px; max-width: 48px"
+              fit
+            />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section
+          class="justify-center items-start"
+          v-if="$q.screen.gt.md"
+        >
+          <q-item-label> {{ energyAvailableDisplay }} (+) </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <q-list
+      class="col"
+      :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
+    >
+      <q-item clickable v-ripple class="q-pa-none">
+        <q-item-section
+          class="justify-center"
+          :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
+        >
+          <q-avatar color="accent">
+            <q-img
+              src="~assets/img/bkm.webp"
+              style="max-height: 48px; max-width: 48px"
+              fit
+            />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section
+          class="justify-center items-start"
+          v-if="$q.screen.gt.md"
+        >
+          <q-item-label> {{ bkmAvailableDisplay }} (+) </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+
+  <!--
   <div class="q-pt-lg container">
-    <!-- RESOURCES TAB -->
     <q-card
       v-if="activePlanet !== false"
       flat
@@ -27,7 +185,6 @@
           />
           <p class="text-weight-bold text-body2">{{ metalAvailableDisplay }}</p>
 
-          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
             class="bg-primary"
             transition-show="scale"
@@ -94,11 +251,11 @@
                   >{{ metalMineEnergyUsage }}/min</q-item-section
                 >
               </q-item>
-
             </q-list>
           </q-tooltip>
         </q-btn>
       </div>
+
       <div class="resource-box">
         <q-btn
           stack
@@ -122,7 +279,6 @@
             {{ crystalAvailableDisplay }}
           </p>
 
-          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
             class="bg-primary"
             transition-show="scale"
@@ -193,6 +349,7 @@
           </q-tooltip>
         </q-btn>
       </div>
+
       <div class="resource-box">
         <q-btn
           stack
@@ -216,7 +373,6 @@
             {{ petrolAvailableDisplay }}
           </p>
 
-          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
             class="bg-primary"
             transition-show="scale"
@@ -287,6 +443,7 @@
           </q-tooltip>
         </q-btn>
       </div>
+
       <div class="resource-box">
         <q-btn
           @click="energyDepositPopup = true"
@@ -306,7 +463,6 @@
             {{ energyAvailableDisplay }} (+)
           </p>
 
-          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
             class="bg-primary"
             transition-show="scale"
@@ -366,7 +522,6 @@
             {{ bkmAvailableDisplay }} (+)
           </p>
 
-          <!-- TOOLTIP : APPLIED TO ONLY ONE -->
           <q-tooltip
             class="bg-primary"
             transition-show="scale"
@@ -610,6 +765,7 @@
       </q-card>
     </q-dialog>
   </div>
+  -->
 </template>
 
 <script setup>
@@ -684,7 +840,6 @@ function timeLeft(minLeft) {
 
   const days = Math.round(hours - h) / 24;
 
-
   let str = "";
   if (days > 0) str += `${days} (D) `;
   if (h > 0) str += `${h} (h)`;
@@ -708,7 +863,6 @@ const energyTimeLeft = computed(() => {
   if (tl === "") return "N/A";
   return tl;
 });
-
 
 const metalAvailableDisplay = computed(() => {
   return tc($store.getters.activePlanet.resources.metal.toFixed(3), {
@@ -745,7 +899,6 @@ const metalProduction = computed(() => {
   const info = calculateProduction(ResourceType.METAL_MINE);
   return info.production;
 });
-
 
 const metalMineEnergyUsage = computed(() => {
   if ($store.getters.resourceData.metalMine === undefined) return;
@@ -977,8 +1130,9 @@ const sprCost = computed(() => {
 
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
-  const amount = depositAmount.value.toFixed(2) - (depositAmount.value.toFixed(2)*0.1);
-  return `${amount} $BKM - ${amount*10000} Energy (-10% $BKM Fee)`;
+  const amount =
+    depositAmount.value.toFixed(2) - depositAmount.value.toFixed(2) * 0.1;
+  return `${amount} $BKM - ${amount * 10000} Energy (-10% $BKM Fee)`;
 });
 
 async function depositEnergy(amount) {
@@ -987,16 +1141,17 @@ async function depositEnergy(amount) {
   );
 
   try {
-
     await ApiRequest.depositEnergy({
       planetId: $store.getters.activePlanet.id,
-      amount: amount.toFixed(2)
+      amount: amount.toFixed(2),
     });
 
     notif($notification("success", "Energy deposited successfully!"));
 
-    $store.commit("incrementEnergy", { energy: ( (amount-(amount*0.1))*10000) });
-    $store.commit("decrementBkm", { bkm:  amount });
+    $store.commit("incrementEnergy", {
+      energy: (amount - amount * 0.1) * 10000,
+    });
+    $store.commit("decrementBkm", { bkm: amount });
 
     energyDepositPopup.value = false;
   } catch (ex) {

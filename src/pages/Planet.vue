@@ -10,7 +10,7 @@
 
     <q-img
       src="~assets/img/buyplanet_footer-scaled.webp"
-      style="height: 300px; width: 100%"
+      style="height: 350px; width: 100%"
     />
 
     <q-card-section

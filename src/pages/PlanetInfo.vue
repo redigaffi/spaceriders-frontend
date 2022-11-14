@@ -8,7 +8,9 @@
 
     <q-separator />
 
-    <q-img src="~assets/img/overview.webp" style="height: 300px; width: 100%" />
+    <q-img src="~assets/img/overview.webp" style="height: 350px; width: 100%">
+      <ResourcesDisplay class="absolute-bottom" />
+    </q-img>
 
     <q-card-section
       class="q-px-none q-mt-sm"
@@ -258,7 +260,7 @@ import { computed, ref, getCurrentInstance, onUnmounted } from "vue";
 
 import tc from "thousands-counter";
 import { useStore } from "vuex";
-import GlassElementHeading from "components/GlassElementHeading";
+import ResourcesDisplay from "src/components/ResourcesDisplay.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import SpaceRidersGameContract, {
   BenefitStakingAttributes,
