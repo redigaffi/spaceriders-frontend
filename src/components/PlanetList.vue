@@ -11,7 +11,9 @@
     <q-img
       src="~assets/img/buyplanet_footer-scaled.webp"
       style="height: 350px; width: 100%"
-    />
+    >
+      <ResourcesDisplay class="absolute-bottom" />
+    </q-img>
 
     <q-card-section class="q-px-none">
       <q-scroll-area style="height: 60vh">
@@ -239,6 +241,7 @@
 import { defineComponent, computed, watch, ref, getCurrentInstance } from "vue";
 import { colors, getCssVar, useQuasar } from "quasar";
 import { useStore } from "vuex";
+import ResourcesDisplay from "components/ResourcesDisplay.vue";
 
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 
