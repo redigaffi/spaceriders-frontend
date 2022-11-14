@@ -8,7 +8,10 @@
 
     <q-separator />
 
-    <q-img src="~assets/img/buyplanet_footer-scaled.webp" />
+    <q-img
+      src="~assets/img/buyplanet_footer-scaled.webp"
+      style="height: 300px; width: 100%"
+    />
 
     <q-card-section
       v-if="!anyUnClaimedPlanet"

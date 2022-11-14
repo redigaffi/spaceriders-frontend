@@ -1,315 +1,256 @@
 <template>
-  <q-card class="glass-element text-white">
-    <glass-element-heading
-      class="text-h6 text-center text-weight-bold text-secondary"
-    >
-      OVERVIEW
-    </glass-element-heading>
+  <q-card dark class="q-my-md">
+    <q-item>
+      <q-item-section class="text-center">
+        <q-item-label>Overview</q-item-label>
+      </q-item-section>
+    </q-item>
 
-    <div class="col-12">
-      <q-card flat class="bg-transparent text-dark">
-        <img
-          src="~assets/img/overview.webp"
-          width="100%"
-          style="height: 400px; width: 100%"
+    <q-separator />
+
+    <q-img src="~assets/img/overview.webp" style="height: 300px; width: 100%" />
+
+    <q-card-section
+      class="q-px-none q-mt-sm"
+      :style="$q.screen.lt.md ? '' : 'padding: 0 12em'"
+    >
+      <q-list dense separator>
+        <q-item clickable>
+          <q-item-section>Diameter:</q-item-section>
+          <q-item-section avatar>
+            {{ diameter }} KM ({{ slotsAvailable }})
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Temperature:</q-item-section>
+          <q-item-section avatar> {{ temperature }} </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Position: </q-item-section>
+          <q-item-section avatar> [{{ position }}] </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Metal Reserve: </q-item-section>
+          <q-item-section avatar> {{ metalReserve }} </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Crystal Reserve: </q-item-section>
+          <q-item-section avatar>
+            {{ crystalReserve }}
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Petrol Reserve: </q-item-section>
+          <q-item-section avatar>
+            {{ petrolReserve }}
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Rarity: </q-item-section>
+          <q-item-section avatar>
+            {{ rarity }}
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section>Level: </q-item-section>
+          <q-item-section avatar>
+            {{ level }}
+          </q-item-section>
+        </q-item>
+
+        <q-item v-if="isStaking" clickable>
+          <q-item-section>Staking Time: </q-item-section>
+          <q-item-section avatar>
+            {{ stakingHoursLeft }}
+          </q-item-section>
+        </q-item>
+
+        <q-item v-if="isStaking" clickable>
+          <q-item-section>LP Value: </q-item-section>
+          <q-item-section avatar> {{ lpPrice }}$ </q-item-section>
+        </q-item>
+      </q-list>
+    </q-card-section>
+
+    <q-card-actions align="center">
+      <q-btn
+        @click="openUpdateDialog = !openUpdateDialog"
+        color="primary"
+        label="Update"
+      />
+
+      <q-btn
+        v-if="!isStaking"
+        @click="openTierDialog"
+        color="info"
+        label="Upgrade"
+      />
+
+      <q-btn
+        v-else
+        @click="unstake"
+        color="negative"
+        :loading="unstakeDisabled"
+        :disable="unstakeDisabled"
+      >
+        Withdraw
+        <template v-slot:loading>
+          <q-spinner-rings size="1em" class="on-left" />
+          Staking...
+        </template>
+      </q-btn>
+    </q-card-actions>
+  </q-card>
+
+  <q-dialog v-model="openUpdateDialog">
+    <q-card class="bg-dark text-white">
+      <q-btn
+        round
+        class="absolute-top-right"
+        flat
+        color="warning"
+        icon="close"
+        v-close-popup
+      />
+      <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
+      <q-card-section class="text-center">
+        <div class="text-h6">RENAME PLANET</div>
+        <div class="text-caption">
+          Updating a planet costs 0.5 BNB, also, you can choose a planet name
+          (which can be changed later).
+        </div>
+      </q-card-section>
+      <q-card-section class="q-pt-none">
+        <q-input
+          label-color="info"
+          v-model="planetName"
+          autofocus
+          label="Planet Name"
+          standout="bg-secondary"
+        />
+      </q-card-section>
+
+      <q-card-section class="q-pt-none text-center">
+        <q-btn
+          label="Rename Planet"
+          color="warning"
+          no-caps
+          class="q-px-lg"
+          v-close-popup
+        />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="layout">
+    <q-card dark>
+      <q-btn
+        round
+        class="absolute-top-right"
+        flat
+        color="warning"
+        icon="close"
+        v-close-popup
+      />
+      <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
+
+      <q-card-section class="text-center">
+        <div class="text-h6">Upgrade Tier</div>
+      </q-card-section>
+
+      <q-card-section v-if="!isStaking" class="q-py-none">
+        <q-select
+          color="info"
+          filled
+          v-model="selectedTier"
+          :options="tierOptions"
+          label="CHOOSE NEW TIER"
+          stack-label
+        >
+          <template v-slot:label>
+            <span style="color: #2253f4" class="text-weight-bold"
+              >CHOOSE NEW TIER</span
+            >
+          </template>
+        </q-select>
+      </q-card-section>
+
+      <q-card-section>
+        <q-list dense separator>
+          <q-item clickable>
+            <q-item-section>
+              <q-item-label>Price:</q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label>
+                ${{ selectedTierInfo.usd_cost }} ({{
+                  selectedTierInfo.token_cost
+                }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable>
+            <q-item-section>
+              <q-item-label>Staking locked:</q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label> {{ stakingLockedDays }} days </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable>
+            <q-item-section>
+              <q-item-label>Performance fee:</q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label> 0.5% </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-expansion-item label="Benefits">
+            <q-list dense separator>
+              <q-item
+                clickable
+                v-for="(benefit, index) in selectedTierInfo.benefit_lines"
+                :key="benefit"
+              >
+                <q-item-section>
+                  <q-item-label> #{{ index + 1 }} </q-item-label>
+                </q-item-section>
+
+                <q-item-section avatar>
+                  <q-item-label>
+                    {{ benefit }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-expansion-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-actions align="center" class="q-gutter-x-sm">
+        <IncreaseAllowance
+          :address="ContractAddress.getSpaceRidersGameAddress()"
+          :amount="selectedTierInfo.token_cost"
+          :tokenAddress="ContractAddress.getSpaceRidersAddress()"
         />
 
-        <q-card-section
-          class="text-secondary absolute-bottom-right tag-glass-element overview-card"
-        >
-          <q-list dense class="text-left">
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Diameter :</q-item-section
-              >
-              <q-item-section avatar>
-                {{ diameter }} KM ({{ slotsAvailable }})
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Temperature :</q-item-section
-              >
-              <q-item-section avatar> {{ temperature }} </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Position :
-              </q-item-section>
-              <q-item-section avatar> [{{ position }}] </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Metal Reserve :
-              </q-item-section>
-              <q-item-section avatar> {{ metalReserve }} </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Crystal Reserve :
-              </q-item-section>
-              <q-item-section avatar>
-                {{ crystalReserve }}
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Petrol Reserve :
-              </q-item-section>
-              <q-item-section avatar>
-                {{ petrolReserve }}
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Rarity :
-              </q-item-section>
-              <q-item-section avatar>
-                {{ rarity }}
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Level :
-              </q-item-section>
-              <q-item-section avatar>
-                {{ level }}
-              </q-item-section>
-            </q-item>
-
-            <q-item v-if="isStaking">
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >Staking Time :
-              </q-item-section>
-              <q-item-section avatar>
-                {{ stakingHoursLeft }}
-              </q-item-section>
-            </q-item>
-
-            <q-item v-if="isStaking">
-              <q-item-section class="text-subtitle2 text-weight-bold"
-                >LP Value :
-              </q-item-section>
-              <q-item-section avatar> {{ lpPrice }}$ </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-btn
-                @click="openUpdateDialog = !openUpdateDialog"
-                color="dark"
-                label="Update"
-                class="q-mr-xs"
-              />
-
-              <q-dialog v-model="openUpdateDialog">
-                <q-card
-                  class="bg-dark text-white"
-                  style="width: 600px; max-width: 70vw; border-radius: 20px"
-                >
-                  <q-btn
-                    round
-                    class="absolute-top-right"
-                    flat
-                    color="warning"
-                    icon="close"
-                    v-close-popup
-                  />
-                  <img
-                    src="~assets/img/buyplanet_footer-scaled.webp"
-                    alt=""
-                    srcset=""
-                  />
-                  <q-card-section class="text-center">
-                    <div class="text-h6">RENAME PLANET</div>
-                    <div class="text-subtitle1">
-                      Updating a planet costs 0.5BNB, also, you can choose a
-                      planet name (which can be changed later).
-                    </div>
-                  </q-card-section>
-                  <q-card-section class="q-pt-none">
-                    <q-input
-                      label-color="info"
-                      v-model="planetName"
-                      autofocus
-                      label="Planet Name"
-                      standout="bg-secondary"
-                    />
-                  </q-card-section>
-
-                  <q-card-section class="q-pt-none text-center">
-                    <q-btn
-                      label="Rename Planet"
-                      color="warning"
-                      no-caps
-                      class="q-px-lg"
-                      v-close-popup
-                    />
-                  </q-card-section>
-                </q-card>
-              </q-dialog>
-
-              <q-btn
-                v-if="!isStaking"
-                @click="openTierDialog"
-                color="warning"
-                label="Upgrade"
-                class="full-width"
-              />
-              <q-btn
-                v-else
-                @click="unstake"
-                color="negative"
-                class="full-width text-weight-bolder"
-                :loading="unstakeDisabled"
-                :disable="unstakeDisabled"
-              >
-                Withdraw
-                <template v-slot:loading>
-                  <q-spinner-rings size="1em" class="on-left" />
-                  Staking...
-                </template>
-              </q-btn>
-            </q-item>
-          </q-list>
-        </q-card-section>
-
-        <q-dialog v-model="layout">
-          <q-layout
-            style="height: 500px"
-            view="l l f"
-            container
-            class="bg-dark"
-          >
-            <q-header class="bg-primary">
-              <q-toolbar>
-                <q-toolbar-title>Upgrade Tier</q-toolbar-title>
-
-                <q-btn flat v-close-popup round dense icon="close" />
-              </q-toolbar>
-            </q-header>
-
-            <q-page-container>
-              <q-page padding v-if="!isStaking">
-                <div>
-                  <q-select
-                    color="info"
-                    filled
-                    v-model="selectedTier"
-                    :options="tierOptions"
-                    label="CHOOSE NEW TIER"
-                    stack-label
-                  >
-                    <template v-slot:label>
-                      <span style="color: #2253f4" class="text-weight-bold"
-                        >CHOOSE NEW TIER</span
-                      >
-                    </template>
-                  </q-select>
-                </div>
-                <table class="q-py-md full-width">
-                  <tr>
-                    <td>
-                      <span>Price</span>
-                    </td>
-                    <td>
-                      <span
-                        class="text-weight-bold text-overline"
-                        style="font-size: 20px"
-                      >
-                        ${{ selectedTierInfo.usd_cost }} ({{
-                          selectedTierInfo.token_cost
-                        }}
-                        &nbsp;
-                        <img
-                          src="~assets/img/bkm.webp"
-                          alt=""
-                          style="
-                            margin-left: -40px;
-                            height: 60px;
-                            width: 60px;
-                            vertical-align: middle;
-                          "
-                        />)</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>Benefits</span>
-                    </td>
-                    <td>
-                      <ul
-                        class="text-weight-bold text-overline q-ma-none q-pa-none"
-                        style="font-size: 14px; list-style-type: none"
-                      >
-                        <li
-                          v-for="benefit in selectedTierInfo.benefit_lines"
-                          :key="benefit"
-                        >
-                          {{ benefit }}
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>Staking locked</span>
-                    </td>
-                    <td>
-                      <span
-                        class="text-weight-bold text-overline"
-                        style="font-size: 16px"
-                        >{{ stakingLockedDays }}
-                      </span>
-                      days
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <span>Performance fee</span>
-                    </td>
-                    <td>
-                      <span
-                        class="text-weight-bold text-overline"
-                        style="font-size: 16px"
-                      >
-                        0.5%</span
-                      >
-                    </td>
-                  </tr>
-                </table>
-
-                <div class="row q-col-gutter-sm">
-                  <div class="col-md-6">
-                    <IncreaseAllowance
-                      :address="ContractAddress.getSpaceRidersGameAddress()"
-                      :amount="selectedTierInfo.token_cost"
-                      :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <q-btn
-                      style="border-radius: 5px; height: 41px"
-                      class="full-width"
-                      color="warning"
-                      label="Upgrade"
-                      @click="stake"
-                    />
-                  </div>
-                </div>
-              </q-page>
-            </q-page-container>
-          </q-layout>
-        </q-dialog>
-      </q-card>
-    </div>
-  </q-card>
+        <q-btn color="info" label="Upgrade" @click="stake" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
