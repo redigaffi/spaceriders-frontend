@@ -57,7 +57,7 @@
     </q-dialog>
 
     <q-dialog v-model="buyPlanetPopup">
-      <q-card class="bg-dark text-white q-pb-md">
+      <q-card class="bg-dark text-white q-pb-md full-width">
         <q-card-section class="row justify-between">
           <div class="text-h6">BUY A PLANET</div>
           <q-btn
@@ -71,8 +71,6 @@
         </q-card-section>
 
         <q-separator />
-
-        <img src="~assets/landing/img/header_bg.jpeg" style="height: 200px" />
 
         <q-card-section class="q-gutter-sm q-py-sm">
           <q-input

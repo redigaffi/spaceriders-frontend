@@ -390,7 +390,6 @@ const stakingLockedDays = computed(() => {
   if (tierInfoReq.value === "") return;
   const selTier = tierInfoReq.value[selectedTier.value.value];
   const stakeTime = selTier["tokens_time_locked"];
-  console.log(stakeTime);
   return Math.ceil(stakeTime / 86400); // 1 day in seconds
 });
 

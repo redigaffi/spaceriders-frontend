@@ -1,20 +1,25 @@
 <template>
   <div class="row justify-center glossy glass-element no-border-radius">
-    <q-list
-      class="col"
-      :class="{
-        'btn-yellow-glass-element':
-          isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
-        'btn-red-glass-element':
-          isStorageFull('metalWarehouse') || energyAvailable <= 0,
-      }"
-    >
-      <q-item clickable v-ripple class="q-pa-none">
+    <q-list class="col">
+      <q-item
+        clickable
+        v-ripple
+        class="q-pa-none"
+        @click="showMetalData = true"
+      >
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
         >
-          <q-avatar color="accent">
+          <q-avatar
+            color="accent"
+            :class="{
+              'btn-yellow-glass-element':
+                isResourceAlert('metal') && !isStorageFull('metalWarehouse'),
+              'btn-red-glass-element':
+                isStorageFull('metalWarehouse') || energyAvailable <= 0,
+            }"
+          >
             <q-img
               src="~assets/img/resources/RES_ic_Metal.webp"
               style="max-height: 48px; max-width: 48px"
@@ -32,23 +37,40 @@
           </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-tooltip
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[10, 10]"
+        class="bg-primary"
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        Metal
+      </q-tooltip>
     </q-list>
 
-    <q-list
-      class="col"
-      :class="{
-        'btn-yellow-glass-element':
-          isResourceAlert('crystal') && !isStorageFull('crystalWarehouse'),
-        'btn-red-glass-element':
-          isStorageFull('crystalWarehouse') || energyAvailable <= 0,
-      }"
-    >
-      <q-item clickable v-ripple class="q-pa-none">
+    <q-list class="col">
+      <q-item
+        clickable
+        v-ripple
+        class="q-pa-none"
+        @click="showCrystalData = true"
+      >
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
         >
-          <q-avatar color="accent">
+          <q-avatar
+            color="accent"
+            :class="{
+              'btn-yellow-glass-element':
+                isResourceAlert('crystal') &&
+                !isStorageFull('crystalWarehouse'),
+              'btn-red-glass-element':
+                isStorageFull('crystalWarehouse') || energyAvailable <= 0,
+            }"
+          >
             <q-img
               src="~assets/img/resources/RES_ic_CRYSTAL.webp"
               style="max-height: 48px; max-width: 48px"
@@ -66,23 +88,39 @@
           </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-tooltip
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[10, 10]"
+        class="bg-primary"
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        Crystal
+      </q-tooltip>
     </q-list>
 
-    <q-list
-      class="col"
-      :class="{
-        'btn-yellow-glass-element':
-          isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
-        'btn-red-glass-element':
-          isStorageFull('petrolWarehouse') || energyAvailable <= 0,
-      }"
-    >
-      <q-item clickable v-ripple class="q-pa-none">
+    <q-list class="col">
+      <q-item
+        clickable
+        v-ripple
+        class="q-pa-none"
+        @click="showPetrolData = true"
+      >
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
         >
-          <q-avatar color="accent">
+          <q-avatar
+            color="accent"
+            :class="{
+              'btn-yellow-glass-element':
+                isResourceAlert('petrol') && !isStorageFull('petrolWarehouse'),
+              'btn-red-glass-element':
+                isStorageFull('petrolWarehouse') || energyAvailable <= 0,
+            }"
+          >
             <q-img
               src="~assets/img/resources/RES_ic_FUEL5.webp"
               style="max-height: 48px; max-width: 48px"
@@ -100,18 +138,34 @@
           </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-tooltip
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[10, 10]"
+        class="bg-primary"
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        Petrol
+      </q-tooltip>
     </q-list>
 
-    <q-list
-      class="col"
-      :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
-    >
-      <q-item clickable v-ripple class="q-pa-none">
+    <q-list class="col">
+      <q-item
+        clickable
+        v-ripple
+        class="q-pa-none"
+        @click="showEnergyData = true"
+      >
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
         >
-          <q-avatar color="accent">
+          <q-avatar
+            color="accent"
+            :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
+          >
             <q-img
               src="~assets/img/resources/RES_ic_ENERGY.webp"
               style="max-height: 48px; max-width: 48px"
@@ -127,13 +181,21 @@
           <q-item-label> {{ energyAvailableDisplay }} (+) </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-tooltip
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[10, 10]"
+        class="bg-primary"
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        Energy
+      </q-tooltip>
     </q-list>
 
-    <q-list
-      class="col"
-      :class="{ 'btn-red-glass-element': energyAvailable <= 0 }"
-    >
-      <q-item clickable v-ripple class="q-pa-none">
+    <q-list class="col">
+      <q-item clickable v-ripple class="q-pa-none" @click="showBKMData = true">
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
@@ -154,7 +216,612 @@
           <q-item-label> {{ bkmAvailableDisplay }} (+) </q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-tooltip
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[10, 10]"
+        class="bg-primary"
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        BKM
+      </q-tooltip>
     </q-list>
+
+    <q-dialog v-model="showMetalData">
+      <q-card class="full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">Metal Resource</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <q-list dense>
+            <q-item>
+              <q-item-section>
+                <q-item-label> Available: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                :class="{
+                  'text-negative': isStorageFull('metalWarehouse'),
+                }"
+              >
+                <q-item-label>
+                  {{ metalAvailableDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Storage Capacity: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  {{ metalCapacityDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Production: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-if="energyAvailable <= 0"
+                class="text-negative"
+              >
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-else-if="!isStorageFull('metalWarehouse')"
+                :class="{
+                  'text-positive': isFullProduction('metalMine'),
+                  'text-yellow-12': !isFullProduction('metalMine'),
+                }"
+              >
+                <q-item-label> +{{ metalProductionDisplay }}/min </q-item-label>
+              </q-item-section>
+              <q-item-section avatar v-else class="text-negative"
+                >-{{ metalProduction }}/min</q-item-section
+              >
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Energy usage: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar v-if="energyAvailable <= 0">
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section v-else avatar>
+                <q-item-label> {{ metalMineEnergyUsage }}/min </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            icon="fas fa-exchange-alt"
+            color="info"
+            label="Trade METAL/BKM"
+            to="/trade/METAL_BKM"
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showCrystalData">
+      <q-card class="full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">Crystal Resource</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <q-list dense>
+            <q-item>
+              <q-item-section>
+                <q-item-label> Available: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                :class="{
+                  'text-negative': isStorageFull('crystalWarehouse'),
+                }"
+              >
+                <q-item-label>
+                  {{ crystalAvailableDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Storage Capacity: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  {{ crystalCapacityDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Production: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-if="energyAvailable <= 0"
+                class="text-negative"
+              >
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-else-if="!isStorageFull('crystalWarehouse')"
+                :class="{
+                  'text-positive': isFullProduction('crystalMine'),
+                  'text-yellow-12': !isFullProduction('crystalMine'),
+                }"
+              >
+                <q-item-label>
+                  +{{ crystalProductionDisplay }}/min
+                </q-item-label>
+              </q-item-section>
+              <q-item-section avatar v-else class="text-negative"
+                >-{{ crystalProduction }}/min</q-item-section
+              >
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Energy usage: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar v-if="energyAvailable <= 0">
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section v-else avatar>
+                <q-item-label> {{ crystalMineEnergyUsage }}/min </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            icon="fas fa-exchange-alt"
+            color="info"
+            label="Trade CRYSTAL/BKM"
+            to="/trade/CRYSTAL_BKM"
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showPetrolData">
+      <q-card class="full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">Petrol Resource</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <q-list dense>
+            <q-item>
+              <q-item-section>
+                <q-item-label> Available: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                :class="{
+                  'text-negative': isStorageFull('petrolWarehouse'),
+                }"
+              >
+                <q-item-label>
+                  {{ petrolAvailableDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Storage Capacity: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  {{ petrolCapacityDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Production: </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-if="energyAvailable <= 0"
+                class="text-negative"
+              >
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section
+                avatar
+                v-else-if="!isStorageFull('petrolWarehouse')"
+                :class="{
+                  'text-positive': isFullProduction('petrolMine'),
+                  'text-yellow-12': !isFullProduction('petrolMine'),
+                }"
+              >
+                <q-item-label>
+                  +{{ petrolProductionDisplay }}/min
+                </q-item-label>
+              </q-item-section>
+              <q-item-section avatar v-else class="text-negative"
+                >-{{ petrolProduction }}/min</q-item-section
+              >
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Energy usage: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar v-if="energyAvailable <= 0">
+                <q-item-label> 0/min </q-item-label>
+              </q-item-section>
+
+              <q-item-section v-else avatar>
+                <q-item-label> {{ petrolMineEnergyUsage }}/min </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            icon="fas fa-exchange-alt"
+            color="info"
+            label="Trade PETROL/BKM"
+            to="/trade/PETROL_BKM"
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showEnergyData">
+      <q-card class="full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">Energy Resource</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <q-list dense>
+            <q-item>
+              <q-item-section>
+                <q-item-label> Available: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar class="text-positive">
+                <q-item-label>
+                  {{ energyAvailableDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label> Consumption: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar class="text-negative">
+                <q-item-label> -{{ energyConsumption }}/min </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item v-if="energyAvailable > 0">
+              <q-item-section>
+                <q-item-label> Time left: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  {{ energyTimeLeft }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            icon="fas fa-exchange-alt"
+            color="info"
+            label="Buy Energy"
+            @click="energyDepositPopup = true"
+            v-close-popup
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showBKMData">
+      <q-card class="full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">$BKM Resource</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <q-list dense>
+            <q-item>
+              <q-item-section>
+                <q-item-label> Available: </q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar class="text-positive">
+                <q-item-label>
+                  {{ bkmAvailableDisplay }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn
+            color="positive"
+            label="Deposit"
+            @click="bkmDepositPopup = true"
+            v-close-popup
+          ></q-btn>
+
+          <q-btn
+            color="info"
+            label="Withdraw"
+            @click="bkmWithdrawPopup = true"
+            v-close-popup
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="energyDepositPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >Convert $BKM To ENERGY</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+        <div class="energy-popup">
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                <div class="q-mb-lg">
+                  <q-badge
+                    class="q-pa-sm text-weight-bold text-overline"
+                    color="warning"
+                  >
+                    {{ energyCostBreakdown }}
+                  </q-badge>
+                </div>
+                <q-slider
+                  id="depositEnergySlider"
+                  v-model="depositAmount"
+                  :min="0.5"
+                  :max="maxEnergyDeposit"
+                  :step="0.5"
+                  label
+                  label-always
+                  color="positive"
+                />
+              </q-card-section>
+
+              <q-card-section class="q-pt-none text-center">
+                <q-btn
+                  label="Deposit"
+                  color="warning"
+                  no-caps
+                  class="q-px-lg q-py-sm full-width"
+                  @click="depositEnergy(depositAmount)"
+                  style="max-width: 130px"
+                />
+              </q-card-section>
+            </q-card-section>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="bkmDepositPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >DEPOSIT $BKM</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+        <div class="energy-popup">
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                <q-slider
+                  id="depositEnergySlider"
+                  v-model="bkmDepositAmount"
+                  :min="0.5"
+                  :step="5"
+                  :max="5000"
+                  label
+                  label-always
+                  color="positive"
+                />
+              </q-card-section>
+
+              <q-card-section class="q-pt-none text-center">
+                <IncreaseAllowance
+                  v-if="!$store.getters.activePlanet.free_planet"
+                  :address="ContractAddress.getSpaceRidersGameAddress()"
+                  :amount="bkmDepositAmount"
+                  :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+                  customWidth
+                />
+                <q-btn
+                  label="Deposit"
+                  color="warning"
+                  no-caps
+                  class="q-px-lg q-py-sm full-width"
+                  @click="depositBkm(bkmDepositAmount)"
+                  style="max-width: 130px"
+                />
+              </q-card-section>
+            </q-card-section>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="bkmWithdrawPopup">
+      <q-card
+        class="bg-dark text-white"
+        style="width: 700px; max-width: 80vw; border-radius: 20px"
+      >
+        <q-card-section class="q-pa-xs text-center">
+          <span class="q-ml-sm text-overline" style="font-size: 14px"
+            >WITHDRAW $BKM</span
+          >
+        </q-card-section>
+        <q-btn
+          round
+          class="absolute-top-right"
+          flat
+          color="white"
+          icon="close"
+          v-close-popup
+        />
+
+        <div class="energy-popup">
+          <div class="text-subtitle2">
+            <q-card-section>
+              <q-card-section class="q-pt-none text-center">
+                <q-slider
+                  id="depositEnergySlider"
+                  v-model="bkmWithdrawAmount"
+                  :min="0.5"
+                  :step="5"
+                  :max="5000"
+                  label
+                  label-always
+                  color="positive"
+                />
+              </q-card-section>
+
+              <q-card-section class="q-pt-none text-center">
+                <q-btn
+                  label="Withdraw"
+                  color="warning"
+                  no-caps
+                  class="q-px-lg q-py-sm full-width"
+                  @click="withdrawBkm(bkmWithdrawAmount)"
+                  style="max-width: 130px"
+                />
+              </q-card-section>
+            </q-card-section>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 
   <!--
@@ -788,6 +1455,12 @@ import {
 } from "../constants/Events";
 import { useQuasar } from "quasar";
 
+const showMetalData = ref(false);
+const showCrystalData = ref(false);
+const showPetrolData = ref(false);
+const showEnergyData = ref(false);
+const showBKMData = ref(false);
+
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
 const $q = useQuasar();
@@ -1285,35 +1958,13 @@ $eventBus.on(UPDATED_ALL, () => {
 }
 
 .btn-red-glass-element {
-  box-shadow: 0 0 1rem 0 rgba(255, 0, 0, 0.4);
-  border-radius: 20px;
-  position: relative;
-  z-index: 1;
-  background: inherit;
-  overflow: hidden;
+  box-shadow: 0 0 2rem 0 rgba(255, 0, 0, 0.4);
   color: red;
 }
 
 .btn-yellow-glass-element {
-  box-shadow: 0 0 1rem 0 rgb(203, 212, 75);
-  border-radius: 20px;
-  position: relative;
-  z-index: 1;
-  background: inherit;
-  overflow: hidden;
+  box-shadow: 0 0 2rem 0 rgb(203, 212, 75);
   color: yellow;
-}
-
-.btn-red-glass-element:before {
-  content: "";
-  position: absolute;
-  background: inherit;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: -20px;
 }
 
 .planet-icons {

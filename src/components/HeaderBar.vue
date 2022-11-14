@@ -253,8 +253,6 @@ const $store = useStore();
 const $quasar = useQuasar();
 const $route = useRoute();
 
-console.log($route.name);
-
 const tabPanel = computed({
   get: () => {
     return $store.getters.tabPanel;
