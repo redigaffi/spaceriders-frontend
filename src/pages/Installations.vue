@@ -67,7 +67,7 @@ export default defineComponent({
     }
 
     return {
-      duration: 1000,
+      duration: 500,
       slideDiv: slideDiv,
       cancelled: cancelled,
       currentTabComponent: currentTabComponent,
