@@ -1,4 +1,6 @@
 <template>
+  <PlanetList />
+
   <q-card dark class="q-my-md">
     <q-item>
       <q-item-section class="text-center text-h6">
@@ -7,11 +9,6 @@
     </q-item>
 
     <q-separator />
-
-    <q-img
-      src="~assets/img/buyplanet_footer-scaled.webp"
-      style="height: 350px; width: 100%"
-    />
 
     <q-card-section
       v-if="!anyUnClaimedPlanet"
@@ -216,6 +213,7 @@
 import { defineComponent, ref } from "vue";
 import ClaimPlanetList from "../components/ClaimPlanetList.vue";
 import BuyPlanet from "../components/BuyPlanet.vue";
+import PlanetList from "components/PlanetList.vue";
 import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
 import tc from "thousands-counter";
 
@@ -224,6 +222,7 @@ export default defineComponent({
   components: {
     ClaimPlanetList,
     BuyPlanet,
+    PlanetList,
   },
 
   data: function () {

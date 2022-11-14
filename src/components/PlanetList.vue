@@ -1,8 +1,178 @@
 <template>
-  <div
-    v-if="$store.getters.activePlanet !== false"
-    class="col-2 gt-sm q-my-lg glass-element text-secondary q-ma-sm"
-  >
+  <q-card dark class="q-my-md" v-if="$store.getters.activePlanet !== false">
+    <q-item>
+      <q-item-section class="text-center text-h6">
+        <q-item-label>My planets</q-item-label>
+      </q-item-section>
+    </q-item>
+
+    <q-separator />
+
+    <q-img
+      src="~assets/img/buyplanet_footer-scaled.webp"
+      style="height: 350px; width: 100%"
+    />
+
+    <q-card-section class="q-px-none">
+      <q-scroll-area style="height: 60vh">
+        <div class="row q-col-gutter-sm">
+          <template v-for="(row, index) in rows" :key="index">
+            <div class="col-12 col-md-6">
+              <q-card
+                dark
+                bordered
+                flat
+                :style="
+                  row.active
+                    ? `border: 1px solid ${getPaletteColor('info')}`
+                    : ''
+                "
+              >
+                <q-card-section horizontal>
+                  <q-img
+                    class="col-2"
+                    :src="row.image_url"
+                    style="
+                      width: 100px;
+                      height: 150px;
+                      object-fit: cover;
+                      object-position: 50% 0%;
+                    "
+                    :style="{
+                      background: `linear-gradient(to top, ${getPaletteColor(
+                        row.color
+                      )} 20% , ${getCssVar('primary') + 'ff'} 80%)`,
+                    }"
+                  >
+                    <q-badge
+                      align="top"
+                      color="primary"
+                      class="text-caption"
+                      style="padding: 5px"
+                      rounded
+                      >lvl {{ row.planet.level }}</q-badge
+                    >
+
+                    <div
+                      class="glossy glass-element absolute-bottom text-center no-border-radius ellipsis text-caption"
+                      style="padding: 5px 0"
+                    >
+                      {{ row.name }}
+                    </div>
+                  </q-img>
+
+                  <q-separator vertical />
+
+                  <q-card-section class="col text-body2 q-pa-none">
+                    <q-list dense>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Rarity:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label :class="'text-' + row.color">{{
+                            row.rarity
+                          }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Position:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label>{{ row.position }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Items in queue:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label>{{
+                            row.planet.building_queue.items.length
+                          }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Slots used:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section>
+                          <q-linear-progress
+                            stripe
+                            size="16px"
+                            color="negative"
+                            :value="
+                              (100 * row.planet.slots_used) /
+                              row.planet.slots /
+                              100
+                            "
+                          >
+                            <span
+                              class="absolute-full flex flex-center text-white"
+                              >{{ row.planet.slots_used }}/{{
+                                row.planet.slots
+                              }}</span
+                            >
+                          </q-linear-progress>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>XP:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section>
+                          <q-linear-progress
+                            stripe
+                            size="16px"
+                            :value="row.planet.experience / 100"
+                            color="info"
+                          >
+                            <span
+                              class="absolute-full flex flex-center text-white"
+                              >{{ row.planet.experience }}/100</span
+                            >
+                          </q-linear-progress>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-card-section>
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-actions align="center">
+                  <q-btn
+                    :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
+                    color="info"
+                    :label="row.active ? 'Active' : 'Select'"
+                    :disabled="row.active"
+                    @click="changeActivatePlanet(row.planet)"
+                  />
+                  <q-btn
+                    outline
+                    icon="far fa-star"
+                    color="amber"
+                    label="Favourite"
+                  />
+                </q-card-actions>
+              </q-card>
+            </div>
+          </template>
+        </div>
+      </q-scroll-area>
+    </q-card-section>
+
+    <!--
     <q-table
       grid
       :rows="rows"
@@ -52,6 +222,7 @@
         </div>
       </template>
     </q-table>
+
     <div class="row justify-center q-my-md">
       <q-pagination
         v-model="pagination.page"
@@ -60,12 +231,13 @@
         size="sm"
       />
     </div>
-  </div>
+    -->
+  </q-card>
 </template>
 
 <script setup>
 import { defineComponent, computed, watch, ref, getCurrentInstance } from "vue";
-import { useQuasar } from "quasar";
+import { colors, getCssVar, useQuasar } from "quasar";
 import { useStore } from "vuex";
 
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
@@ -77,13 +249,14 @@ const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
 const $store = useStore();
+const { getPaletteColor } = colors;
 
 const colorMapping = {
-  uncommon: "blue-grey-6",
-  common: "blue-grey-6",
-  epic: "info",
-  rare: "info",
-  legendary: "purple-9",
+  common: "blue-grey",
+  uncommon: "green-10",
+  rare: "blue-14",
+  epic: "purple-9",
+  legendary: "deep-orange",
 };
 
 let rows = computed(() => {
@@ -182,6 +355,8 @@ const myTweak = (offset) => {
   // this is actually what the default style-fn does in Quasar
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
 };
+
+console.log(rows);
 </script>
 
 <style lang="scss">
