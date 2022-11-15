@@ -6,8 +6,10 @@
         customWidth,
     }"
   >
-    <button
-      class="button q-py-sm full-width"
+    <q-btn
+      class="button full-width"
+      icon="check"
+      label="Approve"
       :class="{ 'q-px-md bg-warning': customWidth }"
       style="
         border: 2px solid #21ba45;
@@ -18,8 +20,7 @@
       "
       @click="approve"
     >
-      Approve
-    </button>
+    </q-btn>
   </div>
 </template>
 <script setup>

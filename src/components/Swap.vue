@@ -115,8 +115,10 @@
           />
         </div>
         <div class="col">
-          <button
-            class="button q-py-sm full-width"
+          <q-btn
+            class="full-width"
+            label="Swap"
+            icon="currency_exchange"
             style="
               border: 2px solid #2253f4;
               border-radius: 5px;
@@ -126,8 +128,7 @@
             "
             v-on:click.prevent="buySpr"
           >
-            Swap
-          </button>
+          </q-btn>
         </div>
       </q-card-actions>
 
