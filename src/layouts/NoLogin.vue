@@ -90,29 +90,48 @@
               <q-separator dark />
 
               <q-card-section>
-                <div class="text-center">Login with your wallet</div>
+                <div class="text-center">Login with:</div>
               </q-card-section>
 
-              <q-card-actions vertical align="center">
+              <q-card-actions :vertical="$q.screen.lt.md" align="center">
                 <q-btn
-                  class="full-width"
+                  :class="{ 'full-width': $q.screen.lt.md }"
                   color="info"
-                  label="Facewallet"
-                  @click="login('facewallet')"
+                  icon="fab fa-google"
+                  label="Google"
+                  @click="login('facewallet', 'google')"
                 />
 
                 <q-btn
-                  class="full-width"
+                  :class="{ 'full-width': $q.screen.lt.md }"
                   color="info"
+                  icon="fab fa-facebook"
+                  label="Facebook"
+                  @click="login('facewallet', 'facebook')"
+                />
+
+                <q-btn
+                  :class="{ 'full-width': $q.screen.lt.md }"
+                  color="info"
+                  icon="fab fa-apple"
+                  label="Apple"
+                  @click="login('facewallet', 'apple')"
+                />
+
+                <q-btn
+                  :class="{ 'full-width': $q.screen.lt.md }"
+                  color="info"
+                  icon="token"
                   label="Metamask"
                   @click="login('metamask')"
                 />
               </q-card-actions>
 
-              <q-card-actions vertical align="center">
+              <q-card-actions align="center">
                 <q-btn
-                  class="full-width"
+                  :class="{ 'full-width': $q.screen.lt.md }"
                   color="primary"
+                  icon="fas fa-arrow-left"
                   label="Back to landing"
                   @click="router.push({ path: '/' })"
                 />
@@ -146,6 +165,12 @@ const $notification =
 const userInfoPopup = ref(false);
 const error = ref(false);
 const router = useRouter();
+
+const socialLoginMap = {
+  google: "google.com",
+  facebook: "facebook.com",
+  apple: "apple.com",
+};
 
 const checkChain = async () => {
   if (window.ethereum) {
@@ -189,13 +214,12 @@ const checkChain = async () => {
   return false;
 };
 
-const login = async (providerName) => {
+const login = async (providerName, socialLoginProvider) => {
   if (loggedIn.value) {
     userInfoPopup.value = true;
     return;
   }
 
-  $quasar.loading.show();
   error.value = false;
 
   let re = false;
@@ -205,6 +229,7 @@ const login = async (providerName) => {
     let provider = false;
 
     if (providerName === "metamask") {
+      $quasar.loading.show();
       const chain = await checkChain();
       if (!chain) {
         error.value = true;
@@ -218,8 +243,11 @@ const login = async (providerName) => {
 
       await window.ethereum.enable();
       provider = new ethers.providers.Web3Provider(window.ethereum);
-    } else if (providerName === "facewallet") {
-      await window.face.auth.login();
+    } else if (providerName === "facewallet" && socialLoginProvider) {
+      await window.face.auth.directSocialLogin(
+        socialLoginMap[socialLoginProvider]
+      );
+
       provider = new ethers.providers.Web3Provider(
         window.face.getEthLikeProvider()
       );
