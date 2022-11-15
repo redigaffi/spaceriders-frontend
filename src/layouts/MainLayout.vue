@@ -513,9 +513,9 @@ const avatar = jdenticon.toSvg($store.getters.address, 200);
 
 const shortAddress = computed(() => {
   const address = $store.getters.address;
-  return `${address.substring(0, 6)}...${address.substring(
-    address.length - 6
-  )}`;
+  return address
+    ? `${address.substring(0, 6)}...${address.substring(address.length - 6)}`
+    : "";
 });
 
 const dominionPercentage = computed(() => {
