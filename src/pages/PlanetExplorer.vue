@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: -10px; width: 700px; height: 50px">
+  <div style="margin-top: 10px; width: 700px; height: 50px">
     <q-input
       v-model.number="galaxy"
       outlined

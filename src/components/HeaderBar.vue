@@ -24,7 +24,9 @@
             />
           </Swap>
 
-          <User v-if="$route.name !== 'trading'" />
+          <User
+            v-if="$route.name !== 'trading' && $route.name !== 'explorer'"
+          />
         </div>
       </div>
     </div>
@@ -76,7 +78,7 @@
           </Swap>
 
           <q-item
-            v-if="$route.name !== 'trading'"
+            v-if="$route.name !== 'trading' && $route.name !== 'explorer'"
             clickable
             exact
             exact-active-class="bg-primary text-white"
@@ -310,7 +312,7 @@ let linksList = computed(() => {
           tmplinksList.push(linksListInfo[childInfo.name]);
         }
 
-        if (childInfo.name === "planet") {
+        if (childInfo.name === "planets") {
           if (loggedIn && hasPlanets) {
             tmplinksList.push(linksListInfo.explorer);
           }
