@@ -413,7 +413,7 @@
         </q-drawer>
 
         <q-dialog v-model="openInbox">
-          <q-card style="width: 700px; max-width: 80vw">
+          <q-card dark class="full-width">
             <q-card-section class="b">
               <div class="row justify-between">
                 <div>
@@ -445,9 +445,7 @@
               </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              <component :is="templateName" :body="body"></component>
-            </q-card-section>
+            <component :is="templateName" :body="body"></component>
           </q-card>
         </q-dialog>
       </q-page>
