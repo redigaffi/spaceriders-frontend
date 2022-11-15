@@ -414,34 +414,33 @@
 
         <q-dialog v-model="openInbox">
           <q-card dark class="full-width">
-            <q-card-section class="b">
-              <div class="row justify-between">
-                <div>
-                  <span class="text-subtitle1 text-weight-bold"
-                    >{{ activeEmail.sender }} |
-                  </span>
-                  {{ activeEmail.title }}
-                </div>
-                <div>
-                  <q-btn
-                    flat
-                    round
-                    size="sm"
-                    color="red"
-                    icon="delete"
-                    v-close-popup
-                    @click="deleteEmail(activeEmail)"
-                    class="q-mr-md"
-                  />
-                  <q-btn
-                    flat
-                    round
-                    size="sm"
-                    color="white"
-                    icon="close"
-                    v-close-popup
-                  />
-                </div>
+            <q-card-section class="row justify-between items-center">
+              <q-item class="col-8">
+                <q-item-section>
+                  <q-item-label overline>{{ activeEmail.sender }}</q-item-label>
+                  <q-item-label>{{ activeEmail.title }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <div class="col-4 text-right">
+                <q-btn
+                  flat
+                  round
+                  size="sm"
+                  color="red"
+                  icon="delete"
+                  v-close-popup
+                  @click="deleteEmail(activeEmail)"
+                  class="q-mr-md"
+                />
+                <q-btn
+                  flat
+                  round
+                  size="sm"
+                  color="white"
+                  icon="close"
+                  v-close-popup
+                />
               </div>
             </q-card-section>
 
