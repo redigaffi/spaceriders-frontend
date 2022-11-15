@@ -3,44 +3,61 @@
     <slot></slot>
   </div>
   <q-dialog v-model="openPopup">
-    <q-card style="width: 600px; max-width: 80vw; background: #0e101c">
-      <q-card-section class="row justify-between">
-        <div class="text-h4" style="letter-spacing: 3px">Swap</div>
-        <div>
-          <q-btn
-            dense
-            color="primary"
-            round
-            icon="close"
-            @click="openPopup = false"
-          />
-        </div>
+    <q-card dark class="full-width">
+      <q-card-section class="row justify-between items-center">
+        <q-item>
+          <q-item-section>
+            <q-item-label>SWAP</q-item-label>
+            <q-item-label overline>$BKM = {{ price }} USD</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-btn
+          flat
+          round
+          size="sm"
+          color="white"
+          icon="close"
+          @click="openPopup = false"
+        />
       </q-card-section>
-      <q-card-section>
-        <div class="row q-col-gutter-sm">
-          <div class="col-1 flex flex-center">
-            <img :src="buyMetadata[pathNames[0]].image" style="height: 40px" />
-          </div>
-          <div class="col-3 text-overline" style="font-size: 12px">
-            <div>Swap From:</div>
+
+      <q-separator />
+
+      <q-card-section class="row">
+        <div class="col-12 row items-center justify-between q-col-gutter-sm">
+          <div
+            class="col-12 col-md row items-center"
+            :class="$q.screen.lt.md ? 'justify-stretch' : 'justify-start'"
+          >
+            <div class="q-mx-sm">
+              <q-avatar color="accent">
+                <q-img :src="buyMetadata[pathNames[0]].image" />
+              </q-avatar>
+            </div>
+
             <div>
-              <div class="text-h4 text-weight-bold">{{ pathNames[0] }}</div>
+              <div>Swap from:</div>
+              <div>{{ pathNames[0] }}</div>
             </div>
           </div>
-          <div class="col flex flex-center">
+
+          <div class="col-12 col-md">
             <q-input
               dense
               outlined
               color="white"
-              class="full-width"
+              class="full-width q-ma-none q-pa-none"
               v-model="buyFromAmount"
               placeholder="0.0"
               type="number"
+              min="0"
+              :rules="[(val) => val > 0 || 'Value must be greater than zero.']"
               @change="buyFromChange"
             >
               <div class="q-mt-sm">
                 <q-btn
-                  color="positive"
+                  color="info"
                   size="sm"
                   label="Max"
                   no-caps
@@ -50,85 +67,121 @@
             </q-input>
           </div>
         </div>
+      </q-card-section>
 
-        <div class="text-center q-py-sm">
-          <q-btn
-            round
-            color="primary"
-            icon="swap_vert"
-            @click="swapComponents"
-          />
-        </div>
+      <q-card-section class="row justify-center items-center">
+        <q-btn round color="primary" icon="swap_vert" @click="swapComponents" />
+      </q-card-section>
 
-        <div class="row q-col-gutter-sm">
-          <div class="col-1 flex flex-center">
-            <img :src="buyMetadata[pathNames[1]].image" style="height: 40px" />
+      <q-card-section class="row">
+        <div class="col-12 row items-center justify-between q-col-gutter-sm">
+          <div
+            class="col-12 col-md row items-center"
+            :class="$q.screen.lt.md ? 'justify-stretch' : 'justify-start'"
+          >
+            <div class="q-mx-sm">
+              <q-avatar color="accent">
+                <q-img :src="buyMetadata[pathNames[1]].image" />
+              </q-avatar>
+            </div>
+
+            <div>
+              <div>Swap to:</div>
+              <div>{{ pathNames[1] }}</div>
+            </div>
           </div>
 
-          <div class="col-3 text-overline" style="font-size: 12px">
-            <div>Swap To:</div>
-            <div class="text-h4 text-weight-bold">{{ pathNames[1] }}</div>
-          </div>
-          <div class="col flex flex-center">
+          <div class="col-12 col-md">
             <q-input
               dense
               outlined
-              class="full-width"
               color="white"
+              class="full-width q-ma-none q-pa-none"
               v-model="buyToAmount"
               placeholder="0.0"
               type="number"
-              readonly
-            />
+            >
+            </q-input>
           </div>
         </div>
       </q-card-section>
 
-      <q-card-section style="color: #fff">
-        <div>$BKM = {{ price }}$</div>
-        <div>
-          <br />
-          [TESTNET]
-          <br />
-          <a href="https://testnet.binance.org/faucet-smart" target="_blank"
-            >Get BNB in testnet</a
-          >
-          <br />
-          <a
-            href="https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
-            target="_blank"
-            >Get BUSD in testnet</a
-          >
-        </div>
+      <q-card-section class="q-pt-sm">
+        <q-expansion-item
+          class="shadow-1 overflow-hidden"
+          style="border-radius: 5px"
+          icon="generating_tokens"
+          label="Get free tokens for Testnet"
+          header-class="bg-primary text-white"
+          expand-icon-class="text-white"
+        >
+          <q-list class="text-subtitle2 q-mb-sm">
+            <q-item
+              @click="openURL('https://testnet.binance.org/faucet-smart')"
+              target="_blank"
+              clickable
+              v-ripple
+            >
+              <q-item-section>
+                <q-item-label>Get BNB in Testnet</q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  <q-icon name="fas fa-link" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item
+              @click="
+                openURL(
+                  'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7'
+                )
+              "
+              target="_blank"
+              clickable
+              v-ripple
+            >
+              <q-item-section>
+                <q-item-label>Get BUSD in Testnet</q-item-label>
+              </q-item-section>
+
+              <q-item-section avatar>
+                <q-item-label>
+                  <q-icon name="fas fa-link" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
       </q-card-section>
 
-      <q-card-actions class="row q-col-gutter-md">
-        <div class="col">
-          <IncreaseAllowance
-            :address="ContractAddress.getRouterAddress()"
-            :amount="buyFromAmount"
-            :tokenAddress="
-              pathNames[0] == 'busd'
-                ? ContractAddress.getBusdAddress()
-                : ContractAddress.getSpaceRidersAddress()
-            "
-          />
-        </div>
-        <div class="col">
-          <button
-            class="button q-py-sm full-width"
-            style="
-              border: 2px solid #2253f4;
-              border-radius: 5px;
-              font-size: 14px;
-              box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-              color: #fff;
-            "
-            v-on:click.prevent="buySpr"
-          >
-            Swap
-          </button>
-        </div>
+      <q-card-actions align="center" class="q-gutter-x-sm">
+        <IncreaseAllowance
+          :address="ContractAddress.getRouterAddress()"
+          :amount="buyFromAmount"
+          :tokenAddress="
+            pathNames[0] == 'busd'
+              ? ContractAddress.getBusdAddress()
+              : ContractAddress.getSpaceRidersAddress()
+          "
+        />
+
+        <q-btn
+          :disable="buyFromAmount <= 0"
+          label="Swap"
+          icon="currency_exchange"
+          style="
+            border: 2px solid #2253f4;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0 0 20px rgb(34 83 244 / 76%);
+            color: #fff;
+          "
+          v-on:click.prevent="buySpr"
+        >
+        </q-btn>
       </q-card-actions>
 
       <q-inner-loading :showing="visible">
@@ -148,7 +201,7 @@ import ERC20 from "../service/contract/ERC20";
 import { SWAP_COMPLETED } from "../constants/Events";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
-import { useQuasar } from "quasar";
+import { useQuasar, openURL } from "quasar";
 const $q = useQuasar();
 
 const pathNames = ref(["busd", "bkm"]);
@@ -192,11 +245,15 @@ const buyFromAmount = ref(1);
 const buyToAmount = ref(1);
 
 const buyFromChange = async () => {
-  let amount = await RouterContract.getAmountsOut(
-    buyFromAmount.value,
-    pathNames.value
-  );
-  buyToAmount.value = amount;
+  if (buyFromAmount.value > 0) {
+    let amount = await RouterContract.getAmountsOut(
+      buyFromAmount.value,
+      pathNames.value
+    );
+    buyToAmount.value = amount;
+  } else {
+    buyToAmount.value = 0;
+  }
 };
 
 const maxBalance = async () => {
@@ -211,8 +268,8 @@ const maxBalance = async () => {
 };
 
 const swapComponents = () => {
-  buyFromAmount.value = 0;
-  buyToAmount.value = 0;
+  buyFromAmount.value = 1;
+  buyToAmount.value = 1;
 
   const path0 = pathNames.value[0];
   const path1 = pathNames.value[1];

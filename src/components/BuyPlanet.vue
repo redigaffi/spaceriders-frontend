@@ -72,6 +72,11 @@
 
         <q-separator />
 
+        <q-img
+          src="~assets/img/buy_planet_bg.jpg"
+          style="height: 200px; width: 100%"
+        />
+
         <q-card-section class="q-gutter-sm q-py-sm">
           <q-input
             label-color="white"
@@ -120,7 +125,7 @@
           />
         </q-card-section>
 
-        <q-card-actions vertical class="justify-between q-gutter-y-sm q-px-md">
+        <q-card-actions align="center" class="q-px-md">
           <!-- <q-btn
             class="full-width"
             style="background: #18121e"
@@ -133,20 +138,21 @@
           /> -->
 
           <IncreaseAllowance
-            class="full-width"
             :address="ContractAddress.getSpaceRidersGameAddress()"
             :amount="planetCost.token_cost"
             :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+            :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
           />
 
           <q-btn
+            :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
             color="info"
-            class="full-width"
+            icon="add"
+            label="Buy Planet"
             @click="buyPlanet"
             :disabled="planetName.length < 4 || planetName.length > 14"
             v-close-popup
           >
-            Buy Planet
           </q-btn>
 
           <q-inner-loading :showing="visible">
