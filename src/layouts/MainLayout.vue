@@ -65,8 +65,8 @@
             },
             move: {
               enable: true,
-              speed: 0.5,
-              direction: 'bottom',
+              speed: 0.1,
+              direction: 'top',
               random: true,
               straight: true,
               out_mode: 'out',
