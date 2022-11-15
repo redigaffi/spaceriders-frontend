@@ -85,6 +85,7 @@
       <q-btn
         @click="openUpdateDialog = !openUpdateDialog"
         color="primary"
+        icon="autorenew"
         label="Update"
       />
 
@@ -92,6 +93,7 @@
         v-if="!isStaking"
         @click="openTierDialog"
         color="info"
+        icon="settings"
         label="Upgrade"
       />
 
@@ -112,16 +114,21 @@
   </q-card>
 
   <q-dialog v-model="openUpdateDialog">
-    <q-card class="bg-dark text-white">
+    <q-card class="bg-dark text-white full-width">
       <q-btn
         round
         class="absolute-top-right"
         flat
-        color="warning"
+        color="white"
         icon="close"
         v-close-popup
       />
-      <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
+
+      <img
+        src="~assets/img/update_planet_bg.jpg"
+        style="height: 200px; object-fit: cover"
+      />
+
       <q-card-section class="text-center">
         <div class="text-h6">RENAME PLANET</div>
         <div class="text-caption">
@@ -142,6 +149,7 @@
       <q-card-section class="q-pt-none text-center">
         <q-btn
           label="Rename Planet"
+          icon="edit"
           color="warning"
           no-caps
           class="q-px-lg"
@@ -152,16 +160,20 @@
   </q-dialog>
 
   <q-dialog v-model="layout">
-    <q-card dark>
+    <q-card dark class="full-width">
       <q-btn
         round
         class="absolute-top-right"
         flat
-        color="warning"
+        color="white"
         icon="close"
         v-close-popup
       />
-      <img src="~assets/img/buyplanet_footer-scaled.webp" alt="" srcset="" />
+
+      <img
+        src="~assets/img/upgrade_planet_bg.jpg"
+        style="height: 200px; object-fit: cover"
+      />
 
       <q-card-section class="text-center">
         <div class="text-h6">Upgrade Tier</div>
@@ -249,7 +261,7 @@
           :tokenAddress="ContractAddress.getSpaceRidersAddress()"
         />
 
-        <q-btn color="info" label="Upgrade" @click="stake" />
+        <q-btn color="info" icon="settings" label="Upgrade" @click="stake" />
       </q-card-actions>
     </q-card>
   </q-dialog>
