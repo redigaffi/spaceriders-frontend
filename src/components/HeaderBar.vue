@@ -29,7 +29,7 @@
             class="q-mr-sm"
             @click="
               openURL(
-                'https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro'
+                'https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/gameplay'
               )
             "
           />
@@ -92,7 +92,7 @@
             exact-active-class="bg-primary text-white"
             @click="
               openURL(
-                'https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro'
+                'https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper/gameplay'
               )
             "
             target="_blank"
