@@ -36,7 +36,7 @@
                     :src="row.image_url"
                     style="
                       width: 100px;
-                      height: 150px;
+                      height: 160px;
                       object-fit: cover;
                       object-position: 50% 0%;
                     "
@@ -358,8 +358,6 @@ const myTweak = (offset) => {
   // this is actually what the default style-fn does in Quasar
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
 };
-
-console.log(rows);
 </script>
 
 <style lang="scss">
