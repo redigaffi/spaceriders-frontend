@@ -421,7 +421,7 @@
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
-                Access SpaceRiders Alpha
+                Access SpaceRiders
               </button>
             </div>
           </div>
