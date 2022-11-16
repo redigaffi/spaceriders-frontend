@@ -47,11 +47,8 @@
                     }"
                   >
                     <q-badge
-                      align="top"
-                      color="primary"
-                      class="text-caption"
-                      style="padding: 5px"
-                      rounded
+                      class="text-caption absolute-top justify-center no-border-radius glossy glass-element"
+                      style="padding: 5px 0"
                       >lvl {{ row.planet.level }}</q-badge
                     >
 
