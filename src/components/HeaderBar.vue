@@ -22,6 +22,18 @@
             @click="openURL('https://forms.gle/PRiDyFoabmiFeA6R9')"
           />
 
+          <q-btn
+            icon="auto_stories"
+            label="Game Manual"
+            color="info"
+            class="q-mr-sm"
+            @click="
+              openURL(
+                'https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro'
+              )
+            "
+          />
+
           <Swap v-if="$store.getters.loggedIn">
             <q-btn
               icon="currency_exchange"
@@ -73,6 +85,25 @@
             v-bind="link"
             :icon="link.icon"
           />
+
+          <q-item
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="
+              openURL(
+                'https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro'
+              )
+            "
+            target="_blank"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="auto_stories" />
+                Game Manual
+              </q-item-label>
+            </q-item-section>
+          </q-item>
 
           <q-item
             clickable
@@ -263,15 +294,6 @@ const linksListInfo = {
     icon: "fa fa-satellite-dish",
     attr: {},
   },
-  gm: {
-    title: "Game Manual",
-    link: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
-    icon: "auto_stories",
-    attr: {
-      href: "https://spaceriders-spaceriders.gitbook.io/spaceriders-game-manual/spaceriders-intro",
-      target: "_blank",
-    },
-  },
 };
 
 const $store = useStore();
@@ -342,7 +364,6 @@ let linksList = computed(() => {
         }
       }
 
-      tmplinksList.push(linksListInfo.gm);
       break;
     }
   }
