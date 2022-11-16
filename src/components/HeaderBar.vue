@@ -14,6 +14,14 @@
         </q-toolbar-title>
 
         <div class="header__nav">
+          <q-btn
+            icon="fas fa-bug"
+            label="Bug"
+            color="negative"
+            class="q-mr-sm"
+            @click="openURL('https://forms.gle/PRiDyFoabmiFeA6R9')"
+          />
+
           <Swap v-if="$store.getters.loggedIn">
             <q-btn
               icon="currency_exchange"
@@ -65,6 +73,21 @@
             v-bind="link"
             :icon="link.icon"
           />
+
+          <q-item
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="openURL('https://forms.gle/PRiDyFoabmiFeA6R9')"
+            target="_blank"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="fas fa-bug" />
+                Bug
+              </q-item-label>
+            </q-item-section>
+          </q-item>
 
           <Swap v-if="$store.getters.loggedIn">
             <q-item clickable exact exact-active-class="bg-primary text-white">
@@ -190,7 +213,7 @@ import User from "./User.vue";
 import Balance from "./Balance.vue";
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
-import { useQuasar } from "quasar";
+import { openURL, useQuasar } from "quasar";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
 import routes from "../router/routes.js";
