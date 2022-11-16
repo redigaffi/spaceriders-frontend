@@ -712,9 +712,9 @@
                 <q-slider
                   id="depositEnergySlider"
                   v-model="depositAmount"
-                  :min="10"
-                  :max="maxEnergyDeposit"
-                  :step="10"
+                  :min="50"
+                  :max="10000"
+                  :step="50"
                   label
                   label-always
                   color="info"
@@ -758,9 +758,9 @@
                 <q-slider
                   id="depositEnergySlider"
                   v-model="bkmDepositAmount"
-                  :min="0.5"
-                  :step="5"
-                  :max="5000"
+                  :min="50"
+                  :step="50"
+                  :max="10000"
                   label
                   label-always
                   color="info"
@@ -769,7 +769,6 @@
 
               <q-card-actions align="center" class="q-gutter-sm">
                 <IncreaseAllowance
-                  v-if="!$store.getters.activePlanet.free_planet"
                   :address="ContractAddress.getSpaceRidersGameAddress()"
                   :amount="bkmDepositAmount"
                   :tokenAddress="ContractAddress.getSpaceRidersAddress()"
@@ -810,9 +809,9 @@
                 <q-slider
                   id="depositEnergySlider"
                   v-model="bkmWithdrawAmount"
-                  :min="0.5"
-                  :step="5"
-                  :max="5000"
+                  :min="50"
+                  :step="50"
+                  :max="10000"
                   label
                   label-always
                   color="negative"
@@ -1190,10 +1189,10 @@ const energyDepositPopup = ref(false);
 const bkmDepositPopup = ref(false);
 const bkmWithdrawPopup = ref(false);
 const bkmPopup = ref(false);
-const depositAmount = ref(10);
+const depositAmount = ref(50);
 
-const bkmDepositAmount = ref(1.0);
-const bkmWithdrawAmount = ref(1.0);
+const bkmDepositAmount = ref(50);
+const bkmWithdrawAmount = ref(50);
 
 const sprCost = computed(() => {
   const tokenPrice = $store.getters.tokenPrice;
@@ -1304,12 +1303,6 @@ async function withdrawBkm(amount) {
     notif($notification("failed", ex));
   }
 }
-
-const maxEnergyDeposit = computed(() => {
-  const planet = $store.getters.activePlanet;
-  if (!planet) return 0;
-  return planet.resources.energy_max_deposit;
-});
 
 function startEnergyTimer() {
   if ($store.getters.activePlanet === false) return false;
