@@ -93,7 +93,11 @@
                 <div class="text-center">Login with:</div>
               </q-card-section>
 
-              <q-card-actions :vertical="$q.screen.lt.md" align="center">
+              <q-card-actions
+                :vertical="$q.screen.lt.md"
+                align="center"
+                class="q-gutter-y-sm"
+              >
                 <q-btn
                   :class="{ 'full-width': $q.screen.lt.md }"
                   color="info"
