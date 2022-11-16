@@ -712,9 +712,9 @@
                 <q-slider
                   id="depositEnergySlider"
                   v-model="depositAmount"
-                  :min="0.5"
+                  :min="10"
                   :max="maxEnergyDeposit"
-                  :step="0.5"
+                  :step="10"
                   label
                   label-always
                   color="info"
@@ -723,7 +723,7 @@
 
               <q-card-actions align="center">
                 <q-btn
-                  label="Deposit"
+                  label="Convert"
                   color="info"
                   icon="file_download"
                   @click="depositEnergy(depositAmount)"
@@ -1190,7 +1190,7 @@ const energyDepositPopup = ref(false);
 const bkmDepositPopup = ref(false);
 const bkmWithdrawPopup = ref(false);
 const bkmPopup = ref(false);
-const depositAmount = ref(1.0);
+const depositAmount = ref(10);
 
 const bkmDepositAmount = ref(1.0);
 const bkmWithdrawAmount = ref(1.0);
@@ -1204,8 +1204,8 @@ const sprCost = computed(() => {
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
   const amount =
-    depositAmount.value.toFixed(2) - depositAmount.value.toFixed(2) * 0.1;
-  return `${amount} $BKM - ${amount * 10000} Energy (-10% $BKM Fee)`;
+    depositAmount.value.toFixed(2) - (depositAmount.value.toFixed(2) * 0.1);
+  return `${amount} $BKM - ${amount / 10} Energy (-10% $BKM Fee)`;
 });
 
 async function depositEnergy(amount) {
@@ -1222,7 +1222,7 @@ async function depositEnergy(amount) {
     notif($notification("success", "Energy deposited successfully!"));
 
     $store.commit("incrementEnergy", {
-      energy: (amount - amount * 0.1) * 10000,
+      energy: (amount - amount * 0.1) / 10,
     });
     $store.commit("decrementBkm", { bkm: amount });
 
