@@ -32,7 +32,11 @@
           >
             <div class="q-mx-sm">
               <q-avatar color="accent">
-                <q-img :src="buyMetadata[pathNames[0]].image" />
+                <q-img
+                  :src="buyMetadata[pathNames[0]].image"
+                  height="48px"
+                  width="48px"
+                />
               </q-avatar>
             </div>
 
@@ -70,7 +74,13 @@
       </q-card-section>
 
       <q-card-section class="row justify-center items-center">
-        <q-btn round color="primary" icon="swap_vert" @click="swapComponents" />
+        <q-btn
+          round
+          color="primary"
+          icon="swap_vert"
+          @click="swapComponents"
+          fit
+        />
       </q-card-section>
 
       <q-card-section class="row">
@@ -81,7 +91,11 @@
           >
             <div class="q-mx-sm">
               <q-avatar color="accent">
-                <q-img :src="buyMetadata[pathNames[1]].image" />
+                <q-img
+                  :src="buyMetadata[pathNames[1]].image"
+                  height="48px"
+                  width="48px"
+                />
               </q-avatar>
             </div>
 
