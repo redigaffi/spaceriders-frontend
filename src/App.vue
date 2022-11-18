@@ -8,6 +8,14 @@ import { Face, Network } from "@haechi-labs/face-sdk";
 
 const $store = useStore();
 
+$store.commit("setTimeCount");
+
+if (!$store.getters.isReleaseTime) {
+  setInterval(() => {
+    $store.commit("increaseTimeCount");
+  }, 1000);
+}
+
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit("setChainInfo", { chainInfo: data });

@@ -178,10 +178,6 @@ const userInfoPopup = ref(false);
 const error = ref(false);
 const router = useRouter();
 
-onMounted(() => {
-  $store.commit("setTimeCount");
-});
-
 const socialLoginMap = {
   google: "google.com",
   facebook: "facebook.com",

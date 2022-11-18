@@ -1437,9 +1437,7 @@ export default defineComponent({
       });
       setBodyOffset();
       getMediumFeed(3);
-      $store.commit("setTimeCount");
       setInterval(() => {
-        $store.commit("increaseTimeCount");
         countDown();
       }, 1000);
     });
