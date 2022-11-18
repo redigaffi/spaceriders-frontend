@@ -20,7 +20,7 @@ if (window.face === undefined) {
   }
   window.face = new Face({
     network: network,
-    apiKey: process.env.FACE_WALLET_API_KEY
+    apiKey: process.env.FACE_WALLET_API_KEY,
   });
 }
 

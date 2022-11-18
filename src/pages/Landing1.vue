@@ -416,13 +416,22 @@
                 </button>
               </Swap>
             </div>-->
-            <div>
+            <div v-if="$store.getters.isReleaseTime">
               <button
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
                 Access SpaceRiders
               </button>
+            </div>
+            <div v-else>
+              <q-btn
+                icon="fas fa-clock"
+                class="button main__button3 popup__open"
+                size="lg"
+                :label="`${h}h ${m}m ${s}s`"
+              >
+              </q-btn>
             </div>
           </div>
         </div>
@@ -1391,13 +1400,15 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import Timeline from "src/components/Timeline.vue";
 import GameMechanics from "src/components/GameMechanics.vue";
 import { useQuasar } from "quasar";
+import { useStore } from "vuex";
 import ApiRequest from "../service/http/ApiRequests";
 import _ from "lodash";
+import { releaseDate } from "../constants/Shared";
 
 //import PieChart from "../components/pieChart";
 
@@ -1406,6 +1417,7 @@ export default defineComponent({
   //components: { PieChart },
   setup() {
     const $q = useQuasar();
+    const $store = useStore();
     const mediumFeed = ref(new Array());
     // $q.loading.show();
     const headerTransparency = ref(true); // obtain the reference
@@ -1425,6 +1437,11 @@ export default defineComponent({
       });
       setBodyOffset();
       getMediumFeed(3);
+      $store.commit("setTimeCount");
+      setInterval(() => {
+        $store.commit("increaseTimeCount");
+        countDown();
+      }, 1000);
     });
     const preventScroll = (e) => {
       if (drawer.value === true) {
@@ -1459,39 +1476,39 @@ export default defineComponent({
     const truncate = (str, len) => {
       return _.truncate(str, { length: len, separator: " " });
     };
+
     const d = ref(0);
     const h = ref(0);
     const m = ref(0);
     const s = ref(0);
-    const second = 1000,
-      minute = second * 60,
-      hour = minute * 60,
-      day = hour * 24;
-    //I'm adding this section so I don't have to keep updating this pen every year :-)
-    //remove this if you don't need it
-    let today = new Date(),
-      dd = String(today.getDate()).padStart(2, "0"),
-      mm = String(today.getMonth() + 1).padStart(2, "0"),
-      yyyy = today.getFullYear(),
-      nextYear = yyyy,
-      dayMonth = "11/22/",
-      birthday = dayMonth + yyyy;
-    today = mm + "/" + dd + "/" + yyyy;
-    if (today > birthday) {
-      birthday = dayMonth + nextYear;
-    }
-    //end
-    const countDown = new Date(birthday).getTime(),
-      x = setInterval(function () {
-        const now = new Date().getTime(),
-          distance = countDown - now;
-        (d.value = Math.floor(distance / day)),
-          (h.value = Math.floor(distance / (1000 * 60 * 60))),
-          (m.value = Math.floor((distance % hour) / minute));
-        s.value = Math.floor((distance % minute) / second);
-        //do something later when date is reached
-        //seconds
-      }, 0);
+
+    const countDown = () => {
+      const dayInMiliseconds = 86400000;
+      const hourInMiliseconds = 3600000;
+
+      let timeLeft = releaseDate - $store.getters.dateNow;
+
+      if (timeLeft - dayInMiliseconds > 0) {
+        const days = Math.trunc(timeLeft / dayInMiliseconds);
+        d.value = days.toString().padStart(2, "0");
+        timeLeft -= dayInMiliseconds * d.value;
+      }
+
+      if (timeLeft - hourInMiliseconds > 0) {
+        const hours = Math.trunc(timeLeft / hourInMiliseconds);
+        h.value = hours.toString().padStart(2, "0");
+        timeLeft -= hourInMiliseconds * h.value;
+      }
+
+      if (timeLeft - 60000 > 0) {
+        const minutes = Math.trunc(timeLeft / 60000);
+        m.value = minutes.toString().padStart(2, "0");
+        timeLeft -= 60000 * m.value;
+      }
+
+      const seconds = Math.trunc(timeLeft / 1000);
+      s.value = seconds.toString().padStart(2, "0");
+    };
     const scrollPosition = ref();
     const updateScroll = () => {
       scrollPosition.value = window.scrollY;

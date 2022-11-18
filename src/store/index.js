@@ -1,4 +1,6 @@
 import { createStore } from "vuex";
+import { releaseDate } from "src/constants/Shared";
+import { ref } from "vue";
 // import example from './module-example'
 
 const Store = createStore({
@@ -27,6 +29,7 @@ const Store = createStore({
       tabPanel: "profile",
       drawerLeft: false,
       drawerRight: false,
+      dateNow: 0,
     };
   },
   mutations: {
@@ -38,7 +41,6 @@ const Store = createStore({
         );
       }
     },
-
     setChainInfo(state, payload) {
       state.chainInfo = payload.chainInfo;
     },
@@ -348,6 +350,14 @@ const Store = createStore({
       state.activePlanet.resources.energy -= payload.energy;
     },
 
+    increaseTimeCount(state) {
+      state.dateNow += 1000;
+    },
+
+    setTimeCount(state) {
+      state.dateNow = new Date().getTime();
+    },
+
     appendBuildingQueue(state, payload) {
       state.buildingQueue.items.push(payload);
     },
@@ -431,6 +441,14 @@ const Store = createStore({
 
     loggedIn: (state) => {
       return state.jwt !== false;
+    },
+
+    dateNow: (state) => {
+      return state.dateNow;
+    },
+
+    isReleaseTime: (state) => {
+      return releaseDate - state.dateNow <= 0;
     },
 
     jwt: (state) => {
