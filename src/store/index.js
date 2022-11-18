@@ -30,6 +30,7 @@ const Store = createStore({
       drawerLeft: false,
       drawerRight: false,
       dateNow: 0,
+      accountInfo: {},
     };
   },
   mutations: {
@@ -67,6 +68,10 @@ const Store = createStore({
     setDrawerRight(state, payload) {
       state.drawerLeft = false;
       state.drawerRight = !state.drawerRight;
+    },
+
+    setAccountInfo(state, info) {
+      state.accountInfo = info;
     },
 
     addEmails(state, payload) {
@@ -449,6 +454,10 @@ const Store = createStore({
 
     isReleaseTime: (state) => {
       return releaseDate - state.dateNow <= 0;
+    },
+
+    accountInfo: (state) => {
+      return state.accountInfo;
     },
 
     jwt: (state) => {

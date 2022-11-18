@@ -166,9 +166,15 @@
                       color="secondary"
                       class="absolute-center"
                       size="215px"
-                      circle
+                      rounded
                     >
                       <object v-html="avatar" class="absolute-center" />
+                      <q-badge
+                        color="primary"
+                        class="absolute-top glossy justify-center"
+                      >
+                        Lvl {{ accountLevel }}
+                      </q-badge>
                     </q-avatar>
                   </q-img>
 
@@ -479,6 +485,10 @@ const router = useRouter();
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
+onMounted(() => {
+  updateAccountInfo();
+});
+
 const tabPanel = computed({
   get: () => {
     return $store.getters.tabPanel;
@@ -552,6 +562,10 @@ const emails = computed(() => {
 const openInbox = ref(false);
 const activeEmail = ref({});
 
+const accountLevel = computed(() => {
+  return $store.getters.accountInfo.level;
+});
+
 const templateName = computed(() => {
   if (!activeEmail.value.template) return;
 
@@ -620,6 +634,12 @@ $eventBus.on(LOGGED_IN, async () => {
   await updateAll();
   await updateInterval();
 });
+
+async function updateAccountInfo() {
+  ApiRequest.getAccountInfo($store.getters.address).then((response) => {
+    $store.commit("setAccountInfo", response.data);
+  });
+}
 
 async function update(activePlanet) {
   ApiRequest.tokenPrice().then((tokenPrice) => {

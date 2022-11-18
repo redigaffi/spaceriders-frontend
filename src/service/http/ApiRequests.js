@@ -41,7 +41,6 @@ export default class ApiRequests {
     return await axios.post(path, body);
   }
 
-
   static async fetchPlanetCost() {
     const path = `${process.env.BASE_API_PATH}/planet/cost`;
     return (await axios.get(path)).data;
@@ -328,5 +327,10 @@ export default class ApiRequests {
     };
 
     return await axios.post(path, body);
+  }
+
+  static async getAccountInfo(wallet) {
+    const path = `${process.env.BASE_API_PATH}/account/info/${wallet}`;
+    return await axios.get(path);
   }
 }
