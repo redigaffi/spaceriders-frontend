@@ -363,6 +363,22 @@ const Store = createStore({
       state.dateNow = new Date().getTime();
     },
 
+    markPlanet(state, payload) {
+      let planet = payload.planet;
+      let p;
+
+      if (!payload.active) {
+        let pI = state.planets.findIndex((p) => p.id === planet.id);
+        p = state.planets[pI];
+        p["is_favourite"] = !p["is_favourite"];
+        state.planets[pI] = p;
+      } else {
+        p = state.activePlanet;
+        p["is_favourite"] = !p["is_favourite"];
+        state.activePlanet = p;
+      }
+    },
+
     appendBuildingQueue(state, payload) {
       state.buildingQueue.items.push(payload);
     },

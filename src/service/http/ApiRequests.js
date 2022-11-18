@@ -314,6 +314,26 @@ export default class ApiRequests {
     return await axios.get(path);
   }
 
+  static async planetMark(id) {
+    const path = `${process.env.BASE_API_PATH}/planet/favourite/mark`;
+
+    const body = {
+      planet_id: id,
+    };
+
+    return await axios.post(path, body);
+  }
+
+  static async planetUnmark(id) {
+    const path = `${process.env.BASE_API_PATH}/planet/favourite/unmark`;
+
+    const body = {
+      planet_id: id,
+    };
+
+    return await axios.post(path, body);
+  }
+
   /**
    * Repair Resource
    * @param {object} data
