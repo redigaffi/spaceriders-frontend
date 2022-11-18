@@ -24,7 +24,8 @@ async function getChainData() {
 if (window.face === undefined) {
   let network = Network.BNB_SMART_CHAIN_TESTNET;
   if (process.env.ENV === "mainnet") {
-    network = Network.BNB_SMART_CHAIN;
+    //network = Network.BNB_SMART_CHAIN;
+    network = Network.BNB_SMART_CHAIN_TESTNET;
   }
   window.face = new Face({
     network: network,
