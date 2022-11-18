@@ -1,12 +1,13 @@
 <template>
   <div
-    class="row justify-center glossy glass-element no-border-radius q-pa-none"
+    class="row justify-center glossy glass-element no-border-radius"
+    style="padding: 0"
   >
-    <q-list class="col q-py-xs">
+    <q-list class="col">
       <q-item
         clickable
         v-ripple
-        class="q-pa-none"
+        class="q-px-none q-py-sm"
         @click="showMetalData = true"
       >
         <q-item-section
@@ -52,11 +53,11 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col q-py-xs">
+    <q-list class="col">
       <q-item
         clickable
         v-ripple
-        class="q-pa-none"
+        class="q-px-none q-py-sm"
         @click="showCrystalData = true"
       >
         <q-item-section
@@ -103,11 +104,11 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col q-py-xs">
+    <q-list class="col">
       <q-item
         clickable
         v-ripple
-        class="q-pa-none"
+        class="q-px-none q-py-sm"
         @click="showPetrolData = true"
       >
         <q-item-section
@@ -153,11 +154,11 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col q-py-xs">
+    <q-list class="col">
       <q-item
         clickable
         v-ripple
-        class="q-pa-none"
+        class="q-px-none q-py-sm"
         @click="showEnergyData = true"
       >
         <q-item-section
@@ -196,8 +197,13 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col q-py-xs">
-      <q-item clickable v-ripple class="q-pa-none" @click="showBKMData = true">
+    <q-list class="col">
+      <q-item
+        clickable
+        v-ripple
+        class="q-px-none q-py-sm"
+        @click="showBKMData = true"
+      >
         <q-item-section
           class="justify-center"
           :class="$q.screen.gt.md ? 'items-end' : 'items-center'"
