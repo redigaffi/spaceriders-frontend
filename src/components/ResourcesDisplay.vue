@@ -1,6 +1,8 @@
 <template>
-  <div class="row justify-center glossy glass-element no-border-radius">
-    <q-list class="col">
+  <div
+    class="row justify-center glossy glass-element no-border-radius q-pa-none"
+  >
+    <q-list class="col q-py-xs">
       <q-item
         clickable
         v-ripple
@@ -50,7 +52,7 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col">
+    <q-list class="col q-py-xs">
       <q-item
         clickable
         v-ripple
@@ -101,7 +103,7 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col">
+    <q-list class="col q-py-xs">
       <q-item
         clickable
         v-ripple
@@ -151,7 +153,7 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col">
+    <q-list class="col q-py-xs">
       <q-item
         clickable
         v-ripple
@@ -194,7 +196,7 @@
       </q-tooltip>
     </q-list>
 
-    <q-list class="col">
+    <q-list class="col q-py-xs">
       <q-item clickable v-ripple class="q-pa-none" @click="showBKMData = true">
         <q-item-section
           class="justify-center"
@@ -1203,7 +1205,7 @@ const sprCost = computed(() => {
 const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
   const amount =
-    depositAmount.value.toFixed(2) - (depositAmount.value.toFixed(2) * 0.1);
+    depositAmount.value.toFixed(2) - depositAmount.value.toFixed(2) * 0.1;
   return `${amount} $BKM - ${amount / 10} Energy (-10% $BKM Fee)`;
 });
 

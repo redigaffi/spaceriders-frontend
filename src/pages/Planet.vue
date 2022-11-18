@@ -1,4 +1,6 @@
 <template>
+  <PlanetList />
+
   <q-card dark class="q-my-md">
     <q-item>
       <q-item-section class="text-center text-h6">
@@ -54,8 +56,6 @@
       </div>
     </q-card-section>
   </q-card>
-
-  <PlanetList />
 
   <q-dialog v-model="planetCongratulationsPopup">
     <q-card
