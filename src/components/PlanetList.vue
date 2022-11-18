@@ -27,6 +27,8 @@
                 :style="
                   row.active
                     ? `border: 1px solid ${getPaletteColor('info')}`
+                    : row.planet.is_favourite
+                    ? `border: 1px solid ${getPaletteColor('amber')}`
                     : ''
                 "
               >
@@ -164,10 +166,12 @@
                     @click="changeActivatePlanet(row.planet)"
                   />
                   <q-btn
-                    outline
-                    icon="far fa-star"
+                    :outline="!row.planet.is_favourite"
+                    :icon="
+                      row.planet.is_favourite ? 'fas fa-star' : 'far fa-star'
+                    "
                     color="amber"
-                    label="Favourite"
+                    @click="planetMark(row)"
                   />
                 </q-card-actions>
               </q-card>
@@ -176,67 +180,6 @@
         </div>
       </q-scroll-area>
     </q-card-section>
-
-    <!--
-    <q-table
-      grid
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      :filter="filter"
-      v-model:pagination="pagination"
-    >
-      <template v-slot:item="props">
-        <div class="col-xs-12 text-center">
-          <q-card class="bg-transparent">
-            <q-btn
-              flat
-              color="white"
-              text-color="warning"
-              :class="[props.row.active == true ? 'active-planet' : '']"
-              @click="changeActivatePlanet(props.row.planet)"
-            >
-              <div>
-                <img
-                  :src="props.row.image_url"
-                  style="height: 95px; width: 100%"
-                />
-              </div>
-
-              <q-card-section class="q-pt-none" style="line-height: 1">
-                <div class>
-                  <q-badge :color="props.row.color">{{
-                    props.row.rarity
-                  }}</q-badge>
-                </div>
-                <br />
-                <div
-                  style="
-                    width: 120px;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                  "
-                >
-                  {{ props.row.name }}
-                </div>
-                <br />
-                <span style="font-size: 12px">[{{ props.row.position }}]</span>
-              </q-card-section>
-            </q-btn>
-          </q-card>
-        </div>
-      </template>
-    </q-table>
-
-    <div class="row justify-center q-my-md">
-      <q-pagination
-        v-model="pagination.page"
-        color="info"
-        :max="pagesNumber"
-        size="sm"
-      />
-    </div>
-    -->
   </q-card>
 </template>
 
@@ -245,8 +188,8 @@ import { defineComponent, computed, watch, ref, getCurrentInstance } from "vue";
 import { colors, getCssVar, useQuasar } from "quasar";
 import { useStore } from "vuex";
 import ResourcesDisplay from "components/ResourcesDisplay.vue";
-
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
+import ApiRequests from "../service/http/ApiRequests";
 
 //https://quasar.dev/layout/routing-with-layouts-and-pages
 
@@ -344,6 +287,16 @@ const cardContainerClass = computed(() => {
     ? "grid-masonry grid-masonry--" + ($q.screen.gt.sm ? "3" : "2")
     : null;
 });
+
+const planetMark = async (data) => {
+  if (data.planet.is_favourite) {
+    await ApiRequests.planetUnmark(data.id);
+  } else {
+    await ApiRequests.planetMark(data.id);
+  }
+
+  $store.commit("markPlanet", data);
+};
 
 const rowsPerPageOptions = computed(() => {
   return $q.screen.gt.xs ? ($q.screen.gt.sm ? [3, 6, 9] : [3, 6]) : [3];
