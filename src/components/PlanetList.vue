@@ -133,12 +133,18 @@
                           <q-linear-progress
                             stripe
                             size="16px"
-                            :value="row.planet.experience / 100"
+                            :value="
+                              (100 * row.planet.experience) /
+                              row.planet.experience_needed /
+                              100
+                            "
                             color="info"
                           >
                             <span
                               class="absolute-full flex flex-center text-white"
-                              >{{ row.planet.experience }}/100</span
+                              >{{ row.planet.experience }}/{{
+                                row.planet.experience_needed
+                              }}</span
                             >
                           </q-linear-progress>
                         </q-item-section>
