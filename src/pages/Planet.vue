@@ -67,153 +67,133 @@
   </q-card>
 
   <q-dialog v-model="planetCongratulationsPopup">
-    <q-card
-      class="planetCongratulationsPopup-card"
-      flat
-      style="width: 800px; max-width: 80vw; border-radius: 20px"
-    >
-      <q-btn
-        round
-        class="absolute-top-right"
-        flat
-        color="warning"
-        icon="close"
-        v-close-popup
+    <q-card class="full-width">
+      <q-card-section class="row justify-between">
+        <div class="text-h6">Congratulations!</div>
+        <q-btn flat round size="sm" color="white" icon="close" v-close-popup />
+      </q-card-section>
+
+      <q-separator />
+
+      <q-img
+        :src="`https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.image}-bg.webp`"
+        style="height: 200px; width: 100%"
       />
-      <q-card-section
-        class="q-pa-none row q-col-gutter-sm"
-        style="padding: 50px 30px; padding-top: 0px; margin-top: 60px"
-      >
+
+      <q-card-section class="q-pa-md">
         <div
-          class="col"
-          style="
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            background-position: center;
-            background-size: cover;
-          "
-          :style="{
-            background: `url(https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.image}-bg.webp) center/cover`,
-          }"
-        ></div>
-
-        <div class="q-py-none col flex flex-center">
-          <q-card
-            class="bg-img"
-            style="border-radius: 5px; color: #fff; padding: 20px 20px"
-          >
-            <q-card-section class="q-pa-none">
-              <div class="text-subtitle2">
-                <q-card-section class="q-pa-none">
-                  <div
-                    class="text-center q-pa-sm"
-                    style="
-                      border: 2px solid #21ba45;
-                      border-radius: 5px;
-                      box-shadow: 0 0 20px #21ba45;
-                      color: #fff;
-                    "
-                  >
-                    New Planet has been claimed
-                  </div>
-                  <div class="q-mt-md">
-                    <div class="text-secondary">
-                      <q-list dense class="text-left q-mt-sm">
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Diameter :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.diameter }}
-                          </q-item-section>
-                        </q-item>
-
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Temperature :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.temperature }}
-                          </q-item-section>
-                        </q-item>
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Position :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.position }}
-                          </q-item-section>
-                        </q-item>
-
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Metal Reserve :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.metalReserve }}
-                          </q-item-section>
-                        </q-item>
-
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Crystal Reserve :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.crystalReserve }}
-                          </q-item-section>
-                        </q-item>
-                        <q-item class="congratulationsDialogItem">
-                          <q-item-section
-                            class="text-subtitle2 text-weight-bold"
-                            lines="1"
-                            >Petrol Reserve :
-                          </q-item-section>
-                          <q-item-section
-                            avatar
-                            style="color: rgb(33, 186, 69) !important"
-                            >{{ this.newPlanetInfo.petrolReserve }}
-                          </q-item-section>
-                        </q-item>
-
-                        <div
-                          class="congratulationsDialogItem text-center q-mt-md"
-                        >
-                          <button class="epic-button">
-                            <span>{{
-                              this.newPlanetInfo.rarity.toUpperCase()
-                            }}</span>
-                          </button>
-                        </div>
-                      </q-list>
-                    </div>
-                  </div>
-                </q-card-section>
-              </div>
-            </q-card-section>
-          </q-card>
+          class="text-center q-py-sm"
+          :style="`border: 2px solid ${getColor(
+            colorMapping[this.newPlanetInfo.rarity]
+          )}; \
+            border-radius: 5px; \
+            box-shadow: 0 0 20px ${getColor(
+              colorMapping[this.newPlanetInfo.rarity]
+            )}; \
+            color: #fff;`"
+        >
+          New planet has been claimed
         </div>
       </q-card-section>
+
+      <q-card-section class="q-px-md">
+        <q-list dense separator bordered class="rounded-borders">
+          <q-item>
+            <q-item-section>
+              <q-item-label> Diameter: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.diameter }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Temperature: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.temperature }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Position: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.position }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Metal reserve: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.metalReserve }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Crystal reserve: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.crystalReserve }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Petrol reserve: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.petrolReserve }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn
+          class="epic-button no-border"
+          size="lg"
+          icon="fas fa-globe"
+          :color="colorMapping[this.newPlanetInfo.rarity]"
+          :label="this.newPlanetInfo.rarity"
+          v-close-popup
+        ></q-btn>
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -225,6 +205,9 @@ import BuyPlanet from "../components/BuyPlanet.vue";
 import PlanetList from "components/PlanetList.vue";
 import { NEW_PLANET_PURCHASED, PLANET_CLAIMED } from "../constants/Events";
 import tc from "thousands-counter";
+import { colors } from "quasar";
+
+const { getPaletteColor } = colors;
 
 export default defineComponent({
   name: "PageIndex",
@@ -239,6 +222,13 @@ export default defineComponent({
       claimRefreshId: -1,
       planetCongratulationsPopup: false,
       newPlanetStats: false,
+      colorMapping: {
+        common: "blue-grey",
+        uncommon: "green-10",
+        rare: "blue-14",
+        epic: "purple-9",
+        legendary: "deep-orange",
+      },
     };
   },
   watch: {
@@ -249,6 +239,7 @@ export default defineComponent({
     },
   },
   methods: {
+    getColor: getPaletteColor,
     startInterval: function () {
       this.claimRefreshId = setInterval(() => {
         this.$store.commit("refreshPlanets");
@@ -293,15 +284,7 @@ export default defineComponent({
       });
       obj.rarity = this.newPlanetStats.rarity;
 
-      const colorMapping = {
-        uncommon: "blue-grey-6",
-        common: "blue-grey-6",
-        epic: "info",
-        rare: "info",
-        legendary: "purple-9",
-      };
-
-      obj.rarityColor = colorMapping[obj.rarity];
+      obj.rarityColor = this.colorMapping[obj.rarity];
 
       const minTemperature = this.newPlanetStats.min_temperature;
       const maxTemperature = this.newPlanetStats.max_temperature;
