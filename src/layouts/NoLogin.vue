@@ -277,6 +277,7 @@ const login = async (providerName, socialLoginProvider) => {
     re = await ApiRequest.authenticate(address, signature);
 
     if (!allowedWallets.includes(address) && !$store.getters.isReleaseTime) {
+      $quasar.loading.hide();
       $store.commit("destroySession");
       $quasar.notify($notification("failed", "MVP is not open yet..."));
       return;
