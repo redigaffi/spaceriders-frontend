@@ -204,13 +204,14 @@ const bnbFeeDisplay = ref();
 
 const visible = ref(true);
 watchEffect(async () => {
-  const fixedCost = Math.trunc(planetCost.value.token_cost * 1000) / 1000;
+
 
   if (buyPlanetPopup.value) {
     planetCost.value = "";
     bnbFeeDisplay.value = "";
     visible.value = true;
     planetCost.value = await ApiRequest.fetchPlanetCost();
+    const fixedCost = Math.trunc(planetCost.value.token_cost * 1000) / 1000;
     planetCostDisplay.value = `${fixedCost} $BKM ($${planetCost.value.usd_cost})`;
     bnbFeeDisplay.value = "0.0025 BNB";
     visible.value = false;
