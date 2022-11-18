@@ -1,90 +1,6 @@
 <template>
-  <div v-if="$store.getters.activePlanet !== false" class="q-py-sm">
-    <!--      <q-btn-->
-    <!--        v-if="buildingsInQueue.length > 0"-->
-    <!--        dense-->
-    <!--        class="q-px-sm q-mt-sm full-width"-->
-    <!--        color="warning"-->
-    <!--        :label="`Pay ${clearQueueCost} $BKM to clear`"-->
-    <!--        no-caps-->
-    <!--        push-->
-    <!--        @click="clearQueue"-->
-    <!--      />-->
-
-    <div class="q-pa-sm" v-for="bQ in buildingsInQueue" :key="`${bQ.label}`">
-      <div>
-        <q-list rounded class="rainbow bg-dark q-pa-none">
-          <div class="text-warning q-pa-sm text-subtitle2 text-center">
-            {{ Types.MAPPING[bQ.type].NAME_MAPPING.get(bQ.label) }}
-          </div>
-
-          <q-item class="q-pa-none">
-            <q-item-section avatar>
-              <img
-                :src="`data_img/${bQ.label}.webp`"
-                style="width: 72px; height: 72px"
-                alt=""
-              />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label caption class="text-left">
-                <div
-                  v-if="bQ.next_level !== null && bQ.action !== 'REPAIRING'"
-                  class="text-body2"
-                >
-                  Upgrade to:
-                  <span class="text-secondary text-weight-bold">{{
-                    bQ.next_level
-                  }}</span>
-                </div>
-
-                <div v-if="bQ.quantity !== null" class="text-body2">
-                  Quantity:
-                  <span class="text-secondary text-weight-bold">{{
-                    bQ.quantity
-                  }}</span>
-                </div>
-
-                <div class="text-body2">
-                  <div v-if="bQ.start_at <= timestamp">
-                    Time left:
-                    <span class="text-secondary text-weight-bold">{{
-                      calculateRelativeTime(bQ.start_at + bQ.time_to_finish)
-                    }}</span>
-                  </div>
-
-                  <div v-if="bQ.start_at > timestamp">
-                    Starts in:
-                    <span class="text-secondary text-weight-bold">{{
-                      calculateRelativeTime(bQ.start_at)
-                    }}</span>
-                  </div>
-                </div>
-
-                <div class="text-body2">
-                  Status:
-                  <span v-if="bQ.start_at <= timestamp">
-                    <span
-                      class="text-weight-bold"
-                      v-if="bQ.action === 'REPAIRING'"
-                      >Repairing...</span
-                    >
-                    <span v-else class="text-weight-bold">Building...</span>
-                  </span>
-
-                  <span v-else>
-                    <span class="text-weight-bold">In Queue...</span>
-                  </span>
-                </div>
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </div>
-    </div>
-
-    <div v-if="buildingsInQueue.length <= 0" class="text-center">
+  <div class="row">
+    <div v-if="buildingsInQueue.length <= 0" class="text-center col-12 q-pa-sm">
       <div>
         <img
           src="~assets/img/stack-svgrepo-com.svg"
@@ -93,6 +9,96 @@
         />
       </div>
       <p class="q-py-sm">Queue is empty</p>
+    </div>
+
+    <div
+      class="col-12 q-pa-sm"
+      v-for="bQ in buildingsInQueue"
+      :key="`${bQ.label}`"
+    >
+      <q-card dark bordered flat>
+        <q-card-section horizontal>
+          <q-img class="col-4" :src="`data_img/${bQ.label}.webp`"> </q-img>
+
+          <q-separator vertical />
+
+          <q-card-section class="col text-body2 q-pa-none">
+            <q-list dense>
+              <q-item>
+                <q-item-section>
+                  <q-item-label class="text-center text-info">{{
+                    Types.MAPPING[bQ.type].NAME_MAPPING.get(bQ.label)
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Status:</q-item-label>
+                </q-item-section>
+
+                <q-item-section v-if="bQ.start_at <= timestamp" side>
+                  <q-item-label v-if="bQ.action === 'REPAIRING'"
+                    >Repairing...</q-item-label
+                  >
+
+                  <q-item-label v-else>Building...</q-item-label>
+                </q-item-section>
+
+                <q-item-section v-else side>
+                  <q-item-label>In Queue...</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item
+                v-if="bQ.next_level !== null && bQ.action !== 'REPAIRING'"
+              >
+                <q-item-section>
+                  <q-item-label>Upgrade to:</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label>Lvl {{ bQ.next_level }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item v-if="bQ.quantity !== null">
+                <q-item-section>
+                  <q-item-label>Quantity:</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label>{{ bQ.quantity }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item v-if="bQ.start_at <= timestamp">
+                <q-item-section>
+                  <q-item-label>Time left:</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label>{{
+                    calculateRelativeTime(bQ.start_at + bQ.time_to_finish)
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item v-if="bQ.start_at > timestamp">
+                <q-item-section>
+                  <q-item-label>Time left:</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label>{{
+                    calculateRelativeTime(bQ.start_at)
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </q-card-section>
+      </q-card>
     </div>
   </div>
 </template>
