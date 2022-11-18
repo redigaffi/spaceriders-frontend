@@ -156,9 +156,17 @@ import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import { ref, computed, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
 
 const $quasar = useQuasar();
 const $store = useStore();
+
+const allowedWallets = [
+  "0x4A67f4cACb27f57467F428EE469bfc69B58b9bCf",
+  "0x1C6ffD4d136F3da9B03304dE4E457789C013f210",
+  "0xbE3BdDb0a6D51DCF64AB3514795713204f58b1ea",
+  "0xB9B769b911301689Df5406728A8Ea2D7B7a0856f",
+];
 
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
@@ -169,6 +177,10 @@ const $notification =
 const userInfoPopup = ref(false);
 const error = ref(false);
 const router = useRouter();
+
+onMounted(() => {
+  $store.commit("setTimeCount");
+});
 
 const socialLoginMap = {
   google: "google.com",
@@ -263,6 +275,13 @@ const login = async (providerName, socialLoginProvider) => {
     const signature = await signer.signMessage(`its me:${address}`);
 
     re = await ApiRequest.authenticate(address, signature);
+
+    if (!allowedWallets.includes(address) && !$store.getters.isReleaseTime) {
+      $store.commit("destroySession");
+      $quasar.notify($notification("failed", "MVP is not open yet..."));
+      return;
+    }
+
     $store.commit("login", {
       provider: providerName,
       jwt: re.data.jwt,
