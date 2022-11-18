@@ -90,17 +90,12 @@
             clickable
             exact
             exact-active-class="bg-primary text-white"
-            @click="
-              openURL(
-                'https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/gameplay'
-              )
-            "
-            target="_blank"
+            to="/trade/METAL_BKM"
           >
             <q-item-section>
               <q-item-label>
-                <q-icon name="auto_stories" />
-                Game Manual
+                <q-icon name="fas fa-exchange-alt" />
+                ISM
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -116,6 +111,25 @@
               <q-item-label>
                 <q-icon name="fas fa-bug" />
                 Bug
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="
+              openURL(
+                'https://spaceriders-spaceriders.gitbook.io/spaceriders-darkpaper-1/gameplay'
+              )
+            "
+            target="_blank"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="auto_stories" />
+                Game Manual
               </q-item-label>
             </q-item-section>
           </q-item>
