@@ -22,32 +22,37 @@
       </div>
 
       <div class="col-12">No planets in queue</div>
-
-      <div class="col-12">
-        <BuyPlanet />
-      </div>
     </q-card-section>
 
     <q-card-section
       v-if="anyUnClaimedPlanet"
-      class="column items-center q-col-gutter-y-md"
+      class="row items-center q-col-gutter-y-md"
     >
-      <div class="col-12" v-if="this.unClaimedNotReadyPlanets.length">
+      <div
+        class="col-12 text-center"
+        v-if="this.unClaimedNotReadyPlanets.length"
+      >
         In queue
       </div>
 
-      <div class="col-12" v-if="this.unClaimedNotReadyPlanets.length">
+      <div
+        class="col-12 row q-col-gutter-sm"
+        v-if="this.unClaimedNotReadyPlanets.length"
+      >
         <ClaimPlanetList
           ref="claimPlanetList"
           :planets="this.unClaimedNotReadyPlanets"
         />
       </div>
 
-      <div class="col-12" v-if="this.unClaimedReadyPlanets.length">
+      <div class="col-12 text-center" v-if="this.unClaimedReadyPlanets.length">
         Claimable
       </div>
 
-      <div class="col-12" v-if="this.unClaimedReadyPlanets.length">
+      <div
+        class="col-12 row q-col-gutter-sm"
+        v-if="this.unClaimedReadyPlanets.length"
+      >
         <ClaimPlanetList
           ref="claimPlanetList"
           :planets="this.unClaimedReadyPlanets"
@@ -55,6 +60,10 @@
         />
       </div>
     </q-card-section>
+
+    <q-card-actions align="center">
+      <BuyPlanet />
+    </q-card-actions>
   </q-card>
 
   <q-dialog v-model="planetCongratulationsPopup">

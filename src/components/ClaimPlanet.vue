@@ -1,5 +1,10 @@
 <template>
-  <q-btn square @click="claimPlanet" color="info" label="Claim" />
+  <q-btn
+    @click="claimPlanet"
+    icon="fas fa-space-shuttle"
+    color="info"
+    label="Claim"
+  />
 </template>
 
 <script setup>

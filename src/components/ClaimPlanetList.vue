@@ -1,42 +1,45 @@
 <template>
-  <div>
-    <div v-if="!claimeable">
-      <div v-for="p in planets" :key="p.id">
-        <q-card
-          flat
-          class="bg-transparent text-dark image"
-          :data-content="calculateClaimDate(p)"
-        >
-          <img src="~assets/img/planet_queue.webp" />
-
-          <q-card-section
-            style="overflow: hidden; text-overflow: ellipsis"
-            class="text-center text-secondary bg-dark"
-            >{{ p.name }}</q-card-section
+  <template v-if="!claimeable">
+    <div v-for="p in planets" :key="p.id" class="col-6 col-md-3">
+      <q-card bordered>
+        <q-img src="~assets/img/planet_queue.webp">
+          <q-badge
+            class="text-h5 absolute-top justify-center no-border-radius"
+            style="padding: 5px 0"
+            >{{ calculateClaimDate(p) }}</q-badge
           >
-        </q-card>
-      </div>
+
+          <q-badge
+            class="text-body2 absolute-bottom justify-center no-border-radius glossy"
+            style="padding: 5px 0"
+            >{{ p.name }}</q-badge
+          >
+        </q-img>
+      </q-card>
     </div>
+  </template>
 
-    <q-card-section v-else>
-      <div v-for="p in planets" :key="p.id">
-        <q-card flat class="bg-transparent text-dark claimable-cards">
-          <img src="~assets/img/planet_claimable.webp" />
-          <q-card-section
-            style="overflow: hidden; text-overflow: ellipsis"
-            class="text-secondary absolute-top tag-glass-element text-center"
-            >{{ p.name }}
-          </q-card-section>
+  <template v-else>
+    <div v-for="p in planets" :key="p.id" class="col-6 col-md-3">
+      <q-card bordered>
+        <q-img src="~assets/img/planet_claimable.webp">
+          <q-badge
+            class="text-body2 absolute-top justify-center no-border-radius glossy"
+            style="padding: 5px 0"
+            >{{ p.name }}</q-badge
+          >
+        </q-img>
 
+        <q-card-actions class="q-pa-none">
           <ClaimPlanet
             :planet="p"
             class="full-width"
             style="border-top-left-radius: 0; border-top-right-radius: 0"
           />
-        </q-card>
-      </div>
-    </q-card-section>
-  </div>
+        </q-card-actions>
+      </q-card>
+    </div>
+  </template>
 </template>
 
 <script setup>
