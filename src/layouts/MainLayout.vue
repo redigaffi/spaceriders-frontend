@@ -165,15 +165,22 @@
                     <q-avatar
                       color="secondary"
                       class="absolute-center"
-                      size="215px"
+                      size="240px"
                       rounded
                     >
                       <object v-html="avatar" class="absolute-center" />
                       <q-badge
                         color="primary"
-                        class="absolute-top glossy justify-center"
+                        class="absolute-top glossy justify-center no-border-radius q-py-sm"
                       >
                         Lvl {{ accountLevel }}
+                      </q-badge>
+
+                      <q-badge
+                        color="primary"
+                        class="absolute-bottom glossy justify-center no-border-radius q-py-sm"
+                      >
+                        {{ accountTitle }}
                       </q-badge>
                     </q-avatar>
                   </q-img>
@@ -487,6 +494,22 @@ const $eventBus =
 
 onMounted(() => {
   updateAccountInfo();
+});
+
+const accountTitle = computed(() => {
+  const level = accountLevel.value;
+
+  if (level <= 1) return "Human";
+  else if (level <= 5) return "Amateur Astronaut";
+  else if (level <= 10) return "Rookie Astronaut";
+  else if (level <= 15) return "Professional Astronaut";
+  else if (level <= 20) return "Planet Manager";
+  else if (level <= 25) return "Planet Lord";
+  else if (level <= 30) return "Space Explorer";
+  else if (level <= 35) return "Space Traveller";
+  else if (level <= 40) return "Space Conqueror";
+  else if (level <= 45) return "Space Lord";
+  else return "Space Rider";
 });
 
 const tabPanel = computed({
