@@ -164,8 +164,10 @@
                   </q-card-section>
 
                   <q-separator dark />
+                </div>
 
-                  <q-img src="~assets/img/cardpopup.webp" height="250px">
+                <q-scroll-area class="col full-height">
+                  <q-img src="~assets/img/cardpopup.webp" height="240px">
                     <q-avatar
                       color="secondary"
                       class="absolute-center"
@@ -189,7 +191,9 @@
                     </q-avatar>
                   </q-img>
 
-                  <q-card-section class="q-px-none">
+                  <q-card-section
+                    class="column q-px-none full-height justify-between"
+                  >
                     <q-list>
                       <q-item>
                         <q-item-section>
@@ -261,7 +265,7 @@
                       </q-item>
                     </q-list>
                   </q-card-section>
-                </div>
+                </q-scroll-area>
 
                 <div>
                   <q-card-section>
@@ -310,28 +314,24 @@
                   </q-card-section>
 
                   <q-separator dark />
-
-                  <q-card-section class="q-px-none">
-                    <q-scroll-area style="height: 70vh">
-                      <building-queue />
-                    </q-scroll-area>
-                  </q-card-section>
                 </div>
 
-                <div>
-                  <q-card-section class="q-pa-none">
-                    <q-tabs
-                      v-model="tabPanel"
-                      dense
-                      align="justify"
-                      narrow-indicator
-                    >
-                      <q-tab name="profile" label="Profile" />
-                      <q-tab name="queue" label="Queue" />
-                      <q-tab name="inbox" label="Inbox" />
-                    </q-tabs>
-                  </q-card-section>
-                </div>
+                <q-scroll-area class="col full-height">
+                  <building-queue />
+                </q-scroll-area>
+
+                <q-card-section class="q-pa-none">
+                  <q-tabs
+                    v-model="tabPanel"
+                    dense
+                    align="justify"
+                    narrow-indicator
+                  >
+                    <q-tab name="profile" label="Profile" />
+                    <q-tab name="queue" label="Queue" />
+                    <q-tab name="inbox" label="Inbox" />
+                  </q-tabs>
+                </q-card-section>
               </q-card>
             </q-tab-panel>
 
@@ -355,49 +355,47 @@
                   </q-card-section>
 
                   <q-separator dark />
-
-                  <q-card-section class="q-px-none">
-                    <q-scroll-area style="height: 60vh">
-                      <q-list>
-                        <q-item v-if="emails.length === 0">
-                          <q-item-section class="text-center">
-                            <q-item-label
-                              >There are no messages...</q-item-label
-                            >
-                          </q-item-section>
-                        </q-item>
-                        <q-item
-                          clickable
-                          v-ripple
-                          v-for="email in emails"
-                          :key="email.id"
-                          class="q-mb-xs"
-                          :class="{ unread_msg: !email.read }"
-                        >
-                          <q-item-section @click="openEmail(email)">
-                            <q-item-label>{{ email.title }}</q-item-label>
-                            <q-item-label caption lines="2">{{
-                              email.subTitle
-                            }}</q-item-label>
-                          </q-item-section>
-
-                          <q-item-section side>
-                            <q-btn
-                              @click="deleteEmail(email)"
-                              round
-                              flat
-                              size="sm"
-                              color="red"
-                              icon="delete"
-                            >
-                              <q-tooltip> Delete Message </q-tooltip>
-                            </q-btn>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
                 </div>
+
+                <q-scroll-area class="col full-height">
+                  <q-card-section class="q-px-none">
+                    <q-list>
+                      <q-item v-if="emails.length === 0">
+                        <q-item-section class="text-center">
+                          <q-item-label>There are no messages...</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item
+                        clickable
+                        v-ripple
+                        v-for="email in emails"
+                        :key="email.id"
+                        class="q-mb-xs"
+                        :class="{ unread_msg: !email.read }"
+                      >
+                        <q-item-section @click="openEmail(email)">
+                          <q-item-label>{{ email.title }}</q-item-label>
+                          <q-item-label caption lines="2">{{
+                            email.subTitle
+                          }}</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-btn
+                            @click="deleteEmail(email)"
+                            round
+                            flat
+                            size="sm"
+                            color="red"
+                            icon="delete"
+                          >
+                            <q-tooltip> Delete Message </q-tooltip>
+                          </q-btn>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-card-section>
+                </q-scroll-area>
 
                 <div>
                   <q-card-section>
