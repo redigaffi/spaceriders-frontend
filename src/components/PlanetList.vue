@@ -19,7 +19,13 @@
       <q-scroll-area style="height: 50vh">
         <div class="row q-col-gutter-sm">
           <template v-for="(row, index) in rows" :key="index">
-            <div class="col-12 col-md-6">
+            <div
+              class="col-12 col-md-6"
+              :class="{
+                'order-first': row.active,
+                'order-last': !row.planet.is_favourite && !row.active,
+              }"
+            >
               <q-card
                 dark
                 bordered
