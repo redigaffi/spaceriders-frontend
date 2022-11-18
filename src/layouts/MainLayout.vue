@@ -139,7 +139,11 @@
           side="right"
           class="bg-dark-3"
         >
-          <q-tab-panels v-model="tabPanel" class="full-height" animated>
+          <q-tab-panels
+            v-model="tabPanel"
+            class="full-height"
+            :animated="false"
+          >
             <q-tab-panel name="profile" class="q-pa-none">
               <q-card flat class="column full-height justify-between">
                 <div>
