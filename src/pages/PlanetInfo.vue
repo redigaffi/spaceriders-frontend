@@ -205,9 +205,10 @@
 
             <q-item-section avatar>
               <q-item-label>
-                ${{ selectedTierInfo.usd_cost }} ({{
+                {{ selectedTierInfo.usd_cost }} USD ({{
                   selectedTierInfo.token_cost
                 }}
+                $BKM)
               </q-item-label>
             </q-item-section>
           </q-item>
