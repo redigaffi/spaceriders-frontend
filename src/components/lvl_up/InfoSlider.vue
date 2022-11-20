@@ -70,7 +70,7 @@
                     </div>
                   </q-item-section>
 
-                  <div v-if="health !== false">
+                  <div v-if="data.level > 0 && health !== false">
                     <q-circular-progress
                       v-if="health > 25"
                       show-value
