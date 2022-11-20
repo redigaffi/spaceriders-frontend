@@ -43,8 +43,8 @@
                     class="col-2"
                     :src="row.image_url"
                     style="
-                      width: 100px;
-                      height: 160px;
+                      width: 130px;
+                      height: 192px;
                       object-fit: cover;
                       object-position: 50% 0%;
                     "
@@ -72,6 +72,18 @@
 
                   <q-card-section class="col text-body2 q-pa-none">
                     <q-list dense>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Type:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label :class="'text-' + row.color">{{
+                            row.type
+                          }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
                       <q-item>
                         <q-item-section>
                           <q-item-label>Rarity:</q-item-label>
@@ -226,9 +238,10 @@ let rows = computed(() => {
     image_url: activePlanet.image_url,
     rarity: activePlanet.rarity,
     color: colorMapping[activePlanet.rarity],
-    position: `${activePlanet.position}:${activePlanet.solar_system}:${activePlanet.galaxy}`,
+    position: `${activePlanet.galaxy}:${activePlanet.solar_system}:${activePlanet.position}`,
     active: true,
     planet: activePlanet,
+    type: activePlanet.type,
   });
 
   const planets = $store.getters.planets.filter(
@@ -243,9 +256,10 @@ let rows = computed(() => {
       rarity: planet.rarity,
       color: colorMapping[planet.rarity],
       name: planet.name,
-      position: `${planet.position}:${planet.solar_system}:${planet.galaxy}`,
+      position: `${planet.galaxy}:${planet.solar_system}:${planet.position}`,
       active: false,
       planet: planet,
+      type: planet.type,
     });
   }
 

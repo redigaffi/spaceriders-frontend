@@ -100,6 +100,21 @@
         <q-list dense separator bordered class="rounded-borders">
           <q-item>
             <q-item-section>
+              <q-item-label> Type: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
+              >
+                {{ this.newPlanetInfo.type }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+
+          <q-item>
+            <q-item-section>
               <q-item-label> Diameter: </q-item-label>
             </q-item-section>
 
@@ -297,6 +312,7 @@ export default defineComponent({
 
       obj.temperature += `${maxTemperature}°C`;
       obj.image = `${this.newPlanetStats.image}-${this.newPlanetStats.rarity}`;
+      obj.type = this.newPlanetStats.type;
 
       return obj;
     },
