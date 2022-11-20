@@ -54,6 +54,14 @@
         </q-item>
 
         <q-item clickable>
+          <q-item-section>Type: </q-item-section>
+          <q-item-section avatar>
+            {{ type }}
+          </q-item-section>
+        </q-item>
+
+
+        <q-item clickable>
           <q-item-section>Rarity: </q-item-section>
           <q-item-section avatar>
             {{ rarity }}
@@ -319,7 +327,11 @@ const position = computed(() => {
   const solarSystem = $store.getters.activePlanet.solar_system;
   const galaxy = $store.getters.activePlanet.galaxy;
 
-  return `${position}:${solarSystem}:${galaxy}`;
+  return `${galaxy}:${solarSystem}:${position}`;
+});
+
+const type = computed(() => {
+  return $store.getters.activePlanet.type;
 });
 
 const rarity = computed(() => {
