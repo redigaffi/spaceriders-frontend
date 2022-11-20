@@ -86,7 +86,7 @@
 
               <q-item v-if="bQ.start_at > timestamp">
                 <q-item-section>
-                  <q-item-label>Time left:</q-item-label>
+                  <q-item-label>Starts in:</q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
