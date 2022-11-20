@@ -1145,12 +1145,17 @@ const calculateWarehouseCapacity = (warehouse) => {
   const data = $store.getters.resourceData;
   const warehouseInfo = data[warehouse];
   if (warehouseInfo === undefined) return false;
+
   const currentCapacity = warehouseInfo["capacity"];
   const currentLevel = warehouseInfo["level"];
   const currentHealth = warehouseInfo["health"];
   const maxHealth = warehouseInfo["upgrades"][currentLevel]["health"];
 
-  const healthPercentage = currentHealth / maxHealth;
+  let healthPercentage = 1;
+  if (currentLevel > 0) {
+    healthPercentage = currentHealth / maxHealth;
+  }
+
   return {
     capacity: currentCapacity * healthPercentage,
     maxCapacity: currentCapacity,
