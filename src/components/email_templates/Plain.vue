@@ -4,7 +4,17 @@
   <q-img :src="topicImage" style="height: 200px; width: 100%" />
 
   <q-card-section>
-    {{ mail.body }}
+    <q-item
+      style="
+        border: 1px solid #242930;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #606060;
+        color: #fff;
+        font-size: 12px;
+      "
+    >
+      {{ mail.body }}
+    </q-item>
   </q-card-section>
 </template>
 <script setup>
