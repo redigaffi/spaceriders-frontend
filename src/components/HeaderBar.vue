@@ -87,6 +87,7 @@
           />
 
           <q-item
+            v-if="hasActivePlanet"
             clickable
             exact
             exact-active-class="bg-primary text-white"
@@ -163,94 +164,6 @@
       </q-card-section>
     </q-card>
   </q-drawer>
-
-  <!--
-  <q-header elevated class="bg-navbar q-py-xs">
-    <q-toolbar>
-      <q-btn
-        class="lt-md"
-        flat
-        dense
-        round
-        icon="menu"
-        aria-label="Menu"
-        @click="toggleLeftDrawer"
-      />
-      <div class="footer__title_logo">
-        <span class="blue">SPACE</span>RIDERS
-      </div>
-
-      <button
-        v-if="$store.getters.loggedIn"
-        class="q-ml-md button q-pa-md q-mr-xs"
-        style="
-          border: 3px solid #2253f4;
-          border-radius: 5px;
-          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-          color: #fff;
-          font-size: 12px;
-          padding: 7px 15px;
-        "
-      >
-        <q-icon name="menu" />
-        MENU
-        <q-menu>
-          <q-list style="min-width: 100px">
-            <q-item
-              v-for="nav in essentialLinks"
-              :key="nav"
-              :to="nav.link"
-              exact
-              exact-active-class="text-positive"
-              v-bind="nav.attr"
-            >
-              <q-item-section top avatar>
-                <q-avatar color="warning" text-color="white" :icon="nav.icon" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ nav.title }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </button>
-
-      <button
-        class="button q-pa-md q-mr-xs"
-        style="
-          border: 3px solid #2253f4;
-          border-radius: 5px;
-          box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-          color: #fff;
-          font-size: 12px;
-          padding: 7px 15px;
-        "
-      >
-        GAME MANUAL
-      </button>
-      <q-space />
-
-      <Swap v-if="$store.getters.loggedIn">
-        <button
-          class="button q-pa-md q-mr-xs"
-          style="
-            border: 3px solid #2253f4;
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgb(34 83 244 / 76%);
-            color: #fff;
-            font-size: 12px;
-            padding: 7px 15px;
-          "
-        >
-          SWAP
-        </button>
-      </Swap>
-
-      <Balance />
-      <User />
-    </q-toolbar>
-  </q-header>
-  -->
 </template>
 
 <script setup>

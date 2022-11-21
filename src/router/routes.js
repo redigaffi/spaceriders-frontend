@@ -81,7 +81,7 @@ const routes = [
     component: basicLayoutNoAnimBg,
     meta: {
       requiresAuth: true,
-      requiresPlanet: false,
+      requiresPlanet: true,
       menu: false,
       title: "Trading",
     },
@@ -92,7 +92,7 @@ const routes = [
         name: "trading",
         meta: {
           requiresAuth: true,
-          requiresPlanet: false,
+          requiresPlanet: true,
           menu: false,
           title: "Trading",
         },

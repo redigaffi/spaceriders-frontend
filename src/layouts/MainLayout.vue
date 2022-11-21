@@ -139,6 +139,7 @@
           v-model="drawer"
           :width="$quasar.screen.lt.sm ? $quasar.screen.width : 400"
           :breakpoint="500"
+          elevated
           overlay
           side="right"
           class="bg-dark-3"
