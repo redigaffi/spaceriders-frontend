@@ -30,6 +30,7 @@
               </div>
             </q-card-section>
             <q-card-section
+              v-if="!isMaxLevelReached"
               class="bg-primary text-subtitle1 text-left text-secondary full-height"
             >
               <q-list dense>
@@ -290,6 +291,15 @@
                     </q-markup-table>
                   </q-expansion-item>
                 </q-list>
+              </div>
+            </q-card-section>
+            <q-card-section
+              v-else
+              class="bg-primary text-h6 text-center text-secondary full-height"
+            >
+              <div class="q-mt-xl">
+                <div>Max level reached!</div>
+                <div>There will be more upgrades available soon...</div>
               </div>
             </q-card-section>
           </div>
@@ -716,6 +726,20 @@ export default defineComponent({
       return "Build";
     });
 
+    const isMaxLevelReached = computed(() => {
+      if (props.data) {
+        const levels = [];
+
+        Object.keys(props.data.upgrades).filter((key) => {
+          return levels.push(Number(key));
+        });
+
+        return props.data.level >= Math.max(...levels);
+      }
+
+      return false;
+    });
+
     return {
       actionConfirmLabel: actionConfirmLabel,
       allRequirementsMeet: allRequirementsMeet,
@@ -730,6 +754,7 @@ export default defineComponent({
       quantity: quantity,
       health,
       showInfo: ref(false),
+      isMaxLevelReached,
     };
   },
 });
