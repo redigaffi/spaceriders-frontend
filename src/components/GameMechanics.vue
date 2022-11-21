@@ -168,7 +168,7 @@ function goToPrevPlanet() {
 
 <style lang="scss" scoped>
 .game-mechanics {
-  background-image: url("~assets/landing/img/space_background_1.jpg");
+  background-image: url("~assets/landing/img/space_background_1.webp");
   background-repeat: no-repeat;
   background-size: auto;
   padding-bottom: 0 !important;

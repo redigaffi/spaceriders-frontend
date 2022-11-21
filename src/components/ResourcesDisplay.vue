@@ -254,7 +254,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/metal_resource_bg.jpg"
+          src="~assets/img/metal_resource_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -361,7 +361,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/crystal_resource_bg.jpg"
+          src="~assets/img/crystal_resource_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -470,7 +470,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/petrol_resource_bg.jpg"
+          src="~assets/img/petrol_resource_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -579,7 +579,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/energy_resource_bg.jpg"
+          src="~assets/img/energy_resource_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -650,7 +650,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/bkm_resource_bg.jpg"
+          src="~assets/img/bkm_resource_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -1354,14 +1354,14 @@ $eventBus.on(UPDATED_ALL, () => {
 <style lang="scss">
 .energy-popup {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(~assets/img/energy_resource_bg.jpg);
+    url(~assets/img/energy_resource_bg.webp);
   background-size: cover;
   background-position: center;
 }
 
 .bkm-popup {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(~assets/img/bkm_resource_bg.jpg);
+    url(~assets/img/bkm_resource_bg.webp);
   background-size: cover;
   background-position: center;
 }

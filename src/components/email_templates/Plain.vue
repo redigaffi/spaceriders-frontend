@@ -38,6 +38,6 @@ const topicImage = computed(() => {
       break;
   }
 
-  return require(`../../assets/img/${popupImage}.jpg`);
+  return require(`../../assets/img/${popupImage}.webp`);
 });
 </script>

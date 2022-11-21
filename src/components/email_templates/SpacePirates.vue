@@ -2,7 +2,7 @@
   <q-separator />
 
   <q-img
-    src="~assets/img/pirate_invasion.jpg"
+    src="~assets/img/pirate_invasion.webp"
     style="height: 200px; width: 100%"
   />
 

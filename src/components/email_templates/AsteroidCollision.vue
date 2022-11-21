@@ -2,7 +2,7 @@
   <q-separator />
 
   <q-img
-    src="~assets/img/asteroid_collision.jpg"
+    src="~assets/img/asteroid_collision.webp"
     style="height: 200px; width: 100%"
   />
 
