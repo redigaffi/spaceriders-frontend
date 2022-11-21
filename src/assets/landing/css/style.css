@@ -178,7 +178,7 @@ input::-webkit-inner-spin-button {
 /* Главный блок */
 .main {
   padding: 26rem 0rem 15rem 0;
-  background: url("../img/header_temp.jpg") center no-repeat;
+  background: url("../img/header_temp.webp") center no-repeat;
   background-size: cover;
   position: relative;
   border-bottom: 1px solid #2253f4;
@@ -294,7 +294,7 @@ input::-webkit-inner-spin-button {
 /* Ico */
 .ico {
   padding: 9rem 0;
-  background: url("../img/game-bg.jpg") center no-repeat;
+  background: url("../img/game-bg.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
@@ -561,14 +561,14 @@ input::-webkit-inner-spin-button {
 /* Game */
 .game {
   padding: 12rem 0rem;
-  background: url("../img/game-bg.jpg") center no-repeat;
+  background: url("../img/game-bg.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
 
 .custom-game {
   padding: 12rem 0rem;
-  background: url("../img/game-bg2.jpg") center no-repeat;
+  background: url("../img/game-bg2.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
@@ -639,7 +639,7 @@ input::-webkit-inner-spin-button {
 /* RoadMap */
 .road {
   padding: 8rem 0rem 0rem 0rem;
-  background: url("../img/roadmap-bg.jpg") center no-repeat;
+  background: url("../img/roadmap-bg.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
@@ -815,7 +815,7 @@ input::-webkit-inner-spin-button {
 /* Social */
 .social {
   padding: 15rem 0;
-  background: url("../img/social-bg.jpg") center no-repeat;
+  background: url("../img/social-bg.webp") center no-repeat;
   background-size: cover;
   border-bottom: 1px solid #2253f4;
 }
