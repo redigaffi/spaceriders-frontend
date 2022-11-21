@@ -133,7 +133,7 @@
       />
 
       <img
-        src="~assets/img/update_planet_bg.jpg"
+        src="~assets/img/update_planet_bg.webp"
         style="height: 200px; object-fit: cover"
       />
 
@@ -179,7 +179,7 @@
       />
 
       <img
-        src="~assets/img/upgrade_planet_bg.jpg"
+        src="~assets/img/upgrade_planet_bg.webp"
         style="height: 200px; object-fit: cover"
       />
 
