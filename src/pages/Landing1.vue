@@ -94,7 +94,7 @@
     <q-drawer
       id="side-menu"
       v-model="drawer"
-      :width="210"
+      :width="$q.screen.lt.sm ? $q.screen.width : 400"
       :breakpoint="500"
       bordered
       overlay
