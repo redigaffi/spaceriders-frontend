@@ -73,7 +73,7 @@
         <q-separator />
 
         <q-img
-          src="~assets/img/buy_planet_bg.jpg"
+          src="~assets/img/buy_planet_bg.webp"
           style="height: 200px; width: 100%"
         />
 
@@ -204,8 +204,6 @@ const bnbFeeDisplay = ref();
 
 const visible = ref(true);
 watchEffect(async () => {
-
-
   if (buyPlanetPopup.value) {
     planetCost.value = "";
     bnbFeeDisplay.value = "";

@@ -464,7 +464,7 @@
               </div>
             </q-card-section>
 
-            <component :is="templateName" :body="body"></component>
+            <component :is="templateName" :mail="body"></component>
           </q-card>
         </q-dialog>
       </q-page>
@@ -620,7 +620,7 @@ const body = computed(() => {
     case "space_pirates":
       return JSON.parse(activeEmail.value.body);
     case "plain":
-      return activeEmail.value.body;
+      return { body: activeEmail.value.body, topic: activeEmail.value.topic };
   }
 
   return "";
