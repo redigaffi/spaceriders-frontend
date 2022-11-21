@@ -91,19 +91,21 @@
           :offset="[24, 96]"
         >
           <q-btn
+            :class="{ shake: buildingsInQueue.length }"
             size="sm"
             fab
             icon="handyman"
-            color="primary"
+            color="info"
             @click="changeTabPanel('queue')"
           >
-            <q-badge
-              class="animation absolute-top-right"
-              v-if="buildingsInQueue.length"
-              color="info"
-              rounded
-            />
           </q-btn>
+
+          <q-badge
+            class="animation absolute-top-right"
+            v-if="buildingsInQueue.length"
+            color="negative"
+            rounded
+          />
         </q-page-sticky>
 
         <q-page-sticky
@@ -116,19 +118,21 @@
           :offset="[24, 24]"
         >
           <q-btn
+            :class="{ shake: anyUnreadMessage }"
             size="sm"
             fab
             icon="mail"
-            color="primary"
+            color="info"
             @click="changeTabPanel('inbox')"
           >
-            <q-badge
-              class="animation absolute-top-right"
-              v-if="anyUnreadMessage"
-              color="info"
-              rounded
-            />
           </q-btn>
+
+          <q-badge
+            class="animation absolute-top-right"
+            v-if="anyUnreadMessage"
+            color="negative"
+            rounded
+          />
         </q-page-sticky>
 
         <q-drawer
@@ -768,9 +772,15 @@ body {
 .unread_msg {
   border-left: 4px solid #2253f4;
 }
+
 .animation {
-  animation: scaleUp 2s ease infinite;
+  animation: scaleUp 1s infinite;
 }
+
+.shake {
+  animation: shakeAnimation 2s ease infinite;
+}
+
 @keyframes scaleUp {
   0% {
     transform: scale(1);
@@ -783,6 +793,24 @@ body {
   100% {
     transform: scale(1);
     opacity: 0.5;
+  }
+}
+
+@keyframes shakeAnimation {
+  0% {
+    transform: rotateZ(-45deg);
+  }
+  25% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(45deg);
+  }
+  75% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(-45deg);
   }
 }
 </style>
