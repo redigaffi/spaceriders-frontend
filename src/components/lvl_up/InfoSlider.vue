@@ -727,7 +727,7 @@ export default defineComponent({
     });
 
     const isMaxLevelReached = computed(() => {
-      if (props.data) {
+      if (props.data && props.data.type !== Types.DEFENSE_TYPE) {
         const levels = [];
 
         Object.keys(props.data.upgrades).filter((key) => {
