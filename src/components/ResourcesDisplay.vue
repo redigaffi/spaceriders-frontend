@@ -1122,6 +1122,7 @@ const isStorageFull = (warehouse) => {
   };
 
   const amount = mapping[warehouse].value;
+
   return amount >= capacity;
 };
 
@@ -1181,21 +1182,32 @@ const isResourceAlert = (resourceType) => {
 
   const rD = $store.getters.resourceData;
 
-  const mine = rD[mappings[resourceType]["mine"]];
-  if (mine === undefined || mine === false) return false;
-  const mineCurrentHealth = mine["health"];
-  const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
-  const mineFullHealth = mineCurrentHealth / mineMaxHealth < 1;
+  let mineFullHealth = true;
+  let warehouseFullHealth = true;
 
+  const mine = rD[mappings[resourceType]["mine"]];
   const warehouse = rD[mappings[resourceType]["warehouse"]];
-  const warehouseCurrentHealth = warehouse["health"];
-  let mineLvl = mine["level"];
-  const warehouseMaxHealth = warehouse["upgrades"][mineLvl]["health"];
-  const warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth < 1;
+
+  const mineLvl = mine["level"];
+  const warehouseLvl = warehouse["level"];
+
+  if (mine === undefined || mine === false) return false;
+
+  if (mineLvl !== 0) {
+    const mineCurrentHealth = mine["health"];
+    const mineMaxHealth = mine["upgrades"][mine["level"]]["health"];
+    mineFullHealth = mineCurrentHealth / mineMaxHealth === 1;
+  }
+
+  if (warehouseLvl !== 0) {
+    const warehouseCurrentHealth = warehouse["health"];
+    const warehouseMaxHealth = warehouse["upgrades"][warehouseLvl]["health"];
+    warehouseFullHealth = warehouseCurrentHealth / warehouseMaxHealth === 1;
+  }
 
   const reserveEmpty = $store.getters.activePlanet.reserves[resourceType] <= 0;
 
-  return mineFullHealth || warehouseFullHealth || reserveEmpty;
+  return !mineFullHealth || !warehouseFullHealth || reserveEmpty;
 };
 
 const energyDepositPopup = ref(false);
