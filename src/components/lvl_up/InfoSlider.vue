@@ -481,9 +481,12 @@ export default defineComponent({
       const level = data[props.data.label]["upgrades"][props.data.level];
 
       return (
-        activePlanet.resources.metal >= level.cost_metal &&
-        activePlanet.resources.petrol >= level.cost_petrol &&
-        activePlanet.resources.crystal >= level.cost_crystal
+        activePlanet.resources.metal >=
+          level.cost_metal - (level.cost_metal * health.value) / 100 &&
+        activePlanet.resources.petrol >=
+          level.cost_petrol - (level.cost_petrol * health.value) / 100 &&
+        activePlanet.resources.crystal >=
+          level.cost_crystal - (level.cost_crystal * health.value) / 100
       );
     };
 
@@ -679,7 +682,9 @@ export default defineComponent({
       const activePlanet = $store.getters.activePlanet;
 
       if (!canRepair(props, activePlanet)) {
-        $q.notify($notification(`Can't repair, not enough resources...`, ex));
+        $q.notify(
+          $notification("failed", "Can't repair, not enough resources...")
+        );
         return;
       }
 
