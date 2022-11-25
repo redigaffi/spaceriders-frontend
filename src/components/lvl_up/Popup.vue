@@ -1,89 +1,52 @@
 <template>
-  <q-card style="width: 1150px; max-width: 80vw; border-radius: 20px">
-    <glass-element-heading
-      class="text-h6 text-center text-weight-bold text-secondary q-pt-sm"
-    >
-      {{ item.name }}
-      <div class="absolute-right q-mr-sm">
-        <q-btn size="sm" round color="primary" icon="close" v-close-popup />
-      </div>
-    </glass-element-heading>
-
-    <q-card-section class="row q-col-gutter-md">
-      <div class="col-3">
-        <img
-          :src="`data_img/${item.label}.webp`"
-          alt=""
-          style="width: 100%; height: 270px"
-        />
-      </div>
-      <div class="col">
-        <q-card-section class="q-pt-none q-pl-none">
-          <div class="text-caption">
-            {{ item.description }}
-          </div>
-          <div class="q-pt-md">
-            <q-list dense class="text-center bg-warning">
-              <q-item>
-                <q-item-section
-                  :class="column.class"
-                  v-for="column in columns"
-                  :key="column"
-                  >{{ column.label }}</q-item-section
-                >
-              </q-item>
-            </q-list>
-
-            <q-table
-              grid
-              :rows="rows"
-              :columns="columns"
-              row-key="name"
-              rows-per-page-label=" "
-              hide-bottom
-              :rows-per-page-options="[0]"
-            >
-              <template v-slot:item="props">
-                <div class="col-12">
-                  <q-list dense bordered class="text-center">
-                    <q-item
-                      clickable
-                      v-ripple
-                      :class="{ 'text-green': props.row.currentLevel }"
-                    >
-                      <q-item-section class="col-1">{{
-                        props.row.level
-                      }}</q-item-section>
-                      <q-item-section>{{
-                        props.row.cost_metal
-                      }}</q-item-section>
-                      <q-item-section>{{
-                        props.row.cost_crystal
-                      }}</q-item-section>
-                      <q-item-section>{{
-                        props.row.cost_petrol
-                      }}</q-item-section>
-
-                      <q-item-section v-if="props.row.production >= 0">{{
-                        props.row.production
-                      }}</q-item-section>
-
-                      <q-item-section v-if="props.row.energy_usage >= 0">{{
-                        props.row.energy_usage
-                      }}</q-item-section>
-
-                      <q-item-section v-if="props.row.capacity >= 0">{{
-                        props.row.capacity
-                      }}</q-item-section>
-                    </q-item>
-                  </q-list>
-                </div>
-              </template>
-            </q-table>
-          </div>
-        </q-card-section>
-      </div>
+  <q-card flat class="column fit justify-between">
+    <q-card-section class="row justify-between">
+      <div class="text-h6">{{ item.name }}</div>
+      <q-btn flat round size="sm" color="white" icon="close" v-close-popup />
     </q-card-section>
+
+    <q-separator />
+
+    <q-card-section>
+      <q-item
+        class="items-center justify-center text-center"
+        style="
+          border: 1px solid #242930;
+          border-radius: 5px;
+          box-shadow: 0 0 5px #606060;
+          color: #fff;
+          font-size: 12px;
+        "
+      >
+        {{ item.description }}
+      </q-item>
+    </q-card-section>
+
+    <q-scroll-area class="col full-height">
+      <q-card-section class="q-pa-none">
+        <q-table
+          flat
+          dense
+          square
+          hide-bottom
+          :rows-per-page-options="[0]"
+          :rows="rows"
+          :columns="columns"
+          row-key="name"
+        >
+          <template v-slot:body="props">
+            <q-tr
+              :props="props"
+              :class="{ 'text-green': props.row.currentLevel }"
+            >
+              <q-td v-for="col in props.cols" :key="col.name" :props="props">
+                {{ col.value }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </q-card-section>
+    </q-scroll-area>
   </q-card>
 </template>
 
@@ -91,6 +54,7 @@
 import { defineProps, reactive, toRefs } from "vue";
 import GlassElementHeading from "components/GlassElementHeading";
 import Types, { ResourceType } from "../../constants/Types";
+import { Background } from "tsparticles/Options/Classes/Background/Background";
 
 const props = defineProps({
   item: Object,
@@ -100,31 +64,28 @@ const { item } = toRefs(props);
 
 let columns = [
   {
-    name: "",
-    required: true,
+    name: "level",
     label: "Level",
-    align: "left",
+    align: "center",
     field: "level",
-    class: "col-1",
   },
   {
     name: "metal",
-    align: "center",
+    align: "right",
     label: "Metal Cost",
-    field: "metal",
+    field: "cost_metal",
   },
   {
     name: "crystal",
     label: "Crystal Cost",
-    align: "center",
-    field: "crystal",
+    align: "right",
+    field: "cost_crystal",
   },
   {
     name: "petrol",
     label: "Petrol Cost",
-    //field: (row) => row.name,
-    align: "center",
-    field: "petrol",
+    align: "right",
+    field: "cost_petrol",
   },
 ];
 
@@ -142,15 +103,15 @@ switch (item.value.type) {
       columns.push({
         name: "production",
         label: "Production / Min",
-        align: "center",
+        align: "right",
         field: "production",
       });
       datafields.push("production");
       columns.push({
         name: "energy",
         label: "Required energy",
-        align: "center",
-        field: "energy",
+        align: "right",
+        field: "energy_usage",
       });
       datafields.push("energy_usage");
     } else if (
@@ -163,7 +124,7 @@ switch (item.value.type) {
       columns.push({
         name: "capacity",
         label: "Capacity",
-        align: "center",
+        align: "right",
         field: "capacity",
       });
 
@@ -182,7 +143,7 @@ switch (item.value.type) {
       columns.push({
         name: "production",
         label: "Production",
-        align: "center",
+        align: "right",
         field: "production",
       });
       datafields.push("production");
@@ -190,8 +151,8 @@ switch (item.value.type) {
       columns.push({
         name: "energy",
         label: "Required energy",
-        align: "center",
-        field: "energy",
+        align: "right",
+        field: "energy_usage",
       });
       datafields.push("energy_usage");
     }

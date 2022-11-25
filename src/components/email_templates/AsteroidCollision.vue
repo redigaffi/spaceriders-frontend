@@ -6,8 +6,9 @@
     style="height: 200px; width: 100%"
   />
 
-  <q-card-section class="q-pb-sm">
+  <q-card-section>
     <q-item
+      class="items-center"
       style="
         border: 1px solid #242930;
         border-radius: 5px;
