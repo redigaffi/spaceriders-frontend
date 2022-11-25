@@ -1188,10 +1188,10 @@ const isResourceAlert = (resourceType) => {
   const mine = rD[mappings[resourceType]["mine"]];
   const warehouse = rD[mappings[resourceType]["warehouse"]];
 
+  if (mine === undefined || mine === false) return false;
+
   const mineLvl = mine["level"];
   const warehouseLvl = warehouse["level"];
-
-  if (mine === undefined || mine === false) return false;
 
   if (mineLvl !== 0) {
     const mineCurrentHealth = mine["health"];
