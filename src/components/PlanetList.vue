@@ -106,7 +106,7 @@
                         </q-item-section>
                       </q-item>
 
-                      <q-item>
+                      <q-item v-if="row.planet.building_queue !== null">
                         <q-item-section>
                           <q-item-label>Items in queue:</q-item-label>
                         </q-item-section>
