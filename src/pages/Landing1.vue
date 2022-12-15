@@ -871,11 +871,16 @@
             >
               <q-card
                 flat
-                class="bg-transparent text-center"
+                class="bg-transparent text-center zoom-item"
                 style="height: 100%"
               >
                 <div class="text-center">
-                  <img :src="member.img" style="width: 100px" />
+                  <q-avatar size="120px">
+                    <img
+                      :src="member.img"
+                      style="border: 3px solid rgb(34, 83, 244)"
+                    />
+                  </q-avatar>
                 </div>
 
                 <q-card-section>
@@ -1568,7 +1573,7 @@ export default defineComponent({
         name: "Jordi",
         title: "CEO",
         roles: ["Principal Software Engineer"],
-        img: "landing/ast/jordi_ast.webp",
+        img: "landing/ast/jordi.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1593,7 +1598,7 @@ export default defineComponent({
           "System & Graphics Analyst",
           "NFT Games Player",
         ],
-        img: "landing/ast/iniaki_ast.webp",
+        img: "landing/ast/nak.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1624,7 +1629,7 @@ export default defineComponent({
           "Marketing Operations",
           "Social Media Lead",
         ],
-        img: "landing/ast/max_ast.webp",
+        img: "landing/ast/max.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1644,11 +1649,11 @@ export default defineComponent({
         name: "José",
         title: "CTO",
         roles: ["Fullstack Engineer", "C# / Unity Developer"],
-        img: "landing/ast/jose_ast.webp",
+        img: "landing/ast/jose.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
-            link: "https://www.linkedin.com/in/joseruizdev/",
+            link: "https://www.linkedin.com/in/devjoseruiz/",
           },
           {
             icon: "fab fa-telegram-plane",
@@ -1659,8 +1664,8 @@ export default defineComponent({
       {
         name: "Erika",
         title: "Intern",
-        roles: ["Junior Frontend Developer"],
-        img: "landing/ast/erika_ast.webp",
+        roles: ["Frontend Developer"],
+        img: "landing/ast/erika.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
