@@ -23,8 +23,16 @@
           />
 
           <q-btn
+            icon="fas fa-bullhorn"
+            label="Feedback"
+            color="amber"
+            class="q-mr-sm"
+            @click="openURL('https://forms.gle/GvbuZWpYxuUSCor59')"
+          />
+
+          <q-btn
             icon="auto_stories"
-            label="Game Manual"
+            label="Manual"
             color="info"
             class="q-mr-sm"
             @click="
@@ -112,6 +120,21 @@
               <q-item-label>
                 <q-icon name="fas fa-bug" />
                 Bug
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="openURL('https://forms.gle/GvbuZWpYxuUSCor59')"
+            target="_blank"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="fas fa-bullhorn" />
+                Feedback
               </q-item-label>
             </q-item-section>
           </q-item>
