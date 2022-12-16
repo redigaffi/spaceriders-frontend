@@ -112,7 +112,6 @@
             </q-item-section>
           </q-item>
 
-
           <q-item>
             <q-item-section>
               <q-item-label> Diameter: </q-item-label>
@@ -122,7 +121,7 @@
               <q-item-label
                 :class="`text-${colorMapping[this.newPlanetInfo.rarity]}`"
               >
-                {{ this.newPlanetInfo.diameter }}
+                {{ this.newPlanetInfo.diameter }} km
               </q-item-label>
             </q-item-section>
           </q-item>
