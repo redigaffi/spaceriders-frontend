@@ -464,7 +464,7 @@
               </div>
             </q-card-section>
 
-            <component :is="templateName" :mail="body"></component>
+            <component :is="templateName" :body="body"></component>
           </q-card>
         </q-dialog>
       </q-page>
