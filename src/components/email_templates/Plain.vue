@@ -13,7 +13,7 @@
         font-size: 12px;
       "
     >
-      {{ mail.body }}
+      {{ body.body }}
     </q-item>
   </q-card-section>
 </template>
@@ -21,15 +21,15 @@
 import { defineProps, reactive, toRefs, computed } from "vue";
 
 const props = defineProps({
-  mail: Object,
+  body: Object,
 });
 
-const { mail } = toRefs(props);
+const { body } = toRefs(props);
 
 const topicImage = computed(() => {
   let popupImage;
 
-  switch (mail.value.topic) {
+  switch (body.value.topic) {
     case "level_up":
       popupImage = "level_up_bg";
       break;
