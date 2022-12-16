@@ -4,7 +4,7 @@
       icon="add"
       label="Buy Planet"
       color="warning"
-      @click="buyPlanetPopup = true"
+      @click="openBuyPlanetPopup()"
     />
 
     <!--
@@ -215,6 +215,11 @@ watchEffect(async () => {
     visible.value = false;
   }
 });
+
+function openBuyPlanetPopup() {
+  planetName.value = "";
+  buyPlanetPopup.value = true;
+}
 
 async function buyPlanet() {
   const planetGuid = ObjectID().toHexString();
