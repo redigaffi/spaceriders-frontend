@@ -3038,11 +3038,6 @@ chardet@^0.7.0:
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-chart.js@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.npmjs.org/chart.js/-/chart.js-3.7.1.tgz"
-  integrity sha512-8knRegQLFnPQAheZV8MjxIXc5gQEfDFD897BJgv/klO/vtIyFFmgMXrNfgrXpbTr/XbTturxRgxIXx/Y+ASJBA==
-
 chokidar@3.5.2, "chokidar@>=3.0.0 <4.0.0", chokidar@^3.4.2, chokidar@^3.5.1:
   version "3.5.2"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.5.2.tgz"
@@ -7934,11 +7929,6 @@ vendors@^1.0.3:
   version "1.0.4"
   resolved "https://registry.npmjs.org/vendors/-/vendors-1.0.4.tgz"
   integrity sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==
-
-vue-chartjs@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/vue-chartjs/-/vue-chartjs-4.0.4.tgz"
-  integrity sha512-OkjOFgz5+cANELyeAph41y3mhW669vDTR3PYCD8PZgVlkAPDVrBtPjUWGTvRx32coYCPIzVQNVr4fH9eoIE2Gw==
 
 vue-class-component@^8.0.0-rc.1:
   version "8.0.0-rc.1"
