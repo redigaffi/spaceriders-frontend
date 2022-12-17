@@ -77,6 +77,32 @@
           style="height: 200px; width: 100%"
         />
 
+        <q-card-section class="q-pb-xs">
+          <q-item-section
+            style="border-radius: 5px"
+            :style="{
+              color: balanceColor,
+              border: `1px solid ${balanceColor}`,
+              'box-shadow': `0 0 5px ${balanceColor}`,
+            }"
+            class="q-pa-xs"
+          >
+            <p
+              class="q-ma-none text-body2 text-center"
+              :style="{ color: balanceColor }"
+            >
+              Your balance is {{ tokenBalance }} $BKM.
+            </p>
+            <p
+              v-if="!canBuyPlanets"
+              class="q-ma-none text-body2 text-center"
+              :style="{ color: balanceColor }"
+            >
+              Not enough to buy a planet.
+            </p>
+          </q-item-section>
+        </q-card-section>
+
         <q-card-section class="q-gutter-sm q-py-sm">
           <q-input
             label-color="white"
@@ -120,7 +146,6 @@
               border-radius: 5px;
               font-size: 14px;
               box-shadow: 0 0 20px #2253f4;
-              color: #fff;
             "
           />
         </q-card-section>
@@ -150,7 +175,9 @@
             icon="add"
             label="Buy Planet"
             @click="buyPlanet"
-            :disabled="planetName.length < 4 || planetName.length > 14"
+            :disabled="
+              planetName.length < 4 || planetName.length > 14 || !canBuyPlanets
+            "
             v-close-popup
           >
           </q-btn>
@@ -181,7 +208,9 @@ import {
 } from "../constants/Events";
 import { ref, watchEffect, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
-import { useQuasar } from "quasar";
+import { useQuasar, getCssVar } from "quasar";
+import SpaceRiders from "../service/contract/SpaceRiders";
+import tc from "thousands-counter";
 
 const $q = useQuasar();
 
@@ -193,6 +222,7 @@ const $eventBus =
 
 const $store = useStore();
 
+const tokenAmount = ref(0);
 const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const freePlanetPopup = ref(false);
@@ -217,9 +247,30 @@ watchEffect(async () => {
 });
 
 function openBuyPlanetPopup() {
+  getBalance();
   planetName.value = "";
   buyPlanetPopup.value = true;
 }
+
+async function getBalance() {
+  try {
+    tokenAmount.value = await SpaceRiders.balanceOf($store.getters.address);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+const tokenBalance = computed(() => {
+  return tc(tokenAmount.value, { digits: 3 });
+});
+
+const canBuyPlanets = computed(() => {
+  return tokenAmount.value > planetCost.value.token_cost;
+});
+
+const balanceColor = computed(() => {
+  return canBuyPlanets.value ? getCssVar("positive") : getCssVar("negative");
+});
 
 async function buyPlanet() {
   const planetGuid = ObjectID().toHexString();
