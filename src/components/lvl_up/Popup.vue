@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="column fit justify-between">
+  <q-card flat class="column fit justify-between" style="max-width: 80vw">
     <q-card-section class="row justify-between">
       <div class="text-h6">{{ item.name }}</div>
       <q-btn flat round size="sm" color="white" icon="close" v-close-popup />

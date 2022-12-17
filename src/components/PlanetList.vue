@@ -74,18 +74,6 @@
                     <q-list dense>
                       <q-item>
                         <q-item-section>
-                          <q-item-label>Type:</q-item-label>
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <q-item-label :class="'text-' + row.color">{{
-                            row.type
-                          }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section>
                           <q-item-label>Rarity:</q-item-label>
                         </q-item-section>
 
@@ -93,6 +81,16 @@
                           <q-item-label :class="'text-' + row.color">{{
                             row.rarity
                           }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label>Type:</q-item-label>
+                        </q-item-section>
+
+                        <q-item-section side>
+                          <q-item-label>{{ row.type }}</q-item-label>
                         </q-item-section>
                       </q-item>
 
