@@ -1,333 +1,347 @@
 <template>
-  <q-card-section v-if="data !== undefined" class="row text-center q-pb-none">
-    <div class="col-12">
-      <q-card flat class="bg-transparent text-dark">
-        <div class="row text-center">
-          <!-- IMAGE -->
-          <div class="col-4 gt-sm">
-            <img
-              :src="`data_img/${data.label}.webp`"
-              width="100%"
-              style="height: 100%; width: 100%"
-            />
-          </div>
-          <!-- CARD -->
-          <div class="col">
-            <q-card-section
-              class="text-h6 text-secondary text-weight-bold text-left tag-glass-element"
-            >
-              {{ data.name }}
-              <span v-if="!itemType" class="text-warning q-ml-md"
-                >Level {{ data.level }}</span
-              >
-              <div class="absolute-right q-ma-md">
-                <q-btn
-                  dense
-                  color="primary"
-                  icon="close"
-                  @click="$emit('cancelled')"
-                />
-              </div>
-            </q-card-section>
-            <q-card-section
-              v-if="!isMaxLevelReached"
-              class="bg-primary text-subtitle1 text-left text-secondary full-height"
-            >
-              <q-list dense>
-                <q-item>
-                  <q-item-section v-if="itemType" class="col">
-                    <q-item-label>Production Duration:</q-item-label>
-                    <q-item-label
-                      class="text-warning text-h6 text-weight-bold"
-                      >{{ timeString }}</q-item-label
-                    >
+  <q-card v-if="data !== undefined" bordered class="q-ma-md bg-primary">
+    <q-card-section horizontal>
+      <q-img
+        v-if="$q.screen.gt.sm"
+        class="col-4"
+        :src="`data_img/${data.label}.webp`"
+      >
+      </q-img>
 
-                    <div v-if="newEnergyUsage > 0">
-                      <q-item-label> Energy usage: </q-item-label>
-                      <q-item-label
-                        class="text-warning text-h6 text-weight-bold"
-                      >
-                        +{{ newEnergyUsage }}</q-item-label
-                      >
-                    </div>
-                  </q-item-section>
-                  <q-item-section v-else class="col">
-                    <q-item-label v-if="health !== false && health < 100"
-                      >Repair time:</q-item-label
-                    >
-                    <q-item-label v-else>Upgrade time:</q-item-label>
-                    <q-item-label
-                      class="text-warning text-h6 text-weight-bold"
-                      >{{ timeString }}</q-item-label
-                    >
+      <q-separator vertical />
 
-                    <div v-if="newEnergyUsage > 0">
-                      <q-item-label> Energy consumption: </q-item-label>
-                      <q-item-label
-                        class="text-warning text-h6 text-weight-bold"
-                      >
-                        +{{ newEnergyUsage }} / min</q-item-label
-                      >
-                    </div>
-                  </q-item-section>
-
-                  <div v-if="data.level > 0 && health !== false">
-                    <q-circular-progress
-                      v-if="health > 25"
-                      show-value
-                      class="text-white"
-                      :value="health"
-                      size="60px"
-                      :thickness="0.15"
-                      color="info"
-                      track-color="dark"
-                    >
-                      <q-icon
-                        name="health_and_safety"
-                        size="26px"
-                        color="info"
-                      />
-                      <q-tooltip v-model="showing">
-                        {{ health }}% Health
-                      </q-tooltip>
-                    </q-circular-progress>
-
-                    <q-circular-progress
-                      v-else
-                      show-value
-                      class="text-white q-ml-md"
-                      :value="health"
-                      size="60px"
-                      :thickness="0.15"
-                      color="negative"
-                      track-color="dark"
-                    >
-                      <q-icon
-                        name="fas fa-shield-virus"
-                        size="23px"
-                        color="negative"
-                      />
-                      <q-tooltip v-model="showing"> Health </q-tooltip>
-                    </q-circular-progress>
-                  </div>
-                  <!--<q-item-section class="col">
-                    <div class="text-right">
-                     <q-btn
-                        push
-                        color="red"
-                        icon="expand_more"
-                        label="Tear Down"
-                        no-caps
-                      />
-                    </div>
-                  </q-item-section>-->
-                  <q-item-section v-if="itemType" class="col-xs-6 col-sm-3">
-                    <q-input
-                      outlined
-                      square
-                      autofocus
-                      v-model="quantity"
-                      type="number"
-                      stack-label
-                      color="warning"
-                      label="Quantity"
-                    >
-                      <template v-slot:prepend>
-                        <q-icon name="tag" color="warning" />
-                      </template>
-                    </q-input>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-
-              <q-separator color="info" spaced inset />
-
-              <q-list dense>
-                <q-item>
-                  <q-item-section class="col">
-                    <div v-if="health !== false && health < 100">
-                      <q-item-label>Cost to repair:</q-item-label>
-                    </div>
-                    <div v-else>
-                      <q-item-label v-if="itemType"
-                        >Cost to build:</q-item-label
-                      >
-                      <q-item-label v-else
-                        >Cost to upgrade to level
-                        {{ data.level + 1 }}:</q-item-label
-                      >
-                    </div>
-
-                    <q-item-label caption>
-                      <q-card
-                        flat
-                        class="bg-transparent row q-col-gutter-sm q-py-md"
-                      >
-                        <div
-                          v-if="metalCost > 0"
-                          class="text-center text-subtitle2"
-                        >
-                          <div>
-                            <img
-                              src="~assets/img/resources/RES_ic_Metal.webp"
-                              alt=""
-                              srcset=""
-                              class="resource-icon-small"
-                            />
-                            <div class="text-secondary">
-                              {{ metalCost }} Metal
-                            </div>
-                            <q-tooltip class="bg-secondary">
-                              {{ metalCost }} Metal
-                            </q-tooltip>
-                          </div>
-                        </div>
-
-                        <div
-                          v-if="petrolCost > 0"
-                          class="text-center text-subtitle2"
-                        >
-                          <div>
-                            <img
-                              src="~assets/img/resources/RES_ic_FUEL5.webp"
-                              alt=""
-                              srcset=""
-                              class="resource-icon-small"
-                            />
-                            <div class="text-secondary">
-                              {{ petrolCost }} Petrol
-                            </div>
-                            <q-tooltip class="bg-secondary">
-                              {{ petrolCost }} Petrol
-                            </q-tooltip>
-                          </div>
-                        </div>
-
-                        <div
-                          v-if="crystalCost > 0"
-                          class="text-center text-subtitle2"
-                        >
-                          <div>
-                            <img
-                              src="~assets/img/resources/RES_ic_CRYSTAL.webp"
-                              alt=""
-                              class="resource-icon-small"
-                              srcset=""
-                            />
-                            <div class="text-secondary">
-                              {{ crystalCost }} Crystal
-                            </div>
-                            <q-tooltip class="bg-secondary">
-                              {{ crystalCost }} Crystal
-                            </q-tooltip>
-                          </div>
-                        </div>
-                      </q-card>
-                    </q-item-label>
-                  </q-item-section>
-                  <q-item-section class="col-3">
-                    <div class="text-right">
-                      <q-btn
-                        v-if="health !== false && health < 100"
-                        dense
-                        class="q-px-sm"
-                        color="warning"
-                        icon="construction"
-                        label="Repair"
-                        no-caps
-                        push
-                        @click="repair"
-                      />
-                      <q-btn
-                        v-else
-                        dense
-                        class="q-px-sm"
-                        color="warning"
-                        icon="expand_less"
-                        :label="actionConfirmLabel"
-                        no-caps
-                        push
-                        @click="upgrade"
-                      />
-                    </div>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-
-              <div v-if="requirements.length > 0" class="q-px-md">
-                <q-list
-                  bordered
-                  class="bg-dark text-white"
-                  :class="{ 'bg-red-5': allRequirementsMeet == false }"
+      <q-card-section class="col q-pa-none full-height column bg-dark">
+        <div class="col row justify-between items-center q-px-md q-py-xs">
+          <q-item class="col-10 q-pa-none">
+            <q-item-section avatar v-if="data.level > 0 && health !== false">
+              <div>
+                <q-circular-progress
+                  v-if="health > 25"
+                  show-value
+                  class="text-white"
+                  :value="health"
+                  size="48px"
+                  :thickness="0.15"
+                  color="info"
+                  track-color="dark"
                 >
-                  <!-- <q-list bordered class="bg-red-5 text-white"> -->
-                  <q-expansion-item dense expand-separator label="Requirements">
-                    <q-separator dark />
-                    <q-markup-table flat dense dark>
-                      <tbody>
-                        <tr v-for="(row, index) in requirements" :key="index">
-                          <td
-                            v-if="row.meet"
-                            class="text-left"
-                            style="width: 14px"
-                          >
-                            <q-icon
-                              size="20px"
-                              color="warning"
-                              name="check_circle_outline"
-                            />
-                          </td>
-                          <td v-else class="text-left" style="width: 14px">
-                            <q-icon
-                              size="20px"
-                              color="red-5"
-                              name="highlight_off"
-                            />
-                          </td>
-                          <td class="text-left">{{ row.requirement }}</td>
-                          <td class="text-left">{{ row.level }}</td>
-                        </tr>
-                      </tbody>
-                    </q-markup-table>
-                  </q-expansion-item>
-                </q-list>
+                  <q-icon name="health_and_safety" size="26px" color="info" />
+                </q-circular-progress>
+
+                <q-circular-progress
+                  v-else
+                  show-value
+                  class="text-white"
+                  :value="health"
+                  size="48px"
+                  :thickness="0.15"
+                  color="negative"
+                  track-color="negative"
+                >
+                  <q-icon
+                    name="fas fa-shield-virus"
+                    size="23px"
+                    color="negative"
+                  />
+                </q-circular-progress>
+                <q-tooltip> {{ health }}% HP </q-tooltip>
               </div>
-            </q-card-section>
-            <q-card-section
-              v-else
-              class="bg-primary text-h6 text-center text-secondary full-height"
-            >
-              <div class="q-mt-xl">
-                <div>Max level reached!</div>
-                <div>There will be more upgrades available soon...</div>
-              </div>
-            </q-card-section>
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label v-if="!itemType" class="text-info text-weight-bold"
+                >Level {{ data.level }}</q-item-label
+              >
+              <q-item-label class="text-h6 text-weight-bold">{{
+                data.name
+              }}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <div>
+            <q-btn
+              dense
+              color="primary"
+              icon="close"
+              @click="$emit('cancelled')"
+            />
           </div>
         </div>
 
-        <q-card-section
-          class="text-secondary text-subtitle1 text-left bg-dark q-py-lg"
-        >
-          <q-btn
-            v-if="data.type !== 'defense'"
-            size="md"
-            color="warning"
-            class="text-white q-mr-md"
-            glossy
-            dense
-            icon="info"
-            @click="showInfo = true"
-          />
+        <div v-if="!isMaxLevelReached" class="col bg-primary">
+          <q-separator />
 
-          {{ data.description }}
-        </q-card-section>
-      </q-card>
-    </div>
+          <q-list>
+            <!-- DEPRECATED (???) -->
+            <!--
+              <q-item v-if="itemType">
+                <q-item-section class="col">
+                  <q-item-label>Production Duration:</q-item-label>
+                  <q-item-label class="text-warning text-h6 text-weight-bold">{{
+                    timeString
+                  }}</q-item-label>
+
+
+                  <div v-if="newEnergyUsage > 0">
+                    <q-item-label> Energy usage: </q-item-label>
+                    <q-item-label class="text-warning text-h6 text-weight-bold">
+                      +{{ newEnergyUsage }}</q-item-label
+                    >
+                  </div>
+                </q-item-section>
+              </q-item>
+              -->
+            <q-item>
+              <q-item-section>
+                <q-item-label v-if="health !== false && health < 100"
+                  >Repair time:</q-item-label
+                >
+                <q-item-label v-else>Upgrade time:</q-item-label>
+
+                <q-item-label class="text-warning text-h6 text-weight-bold">{{
+                  timeString
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item v-if="newEnergyUsage > 0">
+              <q-item-section>
+                <q-item-label> Energy consumption: </q-item-label>
+                <q-item-label class="text-warning text-h6 text-weight-bold">
+                  +{{ newEnergyUsage }} / min</q-item-label
+                >
+              </q-item-section>
+            </q-item>
+          </q-list>
+
+          <q-separator spaced inset />
+
+          <q-list dense>
+            <q-item>
+              <q-item-section class="col">
+                <div v-if="health !== false && health < 100">
+                  <q-item-label>Cost to repair:</q-item-label>
+                </div>
+                <div v-else>
+                  <q-item-label v-if="itemType">Cost to build:</q-item-label>
+                  <q-item-label v-else
+                    >Cost to upgrade to level
+                    {{ data.level + 1 }}:</q-item-label
+                  >
+                </div>
+
+                <q-item-label caption>
+                  <q-card
+                    flat
+                    class="bg-transparent row q-col-gutter-sm q-py-md"
+                  >
+                    <div
+                      v-if="metalCost > 0"
+                      class="text-center text-subtitle2"
+                    >
+                      <div>
+                        <img
+                          src="~assets/img/resources/RES_ic_Metal.webp"
+                          alt=""
+                          srcset=""
+                          class="resource-icon-small"
+                        />
+                        <div class="text-secondary">{{ metalCost }} Metal</div>
+                      </div>
+                    </div>
+
+                    <div
+                      v-if="crystalCost > 0"
+                      class="text-center text-subtitle2"
+                    >
+                      <div>
+                        <img
+                          src="~assets/img/resources/RES_ic_CRYSTAL.webp"
+                          alt=""
+                          class="resource-icon-small"
+                          srcset=""
+                        />
+                        <div class="text-secondary">
+                          {{ crystalCost }} Crystal
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      v-if="petrolCost > 0"
+                      class="text-center text-subtitle2"
+                    >
+                      <div>
+                        <img
+                          src="~assets/img/resources/RES_ic_FUEL5.webp"
+                          alt=""
+                          srcset=""
+                          class="resource-icon-small"
+                        />
+                        <div class="text-secondary">
+                          {{ petrolCost }} Petrol
+                        </div>
+                      </div>
+                    </div>
+                  </q-card>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+
+          <div v-if="requirements.length > 0" class="q-pa-md">
+            <q-list
+              bordered
+              class="bg-dark text-white"
+              :class="{ 'bg-red-5': allRequirementsMeet == false }"
+            >
+              <!-- <q-list bordered class="bg-red-5 text-white"> -->
+              <q-expansion-item dense expand-separator label="Requirements">
+                <q-list dense class="bg-dark">
+                  <q-item
+                    dense
+                    v-for="(row, index) in requirements"
+                    :key="index"
+                  >
+                    <q-item-section>
+                      <q-item-label
+                        :style="{
+                          color: row.meet
+                            ? getCssVar('info')
+                            : getPaletteColor('red-5'),
+                        }"
+                      >
+                        <q-icon
+                          v-if="$q.screen.gt.xs"
+                          size="20px"
+                          :color="row.meet ? 'info' : 'red-5'"
+                          :name="
+                            row.meet ? 'check_circle_outline' : 'highlight_off'
+                          "
+                        />
+
+                        {{ row.requirement }}
+                      </q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>{{ row.level }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-expansion-item>
+            </q-list>
+          </div>
+
+          <q-separator />
+
+          <q-card-section class="row justify-center q-gutter-sm">
+            <div v-if="itemType" class="row col-12 col-md-5">
+              <q-btn
+                class="col-2"
+                color="info"
+                icon="fas fa-minus"
+                style="
+                  border-top-right-radius: 0;
+                  border-bottom-right-radius: 0;
+                "
+                @click="decreaseDefenseQuantity"
+              />
+
+              <q-input
+                class="col"
+                input-class="text-center"
+                outlined
+                square
+                autofocus
+                type="text"
+                :model-value="quantity"
+                color="warning"
+                dense
+                :readonly="true"
+              >
+                <template v-slot:prepend>
+                  <span class="text-caption">Qty</span>
+                </template>
+              </q-input>
+
+              <q-btn
+                class="col-2"
+                color="info"
+                icon="fas fa-plus"
+                style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+                @click="increaseDefenseQuantity"
+              />
+            </div>
+
+            <q-btn
+              v-if="data.type !== 'defense'"
+              class="col-12 col-md-5"
+              icon="fas fa-info-circle"
+              color="positive"
+              label="Stats"
+              outline
+              @click="showInfo = true"
+            ></q-btn>
+
+            <q-btn
+              v-if="health !== false && health < 100"
+              class="col-12 col-md-5"
+              icon="construction"
+              color="info"
+              label="Repair"
+              @click="repair"
+            ></q-btn>
+
+            <q-btn
+              v-else
+              class="col-12 col-md-5"
+              :icon="
+                actionConfirmLabel == 'Research' ? 'fas fa-flask' : 'fas fa-cog'
+              "
+              color="info"
+              :label="actionConfirmLabel"
+              @click="upgrade"
+            ></q-btn>
+          </q-card-section>
+        </div>
+
+        <div v-else class="column bg-primary">
+          <q-separator />
+
+          <q-card-section class="text-center q-gutter-md">
+            <div>
+              <q-avatar
+                size="100px"
+                font-size="52px"
+                color="info"
+                text-color="white"
+                icon="fas fa-exclamation-triangle"
+              />
+            </div>
+            <div
+              class="items-center text-center q-pa-sm"
+              style="
+                border-radius: 5px;
+
+                color: #fff;
+                font-size: 12px;
+              "
+              :style="`border: 1px solid ${getPaletteColor(
+                'info'
+              )}; box-shadow: 0 0 5px ${getPaletteColor('info')};`"
+            >
+              <div class="text-h5 text-info">Max level reached!</div>
+              <div class="text-h6">
+                There will be more upgrades available soon...
+              </div>
+            </div>
+          </q-card-section>
+        </div>
+      </q-card-section>
+    </q-card-section>
 
     <q-dialog v-model="showInfo">
       <popup :item="this.$props.data"></popup>
     </q-dialog>
-  </q-card-section>
+  </q-card>
 </template>
 
 <script>
@@ -337,7 +351,7 @@ import ApiRequests from "../../service/http/ApiRequests";
 import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
-import { useQuasar } from "quasar";
+import { useQuasar, colors, getCssVar } from "quasar";
 import { exception } from "vue-gtag";
 
 export default defineComponent({
@@ -360,6 +374,8 @@ export default defineComponent({
 
     const $store = useStore();
     const $q = useQuasar();
+
+    const { getPaletteColor } = colors;
 
     const dataSource = (type) => {
       let data = {};
@@ -426,6 +442,14 @@ export default defineComponent({
       });
       return flag;
     });
+
+    const increaseDefenseQuantity = () => {
+      quantity.value++;
+    };
+
+    const decreaseDefenseQuantity = () => {
+      if (quantity.value > 1) quantity.value--;
+    };
 
     const $notification =
       getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -579,7 +603,7 @@ export default defineComponent({
     });
 
     const timeString = computed(() => {
-      if (!props.data) return "0m";
+      if (!props.data) return "0 (m)";
 
       let timeNeeded = 0;
       if (props.itemType) {
@@ -607,9 +631,9 @@ export default defineComponent({
       const h = Math.round(minutes - m) / 60;
 
       let str = "";
-      if (h > 0) str += `${h}h`;
-      if (m > 0) str += ` ${m}m`;
-      if (s > 0) str += ` ${s}s`;
+      if (h > 0) str += `${h} (h)`;
+      if (m > 0) str += ` ${m} (m)`;
+      if (s > 0) str += ` ${s} (s)`;
 
       return str;
     });
@@ -757,7 +781,11 @@ export default defineComponent({
       upgrade: upgrade,
       repair,
       quantity: quantity,
+      increaseDefenseQuantity,
+      decreaseDefenseQuantity,
       health,
+      getPaletteColor,
+      getCssVar,
       showInfo: ref(false),
       isMaxLevelReached,
     };
