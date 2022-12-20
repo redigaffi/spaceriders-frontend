@@ -76,7 +76,7 @@
       <q-separator />
 
       <q-img
-        :src="`https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.image}-bg.webp`"
+        :src="`https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.type}-${this.newPlanetInfo.rarity}-${this.newPlanetInfo.image}-${this.newPlanetInfo.image}-bg.webp`"
         style="height: 200px; width: 100%"
       />
 
