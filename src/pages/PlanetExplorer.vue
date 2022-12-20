@@ -559,32 +559,18 @@ function openPlanetInfoCall(solarSystem, position) {
   }
 }
 
-function copyPlanetUrlClipBoard() {
+async function copyPlanetUrlClipBoard() {
   const sp = selectedPlanetInfo.value;
 
-  let basePath = `${window.location.origin}/explorer`;
-  let fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
+  const basePath = `${window.location.origin}/explorer`;
+  const fullPath = `${basePath}/${sp.galaxy}/${sp.solar_system}/${sp.position}`;
 
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(fullPath);
-  } else {
-    let textArea = document.createElement("textarea");
-    textArea.value = fullPath;
-    // make the textarea out of viewport
-    textArea.style.position = "fixed";
-    textArea.style.left = "-999999px";
-    textArea.style.top = "-999999px";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    new Promise((res, rej) => {
-      // here the magic happens
-      document.execCommand("copy") ? res() : rej();
-      textArea.remove();
-    });
+  try {
+    await navigator.clipboard.writeText(fullPath);
+    $quasar.notify($notification("success", "Copied to clipboard"));
+  } catch (err) {
+    $quasar.notify($notification("failed", "Oops, unable to copy"));
   }
-
-  $quasar.notify($notification("success", "Copied to clipboard"));
 }
 </script>
 
