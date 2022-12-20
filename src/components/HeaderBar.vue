@@ -53,7 +53,11 @@
           </Swap>
 
           <User
-            v-if="$route.name !== 'trading' && $route.name !== 'explorer'"
+            v-if="
+              $route.name !== 'trading' &&
+              $route.name !== 'explorer' &&
+              $route.name !== 'explorer-exact-position'
+            "
           />
         </div>
       </div>
@@ -170,7 +174,11 @@
           </Swap>
 
           <q-item
-            v-if="$route.name !== 'trading' && $route.name !== 'explorer'"
+            v-if="
+              $route.name !== 'trading' &&
+              $route.name !== 'explorer' &&
+              $route.name !== 'explorer-exact-position'
+            "
             clickable
             exact
             exact-active-class="bg-primary text-white"

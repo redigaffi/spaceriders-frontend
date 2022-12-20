@@ -1,256 +1,257 @@
 <template>
-  <div style="margin-top: 10px; width: 700px; height: 50px">
-    <q-input
-      v-model.number="galaxy"
-      outlined
-      dense
-      autofocus
-      stack-label
-      type="number"
-      color="warning"
-      width="50px"
-      label="Galaxy"
-      style="float: left; width: 90px"
-      @change="galaxyChange"
-    />
+  <div class="container">
+    <div class="row justify-evenly items-center q-col-gutter-sm q-my-sm">
+      <div class="col-12 col-sm-6 row justify-center">
+        <q-btn
+          class="col-2 col-sm-1"
+          color="info"
+          icon="fas fa-minus"
+          style="border-top-right-radius: 0; border-bottom-right-radius: 0"
+          @click="prevGalaxySector"
+        />
+        <q-input
+          :model-value="galaxy"
+          filled
+          dense
+          autofocus
+          stack-label
+          square
+          type="number"
+          color="info"
+          label="Galaxy sector"
+          class="col-8"
+          min="0"
+          @change="(value) => galaxyChange(value)"
+        />
+        <q-btn
+          class="col-2 col-sm-1"
+          color="info"
+          icon="fas fa-plus"
+          style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+          @click="nextGalaxySector"
+        />
+      </div>
 
-    <q-input
-      v-model.number="fromSolarSystem"
-      outlined
-      dense
-      autofocus
-      stack-label
-      type="number"
-      color="warning"
-      width="100px"
-      label="From Solar System"
-      style="float: left; margin-left: 20px; width: 190px"
-      :step="7"
-      @change="fromChange"
-    />
-
-    <q-input
-      v-model.number="toSolarSystem"
-      outlined
-      dense
-      autofocus
-      stack-label
-      type="number"
-      color="warning"
-      width="50px"
-      label="To Solar System"
-      style="float: left; margin-left: 20px; width: 170px"
-      :step="7"
-      @change="toChange"
-    />
+      <div class="col-12 col-sm-6 row justify-center">
+        <q-btn
+          class="col-2 col-sm-1"
+          color="info"
+          icon="fas fa-minus"
+          style="border-top-right-radius: 0; border-bottom-right-radius: 0"
+          @click="prevSolarSystem"
+        />
+        <q-input
+          :model-value="solarSystemRange"
+          filled
+          dense
+          autofocus
+          stack-label
+          square
+          type="text"
+          color="info"
+          label="From - To Solar System"
+          readonly
+          class="col-8"
+        />
+        <q-btn
+          class="col-2 col-sm-1"
+          color="info"
+          icon="fas fa-plus"
+          style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+          @click="nextSolarSystem"
+        />
+      </div>
+    </div>
   </div>
 
-  <div style="margin-bottom: 25px">
-    <q-page-sticky
-      v-if="toSolarSystem < 100"
-      style="z-index: 1"
-      position="right"
-      :offset="[18, 0]"
+  <div v-if="loaded" class="container q-mt-md">
+    <div
+      v-for="(_, a) in 7"
+      :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`"
     >
-      <q-btn
-        @click="rightPage"
-        round
-        color="accent"
-        icon="arrow_upward"
-        class="rotate-90"
-      />
-    </q-page-sticky>
+      <div class="text-h6">Solar System #{{ a + fromSolarSystem }}</div>
+      <div class="row q-mb-md">
+        <div
+          class="col-4 col-sm-3 col-md-2 box text-center"
+          :class="{ has_planet: loaded && planetsByPosition[a][b].id }"
+          v-for="(_, b) in 12"
+          :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`"
+        >
+          <div
+            class="glossy glass-element absolute-top text-center no-border-radius ellipsis text-caption"
+            style="padding: 5px 0"
+          >
+            {{
+              !planetsByPosition[a][b].id
+                ? "Free spot"
+                : planetsByPosition[a][b].name
+            }}
+          </div>
 
-    <q-page-sticky
-      v-if="galaxy < 100"
-      style="z-index: 1"
-      position="top"
-      :offset="[0, 18]"
-    >
-      <q-btn
-        @click="upPage"
-        round
-        color="accent"
-        icon="arrow_back"
-        class="rotate-90"
-      />
-    </q-page-sticky>
+          <q-img
+            v-if="planetsByPosition[a][b].id"
+            :src="planetsByPosition[a][b].image_url"
+            @click="
+              openPlanetInfoCall(
+                planetsByPosition[a][b].solar_system,
+                planetsByPosition[a][b].position
+              )
+            "
+            style="width: 100%; height: 160px; object-fit: fill"
+            :style="{
+              background: `linear-gradient(to top, ${
+                getPaletteColor(colorMapping[planetsByPosition[a][b].rarity]) +
+                '80'
+              } 20% , ${getCssVar('dark') + 'bf'} 80%)`,
+            }"
+          />
 
-    <q-page-sticky
-      v-if="fromSolarSystem > 0"
-      style="z-index: 1"
-      position="left"
-      :offset="[18, 0]"
-    >
-      <q-btn @click="leftPage" round color="accent" icon="arrow_back" />
-    </q-page-sticky>
+          <div v-else class="bg-dark" style="height: 160px"></div>
 
-    <q-page-sticky
-      v-if="galaxy > 0"
-      style="z-index: 1"
-      position="bottom"
-      :offset="[0, 18]"
-    >
-      <q-btn
-        @click="downPage"
-        round
-        color="accent"
-        icon="arrow_forward"
-        class="rotate-90"
-      />
-    </q-page-sticky>
+          <div
+            class="glossy glass-element absolute-bottom text-center no-border-radius ellipsis text-caption"
+            style="padding: 5px 0"
+          >
+            ({{ planetsByPosition[a][b].galaxy }}:{{
+              planetsByPosition[a][b].solar_system
+            }}:{{ planetsByPosition[a][b].position + 1 }})
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <q-drawer
-      v-model="openPlanetInfo"
-      :width="400"
-      :breakpoint="500"
-      overlay
-      side="right"
-      class="bg-dark-3"
-    >
-      <q-card>
-        <img
-          :src="selectedPlanetInfo.image_url_bg"
-          style="height: 240px; width: 100%; z-index: 2"
-        />
-
+  <q-dialog v-model="openPlanetInfo">
+    <q-card class="full-width">
+      <q-card-section class="row justify-between">
+        <div class="text-h6">Planet info</div>
         <q-btn
           flat
           round
           size="sm"
-          color="red"
+          color="white"
           icon="close"
           @click="
             openPlanetInfo = false;
             selectedPlanetInfo = false;
           "
-        >
-          <q-tooltip> Close planet information </q-tooltip>
-        </q-btn>
-        <q-btn
-          flat
-          round
-          size="sm"
-          color="red"
-          icon="email"
-          @click="sendPlanetEmail"
-        >
-          <q-tooltip> Send email to planet </q-tooltip>
-        </q-btn>
+        />
+      </q-card-section>
 
+      <q-separator />
+
+      <q-img
+        :src="selectedPlanetInfo.image_url_bg"
+        style="height: 200px; width: 100%"
+      />
+
+      <q-card-section class="q-px-none">
+        <q-list dense>
+          <q-item>
+            <q-item-section>
+              <q-item-label> Name: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label>
+                {{ selectedPlanetInfo.name }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Level: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label>
+                {{ selectedPlanetInfo.level }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Rarity: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label
+                :class="`text-${colorMapping[selectedPlanetInfo.rarity]}`"
+              >
+                {{ selectedPlanetInfo.rarity }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Type: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label>
+                {{ selectedPlanetInfo.type }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label> Position: </q-item-label>
+            </q-item-section>
+
+            <q-item-section avatar>
+              <q-item-label>
+                [{{ selectedPlanetInfo.galaxy }}:{{
+                  selectedPlanetInfo.solar_system
+                }}:{{ selectedPlanetInfo.position }}]
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-actions align="center">
         <q-btn
-          flat
-          round
-          size="sm"
-          color="red"
-          icon="share"
+          icon="fas fa-copy"
+          color="info"
+          label="Copy planet permalink"
           @click="copyPlanetUrlClipBoard"
-        >
-          <q-tooltip> Copy planet permalink </q-tooltip>
-        </q-btn>
-
-        <q-card-section class="q-pa-sm q-mt-sm">
-          <div class="text-h9">
-            <q-item-label>Name</q-item-label>
-            <q-item-label caption style="color: white">
-              {{ selectedPlanetInfo.name }}
-            </q-item-label>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="q-pa-sm q-mt-sm">
-          <div class="text-h9">
-            <q-item-label>Position</q-item-label>
-            <q-item-label caption style="color: white">
-              [{{ selectedPlanetInfo.galaxy }}:{{
-                selectedPlanetInfo.solar_system
-              }}:{{ selectedPlanetInfo.position }}]
-            </q-item-label>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="q-pa-sm q-mt-sm">
-          <div class="text-h9">
-            <q-item-label>Rarity</q-item-label>
-            <q-item-label caption style="color: white">
-              {{ selectedPlanetInfo.rarity }}
-            </q-item-label>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="q-pa-sm q-mt-sm">
-          <div class="text-h9">
-            <q-item-label>Level</q-item-label>
-            <q-item-label caption style="color: white">
-              {{ selectedPlanetInfo.level }}
-            </q-item-label>
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-drawer>
-  </div>
-
-  <div v-if="loaded">
-    <div
-      v-for="(_, a) in 7"
-      :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`"
-      class="row"
-    >
-      <div
-        v-for="(_, b) in 12"
-        :key="`${galaxy}-${fromSolarSystem}-${toSolarSystem}-${a}-${b}`"
-        class="col-1 box"
-        :class="{
-          no_planet: loaded && !planetsByPosition[a][b].id,
-          has_planet: loaded && planetsByPosition[a][b].id,
-        }"
-      >
-        <div v-if="!planetsByPosition[a][b].id">
-          ({{ planetsByPosition[a][b].galaxy }}:{{
-            planetsByPosition[a][b].solar_system
-          }}:{{ planetsByPosition[a][b].position + 1 }})
-          <q-tooltip anchor="center right" self="center left">
-            Free spot
-          </q-tooltip>
-        </div>
-
-        <div
-          @click="
-            openPlanetInfoCall(
-              planetsByPosition[a][b].solar_system,
-              planetsByPosition[a][b].position
-            )
-          "
-          v-else
-        >
-          <img :src="planetsByPosition[a][b].image_url" />
-
-          <q-tooltip anchor="center right" self="center left">
-            Position: ({{ planetsByPosition[a][b].galaxy }}:{{
-              planetsByPosition[a][b].solar_system
-            }}:{{ planetsByPosition[a][b].position }})
-          </q-tooltip>
-        </div>
-      </div>
-    </div>
-  </div>
+        ></q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted, watchEffect } from "vue";
+import {
+  ref,
+  onBeforeMount,
+  onMounted,
+  watchEffect,
+  getCurrentInstance,
+} from "vue";
 import ApiRequests from "../service/http/ApiRequests";
-import { useQuasar } from "quasar";
+import { useQuasar, colors, getCssVar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
+import { colorMapping } from "../constants/Shared";
+
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 
 const $quasar = useQuasar();
 const $route = useRoute();
 const $router = useRouter();
+const { getPaletteColor } = colors;
 
 const openPlanetInfo = ref(false);
 
 const galaxy = ref(0);
 const fromSolarSystem = ref(0);
 const toSolarSystem = ref(7);
+const solarSystemRange = ref("0 - 6");
 
 //@TODO: This sucks.
 let planetsByPosition = ref([
@@ -427,10 +428,8 @@ watchEffect(async () => {
   $quasar.loading.hide();
 });
 
-function galaxyChange() {
-  if (galaxy.value < 0) {
-    galaxy.value = 0;
-  }
+function galaxyChange(value) {
+  if (value >= 0) galaxy.value = value;
 }
 
 function fromChange() {
@@ -461,6 +460,46 @@ function toChange() {
   }
 
   fromSolarSystem.value = toSolarSystem.value - 7;
+}
+
+function prevGalaxySector() {
+  if (galaxy.value > 0) galaxy.value--;
+}
+
+function nextGalaxySector() {
+  galaxy.value++;
+}
+
+function prevSolarSystem() {
+  if (toSolarSystem.value > 7) {
+    if (fromSolarSystem.value - 7 < 0) {
+      fromSolarSystem.value = 0;
+      toSolarSystem.value = 7;
+    } else {
+      fromSolarSystem.value -= 7;
+      toSolarSystem.value -= 7;
+    }
+    rangeChange();
+  }
+}
+
+function nextSolarSystem() {
+  if (toSolarSystem.value < 100) {
+    if (toSolarSystem.value + 7 > 100) {
+      fromSolarSystem.value = 93;
+      toSolarSystem.value = 100;
+    } else {
+      fromSolarSystem.value += 7;
+      toSolarSystem.value += 7;
+    }
+    rangeChange();
+  }
+}
+
+function rangeChange() {
+  solarSystemRange.value = `${fromSolarSystem.value} - ${
+    toSolarSystem.value - 1
+  }`;
 }
 
 function sendPlanetEmail() {
@@ -545,35 +584,25 @@ function copyPlanetUrlClipBoard() {
     });
   }
 
-  alert("Copied to clipboard");
+  $quasar.notify($notification("success", "Copied to clipboard"));
 }
 </script>
 
 <style lang="scss">
 .box {
-  float: left;
-  height: 100px !important;
-  line-height: 100px;
   box-shadow: 0 0 4px #303030;
-  text-align: center;
-  z-index: 0;
 }
 
 .has_planet {
-  transition: 0.5s;
-  > div {
-    height: 100% !important;
-  }
+  transition: 0.25s;
+  cursor: pointer;
 }
 
 .has_planet:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 5px #5c5c5c;
-}
+  box-shadow: 0 0 24px #2253f4;
 
-.box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  img {
+    filter: brightness(1.5);
+  }
 }
 </style>
