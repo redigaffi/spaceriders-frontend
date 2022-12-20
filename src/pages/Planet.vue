@@ -76,7 +76,7 @@
       <q-separator />
 
       <q-img
-        :src="`https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.type}-${this.newPlanetInfo.rarity}-${this.newPlanetInfo.image}-${this.newPlanetInfo.image}-bg.webp`"
+        :src="`https://spaceriders-planet-images.s3.eu-west-1.amazonaws.com/${this.newPlanetInfo.type}-${this.newPlanetInfo.rarity}-${this.newPlanetInfo.image}-bg.webp`"
         style="height: 200px; width: 100%"
       />
 
@@ -310,7 +310,7 @@ export default defineComponent({
       }
 
       obj.temperature += `${maxTemperature}°C`;
-      obj.image = `${this.newPlanetStats.image}-${this.newPlanetStats.rarity}`;
+      obj.image = this.newPlanetStats.image;
       obj.type = this.newPlanetStats.type;
 
       return obj;
