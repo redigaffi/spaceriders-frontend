@@ -114,7 +114,7 @@
           >
             ({{ planetsByPosition[a][b].galaxy }}:{{
               planetsByPosition[a][b].solar_system
-            }}:{{ planetsByPosition[a][b].position + 1 }})
+            }}:{{ b + 1 }})
           </div>
         </div>
       </div>
