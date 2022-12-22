@@ -3,7 +3,7 @@
   <div>
     <div class="row">
       <div class>
-        <q-btn v-if="!error" color="info" @click="changeTabPanel('profile')">
+        <q-btn v-if="!error" color="info" @click="setProfileModal">
           <q-avatar class="q-mr-sm" color="secondary" size="24px">
             <q-img v-html="avatar" />
           </q-avatar>
@@ -119,34 +119,8 @@ const router = useRouter();
 
 const avatar = jdenticon.toSvg($store.getters.address, 24);
 
-const tabPanel = computed({
-  get: () => {
-    return $store.getters.tabPanel;
-  },
-  set: (value) => {
-    $store.commit("setTabPanel", value);
-  },
-});
-
-const drawer = computed({
-  get: () => {
-    return $store.getters.drawerRight;
-  },
-  set: (value) => {
-    $store.commit("setDrawerRight", value);
-  },
-});
-
-const changeTabPanel = (tab) => {
-  if (drawer.value && tabPanel.value === tab) {
-    drawer.value = !drawer.value;
-  } else {
-    tabPanel.value = tab;
-
-    if (!drawer.value) {
-      drawer.value = !drawer.value;
-    }
-  }
+const setProfileModal = () => {
+  $store.commit("setProfileModal", !$store.getters.profileModal);
 };
 
 onBeforeMount(async () => {

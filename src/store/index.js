@@ -26,9 +26,10 @@ const Store = createStore({
       defenseData: false,
       buildingQueue: { items: [] },
       emails: [],
-      tabPanel: "profile",
+      tabPanel: "inbox",
       drawerLeft: false,
       drawerRight: false,
+      profileModal: false,
       dateNow: 0,
       accountInfo: {},
     };
@@ -61,13 +62,15 @@ const Store = createStore({
     },
 
     setDrawerLeft(state, payload) {
-      state.drawerRight = false;
-      state.drawerLeft = !state.drawerLeft;
+      state.drawerLeft = payload;
     },
 
     setDrawerRight(state, payload) {
-      state.drawerLeft = false;
-      state.drawerRight = !state.drawerRight;
+      state.drawerRight = payload;
+    },
+
+    setProfileModal(state, payload) {
+      state.profileModal = payload;
     },
 
     setAccountInfo(state, info) {
@@ -454,6 +457,10 @@ const Store = createStore({
 
     drawerRight: (state) => {
       return state.drawerRight;
+    },
+
+    profileModal: (state) => {
+      return state.profileModal;
     },
 
     address: (state) => {
