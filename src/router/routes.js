@@ -18,6 +18,8 @@ const tradingPage = () => import("pages/Trading.vue");
 
 const landingPage = () => import("src/pages/Landing1.vue");
 
+const leaderboardPage = () => import("src/pages/Leaderboard.vue");
+
 // ROUTES
 const routes = [
   {
@@ -164,6 +166,30 @@ const routes = [
           requiresAuth: true,
           requiresPlanet: true,
           title: "Defenses",
+        },
+      },
+    ],
+  },
+  {
+    path: "/leaderboard",
+    name: "leaderboard",
+    component: mainLayout,
+    meta: {
+      requiresAuth: true,
+      requiresPlanet: true,
+      menu: false,
+      title: "Leaderboard",
+    },
+    children: [
+      {
+        path: "",
+        component: leaderboardPage,
+        name: "leaderboard",
+        meta: {
+          requiresAuth: true,
+          requiresPlanet: true,
+          menu: false,
+          title: "Leaderboard",
         },
       },
     ],
