@@ -52,13 +52,7 @@
             />
           </Swap>
 
-          <User
-            v-if="
-              $route.name !== 'trading' &&
-              $route.name !== 'explorer' &&
-              $route.name !== 'explorer-exact-position'
-            "
-          />
+          <User />
         </div>
       </div>
     </div>
@@ -174,15 +168,10 @@
           </Swap>
 
           <q-item
-            v-if="
-              $route.name !== 'trading' &&
-              $route.name !== 'explorer' &&
-              $route.name !== 'explorer-exact-position'
-            "
             clickable
             exact
             exact-active-class="bg-primary text-white"
-            @click="changeTabPanel('profile')"
+            @click="openProfileModal"
           >
             <q-item-section>
               <q-item-label>
@@ -272,6 +261,9 @@ const drawer = computed({
     return $store.getters.drawerLeft;
   },
   set: (value) => {
+    if (value) {
+      $store.commit("setDrawerRight", false);
+    }
     $store.commit("setDrawerLeft", value);
   },
 });
@@ -279,6 +271,10 @@ const drawer = computed({
 const changeTabPanel = (tab) => {
   tabPanel.value = tab;
   $store.commit("setDrawerRight", !$store.getters.drawerRight);
+};
+
+const openProfileModal = () => {
+  $store.commit("setProfileModal", true);
 };
 
 //@TODO: refactor this way of constructing menu.
