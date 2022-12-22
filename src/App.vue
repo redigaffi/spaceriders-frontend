@@ -1,12 +1,16 @@
 <template>
-  <router-view />
+  <router-view :class="{ 'media-player-offset': isMusicPage }" />
 
-  <div v-if="!isLandingPage" class="fixed-bottom" style="z-index: 1">
+  <div
+    v-if="isMusicPage"
+    class="fixed-bottom bg-dark"
+    style="z-index: 1; border-top: 1px solid rgba(255, 255, 255, 0.28)"
+  >
     <MusicPlayer />
   </div>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
@@ -41,21 +45,11 @@ if (window.face === undefined) {
   });
 }
 
-const isLandingPage = computed(() => {
-  return $route.name === "landing";
+const isMusicPage = computed(() => {
+  return $route.name !== "landing" && $route.path !== "/nouser";
 });
 
-const setBodyOffset = () => {
-  const bodyElement = document.querySelector("body");
-  if (!isLandingPage.value) {
-    bodyElement.classList.add("media-player-offset");
-  } else {
-    bodyElement.classList.remove("media-player-offset");
-  }
-};
-
 getChainData();
-setBodyOffset();
 </script>
 
 <style lang="scss">

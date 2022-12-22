@@ -473,7 +473,7 @@
 </template>
 <script setup>
 // window.location.reload();
-import { getCurrentInstance, ref, computed } from "vue";
+import { getCurrentInstance, ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import ResourcesDisplay from "../components/ResourcesDisplay.vue";
@@ -502,6 +502,9 @@ const $eventBus =
 onMounted(() => {
   updateAccountInfo();
 });
+
+let totalMail = $store.getters.emails.length;
+const mailSound = new Audio(require(`../assets/sound/notification.wav`));
 
 const accountTitle = computed(() => {
   const level = accountLevel.value;
@@ -624,6 +627,14 @@ const body = computed(() => {
   }
 
   return "";
+});
+
+watchEffect(() => {
+  if (emails.value.length > totalMail) {
+    mailSound.play();
+  }
+
+  totalMail = emails.value.length;
 });
 
 function openEmail(email) {

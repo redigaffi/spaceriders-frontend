@@ -1,6 +1,6 @@
 <template>
   <q-media-player
-    class="glossy glass-element bg-dark"
+    class="bg-dark container"
     ref="musicPlayer"
     type="audio"
     :sources="audio"
