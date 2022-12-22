@@ -359,22 +359,6 @@ onMounted(() => {
 let totalMail = $store.getters.emails.length;
 const mailSound = new Audio(require(`../assets/sound/notification.wav`));
 
-const accountTitle = computed(() => {
-  const level = accountLevel.value;
-
-  if (level <= 1) return "Human";
-  else if (level <= 5) return "Amateur Astronaut";
-  else if (level <= 10) return "Rookie Astronaut";
-  else if (level <= 15) return "Professional Astronaut";
-  else if (level <= 20) return "Planet Manager";
-  else if (level <= 25) return "Planet Lord";
-  else if (level <= 30) return "Space Explorer";
-  else if (level <= 35) return "Space Traveller";
-  else if (level <= 40) return "Space Conqueror";
-  else if (level <= 45) return "Space Lord";
-  else return "Space Rider";
-}
-
 const tabPanel = computed({
   get: () => {
     return $store.getters.tabPanel;
