@@ -96,7 +96,7 @@
           <q-item>
             <q-item-section>
               <q-item-label
-                ><q-icon name="fas fa-certificate" /> Medals:</q-item-label
+                ><q-icon name="fas fa-certificate" /> Badges:</q-item-label
               >
             </q-item-section>
 

@@ -349,6 +349,16 @@ export default class ApiRequests {
     return await axios.post(path, body);
   }
 
+  static async getLeaderboardPlanets(page, perPage) {
+    const path = `${process.env.BASE_API_PATH}/leaderboard/planets?page=${page}&per_page=${perPage}`;
+    return (await axios.get(path)).data.data;
+  }
+
+  static async getLeaderboardUsers(page, perPage) {
+    const path = `${process.env.BASE_API_PATH}/leaderboard/users?page=${page}&per_page=${perPage}`;
+    return (await axios.get(path)).data.data;
+  }
+
   static async getAccountInfo(wallet) {
     const path = `${process.env.BASE_API_PATH}/account/info/${wallet}`;
     return await axios.get(path);

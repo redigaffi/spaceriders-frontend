@@ -97,6 +97,21 @@
             clickable
             exact
             exact-active-class="bg-primary text-white"
+            to="/leaderboard"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="fas fa-trophy" />
+                Leaderboard
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            v-if="hasActivePlanet"
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
             to="/trade/METAL_BKM"
           >
             <q-item-section>
