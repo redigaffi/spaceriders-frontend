@@ -1,12 +1,24 @@
 <template>
-  <router-view />
+  <router-view :class="{ 'media-player-offset': isMusicPage }" />
+
+  <div
+    v-if="isMusicPage"
+    class="fixed-bottom bg-dark"
+    style="z-index: 1; border-top: 1px solid rgba(255, 255, 255, 0.28)"
+  >
+    <MusicPlayer />
+  </div>
 </template>
 <script setup>
+import { computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
 import { Face, Network } from "@haechi-labs/face-sdk";
+import MusicPlayer from "src/components/MusicPlayer.vue";
 
 const $store = useStore();
+const $route = useRoute();
 
 $store.commit("setTimeCount");
 
@@ -32,6 +44,10 @@ if (window.face === undefined) {
     apiKey: process.env.FACE_WALLET_API_KEY,
   });
 }
+
+const isMusicPage = computed(() => {
+  return $route.name !== "landing" && $route.path !== "/nouser";
+});
 
 getChainData();
 </script>

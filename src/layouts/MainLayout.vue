@@ -88,7 +88,7 @@
               : ''
           "
           position="bottom-right"
-          :offset="[24, 96]"
+          :offset="[24, 120]"
         >
           <q-btn
             :class="{ shake: buildingsInQueue.length }"
@@ -115,7 +115,7 @@
               : ''
           "
           position="bottom-right"
-          :offset="[24, 24]"
+          :offset="[24, 48]"
         >
           <q-btn
             :class="{ shake: anyUnreadMessage }"
@@ -323,7 +323,7 @@
 </template>
 <script setup>
 // window.location.reload();
-import { getCurrentInstance, ref, computed } from "vue";
+import { getCurrentInstance, ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import ResourcesDisplay from "../components/ResourcesDisplay.vue";
@@ -355,6 +355,25 @@ onMounted(() => {
   $store.commit("setDrawerLeft", false);
   $store.commit("setDrawerRight", false);
 });
+
+let totalMail = $store.getters.emails.length;
+const mailSound = new Audio(require(`../assets/sound/notification.wav`));
+
+const accountTitle = computed(() => {
+  const level = accountLevel.value;
+
+  if (level <= 1) return "Human";
+  else if (level <= 5) return "Amateur Astronaut";
+  else if (level <= 10) return "Rookie Astronaut";
+  else if (level <= 15) return "Professional Astronaut";
+  else if (level <= 20) return "Planet Manager";
+  else if (level <= 25) return "Planet Lord";
+  else if (level <= 30) return "Space Explorer";
+  else if (level <= 35) return "Space Traveller";
+  else if (level <= 40) return "Space Conqueror";
+  else if (level <= 45) return "Space Lord";
+  else return "Space Rider";
+}
 
 const tabPanel = computed({
   get: () => {
@@ -438,6 +457,14 @@ const body = computed(() => {
   }
 
   return "";
+});
+
+watchEffect(() => {
+  if (emails.value.length > totalMail) {
+    mailSound.play();
+  }
+
+  totalMail = emails.value.length;
 });
 
 function openEmail(email) {
