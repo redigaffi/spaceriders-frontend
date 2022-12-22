@@ -34,6 +34,7 @@
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app": "^3.0.0",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
+    "@quasar/quasar-app-extension-qmediaplayer": "^2.0.0-beta.6",
     "@quasar/quasar-app-extension-qpdfviewer": "^2.0.0-alpha.5",
     "@vue/devtools": "^5.3.4",
     "eslint": "^7.14.0",

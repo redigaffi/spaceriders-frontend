@@ -88,7 +88,7 @@
               : ''
           "
           position="bottom-right"
-          :offset="[24, 96]"
+          :offset="[24, 120]"
         >
           <q-btn
             :class="{ shake: buildingsInQueue.length }"
@@ -115,7 +115,7 @@
               : ''
           "
           position="bottom-right"
-          :offset="[24, 24]"
+          :offset="[24, 48]"
         >
           <q-btn
             :class="{ shake: anyUnreadMessage }"

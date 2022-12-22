@@ -1,12 +1,20 @@
 <template>
   <router-view />
+
+  <div v-if="!isLandingPage" class="fixed-bottom" style="z-index: 1">
+    <MusicPlayer />
+  </div>
 </template>
 <script setup>
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
 import { Face, Network } from "@haechi-labs/face-sdk";
+import MusicPlayer from "src/components/MusicPlayer.vue";
 
 const $store = useStore();
+const $route = useRoute();
 
 $store.commit("setTimeCount");
 
@@ -33,7 +41,21 @@ if (window.face === undefined) {
   });
 }
 
+const isLandingPage = computed(() => {
+  return $route.name === "landing";
+});
+
+const setBodyOffset = () => {
+  const bodyElement = document.querySelector("body");
+  if (!isLandingPage.value) {
+    bodyElement.classList.add("media-player-offset");
+  } else {
+    bodyElement.classList.remove("media-player-offset");
+  }
+};
+
 getChainData();
+setBodyOffset();
 </script>
 
 <style lang="scss">
