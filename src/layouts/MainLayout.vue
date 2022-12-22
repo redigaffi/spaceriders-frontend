@@ -149,156 +149,6 @@
             class="full-height"
             :animated="false"
           >
-            <q-tab-panel name="profile" class="q-pa-none">
-              <q-card flat class="column full-height justify-between">
-                <div>
-                  <q-card-section class="text-h6 text-weight-bold">
-                    <div class="row justify-between">
-                      <div>PROFILE</div>
-                      <div>
-                        <q-btn
-                          flat
-                          round
-                          size="sm"
-                          color="white"
-                          icon="close"
-                          @click="drawer = !drawer"
-                        />
-                      </div>
-                    </div>
-                  </q-card-section>
-
-                  <q-separator dark />
-                </div>
-
-                <q-scroll-area class="col full-height">
-                  <q-img src="~assets/img/cardpopup.webp" height="240px">
-                    <q-avatar
-                      color="secondary"
-                      class="absolute-center"
-                      size="240px"
-                      rounded
-                    >
-                      <object v-html="avatar" class="absolute-center" />
-                      <q-badge
-                        color="primary"
-                        class="absolute-top glossy justify-center no-border-radius q-py-sm"
-                      >
-                        Lvl {{ accountLevel }}
-                      </q-badge>
-
-                      <q-badge
-                        color="primary"
-                        class="absolute-bottom glossy justify-center no-border-radius q-py-sm"
-                      >
-                        {{ accountTitle }}
-                      </q-badge>
-                    </q-avatar>
-                  </q-img>
-
-                  <q-card-section
-                    class="column q-px-none full-height justify-between"
-                  >
-                    <q-list>
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label
-                            ><q-icon name="wallet" /> Address:</q-item-label
-                          >
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <q-item-label>{{ shortAddress }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label
-                            ><q-icon name="fas fa-user-astronaut" />
-                            Faction:</q-item-label
-                          >
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <q-item-label>Free Worlds</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label
-                            ><q-icon name="savings" /> Balance:</q-item-label
-                          >
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <Balance />
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label
-                            ><q-icon name="fas fa-solar-panel" />
-                            Dominion:</q-item-label
-                          >
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <q-item-label
-                            >{{ dominionPercentage }}% of the
-                            galaxy</q-item-label
-                          >
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label
-                            ><q-icon name="fas fa-certificate" />
-                            Medals:</q-item-label
-                          >
-                        </q-item-section>
-
-                        <q-item-section side>
-                          <q-item-label
-                            ><q-icon name="military_tech" />
-                            Pioneer</q-item-label
-                          >
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-card-section>
-                </q-scroll-area>
-
-                <div>
-                  <q-card-section>
-                    <q-btn
-                      class="full-width"
-                      color="red"
-                      icon-right="logout"
-                      label="Log Out"
-                      @click="logout()"
-                    />
-                  </q-card-section>
-
-                  <q-card-section class="q-pa-none">
-                    <q-tabs
-                      v-model="tabPanel"
-                      dense
-                      align="justify"
-                      narrow-indicator
-                    >
-                      <q-tab name="profile" label="Profile" />
-                      <q-tab name="queue" label="Queue" />
-                      <q-tab name="inbox" label="Inbox" />
-                    </q-tabs>
-                  </q-card-section>
-                </div>
-              </q-card>
-            </q-tab-panel>
-
             <q-tab-panel name="queue" class="q-pa-none">
               <q-card flat class="column full-height justify-between">
                 <div>
@@ -332,7 +182,6 @@
                     align="justify"
                     narrow-indicator
                   >
-                    <q-tab name="profile" label="Profile" />
                     <q-tab name="queue" label="Queue" />
                     <q-tab name="inbox" label="Inbox" />
                   </q-tabs>
@@ -421,7 +270,6 @@
                       align="justify"
                       narrow-indicator
                     >
-                      <q-tab name="profile" label="Profile" />
                       <q-tab name="queue" label="Queue" />
                       <q-tab name="inbox" label="Inbox" />
                     </q-tabs>
@@ -467,6 +315,8 @@
             <component :is="templateName" :body="body"></component>
           </q-card>
         </q-dialog>
+
+        <Profile />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -482,7 +332,7 @@ import AsteroidCollision from "../components/email_templates/AsteroidCollision.v
 import SpacePirates from "../components/email_templates/SpacePirates.vue";
 import Plain from "../components/email_templates/Plain.vue";
 import PlanetList from "../components/PlanetList.vue";
-import Balance from "../components/Balance.vue";
+import Profile from "../components/Profile.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import {
   ACTIVE_PLANET_CHANGED,
@@ -491,7 +341,6 @@ import {
 } from "../constants/Events";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-import jdenticon from "jdenticon/standalone";
 import { onMounted } from "@vue/runtime-core";
 
 const $store = useStore();
@@ -501,6 +350,10 @@ const $eventBus =
 
 onMounted(() => {
   updateAccountInfo();
+
+  $store.commit("setProfileModal", false);
+  $store.commit("setDrawerLeft", false);
+  $store.commit("setDrawerRight", false);
 });
 
 let totalMail = $store.getters.emails.length;
@@ -520,7 +373,7 @@ const accountTitle = computed(() => {
   else if (level <= 40) return "Space Conqueror";
   else if (level <= 45) return "Space Lord";
   else return "Space Rider";
-});
+}
 
 const tabPanel = computed({
   get: () => {
@@ -536,6 +389,9 @@ const drawer = computed({
     return $store.getters.drawerRight;
   },
   set: (value) => {
+    if (value) {
+      $store.commit("setDrawerLeft", false);
+    }
     $store.commit("setDrawerRight", value);
   },
 });
@@ -550,28 +406,6 @@ const changeTabPanel = (tab) => {
       drawer.value = !drawer.value;
     }
   }
-};
-
-const avatar = jdenticon.toSvg($store.getters.address, 200);
-
-const shortAddress = computed(() => {
-  const address = $store.getters.address;
-  return address
-    ? `${address.substring(0, 6)}...${address.substring(address.length - 6)}`
-    : "";
-});
-
-const dominionPercentage = computed(() => {
-  const planetsOwned = $store.getters.planets.length;
-
-  return (planetsOwned * 100) / 1000;
-});
-
-const logout = () => {
-  $store.commit("destroySession");
-  router.push({
-    name: "nouser",
-  });
 };
 
 const buildingsInQueue = computed(() => {
@@ -594,10 +428,6 @@ const emails = computed(() => {
 
 const openInbox = ref(false);
 const activeEmail = ref({});
-
-const accountLevel = computed(() => {
-  return $store.getters.accountInfo.level;
-});
 
 const templateName = computed(() => {
   if (!activeEmail.value.template) return;

@@ -4,6 +4,7 @@
     <q-page-container id="main">
       <q-page>
         <router-view />
+        <Profile />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -14,8 +15,10 @@ import { getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import Headerbar from "../components/HeaderBar.vue";
 import ApiRequest from "../service/http/ApiRequests";
+import { onMounted } from "@vue/runtime-core";
 import { UPDATED_ALL } from "../constants/Events";
 import { useQuasar } from "quasar";
+import Profile from "../components/Profile.vue";
 
 const $store = useStore();
 const $eventBus =
@@ -23,6 +26,12 @@ const $eventBus =
 
 // Main app features
 const $quasar = useQuasar();
+
+onMounted(() => {
+  $store.commit("setProfileModal", false);
+  $store.commit("setDrawerLeft", false);
+  $store.commit("setDrawerRight", false);
+});
 
 async function update(activePlanet) {
   ApiRequest.tokenPrice().then((tokenPrice) => {
