@@ -119,6 +119,14 @@
           @click="openWallet"
         />
         <q-btn
+          v-if="getProvider === 'facewallet'"
+          class="full-width"
+          color="info"
+          icon="fas fa-wallet"
+          label="Wallet Connect"
+          @click="openWalletConnect"
+        />
+        <q-btn
           class="full-width"
           color="red"
           icon="logout"
@@ -142,6 +150,10 @@ const router = useRouter();
 
 const openWallet = async () => {
   await window.face.wallet.home();
+};
+
+const openWalletConnect = async () => {
+  await window.face.wc.connectOpensea();
 };
 
 const getProvider = computed(() => {
