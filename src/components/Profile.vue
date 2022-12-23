@@ -122,7 +122,7 @@
           v-if="getProvider === 'facewallet'"
           class="full-width"
           color="info"
-          icon="fas fa-wallet"
+          icon="fas fa-wifi"
           label="Wallet Connect"
           @click="openWalletConnect"
         />
