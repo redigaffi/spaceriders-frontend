@@ -1,8 +1,10 @@
 <template>
+  <!--
   <q-card-actions align="center" class="q-py-none q-px-md">
     <q-btn icon="fas fa-plus" color="info" label="Add" class="col" />
     <q-btn icon="fas fa-times" color="negative" label="Leave" class="col" />
   </q-card-actions>
+  -->
 
   <q-tabs
     v-model="chatTab"
@@ -21,72 +23,45 @@
     <q-card-section
       class="column q-px-none q-py-xs full-height justify-between q-gutter-y-xs"
     >
-      <q-card bordered flat dark class="bg-info q-mx-md">
-        <q-card-section class="q-pa-xs">
-          <q-item dense>
-            <q-item-section avatar>
-              <q-item-label>
-                <q-avatar color="secondary" size="32px">
-                  <q-img v-html="jdenticon.toSvg($store.getters.address, 32)" />
-                </q-avatar>
-              </q-item-label>
-            </q-item-section>
+      <template v-if="chatsHistory.hasOwnProperty(chatTab)">
+        <q-card
+          v-for="(input, index) in chatsHistory[chatTab]"
+          :key="index"
+          bordered
+          flat
+          dark
+          class="q-mx-md"
+          :class="isMessageFromMe(input.sender) ? 'bg-info' : 'bg-primary'"
+        >
+          <q-card-section class="q-pa-xs">
+            <q-item dense>
+              <q-item-section avatar>
+                <q-item-label>
+                  <q-avatar color="secondary" size="32px">
+                    <q-img v-html="jdenticon.toSvg(input.sender, 32)" />
+                  </q-avatar>
+                </q-item-label>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>{{
-                shortAddress($store.getters.address)
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-card-section>
+              <q-item-section>
+                <q-item-label>{{
+                  input.sender_alias || shortAddress(input.sender)
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-card-section>
 
-        <q-separator inset />
+          <q-separator inset />
 
-        <q-card-section class="q-py-xs text-body2 text-justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mi
-          diam, finibus at pretium at, placerat a lorem. Nulla elementum purus
-          sit amet nulla egestas, quis faucibus sapien sagittis. Vivamus
-          imperdiet pellentesque bibendum. In ut posuere nisl. Praesent sed eros
-          id odio et.
-        </q-card-section>
-      </q-card>
+          <q-card-section class="q-py-xs text-body2 text-justify">
+            {{ input.message }}
+          </q-card-section>
+        </q-card>
+      </template>
 
-      <q-card bordered flat dark class="bg-primary q-mx-md">
-        <q-card-section class="q-pa-xs">
-          <q-item dense>
-            <q-item-section>
-              <q-item-label class="text-right">
-                {{ shortAddress("0x71C7656EC7ab88b098defB751B7401B5f6d8976F") }}
-              </q-item-label>
-            </q-item-section>
-
-            <q-item-section avatar>
-              <q-item-label>
-                <q-avatar color="secondary" size="32px">
-                  <q-img
-                    v-html="
-                      jdenticon.toSvg(
-                        '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-                        32
-                      )
-                    "
-                  />
-                </q-avatar>
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-card-section>
-
-        <q-separator inset />
-
-        <q-card-section class="q-py-xs text-body2">
-          Suspendisse magna augue, convallis et ipsum feugiat, egestas egestas
-          turpis. Praesent sed pulvinar nibh, et vestibulum diam. Pellentesque
-          habitant morbi tristique senectus et netus et malesuada fames ac
-          turpis egestas. Aliquam eleifend pulvinar nibh et pretium. Quisque
-          odio eros.
-        </q-card-section>
-      </q-card>
+      <card-section v-else class="q-pa-md text-center text-amber">
+        There are no messages on this channel, only silence...
+      </card-section>
 
       <q-card
         v-if="!isConnectionUp"
@@ -154,6 +129,7 @@
           flat
           icon="send"
           :disabled="!message.trim() || !isConnectionUp"
+          @click="sendMessage"
         />
       </template>
     </q-input>
@@ -169,10 +145,10 @@ import sanitizeHtml from "sanitize-html";
 const $store = useStore();
 const chatTab = ref("1.1");
 const message = ref("");
-const currentHistory = ref([]);
 const chatsHistory = ref({});
 const isConnectionUp = ref(false);
 const reservedFrequencies = ["1.0", "1.1", "1.2"];
+const chatSound = new Audio(require("../assets/sound/chat.aac"));
 
 let ws = false;
 
@@ -181,7 +157,6 @@ ws = new WebSocket(process.env.BASE_WS_PATH);
 const connect = () => {
   ws.onopen = function (event) {
     console.log("Connection to websockets established!");
-    // Keep connection open
     setInterval(() => {
       ws.send(
         JSON.stringify({
@@ -206,16 +181,20 @@ const connect = () => {
 };
 
 ws.onmessage = function (event) {
-  const data = JSON.parse(event.data);
+  const response = JSON.parse(event.data);
 
-  switch (data.response_type) {
+  switch (response.response_type) {
     case "ping":
       break;
     case "error":
       ws.close();
       break;
+    case "receive_full_chat":
+      populateChat(response.data);
+      break;
     default:
-      console.log(data);
+      populateChat([response.data]);
+      chatSound.play();
       break;
   }
 };
@@ -238,9 +217,21 @@ onBeforeUnmount(() => {
   ws.close();
 });
 
+function populateChat(messages) {
+  messages.forEach((msg) => {
+    if (msg) {
+      if (!chatsHistory.value.hasOwnProperty(msg.frequency)) {
+        chatsHistory.value[msg.frequency] = [];
+      }
+
+      chatsHistory.value[msg.frequency].push(msg);
+    }
+  });
+}
+
 const shortAddress = (address) => {
-  return `${address.substring(0, 6)}...${address.substring(
-    address.length - 6
+  return `${address.substring(0, 4)}...${address.substring(
+    address.length - 4
   )}`;
 };
 
@@ -248,10 +239,35 @@ const isMessageInputAvailable = computed(() => {
   return chatTab.value !== "1.0" && chatTab.value !== "1.2";
 });
 
+const isMessageFromMe = (sender) => {
+  return sender === $store.getters.address;
+};
+
 const sanitize = (string) => {
   return sanitizeHtml(string, {
     allowedTags: [],
     allowedAttributes: {},
   }).trim();
+};
+
+const sendMessage = () => {
+  if (isMessageInputAvailable.value) {
+    let data = {
+      use_case: "emit_frequency",
+      data: {
+        frequency: chatTab.value,
+        message: sanitize(message.value),
+        sender: $store.getters.address,
+        sender_alias: "",
+      },
+    };
+
+    data.data.timestamp = new Date().getTime();
+
+    ws.send(JSON.stringify(data));
+    populateChat([data.data]);
+  }
+
+  message.value = "";
 };
 </script>
