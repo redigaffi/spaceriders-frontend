@@ -14,23 +14,32 @@ import { ref } from "vue";
 import { QMediaPlayer } from "@quasar/quasar-ui-qmediaplayer";
 import "@quasar/quasar-ui-qmediaplayer/src/index.sass";
 
+const resourcePath = "https://spaceriders-audio.s3.eu-west-1.amazonaws.com";
+const playlist = [
+  "a_new_beginning",
+  "blind_shift",
+  "dark_chillout",
+  "dark_decay",
+  "dark_fallout",
+  "empy_space",
+  "exodus",
+  "great_mission",
+  "lost_signal",
+  "please_answer_me",
+  "space_emergency",
+  "terradorian",
+  "through_space",
+  "twists",
+];
 const musicPlayer = ref(null);
 let sourceIndex = ref(0);
 
-const sources = [
-  {
-    src: "https://opengameart.org/sites/default/files/through%20space.ogg",
-    type: "audio/ogg",
-  },
-  {
-    src: "https://opengameart.org/sites/default/files/Space%20Sprinkles_0.mp3",
-    type: "audio/mp3",
-  },
-  {
-    src: "https://opengameart.org/sites/default/files/terradorian%27s%20theme%20song.mp3",
-    type: "audio/mp3",
-  },
-];
+const sources = playlist.map((track) =>
+  Object({
+    src: `${resourcePath}/${track}.aac`,
+    type: "audio/aac",
+  })
+);
 
 let audio = ref(sources);
 
