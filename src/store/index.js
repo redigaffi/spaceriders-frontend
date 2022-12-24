@@ -407,6 +407,10 @@ const Store = createStore({
     appendBuildingQueue(state, payload) {
       state.buildingQueue.items.push(payload);
     },
+
+    updateUsername(state, payload) {
+      state.accountInfo.username = payload;
+    },
   },
 
   getters: {
@@ -519,6 +523,10 @@ const Store = createStore({
 
     musicVolume: (state) => {
       return state.settings.musicVolume;
+    },
+
+    username: (state) => {
+      return state.accountInfo.username;
     },
 
     jwt: (state) => {

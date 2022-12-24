@@ -258,7 +258,7 @@ const sendMessage = () => {
         frequency: chatTab.value,
         message: sanitize(message.value),
         sender: $store.getters.address,
-        sender_alias: "",
+        sender_alias: $store.getters.username,
       },
     };
 

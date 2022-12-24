@@ -48,6 +48,30 @@
       <q-card-section class="q-px-none justify-between">
         <q-list>
           <q-item>
+            <q-input
+              bottom-slots
+              v-model="username"
+              placeholder="Username"
+              counter
+              maxlength="14"
+              color="info"
+              :dense="dense"
+            >
+              <template v-slot:append>
+                <q-btn
+                  round
+                  dense
+                  flat
+                  icon="fas fa-check"
+                  @click="updateUsername"
+                />
+              </template>
+
+              <template v-slot:hint> Length </template>
+            </q-input>
+          </q-item>
+
+          <q-item>
             <q-item-section>
               <q-item-label><q-icon name="wallet" /> Address:</q-item-label>
             </q-item-section>
@@ -186,9 +210,21 @@ import { useStore } from "vuex";
 import jdenticon from "jdenticon/standalone";
 import Balance from "../components/Balance.vue";
 import { useRouter } from "vue-router";
+import ApiRequests from "src/service/http/ApiRequests";
 
 const $store = useStore();
 const router = useRouter();
+
+const getUsername = () => {
+  return $store.getters.username;
+};
+
+const updateUsername = () => {
+  ApiRequests.accountUsername($store.getters.address, username.value);
+  $store.commit("updateUsername", username.value);
+};
+
+const username = ref(getUsername());
 
 const showMusicPlayer = computed({
   get: () => {
@@ -245,7 +281,7 @@ const profileModal = computed({
 const shortAddress = computed(() => {
   const address = $store.getters.address;
   return address
-    ? `${address.substring(0, 6)}...${address.substring(address.length - 6)}`
+    ? `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
     : "";
 });
 
