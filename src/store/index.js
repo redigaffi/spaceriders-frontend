@@ -32,6 +32,12 @@ const Store = createStore({
       profileModal: false,
       dateNow: 0,
       accountInfo: {},
+      settings: {
+        showMusicPlayer: true,
+        autoplayMusic: true,
+        audibleNotifications: true,
+        musicVolume: 100,
+      },
     };
   },
   mutations: {
@@ -71,6 +77,22 @@ const Store = createStore({
 
     setProfileModal(state, payload) {
       state.profileModal = payload;
+    },
+
+    setShowMusicPlayer(state, payload) {
+      state.settings.showMusicPlayer = payload;
+    },
+
+    setAutoplayMusic(state, payload) {
+      state.settings.autoplayMusic = payload;
+    },
+
+    setAudibleNotifications(state, payload) {
+      state.settings.audibleNotifications = payload;
+    },
+
+    setMusicVolume(state, payload) {
+      state.settings.musicVolume = payload;
     },
 
     setAccountInfo(state, info) {
@@ -481,6 +503,22 @@ const Store = createStore({
 
     accountInfo: (state) => {
       return state.accountInfo;
+    },
+
+    showMusicPlayer: (state) => {
+      return state.settings.showMusicPlayer;
+    },
+
+    autoplayMusic: (state) => {
+      return state.settings.autoplayMusic;
+    },
+
+    audibleNotifications: (state) => {
+      return state.settings.audibleNotifications;
+    },
+
+    musicVolume: (state) => {
+      return state.settings.musicVolume;
     },
 
     jwt: (state) => {
