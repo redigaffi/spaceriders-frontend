@@ -445,7 +445,7 @@ const body = computed(() => {
 });
 
 watchEffect(() => {
-  if (emails.value.length > totalMail) {
+  if (emails.value.length > totalMail && $store.getters.audibleNotifications) {
     mailSound.play();
   }
 

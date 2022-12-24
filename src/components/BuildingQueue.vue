@@ -199,7 +199,10 @@ function refreshAll() {
 let inQueueBefore = 0;
 
 watchEffect(() => {
-  if (buildingsInQueue.value.length < inQueueBefore) {
+  if (
+    buildingsInQueue.value.length < inQueueBefore &&
+    $store.getters.audibleNotifications
+  ) {
     completionSound.play();
   }
 
