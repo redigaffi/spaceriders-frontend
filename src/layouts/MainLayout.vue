@@ -356,7 +356,7 @@ onMounted(() => {
 });
 
 let totalMail = $store.getters.emails.length;
-const mailSound = new Audio(require(`../assets/sound/notification.wav`));
+const mailSound = new Audio(require(`../assets/sound/inbox.aac`));
 
 const tabPanel = computed({
   get: () => {
