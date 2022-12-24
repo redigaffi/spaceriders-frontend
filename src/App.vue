@@ -10,8 +10,8 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import ApiRequest from "./service/http/ApiRequests";
 import { useStore } from "vuex";
 import { Face, Network } from "@haechi-labs/face-sdk";
@@ -46,7 +46,9 @@ if (window.face === undefined) {
 }
 
 const isMusicPage = computed(() => {
-  return $route.name !== "landing" && $route.path !== "/nouser";
+  return !$store.getters.showMusicPlayer
+    ? false
+    : $route.name !== "landing" && $route.path !== "/nouser";
 });
 
 getChainData();

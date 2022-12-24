@@ -121,7 +121,9 @@ const $notification =
 
 let refreshTimerId = ref(-1);
 let queueTimeoutIds = reactive({});
-const completionSound = new Audio(require(`../assets/sound/complete_task.mp3`));
+const completionSound = new Audio(
+  require(`../assets/sound/building_complete.aac`)
+);
 
 function calculateRelativeTime(finishTimestamp) {
   const now = new Date();
@@ -197,7 +199,10 @@ function refreshAll() {
 let inQueueBefore = 0;
 
 watchEffect(() => {
-  if (buildingsInQueue.value.length < inQueueBefore) {
+  if (
+    buildingsInQueue.value.length < inQueueBefore &&
+    $store.getters.audibleNotifications
+  ) {
     completionSound.play();
   }
 
