@@ -107,6 +107,48 @@
             </q-item-section>
           </q-item>
         </q-list>
+
+        <q-expansion-item
+          class="shadow-1 overflow-hidden q-mx-md"
+          style="border-radius: 5px"
+          icon="fas fa-sliders-h"
+          label="Settings"
+          header-class="bg-primary text-white"
+          expand-icon-class="text-white"
+        >
+          <q-list>
+            <q-item v-ripple>
+              <q-item-section avatar>
+                <q-checkbox v-model="audibleNotifications" color="info" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Audible notifications</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item v-ripple>
+              <q-item-section avatar>
+                <q-checkbox v-model="showMusicPlayer" color="info" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Music player</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item v-ripple>
+              <q-item-section avatar>
+                <q-checkbox
+                  v-model="autoplayMusic"
+                  color="info"
+                  :disable="!showMusicPlayer"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Autoplay music</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
       </q-card-section>
 
       <q-card-section class="q-gutter-y-sm">
@@ -147,6 +189,37 @@ import { useRouter } from "vue-router";
 
 const $store = useStore();
 const router = useRouter();
+
+const showMusicPlayer = computed({
+  get: () => {
+    return $store.getters.showMusicPlayer;
+  },
+  set: (status) => {
+    $store.commit("setShowMusicPlayer", status);
+
+    if (!status) {
+      $store.commit("setAutoplayMusic", status);
+    }
+  },
+});
+
+const autoplayMusic = computed({
+  get: () => {
+    return $store.getters.autoplayMusic;
+  },
+  set: (status) => {
+    $store.commit("setAutoplayMusic", status);
+  },
+});
+
+const audibleNotifications = computed({
+  get: () => {
+    return $store.getters.audibleNotifications;
+  },
+  set: (status) => {
+    $store.commit("setAudibleNotifications", status);
+  },
+});
 
 const openWallet = async () => {
   await window.face.wallet.home();

@@ -3,16 +3,22 @@
     class="bg-dark container"
     ref="musicPlayer"
     type="audio"
+    :volume="volumeSetting"
+    :autoplay="autoplayMusic"
     :sources="audio"
+    @volume="(volume) => (volumeSetting = volume)"
     @ended="onEnded"
     dense
   />
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import { QMediaPlayer } from "@quasar/quasar-ui-qmediaplayer";
 import "@quasar/quasar-ui-qmediaplayer/src/index.sass";
+
+const $store = useStore();
 
 const resourcePath = "https://spaceriders-audio.s3.eu-west-1.amazonaws.com";
 const playlist = [
@@ -34,6 +40,10 @@ const playlist = [
 const musicPlayer = ref(null);
 let sourceIndex = ref(0);
 
+const autoplayMusic = computed(() => {
+  return $store.getters.autoplayMusic;
+});
+
 const sources = playlist
   .map((track) =>
     Object({
@@ -45,6 +55,15 @@ const sources = playlist
 
 let audio = ref(sources);
 
+const volumeSetting = computed({
+  get: () => {
+    return $store.getters.musicVolume;
+  },
+  set: (volume) => {
+    $store.commit("setMusicVolume", volume);
+  },
+});
+
 const onEnded = () => {
   if (sourceIndex.value === sources.length - 1) {
     sourceIndex.value = 0;
@@ -53,9 +72,5 @@ const onEnded = () => {
   }
 
   audio.value = sources.slice(sourceIndex.value);
-
-  setTimeout(() => {
-    musicPlayer.value.play();
-  }, 2500);
 };
 </script>
