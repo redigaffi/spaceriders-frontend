@@ -377,6 +377,36 @@ export default defineComponent({
 
     const { getPaletteColor } = colors;
 
+    const resourcesBuildingSound = new Audio(
+      require("../../assets/sound/building_resource_start.aac")
+    );
+    const installationBuildingSound = new Audio(
+      require("../../assets/sound/building_installation_start.aac")
+    );
+    const defenseBuildingSound = new Audio(
+      require("../../assets/sound/building_military_start.aac")
+    );
+
+    const playSound = (buildingType) => {
+      if ($store.getters.audibleNotifications) {
+        switch (buildingType) {
+          case "resources":
+            resourcesBuildingSound.play();
+            break;
+
+          case "installations":
+            installationBuildingSound.play();
+            break;
+          case "research":
+            installationBuildingSound.play();
+            break;
+          case "defense":
+            defenseBuildingSound.play();
+            break;
+        }
+      }
+    };
+
     const dataSource = (type) => {
       let data = {};
 
@@ -584,6 +614,7 @@ export default defineComponent({
         }
 
         $q.notify($notification("success", notificationMessage));
+        playSound(data.type);
       } catch (e) {
         $q.notify($notification("failed", e));
       }
@@ -739,6 +770,7 @@ export default defineComponent({
         $store.commit("appendBuildingQueue", re.data.queue_item_info);
 
         $q.notify($notification("success", "Repairing in progress..."));
+        playSound(re.data.type);
       } catch (e) {
         $q.notify($notification("failed", e));
       }
