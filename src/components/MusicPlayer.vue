@@ -34,12 +34,14 @@ const playlist = [
 const musicPlayer = ref(null);
 let sourceIndex = ref(0);
 
-const sources = playlist.map((track) =>
-  Object({
-    src: `${resourcePath}/${track}.aac`,
-    type: "audio/aac",
-  })
-);
+const sources = playlist
+  .map((track) =>
+    Object({
+      src: `${resourcePath}/${track}.aac`,
+      type: "audio/aac",
+    })
+  )
+  .sort(() => Math.random() - 0.5);
 
 let audio = ref(sources);
 
