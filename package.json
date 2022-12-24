@@ -24,6 +24,7 @@
     "near-api-js": "^1.1.0",
     "particles.vue3": "^1.18.2",
     "quasar": "^2.0.0",
+    "sanitize-html": "^2.8.1",
     "thousands-counter": "^2.1.0",
     "uuid": "^8.3.2",
     "vue-gtag": "^2.0.1",
