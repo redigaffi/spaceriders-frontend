@@ -359,6 +359,17 @@ export default class ApiRequests {
     return (await axios.get(path)).data.data;
   }
 
+  static async accountUsername(wallet, username) {
+    const path = `${process.env.BASE_API_PATH}/account/username`;
+
+    const body = {
+      wallet,
+      username,
+    };
+
+    return await axios.post(path, body);
+  }
+
   static async getAccountInfo(wallet) {
     const path = `${process.env.BASE_API_PATH}/account/info/${wallet}`;
     return await axios.get(path);
