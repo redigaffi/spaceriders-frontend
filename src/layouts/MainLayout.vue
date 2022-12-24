@@ -88,7 +88,7 @@
               : ''
           "
           position="bottom-right"
-          :offset="[24, 120]"
+          :offset="[24, 192]"
         >
           <q-btn
             :class="{ shake: buildingsInQueue.length }"
@@ -97,6 +97,33 @@
             icon="handyman"
             color="info"
             @click="changeTabPanel('queue')"
+          >
+          </q-btn>
+
+          <q-badge
+            class="animation absolute-top-right"
+            v-if="buildingsInQueue.length"
+            color="negative"
+            rounded
+          />
+        </q-page-sticky>
+
+        <q-page-sticky
+          :style="
+            !$store.getters.drawerLeft && !$store.getters.drawerRight
+              ? 'z-index: 1'
+              : ''
+          "
+          position="bottom-right"
+          :offset="[24, 120]"
+        >
+          <q-btn
+            :class="{ shake: buildingsInQueue.length }"
+            size="sm"
+            fab
+            icon="fas fa-broadcast-tower"
+            color="info"
+            @click="changeTabPanel('chat')"
           >
           </q-btn>
 
@@ -183,9 +210,51 @@
                     narrow-indicator
                   >
                     <q-tab name="queue" label="Queue" />
+                    <q-tab name="chat" label="Chat" />
                     <q-tab name="inbox" label="Inbox" />
                   </q-tabs>
                 </q-card-section>
+              </q-card>
+            </q-tab-panel>
+
+            <q-tab-panel name="chat" class="q-pa-none">
+              <q-card flat class="column full-height justify-between">
+                <div>
+                  <q-card-section class="text-h6 text-weight-bold">
+                    <div class="row justify-between">
+                      <div>CHAT</div>
+                      <div>
+                        <q-btn
+                          flat
+                          round
+                          size="sm"
+                          color="white"
+                          icon="close"
+                          @click="drawer = !drawer"
+                        />
+                      </div>
+                    </div>
+                  </q-card-section>
+
+                  <q-separator dark />
+                </div>
+
+                <Chat />
+
+                <div>
+                  <q-card-section class="q-pa-none">
+                    <q-tabs
+                      v-model="tabPanel"
+                      dense
+                      align="justify"
+                      narrow-indicator
+                    >
+                      <q-tab name="queue" label="Queue" />
+                      <q-tab name="chat" label="Chat" />
+                      <q-tab name="inbox" label="Inbox" />
+                    </q-tabs>
+                  </q-card-section>
+                </div>
               </q-card>
             </q-tab-panel>
 
@@ -271,6 +340,7 @@
                       narrow-indicator
                     >
                       <q-tab name="queue" label="Queue" />
+                      <q-tab name="chat" label="Chat" />
                       <q-tab name="inbox" label="Inbox" />
                     </q-tabs>
                   </q-card-section>
@@ -332,6 +402,7 @@ import SpacePirates from "../components/email_templates/SpacePirates.vue";
 import DailyLoginReward from "../components/email_templates/DailyLoginReward.vue";
 import Plain from "../components/email_templates/Plain.vue";
 import Profile from "../components/Profile.vue";
+import Chat from "../components/Chat.vue";
 import ApiRequest from "../service/http/ApiRequests";
 import {
   ACTIVE_PLANET_CHANGED,
