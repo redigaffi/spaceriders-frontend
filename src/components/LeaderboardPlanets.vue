@@ -20,7 +20,9 @@
           "
         >
           <q-card-section class="q-pa-none" horizontal>
-            <q-img :src="props.row.image_url_bg" width="96px" height="96px" />
+            <div>
+              <q-img :src="props.row.image_url_bg" width="96px" height="96px" />
+            </div>
 
             <q-separator vertical />
 
