@@ -19,7 +19,7 @@
     <q-tab name="1.2" label="News" />
   </q-tabs>
 
-  <q-scroll-area class="col full-height">
+  <q-scroll-area ref="chatScrollArea" class="col full-height">
     <q-card-section
       class="column q-px-none q-py-xs full-height justify-between q-gutter-y-xs"
     >
@@ -143,6 +143,7 @@ import jdenticon from "jdenticon/standalone";
 import sanitizeHtml from "sanitize-html";
 
 const $store = useStore();
+const chatScrollArea = ref(null);
 const chatTab = ref("1.1");
 const message = ref("");
 const chatsHistory = ref({});
@@ -152,10 +153,12 @@ const chatSound = new Audio(require("../assets/sound/chat.aac"));
 
 let ws = false;
 
-ws = new WebSocket(process.env.BASE_WS_PATH);
-
 const connect = () => {
+  ws = new WebSocket(process.env.BASE_WS_PATH);
+
   ws.onopen = function (event) {
+    isConnectionUp.value = true;
+
     console.log("Connection to websockets established!");
     setInterval(() => {
       ws.send(
@@ -166,56 +169,51 @@ const connect = () => {
     }, 1000);
 
     reservedFrequencies.forEach((freq) => {
-      ws.send(
-        JSON.stringify({
-          use_case: "receive_full_chat",
-          data: {
-            frequency: freq,
-          },
-        })
-      );
+      if (!chatsHistory.value.hasOwnProperty(freq)) {
+        ws.send(
+          JSON.stringify({
+            use_case: "receive_full_chat",
+            data: {
+              frequency: freq,
+            },
+          })
+        );
+      }
     });
-
-    isConnectionUp.value = true;
   };
+
+  ws.onclose = (e) => {
+    console.log("WS closed...");
+    setTimeout(function () {
+      if (ws.readyState == 2 || ws.readyState == 3) {
+        connect();
+      }
+    }, 1000);
+  };
+
+  ws.onmessage = function (event) {
+    const response = JSON.parse(event.data);
+
+    switch (response.response_type) {
+      case "ping":
+        break;
+      case "error":
+        break;
+      case "receive_full_chat":
+        populateChat(response.data);
+        break;
+      default:
+        populateChat([response]);
+        chatSound.play();
+        break;
+    }
+  };
+
+  onBeforeUnmount(() => {
+    console.log("Closing websocket...");
+    ws.close();
+  });
 };
-
-ws.onmessage = function (event) {
-  const response = JSON.parse(event.data);
-
-  switch (response.response_type) {
-    case "ping":
-      break;
-    case "error":
-      ws.close();
-      break;
-    case "receive_full_chat":
-      populateChat(response.data);
-      break;
-    default:
-      populateChat([response.data]);
-      chatSound.play();
-      break;
-  }
-};
-
-ws.onerror = function (error) {
-  console.log(error);
-};
-
-ws.onclose = (e) => {
-  console.log("WS closed...");
-  isConnectionUp.value = false;
-};
-
-onMounted(() => {
-  connect();
-});
-
-onBeforeUnmount(() => {
-  console.log("Closing websocket...");
-  ws.close();
-});
 
 function populateChat(messages) {
   messages.forEach((msg) => {
@@ -225,6 +223,7 @@ function populateChat(messages) {
       }
 
       chatsHistory.value[msg.frequency].push(msg);
+      chatScrollArea.value.setScrollPosition("vertical", 1210, 300);
     }
   });
 }
@@ -262,12 +261,15 @@ const sendMessage = () => {
       },
     };
 
-    data.data.timestamp = new Date().getTime();
-
     ws.send(JSON.stringify(data));
+
     populateChat([data.data]);
   }
 
   message.value = "";
 };
+
+onMounted(() => {
+  connect();
+});
 </script>
