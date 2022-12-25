@@ -118,7 +118,7 @@
           :offset="[24, 120]"
         >
           <q-btn
-            :class="{ shake: buildingsInQueue.length }"
+            :class="{ shake: false }"
             size="sm"
             fab
             icon="fas fa-broadcast-tower"
@@ -129,7 +129,7 @@
 
           <q-badge
             class="animation absolute-top-right"
-            v-if="buildingsInQueue.length"
+            v-if="false"
             color="negative"
             rounded
           />
