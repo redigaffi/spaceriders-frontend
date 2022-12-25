@@ -16,185 +16,183 @@
     </q-img>
 
     <q-card-section class="q-px-none">
-      <q-scroll-area style="height: 50vh">
-        <div class="row q-col-gutter-sm">
-          <template v-for="(row, index) in rows" :key="index">
-            <div
-              class="col-12 col-md-6"
-              :class="{
-                'order-first': row.active,
-                'order-last': !row.planet.is_favourite && !row.active,
-              }"
+      <div class="row q-col-gutter-sm">
+        <template v-for="(row, index) in rows" :key="index">
+          <div
+            class="col-12 col-md-6"
+            :class="{
+              'order-first': row.active,
+              'order-last': !row.planet.is_favourite && !row.active,
+            }"
+          >
+            <q-card
+              dark
+              bordered
+              flat
+              :style="
+                row.active
+                  ? `border: 1px solid ${getPaletteColor('info')}`
+                  : row.planet.is_favourite
+                  ? `border: 1px solid ${getPaletteColor('amber')}`
+                  : ''
+              "
             >
-              <q-card
-                dark
-                bordered
-                flat
-                :style="
-                  row.active
-                    ? `border: 1px solid ${getPaletteColor('info')}`
-                    : row.planet.is_favourite
-                    ? `border: 1px solid ${getPaletteColor('amber')}`
-                    : ''
-                "
-              >
-                <q-card-section horizontal>
-                  <q-img
-                    class="col-2"
-                    :src="row.image_url"
-                    style="
-                      width: 130px;
-                      height: 192px;
-                      object-fit: cover;
-                      object-position: 50% 0%;
-                    "
-                    :style="{
-                      background: `linear-gradient(to top, ${getPaletteColor(
-                        row.color
-                      )} 20% , ${getCssVar('primary') + 'ff'} 80%)`,
-                    }"
+              <q-card-section horizontal>
+                <q-img
+                  class="col-2"
+                  :src="row.image_url"
+                  style="
+                    width: 130px;
+                    height: 192px;
+                    object-fit: cover;
+                    object-position: 50% 0%;
+                  "
+                  :style="{
+                    background: `linear-gradient(to top, ${getPaletteColor(
+                      row.color
+                    )} 20% , ${getCssVar('primary') + 'ff'} 80%)`,
+                  }"
+                >
+                  <q-badge
+                    class="text-caption absolute-top justify-center no-border-radius glossy glass-element"
+                    style="padding: 5px 0"
+                    >lvl {{ row.planet.level }}</q-badge
                   >
-                    <q-badge
-                      class="text-caption absolute-top justify-center no-border-radius glossy glass-element"
-                      style="padding: 5px 0"
-                      >lvl {{ row.planet.level }}</q-badge
-                    >
 
-                    <div
-                      class="glossy glass-element absolute-bottom text-center no-border-radius ellipsis text-caption"
-                      style="padding: 5px 0"
-                    >
-                      {{ row.name }}
-                    </div>
-                  </q-img>
+                  <div
+                    class="glossy glass-element absolute-bottom text-center no-border-radius ellipsis text-caption"
+                    style="padding: 5px 0"
+                  >
+                    {{ row.name }}
+                  </div>
+                </q-img>
 
-                  <q-separator vertical />
+                <q-separator vertical />
 
-                  <q-card-section class="col text-body2 q-pa-none">
-                    <q-list dense>
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label>Rarity:</q-item-label>
-                        </q-item-section>
+                <q-card-section class="col text-body2 q-pa-none">
+                  <q-list dense>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Rarity:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section side>
-                          <q-item-label :class="'text-' + row.color">{{
-                            row.rarity
-                          }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+                      <q-item-section side>
+                        <q-item-label :class="'text-' + row.color">{{
+                          row.rarity
+                        }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label>Type:</q-item-label>
-                        </q-item-section>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Type:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section side>
-                          <q-item-label>{{ row.type }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+                      <q-item-section side>
+                        <q-item-label>{{ row.type }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label>Position:</q-item-label>
-                        </q-item-section>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Position:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section side>
-                          <q-item-label>{{ row.position }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+                      <q-item-section side>
+                        <q-item-label>{{ row.position }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                      <q-item v-if="row.planet.building_queue !== null">
-                        <q-item-section>
-                          <q-item-label>Items in queue:</q-item-label>
-                        </q-item-section>
+                    <q-item v-if="row.planet.building_queue !== null">
+                      <q-item-section>
+                        <q-item-label>Items in queue:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section side>
-                          <q-item-label>{{
-                            row.planet.building_queue.items.length
-                          }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+                      <q-item-section side>
+                        <q-item-label>{{
+                          row.planet.building_queue.items.length
+                        }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label>Slots used:</q-item-label>
-                        </q-item-section>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Slots used:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section>
-                          <q-linear-progress
-                            stripe
-                            size="16px"
-                            color="negative"
-                            :value="
-                              (100 * row.planet.slots_used) /
-                              row.planet.slots /
-                              100
-                            "
+                      <q-item-section>
+                        <q-linear-progress
+                          stripe
+                          size="16px"
+                          color="negative"
+                          :value="
+                            (100 * row.planet.slots_used) /
+                            row.planet.slots /
+                            100
+                          "
+                        >
+                          <span
+                            class="absolute-full flex flex-center text-white"
+                            >{{ row.planet.slots_used }}/{{
+                              row.planet.slots
+                            }}</span
                           >
-                            <span
-                              class="absolute-full flex flex-center text-white"
-                              >{{ row.planet.slots_used }}/{{
-                                row.planet.slots
-                              }}</span
-                            >
-                          </q-linear-progress>
-                        </q-item-section>
-                      </q-item>
+                        </q-linear-progress>
+                      </q-item-section>
+                    </q-item>
 
-                      <q-item>
-                        <q-item-section>
-                          <q-item-label>XP:</q-item-label>
-                        </q-item-section>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>XP:</q-item-label>
+                      </q-item-section>
 
-                        <q-item-section>
-                          <q-linear-progress
-                            stripe
-                            size="16px"
-                            :value="
-                              (100 * row.planet.experience) /
-                              row.planet.experience_needed /
-                              100
-                            "
-                            color="info"
+                      <q-item-section>
+                        <q-linear-progress
+                          stripe
+                          size="16px"
+                          :value="
+                            (100 * row.planet.experience) /
+                            row.planet.experience_needed /
+                            100
+                          "
+                          color="info"
+                        >
+                          <span
+                            class="absolute-full flex flex-center text-white"
+                            >{{ row.planet.experience }}/{{
+                              row.planet.experience_needed
+                            }}</span
                           >
-                            <span
-                              class="absolute-full flex flex-center text-white"
-                              >{{ row.planet.experience }}/{{
-                                row.planet.experience_needed
-                              }}</span
-                            >
-                          </q-linear-progress>
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-card-section>
+                        </q-linear-progress>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-card-section>
+              </q-card-section>
 
-                <q-separator />
+              <q-separator />
 
-                <q-card-actions align="center">
-                  <q-btn
-                    :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
-                    color="info"
-                    :label="row.active ? 'Active' : 'Select'"
-                    :disabled="row.active"
-                    @click="changeActivatePlanet(row.planet)"
-                  />
-                  <q-btn
-                    :outline="!row.planet.is_favourite"
-                    :icon="
-                      row.planet.is_favourite ? 'fas fa-star' : 'far fa-star'
-                    "
-                    color="amber"
-                    @click="planetMark(row)"
-                  />
-                </q-card-actions>
-              </q-card>
-            </div>
-          </template>
-        </div>
-      </q-scroll-area>
+              <q-card-actions align="center">
+                <q-btn
+                  :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
+                  color="info"
+                  :label="row.active ? 'Active' : 'Select'"
+                  :disabled="row.active"
+                  @click="changeActivatePlanet(row.planet)"
+                />
+                <q-btn
+                  :outline="!row.planet.is_favourite"
+                  :icon="
+                    row.planet.is_favourite ? 'fas fa-star' : 'far fa-star'
+                  "
+                  color="amber"
+                  @click="planetMark(row)"
+                />
+              </q-card-actions>
+            </q-card>
+          </div>
+        </template>
+      </div>
     </q-card-section>
   </q-card>
 </template>

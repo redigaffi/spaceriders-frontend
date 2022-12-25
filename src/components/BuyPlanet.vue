@@ -77,7 +77,29 @@
           style="height: 200px; width: 100%"
         />
 
-        <q-card-section class="q-pb-xs">
+        <q-card-section
+          v-if="$store.getters.planets.length >= 6"
+          class="q-pb-xs"
+        >
+          <q-item-section
+            style="border-radius: 5px"
+            :style="{
+              color: getCssVar('negative'),
+              border: `1px solid ${getCssVar('negative')}`,
+              'box-shadow': `0 0 5px ${getCssVar('negative')}`,
+            }"
+            class="q-pa-xs"
+          >
+            <p
+              class="q-ma-none text-body2 text-center"
+              :style="{ color: getCssVar('negative') }"
+            >
+              You already own too many planets.
+            </p>
+          </q-item-section>
+        </q-card-section>
+
+        <q-card-section v-else class="q-pb-xs">
           <q-item-section
             style="border-radius: 5px"
             :style="{
@@ -103,7 +125,10 @@
           </q-item-section>
         </q-card-section>
 
-        <q-card-section class="q-gutter-sm q-py-sm">
+        <q-card-section
+          v-if="$store.getters.planets.length < 6"
+          class="q-gutter-sm q-py-sm"
+        >
           <q-input
             label-color="white"
             v-model="planetCostDisplay"
@@ -150,7 +175,11 @@
           />
         </q-card-section>
 
-        <q-card-actions align="center" class="q-px-md">
+        <q-card-actions
+          v-if="$store.getters.planets.length < 6"
+          align="center"
+          class="q-px-md"
+        >
           <!-- <q-btn
             class="full-width"
             style="background: #18121e"
