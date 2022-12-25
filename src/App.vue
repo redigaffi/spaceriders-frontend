@@ -28,6 +28,12 @@ if (!$store.getters.isReleaseTime) {
   }, 1000);
 }
 
+if (true) {
+  setInterval(() => {
+    $store.commit("increaseTimeCount");
+  }, 1000);
+}
+
 async function getChainData() {
   const data = await ApiRequest.getChainInfo();
   $store.commit("setChainInfo", { chainInfo: data });
