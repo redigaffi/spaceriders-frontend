@@ -60,15 +60,7 @@
       </template>
 
       <card-section v-else class="q-pa-md text-center text-amber">
-        <p>There are no messages on this channel, only noise...</p>
-        <p>Time left to reestablish communications:</p>
-
-        <q-btn
-          icon="fas fa-tools"
-          class="button main__button3 popup__open"
-          size="md"
-          :label="`${d}d ${h}h ${m}m ${s}s`"
-        />
+        <p>There are no messages on this channel, only silence...</p>
       </card-section>
 
       <!--
@@ -225,40 +217,6 @@ const connect = () => {
   });
 };
 
-const d = ref(0);
-const h = ref(0);
-const m = ref(0);
-const s = ref(0);
-
-const countDown = () => {
-  const dayInMiliseconds = 86400000;
-  const hourInMiliseconds = 3600000;
-  const fixTime = Date.parse("27 Dec 2022 19:00:00 UTC");
-
-  let timeLeft = fixTime - $store.getters.dateNow;
-
-  if (timeLeft - dayInMiliseconds > 0) {
-    const days = Math.trunc(timeLeft / dayInMiliseconds);
-    d.value = days.toString().padStart(2, "0");
-    timeLeft -= dayInMiliseconds * d.value;
-  }
-
-  if (timeLeft - hourInMiliseconds > 0) {
-    const hours = Math.trunc(timeLeft / hourInMiliseconds);
-    h.value = hours.toString().padStart(2, "0");
-    timeLeft -= hourInMiliseconds * h.value;
-  }
-
-  if (timeLeft - 60000 > 0) {
-    const minutes = Math.trunc(timeLeft / 60000);
-    m.value = minutes.toString().padStart(2, "0");
-    timeLeft -= 60000 * m.value;
-  }
-
-  const seconds = Math.trunc(timeLeft / 1000);
-  s.value = seconds.toString().padStart(2, "0");
-};
-
 function populateChat(messages) {
   messages.forEach((msg) => {
     if (msg) {
@@ -314,9 +272,6 @@ const sendMessage = () => {
 };
 
 onMounted(() => {
-  //connect();
-  setInterval(() => {
-    countDown();
-  }, 1000);
+  connect();
 });
 </script>
