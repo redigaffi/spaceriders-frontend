@@ -101,6 +101,7 @@
 
         <q-card-section v-else class="q-pb-xs">
           <q-item-section
+            v-if="isTransactionApproved"
             style="border-radius: 5px"
             :style="{
               color: balanceColor,
@@ -196,6 +197,7 @@
             :amount="planetCost.token_cost"
             :tokenAddress="ContractAddress.getSpaceRidersAddress()"
             :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
+            @approveDisabled="transactionApproved"
           />
 
           <q-btn
@@ -261,6 +263,8 @@ const planetCost = ref({});
 const planetCostDisplay = ref();
 const bnbFeeDisplay = ref();
 
+const isTransactionApproved = ref(false);
+
 const visible = ref(true);
 watchEffect(async () => {
   if (buyPlanetPopup.value) {
@@ -274,6 +278,10 @@ watchEffect(async () => {
     visible.value = false;
   }
 });
+
+const transactionApproved = () => {
+  isTransactionApproved.value = true;
+};
 
 function openBuyPlanetPopup() {
   getBalance();
@@ -294,7 +302,10 @@ const tokenBalance = computed(() => {
 });
 
 const canBuyPlanets = computed(() => {
-  return tokenAmount.value > planetCost.value.token_cost;
+  return (
+    tokenAmount.value > planetCost.value.token_cost &&
+    isTransactionApproved.value
+  );
 });
 
 const balanceColor = computed(() => {
