@@ -180,6 +180,7 @@
               ? ContractAddress.getBusdAddress()
               : ContractAddress.getSpaceRidersAddress()
           "
+          @approveDisabled="transactionApproved"
         />
 
         <q-btn
@@ -194,6 +195,7 @@
             color: #fff;
           "
           v-on:click.prevent="buySpr"
+          :disabled="!canSwap"
         >
         </q-btn>
       </q-card-actions>
@@ -240,6 +242,7 @@ const openPopup = ref(false);
 const $store = useStore();
 
 const price = ref(0.0);
+const canSwap = ref(false);
 
 const reloadPriceData = async () => {
   visible.value = true;
@@ -248,6 +251,10 @@ const reloadPriceData = async () => {
 };
 
 $eventBus.on(SWAP_COMPLETED, reloadPriceData);
+
+const transactionApproved = () => {
+  canSwap.value = true;
+};
 
 watch(async () => {
   if (openPopup.value) {
