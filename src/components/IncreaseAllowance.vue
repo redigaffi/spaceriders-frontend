@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="!approveDisabled"
     :class="{
       'approve-btn flex items-center q-mb-md justify-center q-py-md':
         customWidth,
@@ -19,6 +18,7 @@
         color: #fff;
       "
       @click="approve"
+      :disabled="approveDisabled"
     >
     </q-btn>
   </div>
@@ -26,7 +26,14 @@
 <script setup>
 import ERC20 from "../service/contract/ERC20";
 import { useStore } from "vuex";
-import { toRefs, getCurrentInstance, ref, onMounted, watch } from "vue";
+import {
+  toRefs,
+  getCurrentInstance,
+  ref,
+  onMounted,
+  watch,
+  defineEmits,
+} from "vue";
 import { ethers } from "ethers";
 import { useQuasar } from "quasar";
 
@@ -42,10 +49,12 @@ const props = defineProps({
   customWidth: Boolean,
 });
 
+const emit = defineEmits(["approveDisabled"]);
+
 const { tokenAddress, address, amount } = toRefs(props);
 
 const useCheckAllowance = async (owner, spender, amount, tokenAddr) => {
-  const amountInWei = ethers.utils.parseEther(amount).toString();
+  const amountInWei = Number(ethers.utils.parseEther(amount));
 
   let token = new ERC20(tokenAddr);
   let allowance = await token.allowance(owner, spender);
@@ -53,6 +62,7 @@ const useCheckAllowance = async (owner, spender, amount, tokenAddr) => {
 };
 
 const approveDisabled = ref(false);
+
 watch(async () => {
   if (!amount.value) return;
   approveDisabled.value = await useCheckAllowance(
@@ -61,6 +71,8 @@ watch(async () => {
     amount.value.toString(),
     tokenAddress.value
   );
+
+  if (approveDisabled.value) emit("approveDisabled");
 });
 
 async function approve() {
@@ -77,16 +89,16 @@ async function approve() {
   } catch (e) {
     console.log("error");
     console.log(e);
-    closeNotification();
+    //closeNotification();
   }
 
   if (receipt.status === 1) {
     notif($notification("success", "Increased allowance successfuly!"));
+    approveDisabled.value = true;
+    emit("approveDisabled");
   } else {
     notif($notification("failed", "Failed increasing allowance..."));
   }
-
-  approveDisabled.value = true;
 }
 </script>
 <style>
