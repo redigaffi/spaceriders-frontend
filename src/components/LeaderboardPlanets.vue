@@ -29,8 +29,8 @@
             <q-card-section class="q-pa-none full-width">
               <q-item-list dense>
                 <q-item dense>
-                  <q-item-section>
-                    <q-item-label>
+                  <q-item-section class="col">
+                    <q-item-label class="ellipsis">
                       <q-icon
                         v-if="props.row.index + 1 <= 3"
                         name="fas fa-crown"
@@ -40,7 +40,7 @@
                     </q-item-label>
                   </q-item-section>
 
-                  <q-item-section avatar>
+                  <q-item-section class="col-2" avatar>
                     <q-item-label> #{{ props.row.index + 1 }} </q-item-label>
                   </q-item-section>
                 </q-item>
