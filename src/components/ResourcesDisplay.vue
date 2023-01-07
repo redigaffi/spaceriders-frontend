@@ -29,6 +29,13 @@
               fit
             />
           </q-avatar>
+
+          <q-item-label
+            v-if="$q.screen.lt.lg"
+            class="justify-center items-center q-mt-xs"
+          >
+            {{ metalAvailableDisplay }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section
@@ -80,6 +87,13 @@
               fit
             />
           </q-avatar>
+
+          <q-item-label
+            v-if="$q.screen.lt.lg"
+            class="justify-center items-center q-mt-xs"
+          >
+            {{ crystalAvailableDisplay }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section
@@ -130,6 +144,13 @@
               fit
             />
           </q-avatar>
+
+          <q-item-label
+            v-if="$q.screen.lt.lg"
+            class="justify-center items-center q-mt-xs"
+          >
+            {{ petrolAvailableDisplay }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section
@@ -175,6 +196,13 @@
               fit
             />
           </q-avatar>
+
+          <q-item-label
+            v-if="$q.screen.lt.lg"
+            class="justify-center items-center q-mt-xs"
+          >
+            {{ energyAvailableDisplay }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section
@@ -215,6 +243,13 @@
               fit
             />
           </q-avatar>
+
+          <q-item-label
+            v-if="$q.screen.lt.lg"
+            class="justify-center items-center q-mt-xs"
+          >
+            {{ bkmAvailableDisplay }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section
