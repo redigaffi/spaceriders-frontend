@@ -130,7 +130,7 @@
           v-if="$store.getters.planets.length < 6"
           class="q-gutter-sm q-py-sm"
         >
-          <q-input
+          <!--<q-input
             label-color="white"
             v-model="planetCostDisplay"
             label="Planet Cost"
@@ -143,8 +143,8 @@
               box-shadow: 0 0 20px #2253f4;
               color: #fff;
             "
-          />
-          <q-input
+          />-->
+          <!--<q-input
             label-color="white"
             v-model="bnbFeeDisplay"
             label="FEES"
@@ -157,7 +157,7 @@
               box-shadow: 0 0 20px #2253f4;
               color: #fff;
             "
-          />
+          />-->
           <q-input
             label-color="white"
             v-model="planetName"
@@ -192,13 +192,13 @@
 
           /> -->
 
-          <IncreaseAllowance
+          <!--<IncreaseAllowance
             :address="ContractAddress.getSpaceRidersGameAddress()"
             :amount="planetCost.token_cost"
             :tokenAddress="ContractAddress.getSpaceRidersAddress()"
             :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
             @approveDisabled="transactionApproved"
-          />
+          />-->
 
           <q-btn
             :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
@@ -265,9 +265,9 @@ const bnbFeeDisplay = ref();
 
 const isTransactionApproved = ref(false);
 
-const visible = ref(true);
+const visible = ref(false);
 watchEffect(async () => {
-  if (buyPlanetPopup.value) {
+  /*if (buyPlanetPopup.value) {
     planetCost.value = "";
     bnbFeeDisplay.value = "";
     visible.value = true;
@@ -276,7 +276,7 @@ watchEffect(async () => {
     planetCostDisplay.value = `${fixedCost} $BKM ($${planetCost.value.usd_cost})`;
     bnbFeeDisplay.value = "0.0025 BNB";
     visible.value = false;
-  }
+  }*/
 });
 
 const transactionApproved = () => {
@@ -302,10 +302,11 @@ const tokenBalance = computed(() => {
 });
 
 const canBuyPlanets = computed(() => {
-  return (
+  return true;
+  /*return (
     tokenAmount.value > planetCost.value.token_cost &&
     isTransactionApproved.value
-  );
+  );*/
 });
 
 const balanceColor = computed(() => {
@@ -320,7 +321,7 @@ async function buyPlanet() {
   );
 
   try {
-    const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
+    /*const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
     const sD = new SignatureData(
       planetCostData.v,
       planetCostData.r,
@@ -334,8 +335,8 @@ async function buyPlanet() {
       planetCostData.token_uri
     );
 
-    // wait till mined
-    await tx.wait();
+
+    await tx.wait();*/
     const re = await ApiRequest.buyPlanet(planetGuid, planetName.value);
 
     $store.commit("addPlanet", re.data);
