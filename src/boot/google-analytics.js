@@ -1,5 +1,5 @@
 import { boot } from "quasar/wrappers";
-import VueGtag from "vue-gtag";
+import VueGtag from "vue-gtag-next";
 
 // https://matteo-gabriele.gitbook.io/vue-gtag/v/next/
 // "async" is optional;

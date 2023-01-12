@@ -242,6 +242,8 @@ import { useStore } from "vuex";
 import { useQuasar, getCssVar } from "quasar";
 import SpaceRiders from "../service/contract/SpaceRiders";
 import tc from "thousands-counter";
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 const $q = useQuasar();
 
@@ -341,6 +343,10 @@ async function buyPlanet() {
 
     $store.commit("addPlanet", re.data);
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
+    event(NEW_PLANET_PURCHASED, {
+      'event_category' : 'planet',
+      'event_label' : 'planet purchase'
+    });
 
     notif($notification("success", "Planet purchased successfully!"));
   } catch (e) {
