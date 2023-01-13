@@ -1571,7 +1571,7 @@ export default defineComponent({
     const teamMembers = [
       {
         name: "Jordi",
-        title: "CEO",
+        title: "Founder",
         roles: ["Principal Software Engineer"],
         img: "landing/ast/jordi.webp",
         socialMedia: [
@@ -1589,40 +1589,10 @@ export default defineComponent({
           },
         ],
       },
-      {
-        name: "Iñaki",
-        title: "CFO",
-        roles: [
-          "Financial Operations Lead",
-          "Content Creator",
-          "System & Graphics Analyst",
-          "NFT Games Player",
-        ],
-        img: "landing/ast/nak.webp",
-        socialMedia: [
-          {
-            icon: "fab fa-linkedin-in",
-            link: "https://www.linkedin.com/in/inaki-marzo-d%C3%ADaz/",
-          },
-          {
-            icon: "fab fa-youtube",
-            link: "https://www.youtube.com/channel/UCqX0UclPprNbbm8dA3x21JA",
-          },
-          {
-            icon: "landing/linktreee.svg",
-            isNotFontIcon: true,
-            height: 30,
-            link: "https://linktr.ee/MundoLast",
-          },
-          {
-            icon: "fab fa-twitch",
-            link: "https://www.twitch.tv/cryptolast",
-          },
-        ],
-      },
+     
       {
         name: "Max",
-        title: "CPO",
+        title: "Co-Founder",
         roles: [
           "Product Lead",
           "Business Analysis",
@@ -1645,35 +1615,6 @@ export default defineComponent({
           },
         ],
       },
-      {
-        name: "José",
-        title: "CTO",
-        roles: ["Fullstack Engineer", "C# / Unity Developer"],
-        img: "landing/ast/jose.webp",
-        socialMedia: [
-          {
-            icon: "fab fa-linkedin-in",
-            link: "https://www.linkedin.com/in/devjoseruiz/",
-          },
-          {
-            icon: "fab fa-telegram-plane",
-            link: "https://t.me/thewisdomwarrior",
-          },
-        ],
-      },
-      {
-        name: "Erika",
-        title: "Intern",
-        roles: ["Frontend Developer"],
-        img: "landing/ast/erika.webp",
-        socialMedia: [
-          {
-            icon: "fab fa-linkedin-in",
-            link: "https://www.linkedin.com/in/minerikart/",
-          },
-        ],
-      },
-    ];
 
     const timelineFeed = [
       {
