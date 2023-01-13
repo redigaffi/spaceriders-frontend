@@ -2,7 +2,7 @@
   <div>
     <q-btn
       icon="add"
-      label="Buy Planet"
+      label="Free Planet"
       color="warning"
       @click="openBuyPlanetPopup()"
     />
@@ -260,30 +260,10 @@ const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const freePlanetPopup = ref(false);
 
-const planetCost = ref({});
-
-const planetCostDisplay = ref();
-const bnbFeeDisplay = ref();
 
 const isTransactionApproved = ref(false);
 
 const visible = ref(false);
-watchEffect(async () => {
-  /*if (buyPlanetPopup.value) {
-    planetCost.value = "";
-    bnbFeeDisplay.value = "";
-    visible.value = true;
-    planetCost.value = await ApiRequest.fetchPlanetCost();
-    const fixedCost = Math.trunc(planetCost.value.token_cost * 1000) / 1000;
-    planetCostDisplay.value = `${fixedCost} $BKM ($${planetCost.value.usd_cost})`;
-    bnbFeeDisplay.value = "0.0025 BNB";
-    visible.value = false;
-  }*/
-});
-
-const transactionApproved = () => {
-  isTransactionApproved.value = true;
-};
 
 function openBuyPlanetPopup() {
   getBalance();
@@ -305,10 +285,6 @@ const tokenBalance = computed(() => {
 
 const canBuyPlanets = computed(() => {
   return true;
-  /*return (
-    tokenAmount.value > planetCost.value.token_cost &&
-    isTransactionApproved.value
-  );*/
 });
 
 const balanceColor = computed(() => {
@@ -323,22 +299,6 @@ async function buyPlanet() {
   );
 
   try {
-    /*const planetCostData = await ApiRequest.fetchPlanetCostData(planetGuid);
-    const sD = new SignatureData(
-      planetCostData.v,
-      planetCostData.r,
-      planetCostData.s
-    );
-
-    const tx = await SpaceRidersGameContract.buyPlanet(
-      planetCostData.planet_id,
-      planetCostData.price,
-      sD,
-      planetCostData.token_uri
-    );
-
-
-    await tx.wait();*/
     const re = await ApiRequest.buyPlanet(planetGuid, planetName.value);
 
     $store.commit("addPlanet", re.data);

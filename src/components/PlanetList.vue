@@ -174,6 +174,11 @@
 
               <q-card-actions align="center">
                 <q-btn
+                  color="info"
+                  label="mint nft"
+                  @click="mintPlanetPopup = true; mintSelectedPlanet = row.planet.id"
+                />
+                <q-btn
                   :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
                   color="info"
                   :label="row.active ? 'Active' : 'Select'"
@@ -195,23 +200,194 @@
       </div>
     </q-card-section>
   </q-card>
+
+
+
+
+
+
+  <q-dialog v-model="mintPlanetPopup">
+      <q-card class="bg-dark text-white q-pb-md full-width">
+        <q-card-section class="row justify-between">
+          <div class="text-h6">MINT A PLANET</div>
+          <q-btn
+            flat
+            round
+            size="sm"
+            color="white"
+            icon="close"
+            v-close-popup
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-img
+          src="~assets/img/buy_planet_bg.webp"
+          style="height: 200px; width: 100%"
+        />
+
+        <q-card-section class="q-pb-xs">
+          <q-item-section
+            style="border-radius: 5px"
+            :style="{
+              color: balanceColor,
+              border: `1px solid ${balanceColor}`,
+              'box-shadow': `0 0 5px ${balanceColor}`,
+            }"
+            class="q-pa-xs"
+          >
+            <p
+              class="q-ma-none text-body2 text-center"
+              :style="{ color: balanceColor }"
+            >
+              Your balance is {{ tokenBalance }} $BKM.
+            </p>
+            <p
+              v-if="!canBuyPlanets"
+              class="q-ma-none text-body2 text-center"
+              :style="{ color: balanceColor }"
+            >
+              Not enough to buy a planet.
+            </p>
+          </q-item-section>
+        </q-card-section>
+
+        <q-card-section
+          v-if="$store.getters.planets.length < 6"
+          class="q-gutter-sm q-py-sm"
+        >
+          <q-input
+            label-color="white"
+            v-model="planetCostDisplay"
+            label="MINT Cost"
+            standout="bg-secondary"
+            readonly
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px #2253f4;
+              color: #fff;
+            "
+          />
+          <q-input
+            label-color="white"
+            v-model="bnbFeeDisplay"
+            label="FEES"
+            readonly
+            standout="bg-secondary"
+            style="
+              border: 2px solid #2253f4;
+              border-radius: 5px;
+              font-size: 14px;
+              box-shadow: 0 0 20px #2253f4;
+              color: #fff;
+            "
+          />
+
+        </q-card-section>
+
+        <q-card-actions
+          align="center"
+          class="q-px-md"
+        >
+          <IncreaseAllowance
+            :address="ContractAddress.getSpaceRidersGameAddress()"
+            :amount="planetCost.token_cost"
+            :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+            :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
+          />
+
+          <q-btn
+            :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
+            color="info"
+            icon="add"
+            label="Mint Planet"
+            @click="mintPlanet(mintSelectedPlanet)"
+            v-close-popup
+          >
+          </q-btn>
+
+          <q-inner-loading :showing="visible">
+            <q-spinner size="70px" color="warning" />
+          </q-inner-loading>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 </template>
 
 <script setup>
-import { defineComponent, computed, watch, ref, getCurrentInstance } from "vue";
+import { watchEffect, computed, watch, ref, getCurrentInstance } from "vue";
 import { colors, getCssVar, useQuasar } from "quasar";
 import { useStore } from "vuex";
 import ResourcesDisplay from "components/ResourcesDisplay.vue";
 import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import ApiRequests from "../service/http/ApiRequests";
+import SpaceRidersGameContract, {
+  SignatureData,
+} from "../service/contract/SpaceRidersGameContract";
+import SpaceRiders from "../service/contract/SpaceRiders";
+import SpaceRidersNFT from "../service/contract/SpaceRidersNFT";
 
+import ContractAddress from "../service/contract/ContractAddress";
+import tc from "thousands-counter";
+import IncreaseAllowance from "./IncreaseAllowance";
+
+const $notification =
+  getCurrentInstance().appContext.config.globalProperties.$notification;
 //https://quasar.dev/layout/routing-with-layouts-and-pages
+const $store = useStore();
 
+const tokenAmount = ref(0);
+const mintPlanetPopup = ref(false);
+const mintSelectedPlanet = ref("");
+
+const planetCost = ref({});
+const planetCostDisplay = ref();
+const bnbFeeDisplay = ref();
+const visible = ref(false);
+
+const canBuyPlanets = computed(() => {
+  return tokenAmount.value > planetCost.value.token_cost;
+
+});
+
+const balanceColor = computed(() => {
+  return canBuyPlanets.value ? getCssVar("positive") : getCssVar("negative");
+});
+
+async function getBalance() {
+  try {
+    tokenAmount.value = await SpaceRiders.balanceOf($store.getters.address);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+const tokenBalance = computed(() => {
+  return tc(tokenAmount.value, { digits: 3 });
+});
+
+
+watchEffect(async () => {
+  if (mintPlanetPopup.value) {
+    await getBalance();
+    planetCost.value = "";
+    bnbFeeDisplay.value = "";
+    visible.value = true;
+    planetCost.value = await ApiRequests.fetchPlanetCost();
+    const fixedCost = Math.trunc(planetCost.value.token_cost * 1000) / 1000;
+    planetCostDisplay.value = `${fixedCost} $BKM ($${planetCost.value.usd_cost})`;
+    bnbFeeDisplay.value = "0.0025 BNB";
+    visible.value = false;
+  }
+});
 const $q = useQuasar();
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
 
-const $store = useStore();
+
 const { getPaletteColor } = colors;
 
 const colorMapping = {
@@ -330,6 +506,47 @@ const myTweak = (offset) => {
   // this is actually what the default style-fn does in Quasar
   return { minHeight: offset ? `calc(100vh - ${offset}px)` : "100vh" };
 };
+
+async function isPlanetMinted(planetGuid) {
+  return false;
+  const re = await SpaceRidersNFT.getPlanetById(planetGuid);
+  console.log(re);
+  return re[2];
+}
+
+async function mintPlanet(planetGuid) {
+  console.log("ASD")
+  console.log(mintSelectedPlanet)
+  const notif = $q.notify(
+    $notification("progress", "Waiting for transaction to complete...")
+  );
+
+  try {
+    const planetCostData = await ApiRequests.fetchPlanetCostData(planetGuid);
+    const sD = new SignatureData(
+      planetCostData.v,
+      planetCostData.r,
+      planetCostData.s
+    );
+
+    const tx = await SpaceRidersGameContract.buyPlanet(
+      planetCostData.planet_id,
+      planetCostData.price,
+      sD,
+      planetCostData.token_uri
+    );
+
+
+    await tx.wait();
+
+    notif($notification("success", "Planet minted successfully!"));
+  } catch (e) {
+    notif($notification("failed", e));
+
+    console.log("error");
+    console.log(e);
+  }
+}
 </script>
 
 <style lang="scss">
