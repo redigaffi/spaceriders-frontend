@@ -74,10 +74,10 @@ const planetsArray = [
   {
     title: "Play to Own",
     description:
-      "SpaceRiders defines itself as a Play to Own. This game model integrates \
-      blockchain technology, through which NFTs are implemented. Thanks to both \
-      integrations, you as a player have total ownership of all your in-game \
-      assets as well as complete freedom to do with them anything that you want.",
+      "SpaceRiders defines itself as a Play to Own. Thanks to blockchain and \
+      NFTs integration, you as a player have total ownership of all your \
+      in-game assets as well as complete freedom to do with them anything \
+      that you want. Through the Ownership Payment, we certify assets-ownership. ",
     img: "planet_3.webp",
   },
   {
@@ -113,11 +113,11 @@ const planetsArray = [
   {
     title: "Free to Play",
     description:
-      "SpaceRiders has a Free to Play version, where entry is not \
-      limited to those who pay. This version is an exact copy of the Full \
-      Version, but is found on the Binance Smart Chain Testnet. This Free to Play \
-      version will be opened in special events during a few weeks so that \
-      everyone can access SpaceRiders for free.",
+      "At SpaceRiders we believe that everyone has the right and obligation \
+      to enjoy their intergalactic adventure. Committed to our mission \
+      to bring entertainment to all screens and pockets, \
+      we have designed our game based on the Freemium model. \
+      Playing SpaceRiders is Free for everyone.",
     img: "planet_5.webp",
   },
   {
