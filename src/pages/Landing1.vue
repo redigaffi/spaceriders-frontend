@@ -1544,7 +1544,7 @@ export default defineComponent({
       {
         label: "When will I be able to play SpaceRiders?",
         description: [
-          "The MVP (Minimum Viable Product) is completed and accessible in the Binance Smart Chain Testnet.", 
+          "The MVP (Minimum Viable Product) is completed and accessible in the Binance Smart Chain Testnet.",
           "It is currently undergoing validation progress which allows the SpaceRiders’ team to improve the overall experience.",
         ],
       },
@@ -1590,7 +1590,7 @@ export default defineComponent({
           },
         ],
       },
-     
+
       {
         name: "Max",
         title: "Co-Founder",
@@ -1616,6 +1616,7 @@ export default defineComponent({
           },
         ],
       },
+    ]
 
     const timelineFeed = [
       {
