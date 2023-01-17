@@ -1537,21 +1537,22 @@ export default defineComponent({
       {
         label: "What do I need to play SpaceRiders?",
         description: [
-          "You need a compatible wallet such as MetaMask and enough $BKM previously purchased in order to mint a planet and fill your energy.",
+          "You just need a compatible Web3 wallet, nothing else.",
+          "For the convenience of our users, we encourage the usage of Face Wallet, with which you’ll be able to login through your main socials accounts.",
         ],
       },
       {
         label: "When will I be able to play SpaceRiders?",
         description: [
-          "The MVP (Minimum Viable Product) is completed and is currently undergoing rigorous testing by the development team prior to rolling it out, to ensure that your first experience within the game is exceptional.",
-          "As stated in our roadmap, we anticipate launch of this version in Q4 2022.",
+          "The MVP (Minimum Viable Product) is completed and accessible in the Binance Smart Chain Testnet.", 
+          "It is currently undergoing validation progress which allows the SpaceRiders’ team to improve the overall experience.",
         ],
       },
       {
         label: "Will SpaceRiders be a Free to Play?",
         description: [
-          "SpaceRiders is a Play to Own - Player Driven Economy - Free to Play.",
-          "Mainnet version isn’t Free to Play, but during special events a replica of the main version will open to the public into Testnet as a Free to Play, ensuring accessibility to all users.",
+          "SpaceRiders is a Play to Own - Player Driven Economy - Freemium.",
+          "Mainnet version will be a Freemium, as it is already the MVP version on BSC Testnet. This means that the game is open to everyone without requiring any initial purchase. Possibility of in-game purchases exist, but don’t affect the basic gameplay experience.",
         ],
       },
       {
