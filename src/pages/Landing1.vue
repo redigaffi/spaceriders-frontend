@@ -1653,12 +1653,9 @@ export default defineComponent({
         heading: "Q1 2023",
         imgSrc: "hangar.webp",
         content: [
-          "Launch of the PVE version on the Binance Smart Chain Mainnet.",
-          "Launch of the token on the Binance Smart Chain.",
           "Expansion of the SpaceRiders brand.",
           "Strategic blockchain and gaming partners.",
-          "Development and testing of Refined Resources.",
-          "First exclusive NFTs.",
+          "Development and testing of PVP initial concept.",
         ],
       },
       {
@@ -1666,7 +1663,7 @@ export default defineComponent({
         imgSrc: "installations.webp",
         content: [
           "First face-to-face events focused on the expansion of the project.",
-          "Development and testing of the first PVP features.",
+          "Binance Smart Chain Mainnet Launch.",
           "Development and testing of the Items Marketplace.",
         ],
       },
