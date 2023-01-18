@@ -14,16 +14,15 @@ export default boot(async ({ app, router }) => {
         }
       }
     });*/
-    app.use(
-      VueGtag,
+    app.use(VueGtag,
       {
         appName: `SpaceRiders ${process.env.ENV}`,
         pageTrackerScreenviewEnabled: true,
-        config: {
+        property: {
           id: process.env.GA_MEASUREMENT_ID,
           params: {
             send_page_view: true,
-          },
+          }
         },
       },
       router
