@@ -13,6 +13,8 @@ import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
 import { getCurrentInstance, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 const $notification =
   getCurrentInstance().appContext.config.globalProperties.$notification;
@@ -54,7 +56,10 @@ async function claimPlanet() {
       value: data.image_url,
     });
     $eventBus.emit(PLANET_CLAIMED, { planet: data });
-
+    event(PLANET_CLAIMED, {
+      'event_category' : 'planet',
+      'event_label' : 'planet claimed'
+    });
     //closeNotification();
   } catch (e) {
     notif($notification("failed", e));

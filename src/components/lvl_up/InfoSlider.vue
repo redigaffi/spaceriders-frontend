@@ -352,7 +352,9 @@ import { BUILDING_UPGRADED } from "../../constants/Events";
 import Types from "../../constants/Types";
 import popup from "src/components/lvl_up/Popup.vue";
 import { useQuasar, colors, getCssVar } from "quasar";
-import { exception } from "vue-gtag";
+
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 export default defineComponent({
   name: "InfoSlider",
@@ -607,6 +609,10 @@ export default defineComponent({
         });
 
         $eventBus.emit(BUILDING_UPGRADED);
+        event(BUILDING_UPGRADED, {
+          'event_category' : 'building',
+          'event_label' : 'building upgraded'
+        });
 
         let notificationMessage = `${props.data.name} upgraded and added to the queue.`;
         if (props.itemType) {

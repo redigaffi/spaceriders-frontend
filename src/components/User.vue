@@ -101,6 +101,8 @@ import { useStore } from "vuex";
 import { ref, computed, onBeforeMount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import jdenticon from "jdenticon/standalone";
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 const $quasar = useQuasar();
 
@@ -256,6 +258,10 @@ const login = async (providerName) => {
       address: address,
     });
     $eventBus.emit(LOGGED_IN);
+    event(LOGGED_IN, {
+      'event_category' : 'user',
+      'event_label' : 'user logged in'
+    });
 
     router.push({
       name: "planets",

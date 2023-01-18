@@ -771,6 +771,14 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar, useMeta, colors, getCssVar } from "quasar";
 import ApiRequest from "../service/http/ApiRequests";
+import {
+  ISM_SPOT_BUY_ORDER_PLACED,
+  ISM_SPOT_SELL_ORDER_PLACED,
+
+} from "../constants/Events";
+
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 const $q = useQuasar();
 const { getPaletteColor } = colors;
@@ -1266,6 +1274,10 @@ function buySpot() {
   };
 
   ws.send(JSON.stringify(req));
+  event(ISM_SPOT_BUY_ORDER_PLACED, {
+    'event_category' : 'trading',
+    'event_label' : 'spot buy order placed'
+  });
 
   buyPrice.value = 0;
   buyAmount.value = 0;
@@ -1290,6 +1302,10 @@ function sellSpot() {
   };
 
   ws.send(JSON.stringify(req));
+  event(ISM_SPOT_SELL_ORDER_PLACED, {
+    'event_category' : 'trading',
+    'event_label' : 'spot sell order placed'
+  });
 
   sellPrice.value = 0;
   sellAmount.value = 0;

@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import ApiRequest from "../service/http/ApiRequests";
-import { PLANET_CLAIMED, ACTIVE_PLANET_CHANGED } from "../constants/Events";
+import { ACTIVE_PLANET_CHANGED } from "../constants/Events";
+import { useGtag } from "vue-gtag-next";
+const { event } = useGtag();
 
 export default {
   name: "ActivePlanet",
@@ -45,6 +46,10 @@ export default {
     changeActivePlanet: async function (p) {
       this.$store.commit("setActivePlanet", p);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, p);
+      event(ACTIVE_PLANET_CHANGED, {
+        'event_category' : 'planet',
+        'event_label' : 'active planet changed'
+      });
     },
     isActivePlanet: function (p) {
       const currentActivePlanet = this.$store.getters.activePlanet;
