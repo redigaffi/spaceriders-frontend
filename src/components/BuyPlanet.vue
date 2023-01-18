@@ -223,21 +223,14 @@
 </template>
 
 <script setup>
-import { v4 as uuidv4 } from "uuid";
 import ApiRequest from "../service/http/ApiRequests";
-import IncreaseAllowance from "./IncreaseAllowance";
-import ContractAddress from "../service/contract/ContractAddress";
 import ObjectID from "bson-objectid";
-import SpaceRidersGameContract, {
-  SignatureData,
-} from "../service/contract/SpaceRidersGameContract";
 
 import {
   NEW_PLANET_PURCHASED,
-  PLANET_CLAIMED,
-  ACTIVE_PLANET_CHANGED,
+  PLANET_PURCHASE_POPUP_OPENED,
 } from "../constants/Events";
-import { ref, watchEffect, getCurrentInstance, computed } from "vue";
+import { ref, getCurrentInstance, computed } from "vue";
 import { useStore } from "vuex";
 import { useQuasar, getCssVar } from "quasar";
 import SpaceRiders from "../service/contract/SpaceRiders";
@@ -266,6 +259,10 @@ const isTransactionApproved = ref(false);
 const visible = ref(false);
 
 function openBuyPlanetPopup() {
+  event(PLANET_PURCHASE_POPUP_OPENED, {
+    'event_category' : 'planet',
+    'event_label' : 'planet popup opened'
+  });
   getBalance();
   planetName.value = "";
   buyPlanetPopup.value = true;
