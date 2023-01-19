@@ -172,15 +172,7 @@
 
               <q-separator />
 
-              <q-card-actions align="center">
-                <q-btn
-                  color="info"
-                  label="mint nft"
-                  @click="
-                    mintPlanetPopup = true;
-                    mintSelectedPlanet = row.planet.id;
-                  "
-                />
+              <q-card-actions align="center" class="q-gutter-sm">
                 <q-btn
                   :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
                   color="info"
@@ -195,6 +187,15 @@
                   "
                   color="amber"
                   @click="planetMark(row)"
+                />
+                <q-btn
+                  color="info"
+                  icon="add"
+                  label="mint nft"
+                  @click="
+                    mintPlanetPopup = true;
+                    mintSelectedPlanet = row.planet.id;
+                  "
                 />
               </q-card-actions>
             </q-card>
@@ -499,8 +500,6 @@ async function isPlanetMinted(planetGuid) {
 }
 
 async function mintPlanet(planetGuid) {
-  console.log("ASD");
-  console.log(mintSelectedPlanet);
   const notif = $q.notify(
     $notification("progress", "Waiting for transaction to complete...")
   );

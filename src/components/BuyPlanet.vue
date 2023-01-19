@@ -2,7 +2,7 @@
   <div>
     <q-btn
       icon="add"
-      label="Free Planet"
+      label="Get Free Planet"
       color="warning"
       @click="openBuyPlanetPopup()"
     />
@@ -204,7 +204,7 @@
             :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
             color="info"
             icon="add"
-            label="Buy Planet"
+            label="Get Planet"
             @click="buyPlanet"
             :disabled="
               planetName.length < 4 || planetName.length > 14 || !canBuyPlanets
@@ -253,15 +253,14 @@ const planetName = ref("");
 const buyPlanetPopup = ref(false);
 const freePlanetPopup = ref(false);
 
-
 const isTransactionApproved = ref(false);
 
 const visible = ref(false);
 
 function openBuyPlanetPopup() {
   event(PLANET_PURCHASE_POPUP_OPENED, {
-    'event_category' : 'planet',
-    'event_label' : 'planet popup opened'
+    event_category: "planet",
+    event_label: "planet popup opened",
   });
   getBalance();
   planetName.value = "";
@@ -301,8 +300,8 @@ async function buyPlanet() {
     $store.commit("addPlanet", re.data);
     $eventBus.emit(NEW_PLANET_PURCHASED, { planet: re.data });
     event(NEW_PLANET_PURCHASED, {
-      'event_category' : 'planet',
-      'event_label' : 'planet purchase'
+      event_category: "planet",
+      event_label: "planet purchase",
     });
 
     notif($notification("success", "Planet purchased successfully!"));
