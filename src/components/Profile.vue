@@ -65,6 +65,7 @@
                   flat
                   icon="fas fa-check"
                   @click="updateUsername"
+                  :disabled="!aliasChanged"
                 />
               </template>
 
@@ -226,6 +227,10 @@ const updateUsername = () => {
 };
 
 const username = ref(getUsername());
+
+const aliasChanged = computed(() => {
+  return username.value != getUsername();
+});
 
 const showMusicPlayer = computed({
   get: () => {
