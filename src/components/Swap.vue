@@ -52,12 +52,12 @@
               outlined
               color="white"
               class="full-width q-ma-none q-pa-none"
-              v-model="buyFromAmount"
-              placeholder="0.0"
+              :model-value="buyFromAmount"
+              :placeholder="pathNames[0]"
               type="number"
               min="0"
               :rules="[(val) => val > 0 || 'Value must be greater than zero.']"
-              @change="buyFromChange"
+              @change="(value) => buyFromChange(value)"
             >
               <div class="q-mt-sm">
                 <q-btn
@@ -112,8 +112,10 @@
               color="white"
               class="full-width q-ma-none q-pa-none"
               v-model="buyToAmount"
-              placeholder="0.0"
+              :placeholder="pathNames[1]"
               type="number"
+              min="0"
+              readonly
             >
             </q-input>
           </div>
@@ -262,18 +264,18 @@ watch(async () => {
   }
 });
 
-const buyFromAmount = ref(1);
-const buyToAmount = ref(1);
+const buyFromAmount = ref("1");
+const buyToAmount = ref("1");
 
-const buyFromChange = async () => {
-  if (buyFromAmount.value > 0) {
+const buyFromChange = async (value) => {
+  if (value > 0.0) {
+    buyFromAmount.value = value;
+
     let amount = await RouterContract.getAmountsOut(
       buyFromAmount.value,
       pathNames.value
     );
     buyToAmount.value = amount;
-  } else {
-    buyToAmount.value = 0;
   }
 };
 
