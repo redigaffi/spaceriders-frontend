@@ -291,8 +291,8 @@ const maxBalance = async () => {
 };
 
 const swapComponents = () => {
-  buyFromAmount.value = 1;
-  buyToAmount.value = 1;
+  buyFromAmount.value = buyToAmount.value;
+  buyFromChange(buyFromAmount.value);
 
   const path0 = pathNames.value[0];
   const path1 = pathNames.value[1];
