@@ -115,6 +115,7 @@
               :placeholder="pathNames[1]"
               type="number"
               min="0"
+              :rules="[(val) => val > 0 || 'Value must be greater than zero.']"
               readonly
             >
             </q-input>
@@ -186,7 +187,7 @@
         />
 
         <q-btn
-          :disable="buyFromAmount <= 0"
+          :disable="!canSwap || buyFromAmount <= 0 || buyToAmount <= 0"
           label="Swap"
           icon="currency_exchange"
           style="
@@ -197,7 +198,6 @@
             color: #fff;
           "
           v-on:click.prevent="buySpr"
-          :disabled="!canSwap"
         >
         </q-btn>
       </q-card-actions>
