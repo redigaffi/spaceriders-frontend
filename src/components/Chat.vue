@@ -106,6 +106,8 @@
       maxlength="280"
       :dense="dense"
       :readonly="!isConnectionUp"
+      @keyup.enter.exact.prevent="sendMessage"
+      autogrow
     >
       <template v-slot:before>
         <q-avatar color="secondary" size="32px">
