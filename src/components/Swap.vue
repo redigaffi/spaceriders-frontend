@@ -52,12 +52,12 @@
               outlined
               color="white"
               class="full-width q-ma-none q-pa-none"
-              v-model="buyFromAmount"
-              placeholder="0.0"
+              :model-value="buyFromAmount"
+              :placeholder="pathNames[0]"
               type="number"
               min="0"
               :rules="[(val) => val > 0 || 'Value must be greater than zero.']"
-              @change="buyFromChange"
+              @change="(value) => buyFromChange(value)"
             >
               <div class="q-mt-sm">
                 <q-btn
@@ -112,8 +112,11 @@
               color="white"
               class="full-width q-ma-none q-pa-none"
               v-model="buyToAmount"
-              placeholder="0.0"
+              :placeholder="pathNames[1]"
               type="number"
+              min="0"
+              :rules="[(val) => val > 0 || 'Value must be greater than zero.']"
+              readonly
             >
             </q-input>
           </div>
@@ -184,7 +187,7 @@
         />
 
         <q-btn
-          :disable="buyFromAmount <= 0"
+          :disable="!canSwap || buyFromAmount <= 0 || buyToAmount <= 0"
           label="Swap"
           icon="currency_exchange"
           style="
@@ -195,7 +198,6 @@
             color: #fff;
           "
           v-on:click.prevent="buySpr"
-          :disabled="!canSwap"
         >
         </q-btn>
       </q-card-actions>
@@ -208,7 +210,7 @@
 </template>
 
 <script setup>
-import { ref, watch, getCurrentInstance } from "vue";
+import { ref, watch, getCurrentInstance, onMounted } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import RouterContract from "../service/contract/RouterContract";
@@ -262,18 +264,18 @@ watch(async () => {
   }
 });
 
-const buyFromAmount = ref(1);
-const buyToAmount = ref(1);
+const buyFromAmount = ref("1");
+const buyToAmount = ref("1");
 
-const buyFromChange = async () => {
-  if (buyFromAmount.value > 0) {
+const buyFromChange = async (value) => {
+  if (value > 0.0) {
+    buyFromAmount.value = value;
+
     let amount = await RouterContract.getAmountsOut(
       buyFromAmount.value,
       pathNames.value
     );
     buyToAmount.value = amount;
-  } else {
-    buyToAmount.value = 0;
   }
 };
 
@@ -281,16 +283,16 @@ const maxBalance = async () => {
   if (pathNames.value[0] === "busd") {
     const busdContract = new ERC20(ContractAddress.getBusdAddress());
     buyFromAmount.value = await busdContract.balanceOf($store.getters.address);
-    buyFromChange();
+    buyFromChange(buyFromAmount.value);
   } else if (pathNames.value[0] === "bkm") {
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
-    buyFromChange();
+    buyFromChange(buyFromAmount.value);
   }
 };
 
 const swapComponents = () => {
-  buyFromAmount.value = 1;
-  buyToAmount.value = 1;
+  buyFromAmount.value = buyToAmount.value;
+  buyFromChange(buyFromAmount.value);
 
   const path0 = pathNames.value[0];
   const path1 = pathNames.value[1];
@@ -355,4 +357,8 @@ async function addToken() {
     console.log(error);
   }
 }
+
+onMounted(() => {
+  buyFromChange(buyFromAmount.value);
+});
 </script>

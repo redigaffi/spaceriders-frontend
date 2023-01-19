@@ -109,7 +109,7 @@ switch (item.value.type) {
       datafields.push("production");
       columns.push({
         name: "energy",
-        label: "Required energy",
+        label: "Energy / min cost",
         align: "right",
         field: "energy_usage",
       });
@@ -133,7 +133,7 @@ switch (item.value.type) {
       /*
       columns.push({
         name: "energy",
-        label: "Required energy",
+        label: "Energy / min cost",
         align: "center",
         field: "energy",
       });
@@ -150,7 +150,7 @@ switch (item.value.type) {
 
       columns.push({
         name: "energy",
-        label: "Required energy",
+        label: "Energy / min cost",
         align: "right",
         field: "energy_usage",
       });
