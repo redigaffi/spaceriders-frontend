@@ -46,10 +46,12 @@ export default {
     changeActivePlanet: async function (p) {
       this.$store.commit("setActivePlanet", p);
       this.$eventBus.emit(ACTIVE_PLANET_CHANGED, p);
-      event(ACTIVE_PLANET_CHANGED, {
-        'event_category' : 'planet',
-        'event_label' : 'active planet changed'
-      });
+      if (process.env.ENV !== "local") {
+        event(ACTIVE_PLANET_CHANGED, {
+          event_category: "planet",
+          event_label: "active planet changed",
+        });
+      }
     },
     isActivePlanet: function (p) {
       const currentActivePlanet = this.$store.getters.activePlanet;

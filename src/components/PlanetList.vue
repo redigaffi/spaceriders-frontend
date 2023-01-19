@@ -43,7 +43,7 @@
                   :src="row.image_url"
                   style="
                     width: 130px;
-                    height: 192px;
+                    height: 200px;
                     object-fit: cover;
                     object-position: 50% 0%;
                   "
@@ -99,7 +99,19 @@
                       </q-item-section>
 
                       <q-item-section side>
-                        <q-item-label>{{ row.position }}</q-item-label>
+                        <q-item-label>
+                          <q-btn
+                            color="primary"
+                            icon="search"
+                            :label="row.position"
+                            :to="`/explorer/${row.position.replaceAll(
+                              ':',
+                              '/'
+                            )}`"
+                            unelevated
+                            dense
+                          />
+                        </q-item-label>
                       </q-item-section>
                     </q-item>
 
@@ -172,12 +184,7 @@
 
               <q-separator />
 
-              <q-card-actions align="center">
-                <q-btn
-                  color="info"
-                  label="mint nft"
-                  @click="mintPlanetPopup = true; mintSelectedPlanet = row.planet.id"
-                />
+              <q-card-actions align="center" class="q-gutter-sm">
                 <q-btn
                   :icon="row.active ? 'check_box' : 'check_box_outline_blank'"
                   color="info"
@@ -193,6 +200,87 @@
                   color="amber"
                   @click="planetMark(row)"
                 />
+                <q-btn-dropdown
+                  color="primary"
+                  icon="widgets"
+                  label="Resources"
+                >
+                  <q-list>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label
+                          >Metal:
+                          {{
+                            tc(row.planet.resources.metal.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label
+                          >Crystal:
+                          {{
+                            tc(row.planet.resources.crystal.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          Petrol:
+                          {{
+                            tc(row.planet.resources.petrol.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          Energy:
+                          {{
+                            tc(row.planet.resources.energy.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          BKM:
+                          {{
+                            tc(row.planet.resources.bkm.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
+                <q-btn
+                  color="primary"
+                  icon="add"
+                  label="mint nft"
+                  @click="
+                    mintPlanetPopup = true;
+                    mintSelectedPlanet = row.planet.id;
+                  "
+                />
               </q-card-actions>
             </q-card>
           </div>
@@ -201,120 +289,104 @@
     </q-card-section>
   </q-card>
 
-
-
-
-
-
   <q-dialog v-model="mintPlanetPopup">
-      <q-card class="bg-dark text-white q-pb-md full-width">
-        <q-card-section class="row justify-between">
-          <div class="text-h6">MINT A PLANET</div>
-          <q-btn
-            flat
-            round
-            size="sm"
-            color="white"
-            icon="close"
-            v-close-popup
-          />
-        </q-card-section>
+    <q-card class="bg-dark text-white q-pb-md full-width">
+      <q-card-section class="row justify-between">
+        <div class="text-h6">MINT A PLANET</div>
+        <q-btn flat round size="sm" color="white" icon="close" v-close-popup />
+      </q-card-section>
 
-        <q-separator />
+      <q-separator />
 
-        <q-img
-          src="~assets/img/buy_planet_bg.webp"
-          style="height: 200px; width: 100%"
+      <q-img
+        src="~assets/img/buy_planet_bg.webp"
+        style="height: 200px; width: 100%"
+      />
+
+      <q-card-section class="q-pb-xs">
+        <q-item-section
+          style="border-radius: 5px"
+          :style="{
+            color: balanceColor,
+            border: `1px solid ${balanceColor}`,
+            'box-shadow': `0 0 5px ${balanceColor}`,
+          }"
+          class="q-pa-xs"
+        >
+          <p
+            class="q-ma-none text-body2 text-center"
+            :style="{ color: balanceColor }"
+          >
+            Your balance is {{ tokenBalance }} $BKM.
+          </p>
+          <p
+            v-if="!canBuyPlanets"
+            class="q-ma-none text-body2 text-center"
+            :style="{ color: balanceColor }"
+          >
+            Not enough to buy a planet.
+          </p>
+        </q-item-section>
+      </q-card-section>
+
+      <q-card-section
+        v-if="$store.getters.planets.length < 6"
+        class="q-gutter-sm q-py-sm"
+      >
+        <q-input
+          label-color="white"
+          v-model="planetCostDisplay"
+          label="MINT Cost"
+          standout="bg-secondary"
+          readonly
+          style="
+            border: 2px solid #2253f4;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0 0 20px #2253f4;
+            color: #fff;
+          "
+        />
+        <q-input
+          label-color="white"
+          v-model="bnbFeeDisplay"
+          label="FEES"
+          readonly
+          standout="bg-secondary"
+          style="
+            border: 2px solid #2253f4;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0 0 20px #2253f4;
+            color: #fff;
+          "
+        />
+      </q-card-section>
+
+      <q-card-actions align="center" class="q-px-md">
+        <IncreaseAllowance
+          :address="ContractAddress.getSpaceRidersGameAddress()"
+          :amount="planetCost.token_cost"
+          :tokenAddress="ContractAddress.getSpaceRidersAddress()"
+          :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
         />
 
-        <q-card-section class="q-pb-xs">
-          <q-item-section
-            style="border-radius: 5px"
-            :style="{
-              color: balanceColor,
-              border: `1px solid ${balanceColor}`,
-              'box-shadow': `0 0 5px ${balanceColor}`,
-            }"
-            class="q-pa-xs"
-          >
-            <p
-              class="q-ma-none text-body2 text-center"
-              :style="{ color: balanceColor }"
-            >
-              Your balance is {{ tokenBalance }} $BKM.
-            </p>
-            <p
-              v-if="!canBuyPlanets"
-              class="q-ma-none text-body2 text-center"
-              :style="{ color: balanceColor }"
-            >
-              Not enough to buy a planet.
-            </p>
-          </q-item-section>
-        </q-card-section>
-
-        <q-card-section
-          v-if="$store.getters.planets.length < 6"
-          class="q-gutter-sm q-py-sm"
+        <q-btn
+          :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
+          color="info"
+          icon="add"
+          label="Mint Planet"
+          @click="mintPlanet(mintSelectedPlanet)"
+          v-close-popup
         >
-          <q-input
-            label-color="white"
-            v-model="planetCostDisplay"
-            label="MINT Cost"
-            standout="bg-secondary"
-            readonly
-            style="
-              border: 2px solid #2253f4;
-              border-radius: 5px;
-              font-size: 14px;
-              box-shadow: 0 0 20px #2253f4;
-              color: #fff;
-            "
-          />
-          <q-input
-            label-color="white"
-            v-model="bnbFeeDisplay"
-            label="FEES"
-            readonly
-            standout="bg-secondary"
-            style="
-              border: 2px solid #2253f4;
-              border-radius: 5px;
-              font-size: 14px;
-              box-shadow: 0 0 20px #2253f4;
-              color: #fff;
-            "
-          />
+        </q-btn>
 
-        </q-card-section>
-
-        <q-card-actions
-          align="center"
-          class="q-px-md"
-        >
-          <IncreaseAllowance
-            :address="ContractAddress.getSpaceRidersGameAddress()"
-            :amount="planetCost.token_cost"
-            :tokenAddress="ContractAddress.getSpaceRidersAddress()"
-            :class="{ 'full-width q-mb-sm': $q.screen.lt.md }"
-          />
-
-          <q-btn
-            :class="$q.screen.lt.md ? 'full-width' : 'q-ml-sm'"
-            color="info"
-            icon="add"
-            label="Mint Planet"
-            @click="mintPlanet(mintSelectedPlanet)"
-            v-close-popup
-          >
-          </q-btn>
-
-          <q-inner-loading :showing="visible">
-            <q-spinner size="70px" color="warning" />
-          </q-inner-loading>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+        <q-inner-loading :showing="visible">
+          <q-spinner size="70px" color="warning" />
+        </q-inner-loading>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -350,7 +422,6 @@ const visible = ref(false);
 
 const canBuyPlanets = computed(() => {
   return tokenAmount.value > planetCost.value.token_cost;
-
 });
 
 const balanceColor = computed(() => {
@@ -369,7 +440,6 @@ const tokenBalance = computed(() => {
   return tc(tokenAmount.value, { digits: 3 });
 });
 
-
 watchEffect(async () => {
   if (mintPlanetPopup.value) {
     await getBalance();
@@ -386,7 +456,6 @@ watchEffect(async () => {
 const $q = useQuasar();
 const $eventBus =
   getCurrentInstance().appContext.config.globalProperties.$eventBus;
-
 
 const { getPaletteColor } = colors;
 
@@ -421,6 +490,7 @@ let rows = computed(() => {
   );
 
   for (let pId in planets) {
+    console.log(planets);
     const planet = planets[pId];
     re.push({
       id: planet.id,
@@ -515,8 +585,6 @@ async function isPlanetMinted(planetGuid) {
 }
 
 async function mintPlanet(planetGuid) {
-  console.log("ASD")
-  console.log(mintSelectedPlanet)
   const notif = $q.notify(
     $notification("progress", "Waiting for transaction to complete...")
   );
@@ -535,7 +603,6 @@ async function mintPlanet(planetGuid) {
       sD,
       planetCostData.token_uri
     );
-
 
     await tx.wait();
 

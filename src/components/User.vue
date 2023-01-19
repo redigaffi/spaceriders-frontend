@@ -258,10 +258,12 @@ const login = async (providerName) => {
       address: address,
     });
     $eventBus.emit(LOGGED_IN);
-    event(LOGGED_IN, {
-      'event_category' : 'user',
-      'event_label' : 'user logged in'
-    });
+    if (process.env.ENV !== "local") {
+      event(LOGGED_IN, {
+        event_category: "user",
+        event_label: "user logged in",
+      });
+    }
 
     router.push({
       name: "planets",
