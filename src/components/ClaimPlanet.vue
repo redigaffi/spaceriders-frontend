@@ -56,10 +56,12 @@ async function claimPlanet() {
       value: data.image_url,
     });
     $eventBus.emit(PLANET_CLAIMED, { planet: data });
-    event(PLANET_CLAIMED, {
-      'event_category' : 'planet',
-      'event_label' : 'planet claimed'
-    });
+    if (process.env.ENV !== "local") {
+      event(PLANET_CLAIMED, {
+        event_category: "planet",
+        event_label: "planet claimed",
+      });
+    }
     //closeNotification();
   } catch (e) {
     notif($notification("failed", e));

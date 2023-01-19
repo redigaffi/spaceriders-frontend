@@ -609,10 +609,12 @@ export default defineComponent({
         });
 
         $eventBus.emit(BUILDING_UPGRADED);
-        event(BUILDING_UPGRADED, {
-          'event_category' : 'building',
-          'event_label' : 'building upgraded'
-        });
+        if (process.env.ENV !== "local") {
+          event(BUILDING_UPGRADED, {
+            event_category: "building",
+            event_label: "building upgraded",
+          });
+        }
 
         let notificationMessage = `${props.data.name} upgraded and added to the queue.`;
         if (props.itemType) {
