@@ -53,7 +53,7 @@
 
           <q-separator inset />
 
-          <q-card-section class="q-py-xs text-body2 text-justify">
+          <q-card-section class="q-py-xs text-body2 text-justify chat-font">
             {{ input.message }}
           </q-card-section>
         </q-card>
@@ -98,6 +98,7 @@
 
   <q-card-section v-if="isMessageInputAvailable" class="q-px-md">
     <q-input
+      :input-style="{ fontFamily: 'plantFont' }"
       bottom-slots
       v-model="message"
       placeholder="Your message..."
@@ -275,3 +276,10 @@ onMounted(() => {
   connect();
 });
 </script>
+
+<style scoped>
+.chat-font {
+  font-family: "plantFont";
+  font-size: medium;
+}
+</style>
