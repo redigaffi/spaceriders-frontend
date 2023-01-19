@@ -49,6 +49,7 @@
         <q-list>
           <q-item>
             <q-input
+              class="full-width"
               bottom-slots
               v-model="username"
               placeholder="Username"
@@ -64,6 +65,7 @@
                   flat
                   icon="fas fa-check"
                   @click="updateUsername"
+                  :disabled="!aliasChanged"
                 />
               </template>
 
@@ -225,6 +227,10 @@ const updateUsername = () => {
 };
 
 const username = ref(getUsername());
+
+const aliasChanged = computed(() => {
+  return username.value != getUsername();
+});
 
 const showMusicPlayer = computed({
   get: () => {
