@@ -91,6 +91,20 @@
               </q-item>
               -->
             <q-item>
+              <q-item-section
+                class="items-center justify-center text-center"
+                style="
+                  border: 1px solid #2253f4;
+                  border-radius: 5px;
+                  box-shadow: 0 0 5px #2253f4;
+                  color: #fff;
+                "
+              >
+                {{ data.description }}
+              </q-item-section>
+            </q-item>
+
+            <q-item>
               <q-item-section>
                 <q-item-label v-if="health !== false && health < 100"
                   >Repair time:</q-item-label
@@ -610,8 +624,8 @@ export default defineComponent({
 
         $eventBus.emit(BUILDING_UPGRADED);
         event(BUILDING_UPGRADED, {
-          'event_category' : 'building',
-          'event_label' : 'building upgraded'
+          event_category: "building",
+          event_label: "building upgraded",
         });
 
         let notificationMessage = `${props.data.name} upgraded and added to the queue.`;
