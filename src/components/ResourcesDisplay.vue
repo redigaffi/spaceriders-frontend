@@ -1265,7 +1265,7 @@ const energyCostBreakdown = computed(() => {
   if (!energyDepositPopup.value) return false;
   const amount =
     depositAmount.value.toFixed(2) - depositAmount.value.toFixed(2) * 0.1;
-  return `${amount} $BKM - ${amount / 10} Energy (-10% $BKM Fee)`;
+  return `${amount} $BKM - ${amount * 200} Energy (-10% $BKM Fee)`;
 });
 
 async function depositEnergy(amount) {
@@ -1282,7 +1282,7 @@ async function depositEnergy(amount) {
     notif($notification("success", "Energy deposited successfully!"));
 
     $store.commit("incrementEnergy", {
-      energy: (amount - amount * 0.1) / 10,
+      energy: (amount - amount * 0.1) * 200,
     });
     $store.commit("decrementBkm", { bkm: amount });
 
