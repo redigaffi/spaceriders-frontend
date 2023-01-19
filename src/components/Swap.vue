@@ -283,10 +283,10 @@ const maxBalance = async () => {
   if (pathNames.value[0] === "busd") {
     const busdContract = new ERC20(ContractAddress.getBusdAddress());
     buyFromAmount.value = await busdContract.balanceOf($store.getters.address);
-    buyFromChange();
+    buyFromChange(buyFromAmount.value);
   } else if (pathNames.value[0] === "bkm") {
     buyFromAmount.value = await SpaceRiders.balanceOf($store.getters.address);
-    buyFromChange();
+    buyFromChange(buyFromAmount.value);
   }
 };
 
