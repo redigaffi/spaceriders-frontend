@@ -43,7 +43,7 @@
                   :src="row.image_url"
                   style="
                     width: 130px;
-                    height: 192px;
+                    height: 200px;
                     object-fit: cover;
                     object-position: 50% 0%;
                   "
@@ -200,6 +200,78 @@
                   color="amber"
                   @click="planetMark(row)"
                 />
+                <q-btn-dropdown
+                  color="primary"
+                  icon="widgets"
+                  label="Resources"
+                >
+                  <q-list>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label
+                          >Metal:
+                          {{
+                            tc(row.planet.resources.metal.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label
+                          >Crystal:
+                          {{
+                            tc(row.planet.resources.crystal.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          Petrol:
+                          {{
+                            tc(row.planet.resources.petrol.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          Energy:
+                          {{
+                            tc(row.planet.resources.energy.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>
+                          BKM:
+                          {{
+                            tc(row.planet.resources.bkm.toFixed(2), {
+                              digits: 2,
+                            })
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
                 <q-btn
                   color="primary"
                   icon="add"
@@ -418,6 +490,7 @@ let rows = computed(() => {
   );
 
   for (let pId in planets) {
+    console.log(planets);
     const planet = planets[pId];
     re.push({
       id: planet.id,
