@@ -49,6 +49,7 @@
         <q-list>
           <q-item>
             <q-input
+              class="full-width"
               bottom-slots
               v-model="username"
               placeholder="Username"
