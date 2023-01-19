@@ -99,7 +99,19 @@
                       </q-item-section>
 
                       <q-item-section side>
-                        <q-item-label>{{ row.position }}</q-item-label>
+                        <q-item-label>
+                          <q-btn
+                            color="primary"
+                            icon="search"
+                            :label="row.position"
+                            :to="`/explorer/${row.position.replaceAll(
+                              ':',
+                              '/'
+                            )}`"
+                            unelevated
+                            dense
+                          />
+                        </q-item-label>
                       </q-item-section>
                     </q-item>
 
@@ -189,7 +201,7 @@
                   @click="planetMark(row)"
                 />
                 <q-btn
-                  color="info"
+                  color="primary"
                   icon="add"
                   label="mint nft"
                   @click="
