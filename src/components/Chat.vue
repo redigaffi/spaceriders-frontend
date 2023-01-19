@@ -106,6 +106,7 @@
       maxlength="280"
       :dense="dense"
       :readonly="!isConnectionUp"
+      autogrow
     >
       <template v-slot:before>
         <q-avatar color="secondary" size="32px">
