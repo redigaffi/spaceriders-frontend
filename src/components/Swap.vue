@@ -210,7 +210,7 @@
 </template>
 
 <script setup>
-import { ref, watch, getCurrentInstance } from "vue";
+import { ref, watch, getCurrentInstance, onMounted } from "vue";
 import { useStore } from "vuex";
 import ApiRequests from "../service/http/ApiRequests";
 import RouterContract from "../service/contract/RouterContract";
@@ -357,4 +357,8 @@ async function addToken() {
     console.log(error);
   }
 }
+
+onMounted(() => {
+  buyFromChange(buyFromAmount.value);
+});
 </script>
