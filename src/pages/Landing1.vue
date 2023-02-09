@@ -421,7 +421,7 @@
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
               >
-                Access SpaceRiders
+                Play Now
               </button>
             </div>
             <div v-else>
