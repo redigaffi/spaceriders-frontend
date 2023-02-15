@@ -941,7 +941,7 @@
       <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">PARTNERS</div>
-
+          <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
             <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
               <a href="https://facewallet.xyz/" target="_blank">
                 <q-img
