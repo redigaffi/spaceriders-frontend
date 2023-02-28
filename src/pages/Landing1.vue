@@ -942,21 +942,11 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">PARTNERS</div>
           <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
-            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
-              <a href="https://facewallet.xyz/" target="_blank">
+            <div v-for="partner, index in partners" :key="index" class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a :href="partner.link" target="_blank">
                 <q-img
-                  src="~assets/landing/img/partners/face_wallet.webp"
-                  alt="Face Wallet"
-                >
-                </q-img>
-              </a>
-            </div>
-
-            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
-              <a href="https://haechi.io/?lang=en" target="_blank">
-                <q-img
-                  src="~assets/landing/img/partners/haechi.webp"
-                  alt="Haechi Labs"
+                  :src="partner.image"
+                  :alt="partner.alt"
                 >
                 </q-img>
               </a>
@@ -1608,6 +1598,24 @@ export default defineComponent({
           },
         ],
       },
+    ];
+
+    const partners = [
+      {
+        link: 'https://facewallet.xyz/',
+        image: `${require('../assets/landing/img/partners/face_wallet.webp')}`,
+        alt: 'Face Wallet'
+      },
+      {
+        link: 'https://haechi.io/?lang=en',
+        image: `${require('../assets/landing/img/partners/haechi.webp')}`,
+        alt: 'Haechi Labs'
+      },
+      {
+        link: 'https://www.dapp-playstore.com/',
+        image: `${require('../assets/landing/img/partners/DPS_logo.webp')}`,
+        alt: 'Dapp Play Store'
+      },
     ]
 
     const timelineFeed = [
@@ -1696,6 +1704,7 @@ export default defineComponent({
       headerTransparency,
       timelineFeed,
       teamMembers,
+      partners,
       mediumFeed,
       truncate,
     };
