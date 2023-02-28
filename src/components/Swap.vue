@@ -124,13 +124,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-sm">
-        <q-btn
-          color="primary"
-          class="full-width q-mb-sm"
-          icon="fas fa-copy"
-          label="Get contract address"
-          @click="copyToClipBoard"
-        />
+        <ContractAddressButton class="full-width q-mb-sm" />
 
         <q-expansion-item
           class="shadow-1 overflow-hidden"
@@ -227,6 +221,7 @@ import ERC20 from "../service/contract/ERC20";
 import { SWAP_COMPLETED } from "../constants/Events";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import ContractAddressButton from "../components/ContractAddressButton.vue";
 import { useQuasar, openURL } from "quasar";
 const $q = useQuasar();
 
@@ -363,17 +358,6 @@ async function addToken() {
     });
   } catch (error) {
     console.log(error);
-  }
-}
-
-async function copyToClipBoard() {
-  const address = ContractAddress.getSpaceRidersAddress();
-
-  try {
-    await navigator.clipboard.writeText(address);
-    $q.notify($notification("success", "Copied to clipboard"));
-  } catch (err) {
-    $q.notify($notification("failed", "Oops, unable to copy"));
   }
 }
 
