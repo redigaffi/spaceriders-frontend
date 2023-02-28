@@ -408,7 +408,9 @@
             SpaceRiders is a combat and planetary management simulator set in
             space that integrates blockchain technology.
           </p>
-          <div class="fit row wrap justify-start items-start content-start">
+          <div
+            class="fit row wrap justify-start items-start content-start q-gutter-sm"
+          >
             <!--<div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
@@ -417,12 +419,12 @@
               </Swap>
             </div>-->
             <div v-if="$store.getters.isReleaseTime">
-              <button
+              <q-btn
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
-              >
-                Play Now
-              </button>
+                icon="fas fa-rocket"
+                label="Play now"
+              />
             </div>
             <div v-else>
               <q-btn
@@ -432,6 +434,16 @@
                 :label="`${h}h ${m}m ${s}s`"
               >
               </q-btn>
+            </div>
+            <div>
+              <q-btn
+                class="button main__button3"
+                color="info"
+                href="https://t.me/SpaceRidersENChat"
+                target="_blank"
+                icon="fas fa-user-astronaut"
+                label="Join the community"
+              />
             </div>
           </div>
         </div>
@@ -872,21 +884,11 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">PARTNERS</div>
           <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
-            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
-              <a href="https://facewallet.xyz/" target="_blank">
+            <div v-for="partner, index in partners" :key="index" class="zoom-item col-xs-12 col-sm-6 col-md-3">
+              <a :href="partner.link" target="_blank">
                 <q-img
-                  src="~assets/landing/img/partners/face_wallet.webp"
-                  alt="Face Wallet"
-                >
-                </q-img>
-              </a>
-            </div>
-
-            <div class="zoom-item col-xs-12 col-sm-6 col-md-3">
-              <a href="https://haechi.io/?lang=en" target="_blank">
-                <q-img
-                  src="~assets/landing/img/partners/haechi.webp"
-                  alt="Haechi Labs"
+                  :src="partner.image"
+                  :alt="partner.alt"
                 >
                 </q-img>
               </a>
@@ -1541,6 +1543,7 @@ export default defineComponent({
       },
     ];
 
+
     const advisors = [
       {
         name: "Félix",
@@ -1552,6 +1555,24 @@ export default defineComponent({
             link: "https://www.linkedin.com/in/fmayo/",
           },
         ],
+      },
+    ];
+
+    const partners = [
+      {
+        link: 'https://facewallet.xyz/',
+        image: `${require('../assets/landing/img/partners/face_wallet.webp')}`,
+        alt: 'Face Wallet'
+      },
+      {
+        link: 'https://haechi.io/?lang=en',
+        image: `${require('../assets/landing/img/partners/haechi.webp')}`,
+        alt: 'Haechi Labs'
+      },
+      {
+        link: 'https://www.dapp-playstore.com/',
+        image: `${require('../assets/landing/img/partners/DPS_logo.webp')}`,
+        alt: 'Dapp Play Store'
       },
     ];
 
@@ -1642,6 +1663,7 @@ export default defineComponent({
       timelineFeed,
       teamMembers,
       advisors,
+      partners,
       mediumFeed,
       truncate,
     };
