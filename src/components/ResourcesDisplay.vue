@@ -705,6 +705,10 @@
           </q-list>
         </q-card-section>
 
+        <q-card-section>
+          <ContractAddressButton class="full-width" />
+        </q-card-section>
+
         <q-card-actions align="center">
           <q-btn
             color="info"
@@ -890,6 +894,7 @@ import SpaceRidersGameContract, {
 import ApiRequest from "../service/http/ApiRequests";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import ContractAddressButton from "../components/ContractAddressButton.vue";
 import {
   ACTIVE_PLANET_CHANGED,
   UPDATED_ALL,
