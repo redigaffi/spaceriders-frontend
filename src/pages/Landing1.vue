@@ -408,7 +408,9 @@
             SpaceRiders is a combat and planetary management simulator set in
             space that integrates blockchain technology.
           </p>
-          <div class="fit row wrap justify-start items-start content-start">
+          <div
+            class="fit row wrap justify-start items-start content-start q-gutter-sm"
+          >
             <!--<div class="q-mr-md">
               <Swap>
                 <button class="button main__button3 popup__open">
@@ -417,12 +419,12 @@
               </Swap>
             </div>-->
             <div v-if="$store.getters.isReleaseTime">
-              <button
+              <q-btn
                 class="button main__button3 popup__open"
                 @click.prevent="redirectTestnet"
-              >
-                Play Now
-              </button>
+                icon="fas fa-rocket"
+                label="Play now"
+              />
             </div>
             <div v-else>
               <q-btn
@@ -432,6 +434,16 @@
                 :label="`${h}h ${m}m ${s}s`"
               >
               </q-btn>
+            </div>
+            <div>
+              <q-btn
+                class="button main__button3"
+                color="info"
+                href="https://t.me/SpaceRidersENChat"
+                target="_blank"
+                icon="fas fa-user-astronaut"
+                label="Join the community"
+              />
             </div>
           </div>
         </div>
