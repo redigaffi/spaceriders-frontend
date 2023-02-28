@@ -1493,7 +1493,7 @@ export default defineComponent({
         name: "Jordi",
         title: "Founder",
         roles: ["Principal Software Engineer"],
-        img: "landing/ast/jordi.webp",
+        img: "landing/team/jordi.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1519,7 +1519,7 @@ export default defineComponent({
           "Marketing Operations",
           "Social Media Lead",
         ],
-        img: "landing/ast/max.webp",
+        img: "landing/team/max.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1623,6 +1623,7 @@ export default defineComponent({
       headerTransparency,
       timelineFeed,
       teamMembers,
+      advisors,
       mediumFeed,
       truncate,
     };
@@ -1671,14 +1672,6 @@ export default defineComponent({
     .col:last-of-type .social-item {
       border-bottom-left-radius: 12px;
     }
-  }
-}
-
-.zoom-item {
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: scale(1.1);
   }
 }
 
