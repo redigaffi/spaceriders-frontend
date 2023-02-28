@@ -870,81 +870,11 @@
 
     <!-- TEAM -->
     <div id="team"></div>
-    <section class="game">
-      <div :class="$q.screen.lt.md ? 'q-px-md' : 'container'">
-        <div class="game__inner wow animate__animated animate__fadeIn">
-          <div class="text-2 title game__title">TEAM</div>
+    <Members title="TEAM" :members="teamMembers" />
 
-          <div class="q-pt-xl row q-col-gutter-sm justify-center">
-            <div
-              v-for="(member, index) in teamMembers"
-              :key="index"
-              class="col-12 col-sm-6 col-md-4"
-            >
-              <q-card
-                flat
-                class="bg-transparent text-center zoom-item"
-                style="height: 100%"
-              >
-                <div class="text-center">
-                  <q-avatar size="120px">
-                    <img
-                      :src="member.img"
-                      style="border: 3px solid rgb(34, 83, 244)"
-                    />
-                  </q-avatar>
-                </div>
-
-                <q-card-section>
-                  <div class="text-h5">{{ member.name }}</div>
-                  <div class="text-h6">{{ member.title }}</div>
-                </q-card-section>
-
-                <hr class="bg-white" style="width: 100px; height: 3px" />
-                <q-card-section class="text-h5">
-                  <div v-for="(role, index) in member.roles" :key="index">
-                    {{ role }}
-                  </div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 q-gutter-md">
-                  <template
-                    v-for="(social, index) in member.socialMedia"
-                    :key="index"
-                  >
-                    <q-btn
-                      v-if="social.isNotFontIcon"
-                      flat
-                      round
-                      color="white"
-                      type="a"
-                      target="_blank"
-                      :href="social.link"
-                    >
-                      <img
-                        :src="social.icon"
-                        alt="Телеграм"
-                        :style="{ height: social.height + 'px' }"
-                      />
-                    </q-btn>
-
-                    <q-btn
-                      v-else
-                      flat
-                      round
-                      color="white"
-                      :icon="social.icon"
-                      type="a"
-                      target="_blank"
-                      :href="social.link"
-                    />
-                  </template>
-                </q-card-section>
-              </q-card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- ADVISORS -->
+    <div id="advisors"></div>
+    <Members title="ADVISORS" :members="advisors" />
 
     <!-- PARTNERS -->
 
@@ -1401,8 +1331,9 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 import { onMounted } from "@vue/runtime-core";
-import Timeline from "src/components/Timeline.vue";
-import GameMechanics from "src/components/GameMechanics.vue";
+import Timeline from "src/components/landing/Timeline.vue";
+import GameMechanics from "src/components/landing/GameMechanics.vue";
+import Members from "src/components/landing/Members.vue";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import ApiRequest from "../service/http/ApiRequests";
@@ -1568,7 +1499,7 @@ export default defineComponent({
         name: "Jordi",
         title: "Founder",
         roles: ["Principal Software Engineer"],
-        img: "landing/ast/jordi.webp",
+        img: "landing/team/jordi.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1594,7 +1525,7 @@ export default defineComponent({
           "Marketing Operations",
           "Social Media Lead",
         ],
-        img: "landing/ast/max.webp",
+        img: "landing/team/max.webp",
         socialMedia: [
           {
             icon: "fab fa-linkedin-in",
@@ -1607,6 +1538,21 @@ export default defineComponent({
           {
             icon: "fab fa-discord",
             link: "https://discordapp.com/users/838028729884213248",
+          },
+        ],
+      },
+    ];
+
+
+    const advisors = [
+      {
+        name: "Félix",
+        title: "Marketing Advisor",
+        img: "landing/advisors/felix.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/fmayo/",
           },
         ],
       },
@@ -1628,7 +1574,7 @@ export default defineComponent({
         image: `${require('../assets/landing/img/partners/DPS_logo.webp')}`,
         alt: 'Dapp Play Store'
       },
-    ]
+    ];
 
     const timelineFeed = [
       {
@@ -1716,12 +1662,13 @@ export default defineComponent({
       headerTransparency,
       timelineFeed,
       teamMembers,
+      advisors,
       partners,
       mediumFeed,
       truncate,
     };
   },
-  components: { Timeline, GameMechanics },
+  components: { Timeline, GameMechanics, Members },
 });
 </script>
 <style lang="scss" scoped>
@@ -1765,14 +1712,6 @@ export default defineComponent({
     .col:last-of-type .social-item {
       border-bottom-left-radius: 12px;
     }
-  }
-}
-
-.zoom-item {
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: scale(1.1);
   }
 }
 
