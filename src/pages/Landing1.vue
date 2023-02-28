@@ -860,6 +860,10 @@
     <div id="team"></div>
     <Members title="TEAM" :members="teamMembers" />
 
+    <!-- ADVISORS -->
+    <div id="advisors"></div>
+    <Members title="ADVISORS" :members="advisors" />
+
     <!-- PARTNERS -->
 
     <div id="partners"></div>
@@ -1532,6 +1536,20 @@ export default defineComponent({
           {
             icon: "fab fa-discord",
             link: "https://discordapp.com/users/838028729884213248",
+          },
+        ],
+      },
+    ];
+
+    const advisors = [
+      {
+        name: "Félix",
+        title: "Marketing Advisor",
+        img: "landing/advisors/felix.webp",
+        socialMedia: [
+          {
+            icon: "fab fa-linkedin-in",
+            link: "https://www.linkedin.com/in/fmayo/",
           },
         ],
       },

@@ -30,12 +30,15 @@
               </q-card-section>
 
               <hr class="bg-white" style="width: 100px; height: 3px" />
-              <q-card-section class="text-h5">
+              <q-card-section v-if="member.roles" class="text-h5">
                 <div v-for="(role, index) in member.roles" :key="index">
                   {{ role }}
                 </div>
               </q-card-section>
-              <q-card-section class="text-subtitle2 q-gutter-md">
+              <q-card-section
+                v-if="member.socialMedia"
+                class="text-subtitle2 q-gutter-md"
+              >
                 <template
                   v-for="(social, index) in member.socialMedia"
                   :key="index"
@@ -51,7 +54,6 @@
                   >
                     <img
                       :src="social.icon"
-                      alt="Телеграм"
                       :style="{ height: social.height + 'px' }"
                     />
                   </q-btn>
