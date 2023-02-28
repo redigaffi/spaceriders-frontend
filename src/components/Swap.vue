@@ -124,6 +124,14 @@
       </q-card-section>
 
       <q-card-section class="q-pt-sm">
+        <q-btn
+          color="primary"
+          class="full-width q-mb-sm"
+          icon="fas fa-copy"
+          label="Get contract address"
+          @click="copyToClipBoard"
+        />
+
         <q-expansion-item
           class="shadow-1 overflow-hidden"
           style="border-radius: 5px"
@@ -355,6 +363,17 @@ async function addToken() {
     });
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function copyToClipBoard() {
+  const address = ContractAddress.getSpaceRidersAddress();
+
+  try {
+    await navigator.clipboard.writeText(address);
+    $q.notify($notification("success", "Copied to clipboard"));
+  } catch (err) {
+    $q.notify($notification("failed", "Oops, unable to copy"));
   }
 }
 
