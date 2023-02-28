@@ -81,59 +81,95 @@
       <q-page class="container">
         <router-view />
 
-        <q-page-sticky
-          :style="
-            !$store.getters.drawerLeft && !$store.getters.drawerRight
-              ? 'z-index: 1'
-              : ''
-          "
-          position="bottom-right"
-          :offset="[24, 192]"
+        <transition-group
+          appear
+          enter-active-class="animated fadeInUp"
+          leave-active-class="animated fadeOutDown"
         >
-          <q-btn
-            :class="{ shake: buildingsInQueue.length }"
-            size="sm"
-            fab
-            icon="handyman"
-            color="info"
-            @click="changeTabPanel('queue')"
+          <q-page-sticky
+            v-if="showFloatingButtons"
+            :style="
+              !$store.getters.drawerLeft && !$store.getters.drawerRight
+                ? 'z-index: 1'
+                : ''
+            "
+            position="bottom-right"
+            :offset="[24, 264]"
           >
-          </q-btn>
+            <q-btn
+              :class="{ shake: buildingsInQueue.length }"
+              size="sm"
+              fab
+              icon="handyman"
+              color="info"
+              @click="changeTabPanel('queue')"
+            >
+            </q-btn>
 
-          <q-badge
-            class="animation absolute-top-right"
-            v-if="buildingsInQueue.length"
-            color="negative"
-            rounded
-          />
-        </q-page-sticky>
+            <q-badge
+              class="animation absolute-top-right"
+              v-if="buildingsInQueue.length"
+              color="negative"
+              rounded
+            />
+          </q-page-sticky>
 
-        <q-page-sticky
-          :style="
-            !$store.getters.drawerLeft && !$store.getters.drawerRight
-              ? 'z-index: 1'
-              : ''
-          "
-          position="bottom-right"
-          :offset="[24, 120]"
-        >
-          <q-btn
-            :class="{ shake: false }"
-            size="sm"
-            fab
-            icon="fas fa-broadcast-tower"
-            color="info"
-            @click="changeTabPanel('chat')"
+          <q-page-sticky
+            v-if="showFloatingButtons"
+            :style="
+              !$store.getters.drawerLeft && !$store.getters.drawerRight
+                ? 'z-index: 1'
+                : ''
+            "
+            position="bottom-right"
+            :offset="[24, 192]"
           >
-          </q-btn>
+            <q-btn
+              :class="{ shake: false }"
+              size="sm"
+              fab
+              icon="fas fa-broadcast-tower"
+              color="info"
+              @click="changeTabPanel('chat')"
+            >
+            </q-btn>
 
-          <q-badge
-            class="animation absolute-top-right"
-            v-if="false"
-            color="negative"
-            rounded
-          />
-        </q-page-sticky>
+            <q-badge
+              class="animation absolute-top-right"
+              v-if="false"
+              color="negative"
+              rounded
+            />
+          </q-page-sticky>
+
+          <q-page-sticky
+            v-if="showFloatingButtons"
+            :style="
+              !$store.getters.drawerLeft && !$store.getters.drawerRight
+                ? 'z-index: 1'
+                : ''
+            "
+            position="bottom-right"
+            :offset="[24, 120]"
+          >
+            <q-btn
+              :class="{ shake: anyUnreadMessage }"
+              size="sm"
+              fab
+              icon="mail"
+              color="info"
+              @click="changeTabPanel('inbox')"
+            >
+            </q-btn>
+
+            <q-badge
+              class="animation absolute-top-right"
+              v-if="anyUnreadMessage"
+              color="negative"
+              rounded
+            />
+          </q-page-sticky>
+        </transition-group>
 
         <q-page-sticky
           :style="
@@ -145,18 +181,19 @@
           :offset="[24, 48]"
         >
           <q-btn
-            :class="{ shake: anyUnreadMessage }"
+            id="floatingButtonsToggle"
+            :class="{ rotated: showFloatingButtons }"
             size="sm"
             fab
-            icon="mail"
+            icon="add"
             color="info"
-            @click="changeTabPanel('inbox')"
+            @click="showFloatingButtons = !showFloatingButtons"
           >
           </q-btn>
 
           <q-badge
             class="animation absolute-top-right"
-            v-if="anyUnreadMessage"
+            v-if="anyUnreadMessage || buildingsInQueue.length"
             color="negative"
             rounded
           />
@@ -483,6 +520,8 @@ const emails = computed(() => {
 const openInbox = ref(false);
 const activeEmail = ref({});
 
+const showFloatingButtons = ref(false);
+
 const templateName = computed(() => {
   if (!activeEmail.value.template) return;
 
@@ -677,6 +716,14 @@ body {
 
 .shake {
   animation: shakeAnimation 2s ease infinite;
+}
+
+#floatingButtonsToggle {
+  transition: transform 0.25s ease-in-out;
+}
+
+.rotated {
+  transform: rotate(45deg);
 }
 
 @keyframes scaleUp {
