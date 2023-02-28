@@ -1399,8 +1399,8 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 import { onMounted } from "@vue/runtime-core";
-import Timeline from "src/components/Timeline.vue";
-import GameMechanics from "src/components/GameMechanics.vue";
+import Timeline from "src/components/landing/Timeline.vue";
+import GameMechanics from "src/components/landing/GameMechanics.vue";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
 import ApiRequest from "../service/http/ApiRequests";
@@ -1608,7 +1608,7 @@ export default defineComponent({
           },
         ],
       },
-    ]
+    ];
 
     const timelineFeed = [
       {
