@@ -374,4 +374,14 @@ export default class ApiRequests {
     const path = `${process.env.BASE_API_PATH}/account/info/${wallet}`;
     return await axios.get(path);
   }
+
+  static async redeemCode(code) {
+    const path = `${process.env.BASE_API_PATH}/redeem`;
+
+    const body = {
+      redeem_code: code,
+    };
+
+    return await axios.post(path, body);
+  }
 }
