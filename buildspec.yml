@@ -3,6 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - n 14.18.3
       - yarn install
   build:
     commands:
