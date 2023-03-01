@@ -124,6 +124,8 @@
       </q-card-section>
 
       <q-card-section class="q-pt-sm">
+        <ContractAddressButton class="full-width q-mb-sm" />
+
         <q-expansion-item
           class="shadow-1 overflow-hidden"
           style="border-radius: 5px"
@@ -219,6 +221,7 @@ import ERC20 from "../service/contract/ERC20";
 import { SWAP_COMPLETED } from "../constants/Events";
 import IncreaseAllowance from "./IncreaseAllowance";
 import ContractAddress from "../service/contract/ContractAddress";
+import ContractAddressButton from "../components/ContractAddressButton.vue";
 import { useQuasar, openURL } from "quasar";
 const $q = useQuasar();
 
