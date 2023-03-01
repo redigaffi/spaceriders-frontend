@@ -195,10 +195,27 @@
               </q-item-label>
             </q-item-section>
           </q-item>
+
+          <q-item
+            v-if="hasActivePlanet && redeemModalRef"
+            clickable
+            exact
+            exact-active-class="bg-primary text-white"
+            @click="redeemModalRef.showRedeemModal"
+          >
+            <q-item-section>
+              <q-item-label>
+                <q-icon name="fas fa-tag" />
+                Redeem Code
+              </q-item-label>
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-card-section>
     </q-card>
   </q-drawer>
+
+  <RedeemModal ref="redeemModalRef" />
 </template>
 
 <script setup>
@@ -209,6 +226,7 @@ import { useStore } from "vuex";
 import { openURL, useQuasar } from "quasar";
 import NavLinks from "components/NavLinks.vue";
 import Swap from "components/Swap.vue";
+import RedeemModal from "../components/RedeemModal";
 import routes from "../router/routes.js";
 import { onMounted } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
@@ -261,6 +279,8 @@ const linksListInfo = {
 const $store = useStore();
 const $quasar = useQuasar();
 const $route = useRoute();
+
+const redeemModalRef = ref();
 
 const tabPanel = computed({
   get: () => {
