@@ -409,7 +409,7 @@
             space that integrates blockchain technology.
           </p>
           <div
-            class="fit row wrap justify-start items-start content-start q-gutter-sm"
+            class="q-mt-xl fit row wrap justify-start items-start content-start q-gutter-sm"
           >
             <!--<div class="q-mr-md">
               <Swap>
@@ -443,6 +443,28 @@
                 target="_blank"
                 icon="fas fa-user-astronaut"
                 label="Join the community"
+              />
+            </div>
+
+            <div>
+              <q-btn
+                class="button main__button3"
+                color="info"
+                href="https://www.indiegogo.com/projects/spaceriders-a-community-driven-space-simulator"
+                target="_blank"
+                icon="fas fa-heart"
+                label="Crowdfunding"
+              />
+            </div>
+
+            <div>
+              <q-btn
+                class="button main__button3"
+                color="dark"
+                href="https://github.com/spaceriders-web3"
+                target="_blank"
+                icon="fab fa-github-alt"
+                label="Contribute"
               />
             </div>
           </div>
@@ -884,13 +906,13 @@
         <div class="game__inner wow animate__animated animate__fadeIn">
           <div class="text-2 title game__title">PARTNERS</div>
           <div class="q-pt-xl row flex-center items-center q-col-gutter-xl">
-            <div v-for="partner, index in partners" :key="index" class="zoom-item col-xs-12 col-sm-6 col-md-3">
+            <div
+              v-for="(partner, index) in partners"
+              :key="index"
+              class="zoom-item col-xs-12 col-sm-6 col-md-3"
+            >
               <a :href="partner.link" target="_blank">
-                <q-img
-                  :src="partner.image"
-                  :alt="partner.alt"
-                >
-                </q-img>
+                <q-img :src="partner.image" :alt="partner.alt"> </q-img>
               </a>
             </div>
           </div>
@@ -1543,7 +1565,6 @@ export default defineComponent({
       },
     ];
 
-
     const advisors = [
       {
         name: "Félix",
@@ -1560,19 +1581,19 @@ export default defineComponent({
 
     const partners = [
       {
-        link: 'https://facewallet.xyz/',
-        image: `${require('../assets/landing/img/partners/face_wallet.webp')}`,
-        alt: 'Face Wallet'
+        link: "https://facewallet.xyz/",
+        image: `${require("../assets/landing/img/partners/face_wallet.webp")}`,
+        alt: "Face Wallet",
       },
       {
-        link: 'https://haechi.io/?lang=en',
-        image: `${require('../assets/landing/img/partners/haechi.webp')}`,
-        alt: 'Haechi Labs'
+        link: "https://haechi.io/?lang=en",
+        image: `${require("../assets/landing/img/partners/haechi.webp")}`,
+        alt: "Haechi Labs",
       },
       {
-        link: 'https://www.dapp-playstore.com/',
-        image: `${require('../assets/landing/img/partners/DPS_logo.webp')}`,
-        alt: 'Dapp Play Store'
+        link: "https://www.dapp-playstore.com/",
+        image: `${require("../assets/landing/img/partners/DPS_logo.webp")}`,
+        alt: "Dapp Play Store",
       },
     ];
 
